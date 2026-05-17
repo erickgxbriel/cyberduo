@@ -58,7 +58,7 @@
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
-            padding: 0 2rem  1.5rem;
+            padding: 0 clamp(1rem, 4vw, 2rem) 1.5rem;
         }
 
         .module-header {
@@ -95,7 +95,7 @@
             background: #0d1117;
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 0.8rem;
-            padding: 1rem 1.5rem;
+            padding: 1rem clamp(1rem, 3vw, 1.5rem); -webkit-tap-highlight-color: transparent;
             transition: all 0.2s ease;
             text-decoration: none;
             color: inherit;
@@ -191,6 +191,12 @@
         .submodule-item:nth-child(10) { animation-delay: 0.50s; }
         .submodule-item:nth-child(11) { animation-delay: 0.55s; }
         .submodule-item:nth-child(12) { animation-delay: 0.60s; }
+    
+        .submodule-item:active {
+            transform: scale(0.98);
+            background: rgba(0, 255, 65, 0.05);
+        }
+    
     </style>
 </head>
 <body>
@@ -213,40 +219,40 @@
             
             <a href="../lessons/4.0-introducao.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-info-circle"></i>
+                    <i class="fas fa-people-arrows"></i>
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">4.0</span>
-                    <span class="submodule-title">Introdução</span>
-                    <span class="submodule-desc">Por que e como ataques de Engenharia Social funcionam.</span>
+                    <span class="submodule-title">Engenharia Social</span>
+                    <span class="submodule-desc">Engenharia Social é a arte de manipular pessoas para que revelem informações ...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
+            
             <a href="../lessons/4.1-pretexting.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-id-card"></i>
+                    <i class="fas fa-user-tie"></i>
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">4.1</span>
-                    <span class="submodule-title">Pretexting e Impersonação</span>
-                    <span class="submodule-desc">Elicitação, interrogatório e personificação de TI.</span>
+                    <span class="submodule-title">Pretexting</span>
+                    <span class="submodule-desc">O atacante se passa por alguém de confiança: técnico de TI, gerente, entregad...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
+            
             <a href="../lessons/4.2-ataques-sociais.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-envelope-open-text"></i>
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">4.2</span>
-                    <span class="submodule-title">Vetores de Ataque Social</span>
-                    <span class="submodule-desc">Phishing, Spear Phishing, Vishing e Smishing.</span>
+                    <span class="submodule-title">Ataques Sociais</span>
+                    <span class="submodule-desc">Phishing é enviar e-mails falsos que imitam empresas legítimas para roubar cr...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
+            
             <a href="../lessons/4.3-ataques-fisicos.html" class="submodule-item">
                 <div class="submodule-icon-box">
                     <i class="fas fa-door-open"></i>
@@ -254,23 +260,23 @@
                 <div class="submodule-info">
                     <span class="submodule-number">4.3</span>
                     <span class="submodule-title">Ataques Físicos</span>
-                    <span class="submodule-desc">Tailgating, Piggybacking e Shoulder Surfing.</span>
+                    <span class="submodule-desc">Tailgating (ou piggybacking) é seguir um funcionário autorizado pela porta se...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
+            
             <a href="../lessons/4.4-ferramentas-sociais.html" class="submodule-item">
                 <div class="submodule-icon-box">
                     <i class="fas fa-toolbox"></i>
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">4.4</span>
-                    <span class="submodule-title">Ferramentas de Engenharia Social</span>
-                    <span class="submodule-desc">Exploração com SET e BeEF.</span>
+                    <span class="submodule-title">Ferramentas Sociais</span>
+                    <span class="submodule-desc">O SET é a principal ferramenta de engenharia social do Kali Linux.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
+            
             <a href="../lessons/4.5-metodos-influencia.html" class="submodule-item">
                 <div class="submodule-icon-box">
                     <i class="fas fa-brain"></i>
@@ -278,11 +284,10 @@
                 <div class="submodule-info">
                     <span class="submodule-number">4.5</span>
                     <span class="submodule-title">Métodos de Influência</span>
-                    <span class="submodule-desc">Autoridade, Urgência, Prova Social e Reciprocidade.</span>
+                    <span class="submodule-desc">Robert Cialdini identificou 6 princípios de influência usados em engenharia s...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
         </div>
 
     </main>

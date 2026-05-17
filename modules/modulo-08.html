@@ -58,7 +58,7 @@
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
-            padding: 0 2rem  1.5rem;
+            padding: 0 clamp(1rem, 4vw, 2rem) 1.5rem;
         }
 
         .module-header {
@@ -95,7 +95,7 @@
             background: #0d1117;
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 0.8rem;
-            padding: 1rem 1.5rem;
+            padding: 1rem clamp(1rem, 3vw, 1.5rem); -webkit-tap-highlight-color: transparent;
             transition: all 0.2s ease;
             text-decoration: none;
             color: inherit;
@@ -191,6 +191,12 @@
         .submodule-item:nth-child(10) { animation-delay: 0.50s; }
         .submodule-item:nth-child(11) { animation-delay: 0.55s; }
         .submodule-item:nth-child(12) { animation-delay: 0.60s; }
+    
+        .submodule-item:active {
+            transform: scale(0.98);
+            background: rgba(0, 255, 65, 0.05);
+        }
+    
     </style>
 </head>
 <body>
@@ -213,40 +219,39 @@
             
             <a href="../lessons/8.0-introducao.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-flag-checkered"></i>
+                    <i class="fas fa-door-open"></i>
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">8.0</span>
-                    <span class="submodule-title">Introdução</span>
-                    <span class="submodule-desc">Objetivos de relatório, dwell time e risco sistêmico.</span>
+                    <span class="submodule-title">Pós-Exploração</span>
+                    <span class="submodule-desc">Após comprometer um sistema, o atacante precisa manter acesso (persistência),...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
-            <a href="../lessons/8.1-persistencia.html" class="submodule-item">
+            
+            <a href="../lessons/8.1a-persistencia-avancada.html" class="submodule-item">
                 <div class="submodule-icon-box">
                     <i class="fas fa-anchor"></i>
                 </div>
                 <div class="submodule-info">
-                    <span class="submodule-number">8.1</span>
-                    <span class="submodule-title">Persistência e Criação de Base</span>
-                    <span class="submodule-desc">Shells, Netcat, C2 e tarefas agendadas.</span>
+                    <span class="submodule-number">8.1a</span>
+                    <span class="submodule-title">Persistência Avançada</span>
+                    <span class="submodule-desc">Além de scheduled tasks e contas locais, atacantes mantêm acesso via: Registr...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
-            <a href="../lessons/8.2-lateral-evasao.html" class="submodule-item">
+            
+            <a href="../lessons/8.2a-lateral-exfiltracao.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-shoe-prints"></i>
+                    <i class="fas fa-arrows-left-right"></i>
                 </div>
                 <div class="submodule-info">
-                    <span class="submodule-number">8.2</span>
-                    <span class="submodule-title">Movimento Lateral e Evasão</span>
-                    <span class="submodule-desc">Pivotagem, PtH, BloodHound e limpeza de rastros.</span>
+                    <span class="submodule-number">8.2a</span>
+                    <span class="submodule-title">Mov. Lateral e Exfiltração</span>
+                    <span class="submodule-desc">Após obter um hash (Pass-the-Hash) ou ticket (Pass-the-Ticket), o atacante pr...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
         </div>
 
     </main>

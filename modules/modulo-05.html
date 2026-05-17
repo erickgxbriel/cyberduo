@@ -59,7 +59,7 @@
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
-            padding: 0 2rem  1.5rem;
+            padding: 0 clamp(1rem, 4vw, 2rem) 1.5rem;
         }
 
         .module-header {
@@ -96,7 +96,7 @@
             background: #0d1117;
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 0.8rem;
-            padding: 1rem 1.5rem;
+            padding: 1rem clamp(1rem, 3vw, 1.5rem); -webkit-tap-highlight-color: transparent;
             transition: all 0.2s ease;
             text-decoration: none;
             color: inherit;
@@ -192,6 +192,12 @@
         .submodule-item:nth-child(10) { animation-delay: 0.50s; }
         .submodule-item:nth-child(11) { animation-delay: 0.55s; }
         .submodule-item:nth-child(12) { animation-delay: 0.60s; }
+    
+        .submodule-item:active {
+            transform: scale(0.98);
+            background: rgba(0, 255, 65, 0.05);
+        }
+    
     </style>
 </head>
 <body>
@@ -218,36 +224,59 @@
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">5.0</span>
-                    <span class="submodule-title">Introdução</span>
-                    <span class="submodule-desc">Objetivos e panorama geral de ataques em LANs.</span>
+                    <span class="submodule-title">Exploração de Redes</span>
+                    <span class="submodule-desc">Este módulo cobre a exploração de vulnerabilidades em redes com fio e sem fio...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
-            <a href="../lessons/5.1-vulnerabilidades-rede.html" class="submodule-item">
+            
+            <a href="../lessons/5.1a-protocolos-ataques.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-server"></i>
+                    <i class="fas fa-route"></i>
                 </div>
                 <div class="submodule-info">
-                    <span class="submodule-number">5.1</span>
-                    <span class="submodule-title">Vulnerabilidades de Rede</span>
-                    <span class="submodule-desc">SMB, SNMP, SMTP, Pass-the-Hash, Kerberos e ataques MITM.</span>
+                    <span class="submodule-number">5.1a</span>
+                    <span class="submodule-title">Protocolos e Ataques de Rede</span>
+                    <span class="submodule-desc">ARP Spoofing envia respostas ARP falsas para associar o MAC do atacante ao IP...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
-            <a href="../lessons/5.2-vulnerabilidades-wireless.html" class="submodule-item">
+            
+            <a href="../lessons/5.1b-senhas-kerberos.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-key"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">5.1b</span>
+                    <span class="submodule-title">Ataques de Senha e Kerberos</span>
+                    <span class="submodule-desc">Brute Force: testa TODAS as combinações.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            
+            <a href="../lessons/5.2a-wireless-fundamentals.html" class="submodule-item">
                 <div class="submodule-icon-box">
                     <i class="fas fa-wifi"></i>
                 </div>
                 <div class="submodule-info">
-                    <span class="submodule-number">5.2</span>
-                    <span class="submodule-title">Vulnerabilidades Sem Fio</span>
-                    <span class="submodule-desc">WEP, WPA/WPA2/WPA3, Rogue AP, Evil Twin e Bluetooth.</span>
+                    <span class="submodule-number">5.2a</span>
+                    <span class="submodule-title">Fundamentos Wireless</span>
+                    <span class="submodule-desc">WEP: RC4, quebrado (não usar).</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
+            
+            <a href="../lessons/5.2b-wireless-attacks.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-tower-broadcast"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">5.2b</span>
+                    <span class="submodule-title">Ataques Wireless Avançados</span>
+                    <span class="submodule-desc">Evil Twin: AP falso com SSID idêntico ao legítimo.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
         </div>
 
     </main>

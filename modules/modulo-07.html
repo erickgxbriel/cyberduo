@@ -58,7 +58,7 @@
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
-            padding: 0 2rem  1.5rem;
+            padding: 0 clamp(1rem, 4vw, 2rem) 1.5rem;
         }
 
         .module-header {
@@ -95,7 +95,7 @@
             background: #0d1117;
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 0.8rem;
-            padding: 1rem 1.5rem;
+            padding: 1rem clamp(1rem, 3vw, 1.5rem); -webkit-tap-highlight-color: transparent;
             transition: all 0.2s ease;
             text-decoration: none;
             color: inherit;
@@ -191,6 +191,12 @@
         .submodule-item:nth-child(10) { animation-delay: 0.50s; }
         .submodule-item:nth-child(11) { animation-delay: 0.55s; }
         .submodule-item:nth-child(12) { animation-delay: 0.60s; }
+    
+        .submodule-item:active {
+            transform: scale(0.98);
+            background: rgba(0, 255, 65, 0.05);
+        }
+    
     </style>
 </head>
 <body>
@@ -213,40 +219,63 @@
             
             <a href="../lessons/7.0-introducao.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-info-circle"></i>
+                    <i class="fas fa-cloud"></i>
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">7.0</span>
-                    <span class="submodule-title">Introdução</span>
-                    <span class="submodule-desc">Novas superfícies de ataque em ambientes hiperconectados.</span>
+                    <span class="submodule-title">Cloud e IoT</span>
+                    <span class="submodule-desc">Este módulo cobre ataques a ambientes cloud (AWS, Azure, GCP), dispositivos I...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
-            <a href="../lessons/7.1-vetores-nuvem.html" class="submodule-item">
+            
+            <a href="../lessons/7.1a-vetores-nuvem.html" class="submodule-item">
                 <div class="submodule-icon-box">
                     <i class="fas fa-cloud"></i>
                 </div>
                 <div class="submodule-info">
-                    <span class="submodule-number">7.1</span>
-                    <span class="submodule-title">Ataques em Tecnologias de Nuvem</span>
-                    <span class="submodule-desc">IaaS, PaaS, SaaS, IMDS e escalada de privilégios.</span>
+                    <span class="submodule-number">7.1a</span>
+                    <span class="submodule-title">Vetores na Nuvem</span>
+                    <span class="submodule-desc">A segurança na nuvem é compartilhada.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
-            <a href="../lessons/7.2-sistemas-especializados.html" class="submodule-item">
+            
+            <a href="../lessons/7.1b-cloud-exploits.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-mobile-alt"></i>
+                    <i class="fas fa-bolt"></i>
                 </div>
                 <div class="submodule-info">
-                    <span class="submodule-number">7.2</span>
-                    <span class="submodule-title">Móvel, IoT e Sistemas Industriais</span>
-                    <span class="submodule-desc">Android, BLE, ICS/SCADA e ferramentas de exploração.</span>
+                    <span class="submodule-number">7.1b</span>
+                    <span class="submodule-title">Exploração e Enumeração Cloud</span>
+                    <span class="submodule-desc">Funções Serverless executam código sob demanda, sem servidor fixo.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
+            
+            <a href="../lessons/7.2a-mobile-iot.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-mobile-screen"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">7.2a</span>
+                    <span class="submodule-title">Mobile e IoT</span>
+                    <span class="submodule-desc">Dispositivos móveis são alvos via apps maliciosos, MDM bypass, jailbreak/root...</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            
+            <a href="../lessons/7.2b-ics-scada-embedded.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-industry"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">7.2b</span>
+                    <span class="submodule-title">ICS/SCADA, Embarcados e Especializados</span>
+                    <span class="submodule-desc">Sistemas ICS (Industrial Control Systems) e SCADA controlam infraestrutura cr...</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
         </div>
 
     </main>
