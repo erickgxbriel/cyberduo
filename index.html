@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <title>CyberDuo - Hub de Treinamento</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
@@ -28,7 +31,7 @@
             background-color: var(--bg-dark);
             color: #e6edf3;
             font-family: 'Inter', sans-serif;
-            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
         }
@@ -135,7 +138,7 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            padding: 0 2rem 5rem;
+            padding: 0 2rem  1.5rem;
         }
 
         .module-grid {
@@ -212,7 +215,7 @@
         }
 
         .module-title {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 4vw, 1.2rem);
             font-weight: 800;
             color: white;
             line-height: 1.2;
@@ -229,11 +232,46 @@
 
         footer {
             margin-top: auto;
-            padding: 3rem;
+            padding:  1.5rem; padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
             text-align: center;
             font-size: 0.75rem;
             color: #484f58;
             letter-spacing: 1px;
+        }
+    
+        /* Design Spells: Entrance & Micro-interactions */
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes cyberGlitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        .module-card {
+            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .module-card:nth-child(1) { animation-delay: 0.05s; }
+        .module-card:nth-child(2) { animation-delay: 0.10s; }
+        .module-card:nth-child(3) { animation-delay: 0.15s; }
+        .module-card:nth-child(4) { animation-delay: 0.20s; }
+        .module-card:nth-child(5) { animation-delay: 0.25s; }
+        .module-card:nth-child(6) { animation-delay: 0.30s; }
+        .module-card:nth-child(7) { animation-delay: 0.35s; }
+        .module-card:nth-child(8) { animation-delay: 0.40s; }
+        .module-card:nth-child(9) { animation-delay: 0.45s; }
+        .module-card:nth-child(10) { animation-delay: 0.50s; }
+        .module-card:nth-child(11) { animation-delay: 0.55s; }
+        .module-card:nth-child(12) { animation-delay: 0.60s; }
+        
+        .cyber-title:hover .highlight {
+            animation: cyberGlitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: #fff;
+            text-shadow: 3px 0 var(--cyber-red), -3px 0 var(--cyber-blue);
         }
     </style>
 </head>
@@ -337,7 +375,7 @@
 
             <!-- Módulo Especial: THE BLACK BOX -->
             <a href="modules/blackbox.html" class="module-card" style="--card-color: #ffffff; border-style: dashed; border-width: 2px;">
-                <div class="module-icon"><i class="fas fa-vault"></i></div>
+                <div class="module-icon"><i class="fas fa-box"></i></div>
                 <span class="module-number">Especial</span>
                 <h2 class="module-title">THE BLACK BOX</h2>
                 <div class="module-stats"><span><i class="fas fa-folder-open mr-1"></i> Arsenal Hacker</span><span><i class="fas fa-unlock mr-1"></i> Acesso Livre</span></div>
