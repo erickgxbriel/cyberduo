@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Verificações de Vulnerabilidade 3.3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00facd;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 250, 205, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
+        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+
+        .highlight-cyan { color: #00f2ff; font-weight: 700; }
+        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
+        .highlight-red { color: var(--cyber-red); font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+
+        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+
+        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 250, 205, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+
+        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00b3a4; }
+
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
+        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-03.html'"></i>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const phases = [
+            {
+                icon: 'fa-shield-virus',
+                concept: 'Scanners de Vulnerabilidade',
+                desc: 'Scanners automatizados identificam versões de software e as comparam com um banco de dados de falhas conhecidas, gerando um mapa de riscos potenciais.',
+                task: 'Qual o método principal usado por um scanner para determinar se um serviço é vulnerável?',
+                options: [
+                    'Identificar a versão do software e compará-la com vulnerabilidades conhecidas',
+                    'Desligar fisicamente o servidor para ver se ele volta a funcionar sozinho',
+                    'Pedir a senha do administrador via chat para validar a segurança'
+                ],
+                correctText: 'Identificar a versão do software e compará-la com vulnerabilidades conhecidas',
+                explanation: 'A correlação entre versão e CVEs conhecidas é o motor dos scanners.'
+            },
+            {
+                icon: 'fa-triangle-exclamation',
+                concept: 'Falsos Positivos',
+                desc: 'A maior preocupação com scanners automáticos são os <span class="highlight-red">falsos positivos</span>: falhas relatadas que não existem ou não são exploráveis na prática.',
+                task: 'Por que relatórios cheios de falsos positivos são prejudiciais ao processo de segurança?',
+                options: [
+                    'Porque causam desperdício de tempo e conflitos entre as equipes de TI',
+                    'Porque aumentam o custo da licença anual do software de varredura',
+                    'Porque tornam o site do cliente mais lento para os usuários finais'
+                ],
+                correctText: 'Porque causam desperdício de tempo e conflitos entre as equipes de TI',
+                explanation: 'Validar descobertas é essencial para manter a credibilidade do Pentest.'
+            },
+            {
+                icon: 'fa-user-lock',
+                concept: 'Verificações Autenticadas',
+                desc: 'Uma varredura <span class="highlight-cyan">autenticada</span> utiliza credenciais de nível root para analisar o sistema de dentro, reduzindo drasticamente os falsos positivos.',
+                task: 'Qual a vantagem técnica de realizar uma varredura autenticada (com credenciais)?',
+                options: [
+                    'Permite ao scanner ler arquivos internos e listar processos com precisão',
+                    'Elimina a necessidade de ter uma conexão de rede com o servidor alvo',
+                    'Garante que nenhum firewall consiga detectar a atividade do scanner'
+                ],
+                correctText: 'Permitir ao scanner ler arquivos internos e listar processos com precisão',
+                explanation: 'Acesso interno revela patches aplicados que uma varredura remota não veria.'
+            },
+            {
+                icon: 'fa-ghost',
+                concept: 'Verificações Não Autenticadas',
+                desc: 'Varreduras <span class="highlight-yellow">não autenticadas</span> simulam a visão de um atacante externo, focando apenas em serviços expostos e portas abertas.',
+                task: 'O que uma varredura não autenticada revela sobre o alvo?',
+                options: [
+                    'Apenas os serviços e portas expostos diretamente à rede',
+                    'A lista completa de senhas salvas no navegador dos usuários',
+                    'O conteúdo criptografado de todos os backups em fita'
+                ],
+                correctText: 'Apenas os serviços e portas expostos diretamente à rede',
+                explanation: 'É o ponto de partida para entender a superfície de ataque externa.'
+            },
+            {
+                icon: 'fa-magnifying-glass-chart',
+                concept: 'Escaneamento Furtivo',
+                desc: 'Em ambientes de produção, realizam-se <span class="highlight-cyan">escaneamentos furtivos</span>, desativando plug-ins ruidosos ou agressivos para evitar alertas e travamentos.',
+                task: 'Qual a principal restrição de um "escaneamento furtivo" em redes de produção?',
+                options: [
+                    'Evitar alertar a defesa e reduzir o risco de queda dos serviços críticos',
+                    'Garantir que o scanner use 100% da largura de banda do roteador',
+                    'Remover o registro de logs de acesso de todos os funcionários'
+                ],
+                correctText: 'Evitar alertar a defesa e reduzir o risco de queda dos serviços críticos',
+                explanation: 'A estabilidade do negócio é prioritária durante a auditoria.'
+            },
+            {
+                icon: 'fa-building-shield',
+                concept: 'Verificações de Conformidade',
+                desc: 'Testes de <span class="highlight-green">conformidade</span> verificam se o ambiente segue políticas específicas, como HIPAA ou PCI DSS, usando arquivos de diretivas importados.',
+                task: 'Como scanners de vulnerabilidade auxiliam no cumprimento de normas regulatórias?',
+                options: [
+                    'Validando requisitos técnicos de segurança através de políticas automatizadas',
+                    'Gerando automaticamente multas para os funcionários que erram senhas',
+                    'Substituindo a necessidade de auditorias humanas em 100% dos casos'
+                ],
+                correctText: 'Validando requisitos técnicos de segurança através de políticas automatizadas',
+                explanation: 'Scanners traduzem leis em verificações técnicas objetivas (ex: senha de 8 dígitos).'
+            },
+            {
+                icon: 'fa-print',
+                concept: 'Sistemas Frágeis',
+                desc: 'Dispositivos como <span class="highlight-red">impressoras e IoT</span> são considerados sistemas frágeis, podendo travar ao receber o tráfego intenso de um scanner.',
+                task: 'Qual a recomendação para lidar com sistemas frágeis durante uma varredura?',
+                options: [
+                    'Limitar a frequência da varredura ou isentar os dispositivos se necessário',
+                    'Aumentar o número de threads de ataque para forçar o sistema a responder',
+                    'Mudar a cor dos ícones dos dispositivos no mapa de rede para vermelho'
+                ],
+                correctText: 'Limitar a frequência da varredura ou isentar os dispositivos se necessário',
+                explanation: 'Derrubar uma impressora corporativa pode interromper o trabalho de centenas de pessoas.'
+            },
+            {
+                icon: 'fa-gauge-high',
+                concept: 'Largura de Banda',
+                desc: 'Varreduras intensas podem causar <span class="highlight-yellow">congestionamento</span> significativo. É vital ajustar a política para evitar inundações em links limitados (VPN/WAN).',
+                task: 'O que o termo "limitação de consultas" significa no contexto de varredura?',
+                options: [
+                    'Reduzir o número de threads e ataques simultâneos enviados ao alvo',
+                    'Aumentar a prioridade de tráfego de vídeo sobre os dados de segurança',
+                    'Limitar o número de vezes que o administrador pode ver o relatório'
+                ],
+                correctText: 'Reduzir o número de threads e ataques simultâneos enviados ao alvo',
+                explanation: 'Ajustar a velocidade do scanner evita o esgotamento da rede.'
+            },
+            {
+                icon: 'fa-moon',
+                concept: 'Janelas de Varredura',
+                desc: 'A escolha do <span class="highlight-green">momento da varredura</span> é crucial. Em redes de produção, prefere-se horários de baixo tráfego (ex: madrugada).',
+                task: 'Qual o melhor horário para realizar varreduras agressivas em redes críticas?',
+                options: [
+                    'Em horários de baixo uso, como nas primeiras horas do dia ou madrugada',
+                    'Exatamente ao meio-dia, quando o tráfego de usuários é máximo',
+                    'Apenas durante reuniões importantes da diretoria da empresa'
+                ],
+                correctText: 'Em horários de baixo uso, como nas primeiras horas do dia ou madrugada',
+                explanation: 'Isso minimiza o impacto caso algum serviço sofra instabilidade.'
+            },
+            {
+                icon: 'fa-check-double',
+                concept: 'Conclusão da Varredura',
+                desc: 'O scanner é uma <span class="highlight-green">ferramenta de apoio</span>, não um substituto para a análise crítica. O verdadeiro trabalho começa após o relatório ser gerado.',
+                task: 'Qual a limitação fundamental dos scanners de vulnerabilidade?',
+                options: [
+                    'Eles não identificam falhas de lógica de negócios ou contextos específicos',
+                    'Eles são proibidos em sistemas que utilizam criptografia quântica',
+                    'Eles só funcionam se o sistema operacional alvo for o Windows XP'
+                ],
+                correctText: 'Eles não identificam falhas de lógica de negócios ou contextos específicos',
+                explanation: 'A máquina encontra o erro de versão; o humano encontra o erro de processo.'
+            }
+        ];
+
+        let currentStep = 0;
+        let selectedIdx = null;
+        let hearts = 5;
+        let shuffledOptions = [];
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function render() {
+            if (currentStep >= phases.length) { showVictory(); return; }
+            const step = phases[currentStep];
+            const area = document.getElementById('gameArea');
+            const checkBtn = document.getElementById('checkBtn');
+            const progress = (currentStep / phases.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            selectedIdx = null;
+            checkBtn.disabled = true;
+            checkBtn.classList.remove('active');
+            updateHearts();
+
+            shuffledOptions = shuffle([...step.options]);
+
+            area.innerHTML = `
+                <div class="fixation-card">
+                    <i class="fas ${step.icon} concept-icon" style="color: var(--cyber-blue)"></i>
+                    <div class="text-[0.6rem] font-black uppercase tracking-widest mb-1" style="color: var(--cyber-blue)">3.3 • VARREDURA • Nível ${currentStep + 1}</div>
+                    <div class="concept-text">${step.concept}</div>
+                    <div class="concept-desc">${step.desc}</div>
+                    <div class="question-title">${step.task}</div>
+                    <div class="options-grid">
+                        ${shuffledOptions.map((opt, i) => `
+                            <div class="option-card" onclick="select(${i})">
+                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            area.scrollTop = 0;
+        }
+
+        function select(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function checkResponse() {
+            const step = phases[currentStep];
+            const isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            const popup = document.getElementById('feedbackPopup');
+            
+            document.querySelectorAll('.option-card').forEach((c, i) => {
+                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                else if (i === selectedIdx) c.classList.add('wrong');
+                c.classList.add('disabled', 'pointer-events-none');
+            });
+
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerText = "VULNERABILIDADE MAPEADA!";
+                document.getElementById('fbTitle').className = "text-green-500 font-bold";
+                document.getElementById('fbMsg').innerText = step.explanation;
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                updateHearts();
+                document.getElementById('fbTitle').innerText = "FALSO POSITIVO!";
+                document.getElementById('fbTitle').className = "text-red-500 font-bold";
+                document.getElementById('fbMsg').innerText = "O correto era: " + step.correctText;
+                popup.className = "feedback-overlay show wrong";
+                if (hearts <= 0) setTimeout(() => { alert("ACESSO BLOQUEADO. Reiniciando!"); location.reload(); }, 500);
+            }
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            render();
+        }
+
+        function updateHearts() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            document.getElementById('gameArea').innerHTML = `
+                <div class="fixation-card text-center items-center flex flex-col" style="border-color: var(--cyber-blue)">
+                    <i class="fas fa-medal text-5xl text-yellow-400 mb-2"></i>
+                    <h2 class="text-xl font-bold text-white mb-1">VARREDURA CONCLUÍDA!</h2>
+                    <p class="text-[0.7rem] text-gray-400 mb-4">Você compreendeu como operar e configurar scanners de vulnerabilidade no Módulo 3.3.</p>
+                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-03.html'" style="background: var(--cyber-blue); color: black;">VOLTAR AO MÓDULO</button>
+                </div>
+            `;
+        }
+
+        render();
+    </script>
+</body>
+</html>

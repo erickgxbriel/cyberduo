@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Vetores de Nuvem 7.1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #e6edf3;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(230, 237, 243, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
+        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+
+        .highlight-cyan { color: #00f2ff; font-weight: 700; }
+        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
+        .highlight-red { color: var(--cyber-red); font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+
+        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+
+        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(230, 237, 243, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+
+        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b1bac4; }
+
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
+        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-07.html'"></i>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const phases = [
+            {
+                icon: 'fa-cloud',
+                concept: 'Modelos de Serviço (IaaS)',
+                desc: 'No <span class="highlight-cyan">IaaS</span> (Infraestrutura como Serviço), você aluga poder virtual e armazenamento. É como rodar um servidor virtual em um disco virtual, pagando apenas pelo que usa.',
+                task: 'Qual o modelo de nuvem que permite alugar infraestrutura pura (energia virtual e armazenamento)?',
+                options: [
+                    'IaaS (Infrastructure as a Service)',
+                    'PaaS (Platform as a Service)',
+                    'SaaS (Software as a Service)'
+                ],
+                correctText: 'IaaS (Infrastructure as a Service)',
+                explanation: 'O IaaS oferece o maior nível de controle sobre o hardware virtualizado.'
+            },
+            {
+                icon: 'fa-layer-group',
+                concept: 'Modelos de Serviço (PaaS/SaaS)',
+                desc: 'O <span class="highlight-cyan">PaaS</span> fornece tudo exceto o app (incluindo o SDLC e APIs), enquanto o <span class="highlight-cyan">SaaS</span> entrega a solução de software completa pronta para uso.',
+                task: 'Em qual modelo o provedor fornece todas as ferramentas para o Ciclo de Vida de Desenvolvimento (SDLC)?',
+                options: [
+                    'PaaS (Platform as a Service)',
+                    'SaaS (Software as a Service)',
+                    'IaaS (Infrastructure as a Service)'
+                ],
+                correctText: 'PaaS (Platform as a Service)',
+                explanation: 'O PaaS é focado em desenvolvedores que precisam de uma plataforma pronta para criar seus apps.'
+            },
+            {
+                icon: 'fa-cloud-meatball',
+                concept: 'Implementação de Nuvem',
+                desc: 'A <span class="highlight-yellow">Nuvem Comunitária</span> é compartilhada entre várias organizações com interesses comuns, enquanto a <span class="highlight-yellow">Nuvem Híbrida</span> combina serviços locais e nuvem pública.',
+                task: 'Como se define uma Nuvem Comunitária de acordo com o NIST?',
+                options: [
+                    'Uma nuvem compartilhada entre várias organizações específicas',
+                    'Uma nuvem aberta para qualquer pessoa do público em geral',
+                    'Uma nuvem operada por um único usuário em sua casa'
+                ],
+                correctText: 'Uma nuvem compartilhada entre várias organizações específicas',
+                explanation: 'Redes comunitárias são comuns em setores de saúde ou governo com necessidades similares.'
+            },
+            {
+                icon: 'fa-id-card',
+                concept: 'Credential Harvesting',
+                desc: 'Atacantes criam <span class="highlight-red">sites falsos</span> (como clones do Office 365 ou Gmail) para colher credenciais através de redirecionamentos maliciosos e phishing.',
+                task: 'Qual a técnica utilizada para roubar senhas de serviços de nuvem simulando páginas legítimas?',
+                options: [
+                    'Colheita de Credenciais (Credential Harvesting)',
+                    'Escaneamento de portas via Wi-Fi público',
+                    'Limpeza de hardware em data centers locais'
+                ],
+                correctText: 'Colheita de Credenciais (Credential Harvesting)',
+                explanation: 'Roubar a credencial é o método mais rápido para acessar dados na nuvem.'
+            },
+            {
+                icon: 'fa-toolbox',
+                concept: 'Website Attack Vectors (SET)',
+                desc: 'A ferramenta <span class="highlight-cyan">setoolkit</span> possui o menu "2) Website Attack Vectors" para instanciar sites clonados e colher dados automaticamente.',
+                task: 'No SET, qual o método específico para realizar ataques de coleta de senhas em sites?',
+                options: [
+                    'Credential Harvester Attack Method',
+                    'Web-Jack Attack Method',
+                    'Java Applet Attack Method'
+                ],
+                correctText: 'Credential Harvester Attack Method',
+                explanation: 'Este método permite clonar sites como Twitter ou Gmail para roubar dados de login.'
+            },
+            {
+                icon: 'fa-arrow-up-right-dots',
+                concept: 'Escalada de Privilégios',
+                desc: 'A <span class="highlight-yellow">Escalada Vertical</span> é quando um usuário comum obtém controle administrativo. A <span class="highlight-yellow">Escalada Horizontal</span> é quando um usuário acessa dados de outro usuário do mesmo nível.',
+                task: 'O que caracteriza uma escalada de privilégios horizontal?',
+                options: [
+                    'Um usuário normal acessando funções ou conteúdo de outro usuário normal',
+                    'Um estagiário se tornando administrador root do servidor Linux',
+                    'O administrador do sistema resetando as senhas de todos os usuários'
+                ],
+                correctText: 'Um usuário normal acessando funções ou conteúdo de outro usuário normal',
+                explanation: 'A escalada horizontal visa o roubo de dados de pares, sem necessariamente elevar permissões.'
+            },
+            {
+                icon: 'fa-user-secret',
+                concept: 'Account Takeover (ATO)',
+                desc: 'Na <span class="highlight-red">Aquisição de Conta</span>, o atacante ganha acesso e usa a conta para comprometer mais informações. E-mails de phishing vindos de contas já invadidas são comuns.',
+                task: 'Qual o impacto principal de um Account Takeover em ambiente SaaS?',
+                options: [
+                    'Uso da conta comprometida para lançar novos ataques internos e roubar dados',
+                    'Aumento automático da cota de armazenamento da conta invadida',
+                    'Desativação imediata de todos os firewalls do provedor de nuvem'
+                ],
+                correctText: 'Uso da conta comprometida para lançar novos ataques internos e roubar dados',
+                explanation: 'Contas legítimas invadidas são ideais para burlar filtros de spam e desconfiança.'
+            },
+            {
+                icon: 'fa-database',
+                concept: 'Serviço de Metadados (IMDS)',
+                desc: 'Provedores como AWS fornecem o <span class="highlight-cyan">Instance Metadata Service</span> que pode retornar credenciais temporárias (AccessKeyID, SecretAccessKey) via API local.',
+                task: 'Por que o acesso ao serviço de metadados da instância (IMDS) é perigoso?',
+                options: [
+                    'Pode retornar chaves e tokens de segurança para interagir com a API da nuvem',
+                    'Desliga a refrigeração física do servidor no data center remoto',
+                    'Criptografa permanentemente o monitor do administrador do sistema'
+                ],
+                correctText: 'Pode retornar chaves e tokens de segurança para interagir com a API da nuvem',
+                explanation: 'Atacantes usam SSRF para induzir o servidor a ler suas próprias credenciais do IMDS.'
+            },
+            {
+                icon: 'fa-id-badge',
+                concept: 'Identidade Federada e SAML',
+                desc: 'Vulnerabilidades em <span class="highlight-yellow">SAML</span> ou <span class="highlight-yellow">OAuth</span> permitem ataques de reprodução (replay) ou alteração de IDs de usuário para ganhar acesso não autorizado.',
+                task: 'Qual o risco de uma configuração incorreta em declarações SAML?',
+                options: [
+                    'Um atacante pode reproduzir mensagens SAML para criar sessões não autorizadas',
+                    'O aplicativo web começa a carregar apenas imagens em preto e branco',
+                    'O servidor DNS da empresa é desativado por excesso de requisições XML'
+                ],
+                correctText: 'Um atacante pode reproduzir mensagens SAML para criar sessões não autorizadas',
+                explanation: 'Se a ID única (nonce) não for verificada, a mensagem de autorização pode ser reusada.'
+            },
+            {
+                icon: 'fa-box-open',
+                concept: 'Segurança de Contêineres',
+                desc: 'Ataques contra <span class="highlight-red">Docker e Kubernetes</span> podem ocorrer via Shodan (exposição de daemons) ou ataques de cadeia de suprimentos (Typosquatting no Docker Hub).',
+                task: 'O que caracteriza o ataque de Typosquatting em repositórios de contêineres?',
+                options: [
+                    'Criar imagens maliciosas com nomes similares a imagens populares para enganar usuários',
+                    'Digitar comandos Linux muito rápido para causar uma falha no processador',
+                    'Substituir o cabo de rede do servidor por um cabo de carregamento de celular'
+                ],
+                correctText: 'Criar imagens maliciosas com nomes similares a imagens populares para enganar usuários',
+                explanation: 'O usuário baixa a imagem "errada" por um erro de digitação e instala um backdoor.'
+            },
+            {
+                icon: 'fa-network-wired',
+                concept: 'Métricas DDoS em Nuvem',
+                desc: 'Ataques DDoS são medidos por <span class="highlight-cyan">bps</span> (bits por segundo), <span class="highlight-cyan">pps</span> (pacotes) e <span class="highlight-cyan">rps</span> (requisições HTTPs).',
+                task: 'Quais métricas são usadas para identificar ataques DDoS volumétricos?',
+                options: [
+                    'bps (bits por segundo) e pps (pacotes por segundo)',
+                    'fps (frames por segundo) e dpi (pontos por polegada)',
+                    'rpm (rotações por minuto) e km/h (quilômetros por hora)'
+                ],
+                correctText: 'bps (bits por segundo) e pps (pacotes por segundo)',
+                explanation: 'A nuvem ajuda a mitigar estes ataques devido à sua infraestrutura distribuída.'
+            },
+            {
+                icon: 'fa-bullseye',
+                concept: 'Ataque Direto à Origem (D2O)',
+                desc: 'No ataque <span class="highlight-red">D2O</span>, o agressor tenta descobrir o IP real do servidor atrás de um CDN ou Proxy para burlar proteções anti-DDoS.',
+                task: 'Qual o objetivo de um ataque Direto à Origem (D2O) em ambientes protegidos?',
+                options: [
+                    'Revelar o endereço IP de origem por trás de um CDN ou Proxy',
+                    'Aumentar o cache do navegador para todos os usuários do site',
+                    'Mudar o nome do domínio registrado no Registro.br'
+                ],
+                correctText: 'Revelar o endereço IP de origem por trás de um CDN ou Proxy',
+                explanation: 'Ignorar o CDN permite atacar o servidor diretamente sem qualquer filtragem.'
+            },
+            {
+                icon: 'fa-microchip',
+                concept: 'Ataques de Canal Lateral',
+                desc: 'Baseiam-se em informações físicas como <span class="highlight-yellow">tempo de computação e consumo de energia</span>. Exemplos famosos incluem as falhas Spectre e Meltdown em CPUs.',
+                task: 'O que um atacante explora em um ataque de canal lateral (Side-channel)?',
+                options: [
+                    'Efeitos indiretos do hardware, como tempo de resposta ou emissões eletromagnéticas',
+                    'Vulnerabilidades lógicas em formulários de login HTML5',
+                    'Falta de treinamento de conscientização dos funcionários da recepção'
+                ],
+                correctText: 'Efeitos indiretos do hardware, como tempo de resposta ou emissões eletromagnéticas',
+                explanation: 'Estes ataques podem extrair chaves criptográficas sem quebrar o algoritmo.'
+            },
+            {
+                icon: 'fa-laptop-code',
+                concept: 'SDKs e CDKs em Pentest',
+                desc: 'Kits de Desenvolvimento (<span class="highlight-green">SDKs</span>) e Nuvem (<span class="highlight-green">CDKs</span>) fornecem ideias sobre a infraestrutura e recursos do provedor (ex: AWS CDK).',
+                task: 'Como os CDKs (Cloud Development Kits) auxiliam na compreensão da infraestrutura?',
+                options: [
+                    'Permitem definir recursos de nuvem usando linguagens de programação familiares',
+                    'Criptografam todos os arquivos de log do administrador localmente',
+                    'Reduzem o custo da fatura mensal do provedor de nuvem em 50%'
+                ],
+                correctText: 'Permitem definir recursos de nuvem usando linguagens de programação familiares',
+                explanation: 'Analisar scripts CDK/Terraform revela como a infraestrutura foi montada e onde estão as brechas.'
+            }
+        ];
+
+        let currentStep = 0;
+        let selectedIdx = null;
+        let hearts = 5;
+        let shuffledOptions = [];
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function render() {
+            if (currentStep >= phases.length) { showVictory(); return; }
+            const step = phases[currentStep];
+            const area = document.getElementById('gameArea');
+            const checkBtn = document.getElementById('checkBtn');
+            const progress = (currentStep / phases.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            selectedIdx = null;
+            checkBtn.disabled = true;
+            checkBtn.classList.remove('active');
+            updateHearts();
+
+            shuffledOptions = shuffle([...step.options]);
+
+            area.innerHTML = `
+                <div class="fixation-card">
+                    <i class="fas ${step.icon} concept-icon" style="color: var(--cyber-blue)"></i>
+                    <div class="text-[0.6rem] font-black uppercase tracking-widest mb-1" style="color: var(--cyber-blue)">7.1 • VETORES NUVEM • Nível ${currentStep + 1}</div>
+                    <div class="concept-text">${step.concept}</div>
+                    <div class="concept-desc">${step.desc}</div>
+                    <div class="question-title">${step.task}</div>
+                    <div class="options-grid">
+                        ${shuffledOptions.map((opt, i) => `
+                            <div class="option-card" onclick="select(${i})">
+                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            area.scrollTop = 0;
+        }
+
+        function select(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function checkResponse() {
+            const step = phases[currentStep];
+            const isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            const popup = document.getElementById('feedbackPopup');
+            
+            document.querySelectorAll('.option-card').forEach((c, i) => {
+                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                else if (i === selectedIdx) c.classList.add('wrong');
+                c.classList.add('disabled', 'pointer-events-none');
+            });
+
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerText = "VETOR BLOQUEADO!";
+                document.getElementById('fbTitle').className = "text-green-500 font-bold";
+                document.getElementById('fbMsg').innerText = step.explanation;
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                updateHearts();
+                document.getElementById('fbTitle').innerText = "VULNERABILIDADE EXPLORADA!";
+                document.getElementById('fbTitle').className = "text-red-500 font-bold";
+                document.getElementById('fbMsg').innerText = "O correto era: " + step.correctText;
+                popup.className = "feedback-overlay show wrong";
+                if (hearts <= 0) setTimeout(() => { alert("INSTÂNCIA TERMINADA. Reiniciando!"); location.reload(); }, 500);
+            }
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            render();
+        }
+
+        function updateHearts() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            document.getElementById('gameArea').innerHTML = `
+                <div class="fixation-card text-center items-center flex flex-col" style="border-color: var(--cyber-blue)">
+                    <i class="fas fa-award text-5xl text-yellow-400 mb-2"></i>
+                    <h2 class="text-xl font-bold text-white mb-1">TRILHA DE NUVEM CONCLUÍDA!</h2>
+                    <p class="text-[0.7rem] text-gray-400 mb-4">Você dominou exaustivamente os vetores de ataque contra infraestruturas e serviços em nuvem no Módulo 7.1.</p>
+                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-07.html'" style="background: var(--cyber-blue); color: black;">VOLTAR AO MÓDULO</button>
+                </div>
+            `;
+        }
+
+        render();
+    </script>
+</body>
+</html>

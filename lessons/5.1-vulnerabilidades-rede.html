@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Vulnerabilidades de Rede 5.1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #ff8c00;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(255, 140, 0, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
+        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+
+        .highlight-cyan { color: #00f2ff; font-weight: 700; }
+        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
+        .highlight-red { color: var(--cyber-red); font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+
+        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+
+        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(255, 140, 0, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+
+        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .check-btn.active { background: var(--cyber-blue); color: white; box-shadow: 0 4px 0 #cc5500; }
+
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
+        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-05.html'"></i>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const phases = [
+            {
+                icon: 'fa-sitemap',
+                concept: 'Resolução de Nomes',
+                desc: 'Protocolos como <span class="highlight-cyan">NetBIOS</span> e <span class="highlight-cyan">LLMNR</span> são fundamentais para identificação de hosts no Windows, mas vulneráveis a envenenamento.',
+                task: 'Quais portas são comumente usadas pelo serviço NetBIOS no Windows?',
+                options: [
+                    'UDP 137, UDP 138 e TCP 139',
+                    'TCP 80 e TCP 443',
+                    'UDP 53 e TCP 53'
+                ],
+                correctText: 'UDP 137, UDP 138 e TCP 139',
+                explanation: 'O NetBIOS usa 137 (Name Service), 138 (Datagram) e 139 (Session).'
+            },
+            {
+                icon: 'fa-mask',
+                concept: 'Envenenamento LLMNR',
+                desc: 'O agressor envenena o serviço <span class="highlight-yellow">LLMNR</span> respondendo a requisições na porta <span class="highlight-cyan">UDP 5355</span>, capturando hashes NTLMv2 da vítima.',
+                task: 'Qual ferramenta é amplamente usada para realizar ataques de envenenamento LLMNR e NBT-NS?',
+                options: [
+                    'Responder',
+                    'Wireshark',
+                    'Nmap'
+                ],
+                correctText: 'Responder',
+                explanation: 'O Responder automatiza a captura de hashes ao responder falsamente a consultas de nomes na rede local.'
+            },
+            {
+                icon: 'fa-file-shield',
+                concept: 'Protocolo SMB',
+                desc: 'O <span class="highlight-cyan">Server Message Block (SMB)</span> na porta <span class="highlight-cyan">TCP 445</span> é usado para compartilhamento de arquivos e sofreu inúmeras vulnerabilidades históricas.',
+                task: 'Qual comando no Kali permite buscar exploits conhecidos para o protocolo SMB?',
+                options: [
+                    'searchsploit smb',
+                    'find / -name smb',
+                    'grep smb /etc/passwd'
+                ],
+                correctText: 'searchsploit smb',
+                explanation: 'O searchsploit consulta offline o Banco de Dados de Exploits (exploit-db).'
+            },
+            {
+                icon: 'fa-network-wired',
+                concept: 'SNMP e MIBs',
+                desc: 'O <span class="highlight-cyan">SNMP</span> usa MIBs para organizar dados. Agressores usam ferramentas como <span class="highlight-yellow">snmpwalk</span> para coletar informações de dispositivos.',
+                task: 'Por que o uso de "strings de comunidade" padrão (ex: public) no SNMP é perigoso?',
+                options: [
+                    'Permite que atacantes enumerem e coletem informações sensíveis do dispositivo',
+                    'Causa o desligamento imediato do roteador se for acessado remotamente',
+                    'Criptografa todos os pacotes de rede impedindo o monitoramento legítimo'
+                ],
+                correctText: 'Permite que atacantes enumerem e coletem informações sensíveis do dispositivo',
+                explanation: 'Muitos administradores esquecem de trocar as strings "public" (leitura) e "private" (escrita).'
+            },
+            {
+                icon: 'fa-envelope',
+                concept: 'SMTP Open Relay',
+                desc: 'Um <span class="highlight-red">Open Relay</span> aceita e retransmite e-mails de qualquer origem, sendo abusado para spam e phishing em massa.',
+                task: 'Qual script NSE do Nmap pode ser usado para detectar um servidor de e-mail mal configurado como Open Relay?',
+                options: [
+                    'smtp-open-relay.nse',
+                    'http-vuln-check.nse',
+                    'ftp-anon-login.nse'
+                ],
+                correctText: 'smtp-open-relay.nse',
+                explanation: 'Identificar relays abertos é essencial para evitar o abuso da infraestrutura de e-mail do cliente.'
+            },
+            {
+                icon: 'fa-user-check',
+                concept: 'Enumeração SMTP',
+                desc: 'Comandos como <span class="highlight-cyan">VRFY</span> e <span class="highlight-cyan">EXPN</span> permitem verificar a existência de usuários e expandir listas de e-mail no servidor.',
+                task: 'Qual o comando SMTP usado para verificar se um usuário específico existe no sistema?',
+                options: [
+                    'VRFY',
+                    'HELO',
+                    'RCPT'
+                ],
+                correctText: 'VRFY',
+                explanation: 'O comando VRFY (Verify) retorna se o e-mail informado é válido no servidor.'
+            },
+            {
+                icon: 'fa-upload',
+                concept: 'Abuso de FTP',
+                desc: 'Servidores FTP que permitem <span class="highlight-yellow">login anônimo</span> podem ser usados como "trampolins" para exfiltração de dados roubados.',
+                task: 'Qual medida de segurança substitui o FTP legado por uma versão criptografada via SSH?',
+                options: [
+                    'SFTP (Secure File Transfer Protocol)',
+                    'FTPS (FTP over TLS)',
+                    'TFTP (Trivial FTP)'
+                ],
+                correctText: 'SFTP (Secure File Transfer Protocol)',
+                explanation: 'SFTP utiliza o túnel seguro do SSH para transferir arquivos com integridade e sigilo.'
+            },
+            {
+                icon: 'fa-id-card',
+                concept: 'Pass-the-Hash (PtH)',
+                desc: 'No <span class="highlight-red">Pass-the-Hash</span>, o atacante usa o hash extraído do arquivo <span class="highlight-cyan">SAM</span> ou memória (LSASS) para logar em outros hosts sem saber a senha.',
+                task: 'Como um atacante contorna a necessidade da senha em texto claro no Windows?',
+                options: [
+                    'Enviando diretamente o hash da senha capturado para autenticação via NTLM',
+                    'Digitando o nome de usuário repetidamente até o sistema falhar',
+                    'Reiniciando o computador em modo de segurança com rede desativada'
+                ],
+                correctText: 'Enviando diretamente o hash da senha capturado para autenticação via NTLM',
+                explanation: 'O sistema valida o hash, permitindo o movimento lateral sem quebrar a criptografia.'
+            },
+            {
+                icon: 'fa-key',
+                concept: 'Kerberos: TGT e TGS',
+                desc: 'O Kerberos usa <span class="highlight-cyan">Tickets</span>. O KDC emite um TGT (Granting Ticket) que o usuário troca por um TGS (Service Ticket) para acessar recursos.',
+                task: 'Qual a função do KDC (Key Distribution Center) no protocolo Kerberos?',
+                options: [
+                    'Autenticar identidades e distribuir chaves de sessão e tickets',
+                    'Bloquear permanentemente tentativas de login em redes Wi-Fi',
+                    'Monitorar a temperatura física dos processadores no data center'
+                ],
+                correctText: 'Autenticar identidades e distribuir chaves de sessão e tickets',
+                explanation: 'O KDC é o coração da confiança centralizada em domínios Active Directory.'
+            },
+            {
+                icon: 'fa-medal',
+                concept: 'Golden Ticket Attack',
+                desc: 'Ao comprometer o hash da conta <span class="highlight-red">KRBTGT</span>, um atacante pode forjar um Bilhete Dourado, garantindo acesso total e persistente ao domínio.',
+                task: 'O que o comprometimento do hash da conta KRBTGT permite a um atacante?',
+                options: [
+                    'Forjar tickets TGT e obter acesso de administrador a qualquer serviço do domínio',
+                    'Mudar a senha do administrador local sem ter acesso à rede',
+                    'Desativar o firewall de hardware da empresa através de um e-mail'
+                ],
+                correctText: 'Forjar tickets TGT e obter acesso de administrador a qualquer serviço do domínio',
+                explanation: 'É o "Santo Graal" do ataque a domínios Windows, permitindo persistência total.'
+            },
+            {
+                icon: 'fa-people-arrows',
+                concept: 'Ataque em Caminho (MITM)',
+                desc: 'O agressor se coloca entre dois dispositivos para escutar ou manipular dados. O <span class="highlight-yellow">Envenenamento ARP</span> é o método mais comum na Camada 2.',
+                task: 'Qual o objetivo do envenenamento de cache ARP em um ataque MITM?',
+                options: [
+                    'Mapear o endereço MAC do atacante ao endereço IP do gateway padrão nas vítimas',
+                    'Aumentar a velocidade física de transmissão de dados via cabo Ethernet',
+                    'Apagar todos os registros de log do servidor web em tempo real'
+                ],
+                correctText: 'Mapear o endereço MAC do atacante ao endereço IP do gateway padrão nas vítimas',
+                explanation: 'As vítimas enviam o tráfego para o atacante acreditando ser o roteador.'
+            },
+            {
+                icon: 'fa-route',
+                concept: 'BGP Hijacking',
+                desc: 'O <span class="highlight-red">Sequestro de BGP</span> ocorre quando rotas IP falsas são anunciadas, redirecionando o tráfego da internet para sistemas controlados pelo agressor.',
+                task: 'Como um atacante consegue redirecionar o tráfego global via BGP?',
+                options: [
+                    'Anunciando prefixos de rede mais específicos ou com caminhos mais curtos',
+                    'Criptografando os cabos submarinos de fibra ótica com chaves públicas',
+                    'Alterando o endereço MAC físico de todos os roteadores do mundo'
+                ],
+                correctText: 'Anunciando prefixos de rede mais específicos ou com caminhos mais curtos',
+                explanation: 'O protocolo BGP prioriza a "melhor rota" baseada em especificidade e distância.'
+            },
+            {
+                icon: 'fa-flood',
+                concept: 'Ataques DoS/DDoS',
+                desc: 'Ataques de Negação de Serviço visam exaurir recursos. O <span class="highlight-red">SYN Flood</span> inunda o alvo com requisições de conexão incompletas.',
+                task: 'Qual o mecanismo técnico de um ataque de inundação SYN (SYN Flood)?',
+                options: [
+                    'Enviar múltiplos pacotes TCP SYN sem completar o handshake de três vias',
+                    'Enviar um único e-mail com um anexo extremamente pesado para o servidor',
+                    'Reiniciar o roteador do cliente várias vezes em uma sequência rápida'
+                ],
+                correctText: 'Enviar múltiplos pacotes TCP SYN sem completar o handshake de três vias',
+                explanation: 'O servidor reserva memória para conexões que nunca se abrem, travando o serviço.'
+            },
+            {
+                icon: 'fa-bullhorn',
+                concept: 'Ataques de Amplificação',
+                desc: 'Usam protocolos que respondem com dados muito maiores que a requisição (ex: <span class="highlight-cyan">DNS/NTP</span>), saturando a banda da vítima com pouco esforço.',
+                task: 'Por que ataques de amplificação são tão eficientes para um agressor?',
+                options: [
+                    'Porque permitem gerar um tráfego massivo contra a vítima usando poucos recursos',
+                    'Porque convertem o cabo de rede em uma antena de transmissão de rádio',
+                    'Porque apagam automaticamente o antivírus da máquina alvo antes do ataque'
+                ],
+                correctText: 'Porque permitem gerar um tráfego massivo contra a vítima usando poucos recursos',
+                explanation: 'Pequenas requisições geram respostas gigantescas, todas direcionadas ao alvo falsificado.'
+            },
+            {
+                icon: 'fa-door-lock',
+                concept: 'Bypass de NAC',
+                desc: 'O <span class="highlight-cyan">NAC</span> interroga dispositivos antes de permitir acesso. Agressores burlam isso via <span class="highlight-yellow">MAC Spoofing</span> de dispositivos autorizados.',
+                task: 'Como um intruso pode contornar o controle de acesso à rede (NAC) baseado em portas?',
+                options: [
+                    'Falsificando o endereço MAC de um dispositivo autorizado, como um telefone IP',
+                    'Criptografando o hardware da placa de rede para ocultar sua identidade',
+                    'Usando um cabo USB em vez de um cabo Ethernet para conectar ao switch'
+                ],
+                correctText: 'Falsificando o endereço MAC de um dispositivo autorizado, como um telefone IP',
+                explanation: 'Muitos sistemas NAC permitem acesso automático (whitelist) para dispositivos conhecidos.'
+            },
+            {
+                icon: 'fa-layer-group',
+                concept: 'VLAN Hopping',
+                desc: 'O <span class="highlight-red">VLAN Hopping</span> permite acessar tráfego de outras VLANs. O <span class="highlight-yellow">Switch Spoofing</span> imita um switch de trunking para receber todos os dados.',
+                task: 'Qual a recomendação para evitar ataques de Switch Spoofing em portas de acesso?',
+                options: [
+                    'Forçar a porta a ser "Access" e desativar a negociação de trunking (DTP)',
+                    'Trocar a VLAN nativa 1 por uma VLAN administrativa secreta e oculta',
+                    'Criptografar todo o tráfego da camada 2 usando certificados digitais'
+                ],
+                correctText: 'Forçar a porta a ser "Access" e desativar a negociação de trunking (DTP)',
+                explanation: 'Isso impede que o host do atacante negocie um tronco e receba dados de várias VLANs.'
+            },
+            {
+                icon: 'fa-shield-halved',
+                concept: 'Mitigação de Camada 2',
+                desc: 'A defesa envolve <span class="highlight-green">Dynamic ARP Inspection (DAI)</span> e DHCP Snooping para validar identidades e endereços na rede local.',
+                task: 'Qual tecnologia de switch ajuda a mitigar ataques de envenenamento ARP?',
+                options: [
+                    'Dynamic ARP Inspection (DAI)',
+                    'Quality of Service (QoS)',
+                    'Port Fast Configuration'
+                ],
+                correctText: 'Dynamic ARP Inspection (DAI)',
+                explanation: 'A DAI verifica se as respostas ARP coincidem com os endereços IP/MAC legítimos.'
+            },
+            {
+                icon: 'fa-check-double',
+                concept: 'Conclusão Técnica',
+                desc: 'Dominar vulnerabilidades de rede exige entender protocolos de <span class="highlight-cyan">Camada 2 a 7</span>, suas falhas lógicas e ferramentas de exploração.',
+                task: 'Qual o papel fundamental do pentester de rede em uma auditoria?',
+                options: [
+                    'Identificar e explorar falhas de protocolo e configuração para avaliar o risco real',
+                    'Apenas contar o número de roteadores presentes no escritório do cliente',
+                    'Substituir fisicamente todos os cabos de rede por fibra ótica'
+                ],
+                correctText: 'Identificar e explorar falhas de protocolo e configuração para avaliar o risco real',
+                explanation: 'O teste técnico fornece a base empírica para as decisões de investimento em segurança.'
+            }
+        ];
+
+        let currentStep = 0;
+        let selectedIdx = null;
+        let hearts = 5;
+        let shuffledOptions = [];
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function render() {
+            if (currentStep >= phases.length) { showVictory(); return; }
+            const step = phases[currentStep];
+            const area = document.getElementById('gameArea');
+            const checkBtn = document.getElementById('checkBtn');
+            const progress = (currentStep / phases.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            selectedIdx = null;
+            checkBtn.disabled = true;
+            checkBtn.classList.remove('active');
+            updateHearts();
+
+            shuffledOptions = shuffle([...step.options]);
+
+            area.innerHTML = `
+                <div class="fixation-card">
+                    <i class="fas ${step.icon} concept-icon" style="color: var(--cyber-blue)"></i>
+                    <div class="text-[0.6rem] font-black uppercase tracking-widest mb-1" style="color: var(--cyber-blue)">5.1 • VULNERABILIDADES DE REDE • Nível ${currentStep + 1}</div>
+                    <div class="concept-text">${step.concept}</div>
+                    <div class="concept-desc">${step.desc}</div>
+                    <div class="question-title">${step.task}</div>
+                    <div class="options-grid">
+                        ${shuffledOptions.map((opt, i) => `
+                            <div class="option-card" onclick="select(${i})">
+                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            area.scrollTop = 0;
+        }
+
+        function select(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function checkResponse() {
+            const step = phases[currentStep];
+            const isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            const popup = document.getElementById('feedbackPopup');
+            
+            document.querySelectorAll('.option-card').forEach((c, i) => {
+                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                else if (i === selectedIdx) c.classList.add('wrong');
+                c.classList.add('disabled', 'pointer-events-none');
+            });
+
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerText = "VETOR VALIDADO!";
+                document.getElementById('fbTitle').className = "text-green-500 font-bold";
+                document.getElementById('fbMsg').innerText = step.explanation;
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                updateHearts();
+                document.getElementById('fbTitle').innerText = "PACOTE CORROMPIDO!";
+                document.getElementById('fbTitle').className = "text-red-500 font-bold";
+                document.getElementById('fbMsg').innerText = "O correto era: " + step.correctText;
+                popup.className = "feedback-overlay show wrong";
+                if (hearts <= 0) setTimeout(() => { alert("TIMEOUT DE CONEXÃO. Reiniciando!"); location.reload(); }, 500);
+            }
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            render();
+        }
+
+        function updateHearts() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            document.getElementById('gameArea').innerHTML = `
+                <div class="fixation-card text-center items-center flex flex-col" style="border-color: var(--cyber-blue)">
+                    <i class="fas fa-medal text-5xl text-yellow-400 mb-2"></i>
+                    <h2 class="text-xl font-bold text-white mb-1">SKILLS DE REDE DOMINADAS!</h2>
+                    <p class="text-[0.7rem] text-gray-400 mb-4">Você completou a exaustão técnica sobre protocolos, ataques e defesas de rede no Módulo 5.1.</p>
+                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-05.html'" style="background: var(--cyber-blue); color: white;">VOLTAR AO MÓDULO</button>
+                </div>
+            `;
+        }
+
+        render();
+    </script>
+</body>
+</html>

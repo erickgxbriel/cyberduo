@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Métodos de Influência 4.5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #ff00ff;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(255, 0, 255, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
+        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+
+        .highlight-cyan { color: #00f2ff; font-weight: 700; }
+        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
+        .highlight-red { color: var(--cyber-red); font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+        .highlight-magenta { color: #ff00ff; font-weight: 700; }
+
+        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+
+        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(255, 0, 255, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+
+        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #990099; }
+
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
+        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-04.html'"></i>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const phases = [
+            {
+                icon: 'fa-gavel',
+                concept: 'Princípio da Autoridade',
+                desc: 'O agressor demonstra <span class="highlight-cyan">confiança e autoridade</span> (jurídica, organizacional ou social) para dominar a percepção da vítima.',
+                task: 'Como o método da autoridade é aplicado para induzir o comportamento de risco?',
+                options: [
+                    'O agressor finge possuir poder hierárquico ou legal sobre o alvo',
+                    'O agressor se mostra confuso e despreparado para gerar pena',
+                    'O agressor oferece dinheiro em troca de informações técnicas'
+                ],
+                correctText: 'O agressor finge possuir poder hierárquico ou legal sobre o alvo',
+                explanation: 'A tendência humana de obedecer a figuras de autoridade reduz o questionamento crítico.'
+            },
+            {
+                icon: 'fa-hourglass-half',
+                concept: 'Escassez e Urgência',
+                desc: 'Criar um sentimento de <span class="highlight-yellow">urgência</span> no contexto da tomada de decisões "desliga" a lógica e prioriza a ação impulsiva.',
+                task: 'Qual o efeito psicológico da urgência na vítima de engenharia social?',
+                options: [
+                    'Força a ação imediata para evitar uma suposta consequência negativa',
+                    'Aumenta o tempo gasto verificando a autenticidade da solicitação',
+                    'Garante que o usuário consulte seu superior antes de qualquer clique'
+                ],
+                correctText: 'Força a ação imediata para evitar uma suposta consequência negativa',
+                explanation: 'O medo da perda ou de punição imediata é um gatilho biológico poderoso.'
+            },
+            {
+                icon: 'fa-users',
+                concept: 'Prova Social (Consenso)',
+                desc: 'A <span class="highlight-cyan">Prova Social</span> utiliza o comportamento de outros para validar a ação. Se outros colegas "já fizeram", o alvo sente-se seguro.',
+                task: 'O que define o método de influência por Prova Social?',
+                options: [
+                    'Utilizar a ação de terceiros como validação de que a conduta é segura',
+                    'Isolar completamente a vítima de qualquer contato com outras pessoas',
+                    'Exigir que a vítima prove sua identidade social através de documentos'
+                ],
+                correctText: 'Utilizar a ação de terceiros como validação de que a conduta é segura',
+                explanation: 'O consenso social reduz a percepção de perigo e a responsabilidade individual.'
+            },
+            {
+                icon: 'fa-hand-holding-heart',
+                concept: 'Reciprocidade',
+                desc: 'A <span class="highlight-green">Reciprocidade</span> explora a tendência de retribuir favores. Fornecer algo pequeno cria uma "dívida moral" na vítima.',
+                task: 'Como o agressor utiliza a reciprocidade em um ataque social?',
+                options: [
+                    'Oferecendo uma pequena concessão ou ajuda para facilitar um pedido maior depois',
+                    'Ameaçando demitir a vítima caso ela não colabore com a investigação',
+                    'Ignorando a vítima até que ela implore para entregar suas credenciais'
+                ],
+                correctText: 'Oferecendo uma pequena concessão ou ajuda para facilitar um pedido maior depois',
+                explanation: 'Receber algo gera um desconforto psicológico que só é aliviado com a retribuição.'
+            },
+            {
+                icon: 'fa-heart',
+                concept: 'Afeição e Afinidade',
+                desc: 'Pessoas dizem "sim" mais facilmente para quem <span class="highlight-cyan">gostam</span> ou com quem possuem afinidades e interesses em comum.',
+                task: 'Qual a importância de criar afinidade com o alvo na engenharia social?',
+                options: [
+                    'Reduzir as defesas naturais e aumentar a cooperação voluntária da vítima',
+                    'Garantir que o agressor seja processado judicialmente por assédio moral',
+                    'Aumentar a complexidade técnica do código de criptografia do vírus'
+                ],
+                correctText: 'Reduzir as defesas naturais e aumentar a cooperação voluntária da vítima',
+                explanation: 'A simpatia é um lubrificante social que facilita a manipulação de informações.'
+            },
+            {
+                icon: 'fa-handshake',
+                concept: 'Compromisso e Coerência',
+                desc: 'Uma vez que alguém toma uma pequena <span class="highlight-yellow">posição inicial</span>, ela tende a ser coerente com esse ato em pedidos subsequentes.',
+                task: 'Por que obter um pequeno "sim" inicial é vital para o agressor?',
+                options: [
+                    'Para estabelecer um padrão de compromisso que facilita concessões maiores',
+                    'Para registrar a voz da vítima e vender em bancos de dados de IA',
+                    'Para provar ao firewall que a conexão é legítima e amigável'
+                ],
+                correctText: 'Para estabelecer um padrão de compromisso que facilita concessões maiores',
+                explanation: 'A necessidade psicológica de ser coerente com atos passados guia o comportamento futuro.'
+            },
+            {
+                icon: 'fa-gem',
+                concept: 'Escassez de Oportunidade',
+                desc: 'A <span class="highlight-red">Escassez</span> sugere que um recurso é limitado, aumentando drasticamente seu valor percebido e a pressa da vítima.',
+                task: 'Como o gatilho da escassez atua na mente da vítima?',
+                options: [
+                    'Gerando ansiedade pela perda de uma oportunidade única ou limitada',
+                    'Reduzindo o número de tentativas de senha que o sistema permite',
+                    'Bloqueando o acesso físico a áreas de lazer da organização alvo'
+                ],
+                correctText: 'Gerando ansiedade pela perda de uma oportunidade única ou limitada',
+                explanation: 'O valor atribuído a itens ou acessos raros motiva ações de risco imediato.'
+            },
+            {
+                icon: 'fa-user-check',
+                concept: 'Conscientização em Psicologia',
+                desc: 'Entender estes gatilhos é a <span class="highlight-green">única defesa</span> real contra o "hacking do humano" realizado pela engenharia social.',
+                task: 'Qual a principal lição sobre os métodos de influência em cibersegurança?',
+                options: [
+                    'Eles visam manipular a motivação humana para burlar controles lógicos',
+                    'Eles servem apenas para melhorar o atendimento ao cliente em bancos',
+                    'Eles são técnicas inofensivas usadas apenas em vendas de varejo'
+                ],
+                correctText: 'Eles visam manipular a motivação humana para burlar controles lógicos',
+                explanation: 'A psicologia é o sistema operacional do elo mais fraco: o humano.'
+            }
+        ];
+
+        let currentStep = 0;
+        let selectedIdx = null;
+        let hearts = 5;
+        let shuffledOptions = [];
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function render() {
+            if (currentStep >= phases.length) { showVictory(); return; }
+            const step = phases[currentStep];
+            const area = document.getElementById('gameArea');
+            const checkBtn = document.getElementById('checkBtn');
+            const progress = (currentStep / phases.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            selectedIdx = null;
+            checkBtn.disabled = true;
+            checkBtn.classList.remove('active');
+            updateHearts();
+
+            shuffledOptions = shuffle([...step.options]);
+
+            area.innerHTML = `
+                <div class="fixation-card">
+                    <i class="fas ${step.icon} concept-icon text-fuchsia-500"></i>
+                    <div class="text-[0.6rem] text-fuchsia-500 font-black uppercase tracking-widest mb-1">4.5 • MÉTODOS DE INFLUÊNCIA • Nível ${currentStep + 1}</div>
+                    <div class="concept-text">${step.concept}</div>
+                    <div class="concept-desc">${step.desc}</div>
+                    <div class="question-title">${step.task}</div>
+                    <div class="options-grid">
+                        ${shuffledOptions.map((opt, i) => `
+                            <div class="option-card" onclick="select(${i})">
+                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            area.scrollTop = 0;
+        }
+
+        function select(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function checkResponse() {
+            const step = phases[currentStep];
+            const isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            const popup = document.getElementById('feedbackPopup');
+            
+            document.querySelectorAll('.option-card').forEach((c, i) => {
+                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                else if (i === selectedIdx) c.classList.add('wrong');
+                c.classList.add('disabled', 'pointer-events-none');
+            });
+
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerText = "GATILHO IDENTIFICADO!";
+                document.getElementById('fbTitle').className = "text-green-500 font-bold";
+                document.getElementById('fbMsg').innerText = step.explanation;
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                updateHearts();
+                document.getElementById('fbTitle').innerText = "MANIPULAÇÃO BEM-SUCEDIDA!";
+                document.getElementById('fbTitle').className = "text-red-500 font-bold";
+                document.getElementById('fbMsg').innerText = "O correto era: " + step.correctText;
+                popup.className = "feedback-overlay show wrong";
+                if (hearts <= 0) setTimeout(() => { alert("VÍTIMA COMPROMETIDA. Reiniciando treinamento!"); location.reload(); }, 500);
+            }
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            render();
+        }
+
+        function updateHearts() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            document.getElementById('gameArea').innerHTML = `
+                <div class="fixation-card text-center items-center flex flex-col" style="border-color: #ff00ff">
+                    <i class="fas fa-brain text-5xl text-magenta-400 mb-2" style="color: #ff00ff"></i>
+                    <h2 class="text-xl font-bold text-white mb-1">MÉTODO DE INFLUÊNCIA CONCLUÍDO!</h2>
+                    <p class="text-[0.7rem] text-gray-400 mb-4">Você compreendeu exaustivamente os gatilhos psicológicos usados por engenheiros sociais no Módulo 4.5.</p>
+                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-04.html'" style="background: #ff00ff; color: white; border-bottom: 4px solid #990099;">VOLTAR AO MÓDULO</button>
+                </div>
+            `;
+        }
+
+        render();
+    </script>
+</body>
+</html>

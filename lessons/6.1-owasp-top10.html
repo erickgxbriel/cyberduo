@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Ataques Web & OWASP Top 10 6.1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00f2ff;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 242, 255, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
+        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+
+        .highlight-cyan { color: #00f2ff; font-weight: 700; }
+        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
+        .highlight-red { color: var(--cyber-red); font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+
+        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+
+        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 242, 255, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+
+        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #0099a1; }
+
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
+        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-06.html'"></i>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const phases = [
+            {
+                icon: 'fa-network-wired',
+                concept: 'Proxies HTTP',
+                desc: 'Proxies HTTP atuam como <span class="highlight-cyan">servidores e clientes</span> simultaneamente. Eles permitem transferências através de firewalls, suporte a cache, NAT e filtragem de conteúdo.',
+                task: 'Qual a função de um proxy HTTP em nome de um cliente web?',
+                options: [
+                    'Realizar solicitações para servidores Web em nome de outros clientes',
+                    'Aumentar fisicamente a velocidade da luz nos cabos de fibra',
+                    'Criptografar o hardware do teclado do usuário final local'
+                ],
+                correctText: 'Realizar solicitações para servidores Web em nome de outros clientes',
+                explanation: 'O proxy atua como um intermediário, podendo filtrar e otimizar o tráfego.'
+            },
+            {
+                icon: 'fa-handshake',
+                concept: 'TCP Handshake',
+                desc: 'O HTTP usa o protocolo TCP na camada de transporte. A conexão é estabelecida via <span class="highlight-yellow">handshake de três vias</span>: SYN, SYN ACK e ACK.',
+                task: 'Qual a sequência correta de pacotes no handshake TCP antes de uma requisição HTTP?',
+                options: [
+                    'SYN, SYN-ACK, ACK',
+                    'GET, POST, RESPONSE',
+                    'HELLO, READY, GO'
+                ],
+                correctText: 'SYN, SYN-ACK, ACK',
+                explanation: 'Esta sequência garante que ambos os lados estão prontos para trocar dados de forma confiável.'
+            },
+            {
+                icon: 'fa-terminal',
+                concept: 'Captura com tcpdump',
+                desc: 'O utilitário <span class="highlight-cyan">tcpdump</span> permite capturar pacotes em tempo real. Pentesters usam para analisar o handshake e as requisições GET/POST brutas.',
+                task: 'Qual ferramenta de linha de comando é ideal para capturar pacotes brutos no terminal Linux?',
+                options: [
+                    'tcpdump',
+                    'notepad',
+                    'ls -la'
+                ],
+                correctText: 'tcpdump',
+                explanation: 'tcpdump é o padrão para análise de rede via console em sistemas Unix-like.'
+            },
+            {
+                icon: 'fa-envelope-open',
+                concept: 'Estrutura da Mensagem',
+                desc: 'Mensagens HTTP (solicitação ou resposta) consistem em um <span class="highlight-cyan">cabeçalho (header)</span> seguido por um <span class="highlight-cyan">corpo (body)</span> opcional.',
+                task: 'O que compõe a estrutura básica de uma mensagem de protocolo HTTP?',
+                options: [
+                    'Bloco de linhas do cabeçalho seguido pelo corpo da mensagem',
+                    'Apenas um arquivo binário criptografado sem identificação',
+                    'Uma sequência de bips sonoros emitidos pela placa-mãe'
+                ],
+                correctText: 'Bloco de linhas do cabeçalho seguido pelo corpo da mensagem',
+                explanation: 'O cabeçalho contém metadados (como User-Agent) e o corpo contém os dados reais (como HTML ou JSON).'
+            },
+            {
+                icon: 'fa-list-check',
+                concept: 'Códigos de Status',
+                desc: 'Respostas do servidor incluem códigos de 3 dígitos. Exemplos: <span class="highlight-green">2xx</span> (Sucesso), <span class="highlight-yellow">3xx</span> (Redirecionamento), <span class="highlight-red">4xx</span> (Erro do Cliente) e <span class="highlight-red">5xx</span> (Erro do Servidor).',
+                task: 'Um código de status "404 Not Found" pertence a qual categoria de resposta HTTP?',
+                options: [
+                    'Erros do Cliente (Client Error)',
+                    'Sucesso (Success)',
+                    'Erros do Servidor (Server Error)'
+                ],
+                correctText: 'Erros do Cliente (Client Error)',
+                explanation: 'A série 400 indica que a requisição do cliente tem algum problema (ex: página não existe).'
+            },
+            {
+                icon: 'fa-link',
+                concept: 'Estrutura da URL',
+                desc: 'Uma URL completa contém: <span class="highlight-cyan">Esquema</span> (http), <span class="highlight-cyan">Host</span> (ip/dns), <span class="highlight-cyan">Porta</span> (ex: 8123), Caminho, Parâmetros e Query String.',
+                task: 'Na URL "https://site.org:8080/dir?id=1", o que representa o valor ":8080"?',
+                options: [
+                    'A porta de comunicação do servidor web',
+                    'O esquema de criptografia utilizado',
+                    'O diretório raiz de arquivos do sistema'
+                ],
+                correctText: 'A porta de comunicação do servidor web',
+                explanation: 'A porta define para qual serviço a requisição deve ser enviada dentro do host.'
+            },
+            {
+                icon: 'fa-code',
+                concept: 'APIs REST vs SOAP',
+                desc: 'APIs <span class="highlight-green">REST</span> usam JSON e são mais flexíveis. APIs <span class="highlight-yellow">SOAP</span> são rígidas, baseadas em XML e regidas por documentos XSD.',
+                task: 'Qual o formato de dados padrão utilizado em respostas de APIs RESTful modernas?',
+                options: [
+                    'JSON (JavaScript Object Notation)',
+                    'XML (Extensible Markup Language)',
+                    'Texto plano sem formatação (TXT)'
+                ],
+                correctText: 'JSON (JavaScript Object Notation)',
+                explanation: 'JSON é leve e fácil de ser processado por navegadores e aplicativos móveis.'
+            },
+            {
+                icon: 'fa-bolt',
+                concept: 'HTTP 1.1 vs 2.0',
+                desc: 'O <span class="highlight-cyan">HTTP 2.0</span> introduziu a multiplexação, permitindo múltiplas trocas de dados simultâneas em uma única conexão TCP.',
+                task: 'Qual a principal vantagem de performance do HTTP 2.0 sobre o 1.1?',
+                options: [
+                    'Multiplexação de requisições em uma única conexão',
+                    'Uso obrigatório de cabos de rede banhados a ouro',
+                    'Remoção completa dos cabeçalhos das mensagens'
+                ],
+                correctText: 'Multiplexação de requisições em uma única conexão',
+                explanation: 'A multiplexação reduz a latência ao carregar vários recursos de uma vez.'
+            },
+            {
+                icon: 'fa-id-card-clip',
+                concept: 'Gestão de Sessão',
+                desc: 'IDs de sessão (como <span class="highlight-yellow">PHPSESSID</span> ou JSESSIONID) rastreiam o progresso do usuário. Devem ter pelo menos 128 bits para evitar força bruta.',
+                task: 'Qual a recomendação de segurança para o nome do ID de sessão de um framework?',
+                options: [
+                    'Alterar para um nome genérico (ex: ID) para ocultar a tecnologia usada',
+                    'Manter o nome padrão para facilitar o debug público',
+                    'Incluir a senha do administrador no nome do cookie'
+                ],
+                correctText: 'Alterar para um nome genérico (ex: ID) para ocultar a tecnologia usada',
+                explanation: 'Nomes padrão revelam a stack tecnológica (ex: PHP, Java, ASP.NET) ao atacante.'
+            },
+            {
+                icon: 'fa-cookie-bite',
+                concept: 'Atributos de Cookies',
+                desc: 'Cookies <span class="highlight-cyan">Persistentes</span> usam Max-Age ou Expires para ficar no disco. Cookies de <span class="highlight-cyan">Sessão</span> são excluídos ao fechar o navegador.',
+                task: 'Qual atributo de cookie é priorizado pelos navegadores modernos: Max-Age ou Expires?',
+                options: [
+                    'Max-Age',
+                    'Expires',
+                    'Ambos são ignorados por padrão'
+                ],
+                correctText: 'Max-Age',
+                explanation: 'Max-Age define a duração em segundos e é considerado mais preciso.'
+            },
+            {
+                icon: 'fa-shield-halved',
+                concept: 'Ataque de Fixação',
+                desc: 'No <span class="highlight-red">Session Fixation</span>, o agressor injeta um ID de sessão no navegador da vítima. Usar HTTPS/TLS protege contra a interceptação desse token.',
+                task: 'Como o uso de canais criptografados (HTTPS) ajuda a mitigar ataques de sessão?',
+                options: [
+                    'Garante que o ID da sessão seja trocado apenas via canal seguro',
+                    'Desativa automaticamente todos os cookies do computador',
+                    'Aumenta o tamanho do ID de sessão para 1024 bits'
+                ],
+                correctText: 'Garante que o ID da sessão seja trocado apenas via canal seguro',
+                explanation: 'A criptografia impede que o atacante "leia" ou "sequestre" o token em trânsito.'
+            },
+            {
+                icon: 'fa-search',
+                concept: 'Scanner Nikto',
+                desc: 'O <span class="highlight-yellow">Nikto</span> é um scanner de código aberto "barulhento" que foca em descobrir vulnerabilidades na arquitetura e configuração do servidor.',
+                task: 'Por que o Nikto é frequentemente classificado como um scanner "barulhento"?',
+                options: [
+                    'Porque gera muitas requisições que são facilmente detectadas por sistemas de IDS/IPS',
+                    'Porque emite um som de alerta alto no computador do atacante',
+                    'Porque só funciona se o servidor web estiver com o volume no máximo'
+                ],
+                correctText: 'Porque gera muitas requisições que são facilmente detectadas por sistemas de IDS/IPS',
+                explanation: 'Sua varredura exaustiva deixa muitos rastros nos logs de segurança.'
+            },
+            {
+                icon: 'fa-shield-virus',
+                concept: 'GVM e OpenVAS',
+                desc: 'O <span class="highlight-green">Greenbone Vulnerability Management (GVM)</span> utiliza o motor OpenVAS para realizar escaneamentos profundos de vulnerabilidades.',
+                task: 'Qual a relação entre as ferramentas OpenVAS e GVM?',
+                options: [
+                    'OpenVAS é um componente do motor de busca iniciado pela interface GVM',
+                    'São ferramentas concorrentes de empresas diferentes e incompatíveis',
+                    'OpenVAS é para Windows e GVM é exclusivo para dispositivos móveis'
+                ],
+                correctText: 'OpenVAS é um componente do motor de busca iniciado pela interface GVM',
+                explanation: 'O GVM fornece a estrutura de gerenciamento para o motor de varredura OpenVAS.'
+            },
+            {
+                icon: 'fa-users-gear',
+                concept: 'Mentalidade OWASP',
+                desc: 'O <span class="highlight-cyan">Top 10 do OWASP</span> é um esforço comunitário para educar e priorizar os riscos mais críticos de segurança em aplicações web.',
+                task: 'Qual o principal objetivo da lista Top 10 do OWASP na indústria?',
+                options: [
+                    'Fornecer conscientização sobre os maiores riscos de segurança de aplicativos',
+                    'Vender licenças de software antivírus para grandes corporações',
+                    'Substituir completamente todos os profissionais de segurança por robôs'
+                ],
+                correctText: 'Fornecer conscientização sobre os maiores riscos de segurança de aplicativos',
+                explanation: 'O Top 10 serve como guia para desenvolvedores e auditores focarem no que é mais perigoso.'
+            }
+        ];
+
+        let currentStep = 0;
+        let selectedIdx = null;
+        let hearts = 5;
+        let shuffledOptions = [];
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function render() {
+            if (currentStep >= phases.length) { showVictory(); return; }
+            const step = phases[currentStep];
+            const area = document.getElementById('gameArea');
+            const checkBtn = document.getElementById('checkBtn');
+            const progress = (currentStep / phases.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            selectedIdx = null;
+            checkBtn.disabled = true;
+            checkBtn.classList.remove('active');
+            updateHearts();
+
+            shuffledOptions = shuffle([...step.options]);
+
+            area.innerHTML = `
+                <div class="fixation-card">
+                    <i class="fas ${step.icon} concept-icon" style="color: var(--cyber-blue)"></i>
+                    <div class="text-[0.6rem] font-black uppercase tracking-widest mb-1" style="color: var(--cyber-blue)">6.1 • OWASP TOP 10 • Nível ${currentStep + 1}</div>
+                    <div class="concept-text">${step.concept}</div>
+                    <div class="concept-desc">${step.desc}</div>
+                    <div class="question-title">${step.task}</div>
+                    <div class="options-grid">
+                        ${shuffledOptions.map((opt, i) => `
+                            <div class="option-card" onclick="select(${i})">
+                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            area.scrollTop = 0;
+        }
+
+        function select(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function checkResponse() {
+            const step = phases[currentStep];
+            const isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            const popup = document.getElementById('feedbackPopup');
+            
+            document.querySelectorAll('.option-card').forEach((c, i) => {
+                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                else if (i === selectedIdx) c.classList.add('wrong');
+                c.classList.add('disabled', 'pointer-events-none');
+            });
+
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerText = "PACOTE VALIDADO!";
+                document.getElementById('fbTitle').className = "text-green-500 font-bold";
+                document.getElementById('fbMsg').innerText = step.explanation;
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                updateHearts();
+                document.getElementById('fbTitle').innerText = "ERRO DE PROTOCOLO!";
+                document.getElementById('fbTitle').className = "text-red-500 font-bold";
+                document.getElementById('fbMsg').innerText = "O correto era: " + step.correctText;
+                popup.className = "feedback-overlay show wrong";
+                if (hearts <= 0) setTimeout(() => { alert("TIMEOUT DE CONEXÃO. Reiniciando!"); location.reload(); }, 500);
+            }
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            render();
+        }
+
+        function updateHearts() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            document.getElementById('gameArea').innerHTML = `
+                <div class="fixation-card text-center items-center flex flex-col" style="border-color: var(--cyber-blue)">
+                    <i class="fas fa-medal text-5xl text-yellow-400 mb-2"></i>
+                    <h2 class="text-xl font-bold text-white mb-1">FUNDAMENTOS DOMINADOS!</h2>
+                    <p class="text-[0.7rem] text-gray-400 mb-4">Você completou a exaustão técnica sobre HTTP, Sessões e OWASP Top 10 no Módulo 6.1.</p>
+                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-06.html'" style="background: var(--cyber-blue); color: black;">VOLTAR AO MÓDULO</button>
+                </div>
+            `;
+        }
+
+        render();
+    </script>
+</body>
+</html>

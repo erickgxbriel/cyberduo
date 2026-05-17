@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - THE BLACK BOX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-silver: #8b949e;
+            --cyber-white: #ffffff;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e6edf3;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cyber-header {
+            padding: 2rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .back-link {
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--cyber-white);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 1.5rem 5rem;
+        }
+
+        .vault-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .vault-title {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            color: white;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        .vault-subtitle {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: var(--cyber-silver);
+            margin-top: 0.5rem;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .resource-category {
+            background: #0d1117;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-category:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.8rem;
+        }
+
+        .category-icon {
+            font-size: 1.3rem;
+            color: var(--cyber-white);
+        }
+
+        .category-name {
+            font-weight: 800;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            flex-grow: 1;
+        }
+
+        .resource-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.7rem 0.9rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 0.6rem;
+            text-decoration: none;
+            color: #8b949e;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .resource-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+
+        .resource-link i {
+            font-size: 0.75rem;
+            opacity: 0.5;
+        }
+
+        .tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.55rem;
+            padding: 2px 5px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--cyber-silver);
+            text-transform: uppercase;
+            margin-left: 0.4rem;
+            flex-shrink: 0;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 3rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #484f58;
+            letter-spacing: 1px;
+        }
+
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(0, 0, 0, 0) 100%);
+            opacity: 0.1;
+            position: absolute;
+            bottom: 100%;
+            animation: scanline 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scanline {
+            0% { bottom: 100%; }
+            100% { bottom: 0%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="cyber-header">
+        <a href="../index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Voltar ao Terminal
+        </a>
+        <div class="font-black text-xl tracking-tighter">THE <span style="color: var(--cyber-white)">BLACK BOX</span></div>
+    </header>
+
+    <main class="main-container">
+        
+        <div class="vault-header">
+            <div class="scanline"></div>
+            <h1 class="vault-title">Arsenal Hacker</h1>
+            <p class="vault-subtitle">Recursos operacionais e educacionais de elite para auditores.</p>
+        </div>
+
+        <div class="resource-grid">
+            
+            <!-- Manuais & Metodologias -->
+            <section class="resource-category">
+                <div class="category-header">
+                    <i class="fas fa-book-skull category-icon"></i>
+                    <h2 class="category-name">Manuais & Wiki</h2>
+                </div>
+                <div class="link-list">
+                    <a href="https://book.hacktricks.xyz/" target="_blank" class="resource-link">
+                        <span>HackTricks <span class="tag">Essential</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://thehackerrecipes.com/" target="_blank" class="resource-link">
+                        <span>The Hacker Recipes <span class="tag">AD & Cloud</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.hackingarticles.in/" target="_blank" class="resource-link">
+                        <span>Hacking Articles <span class="tag">Lab Guides</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://pwnwiki.org/" target="_blank" class="resource-link">
+                        <span>PwnWiki <span class="tag">Techniques</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.exploit-db.com/" target="_blank" class="resource-link">
+                        <span>Exploit Database <span class="tag">CVE</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://attack.mitre.org/" target="_blank" class="resource-link">
+                        <span>MITRE ATT&CK <span class="tag">TTPs</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Intel & Notícias -->
+            <section class="resource-category">
+                <div class="category-header">
+                    <i class="fas fa-satellite-dish category-icon"></i>
+                    <h2 class="category-name">Intel & Notícias</h2>
+                </div>
+                <div class="link-list">
+                    <a href="https://krebsonsecurity.com/" target="_blank" class="resource-link">
+                        <span>Krebs on Security <span class="tag">Investigative</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://thehackernews.com/" target="_blank" class="resource-link">
+                        <span>The Hacker News <span class="tag">Daily News</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.bleepingcomputer.com/" target="_blank" class="resource-link">
+                        <span>BleepingComputer <span class="tag">Malware</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://therecord.media/" target="_blank" class="resource-link">
+                        <span>The Record <span class="tag">Cyber News</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://isc.sans.edu/" target="_blank" class="resource-link">
+                        <span>SANS Storm Center <span class="tag">Threat Intel</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.darkreading.com/" target="_blank" class="resource-link">
+                        <span>Dark Reading <span class="tag">Pro Analysis</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Cloud & Enterprise -->
+            <section class="resource-category">
+                <div class="category-header">
+                    <i class="fas fa-cloud-bolt category-icon"></i>
+                    <h2 class="category-name">Cloud & Enterprise</h2>
+                </div>
+                <div class="link-list">
+                    <a href="https://github.com/RhinoSecurityLabs/cloudgoat" target="_blank" class="resource-link">
+                        <span>CloudGoat <span class="tag">AWS Lab</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://github.com/RhinoSecurityLabs/pacu" target="_blank" class="resource-link">
+                        <span>Pacu <span class="tag">AWS Exploitation</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://github.com/inguardians/peirates" target="_blank" class="resource-link">
+                        <span>Peirates <span class="tag">K8s Pentest</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://cloud.hacktricks.xyz/" target="_blank" class="resource-link">
+                        <span>HackTricks Cloud <span class="tag">Manual</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://github.com/clong/DetectionLab" target="_blank" class="resource-link">
+                        <span>Purple Team Lab <span class="tag">AD/SOC</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.thec2matrix.com/" target="_blank" class="resource-link">
+                        <span>C2 Matrix <span class="tag">C&C</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Análise & Reversa -->
+            <section class="resource-category">
+                <div class="category-header">
+                    <i class="fas fa-microchip category-icon"></i>
+                    <h2 class="category-name">Análise & Reversa</h2>
+                </div>
+                <div class="link-list">
+                    <a href="https://remnux.org/" target="_blank" class="resource-link">
+                        <span>REMnux <span class="tag">Malware OS</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://github.com/mandiant/flare-vm" target="_blank" class="resource-link">
+                        <span>FLARE VM <span class="tag">Reverse OS</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://hex-rays.com/ida-free/" target="_blank" class="resource-link">
+                        <span>IDA Free <span class="tag">Disassembler</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://ghidra-sre.org/" target="_blank" class="resource-link">
+                        <span>Ghidra <span class="tag">RE Suite</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://gchq.github.io/CyberChef/" target="_blank" class="resource-link">
+                        <span>CyberChef <span class="tag">Decoders</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.virustotal.com/" target="_blank" class="resource-link">
+                        <span>VirusTotal <span class="tag">Analysis</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Defesa & DFIR -->
+            <section class="resource-category">
+                <div class="category-header">
+                    <i class="fas fa-user-shield category-icon"></i>
+                    <h2 class="category-name">Defesa & DFIR</h2>
+                </div>
+                <div class="link-list">
+                    <a href="https://blueteamlabs.online/" target="_blank" class="resource-link">
+                        <span>Blue Team Labs <span class="tag">Training</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://cyberdefenders.org/" target="_blank" class="resource-link">
+                        <span>CyberDefenders <span class="tag">SOC Labs</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.dfir.training/" target="_blank" class="resource-link">
+                        <span>DFIR.training <span class="tag">Artifacts</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://sans.org/white-papers/" target="_blank" class="resource-link">
+                        <span>SANS Reading Room <span class="tag">Papers</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://haveibeenpwned.com/" target="_blank" class="resource-link">
+                        <span>Have I Been Pwned <span class="tag">OSINT</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://any.run/" target="_blank" class="resource-link">
+                        <span>Any.Run <span class="tag">Sandbox</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- OSINT & Recon -->
+            <section class="resource-category">
+                <div class="category-header">
+                    <i class="fas fa-magnifying-glass category-icon"></i>
+                    <h2 class="category-name">OSINT & Recon</h2>
+                </div>
+                <div class="link-list">
+                    <a href="https://spiderfoot.net/" target="_blank" class="resource-link">
+                        <span>SpiderFoot <span class="tag">Automation</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.maltego.com/" target="_blank" class="resource-link">
+                        <span>Maltego <span class="tag">Link Analysis</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.exploit-db.com/google-hacking-database" target="_blank" class="resource-link">
+                        <span>GHDB <span class="tag">Dorking</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.shodan.io/" target="_blank" class="resource-link">
+                        <span>Shodan <span class="tag">IoT Search</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://hunter.io/" target="_blank" class="resource-link">
+                        <span>Hunter.io <span class="tag">Emails</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://osintframework.com/" target="_blank" class="resource-link">
+                        <span>OSINT Framework <span class="tag">Hub</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Laboratórios de Elite -->
+            <section class="resource-category">
+                <div class="category-header">
+                    <i class="fas fa-flask-vial category-icon"></i>
+                    <h2 class="category-name">Laboratórios de Elite</h2>
+                </div>
+                <div class="link-list">
+                    <a href="https://portswigger.net/web-security" target="_blank" class="resource-link">
+                        <span>Web Security Academy <span class="tag">Web</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.hackthebox.com/" target="_blank" class="resource-link">
+                        <span>HackTheBox <span class="tag">Advanced</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://tryhackme.com/" target="_blank" class="resource-link">
+                        <span>TryHackMe <span class="tag">Learning</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.vulnhub.com/" target="_blank" class="resource-link">
+                        <span>VulnHub <span class="tag">Local VMs</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.root-me.org/" target="_blank" class="resource-link">
+                        <span>Root-Me <span class="tag">CTF</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://overthewire.org/" target="_blank" class="resource-link">
+                        <span>OverTheWire <span class="tag">Linux</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Cheat Sheets & Payloads -->
+            <section class="resource-category">
+                <div class="category-header">
+                    <i class="fas fa-bolt category-icon"></i>
+                    <h2 class="category-name">Cheat Sheets</h2>
+                </div>
+                <div class="link-list">
+                    <a href="https://gtfobins.github.io/" target="_blank" class="resource-link">
+                        <span>GTFOBins <span class="tag">PrivEsc</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank" class="resource-link">
+                        <span>PayloadsAllTheThings <span class="tag">All-in-one</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://cheatsheetseries.owasp.org/" target="_blank" class="resource-link">
+                        <span>OWASP Cheat Sheet <span class="tag">Web</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.stationx.net/nmap-cheat-sheet/" target="_blank" class="resource-link">
+                        <span>Nmap Cheat Sheet <span class="tag">Network</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://portswigger.net/burp/documentation/desktop/cheat-sheets" target="_blank" class="resource-link">
+                        <span>Burp Cheat Sheet <span class="tag">Proxy</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet" target="_blank" class="resource-link">
+                        <span>Reverse Shells <span class="tag">Scripts</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Carreira & Profissional -->
+            <section class="resource-category">
+                <div class="category-header">
+                    <i class="fas fa-rocket category-icon"></i>
+                    <h2 class="category-name">Carreira & Profissional</h2>
+                </div>
+                <div class="link-list">
+                    <a href="https://roadmap.sh/cyber-security" target="_blank" class="resource-link">
+                        <span>Cyber Roadmap <span class="tag">Path</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.cyberseek.org/" target="_blank" class="resource-link">
+                        <span>CyberSeek <span class="tag">Jobs & Salary</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.cisa.gov/resources-tools" target="_blank" class="resource-link">
+                        <span>CISA Resources <span class="tag">Standards</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://github.com/juliocesarfort/public-pentesting-reports" target="_blank" class="resource-link">
+                        <span>Public Reports <span class="tag">Templates</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.hackerone.com/" target="_blank" class="resource-link">
+                        <span>HackerOne <span class="tag">Bounty</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="https://www.bugcrowd.com/" target="_blank" class="resource-link">
+                        <span>Bugcrowd <span class="tag">Bounty</span></span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer>
+        A cibersegurança eficaz não é um produto, mas sim um processo.
+    </footer>
+
+</body>
+</html>

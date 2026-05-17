@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Módulo 5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00f2ff;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --cyber-orange: #ff8c00;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e6edf3;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cyber-header {
+            padding: 2rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .back-link {
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--cyber-orange);
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 2rem 5rem;
+        }
+
+        .module-header {
+            border-left: 4px solid var(--cyber-orange);
+            padding-left: 1.5rem;
+            margin-bottom: 3rem;
+            margin-top: 2rem;
+        }
+
+        .module-id {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--cyber-orange);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .module-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .submodule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .submodule-item {
+            background: #0d1117;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 0.8rem;
+            padding: 1rem 1.5rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .submodule-item:hover {
+            border-color: var(--cyber-orange);
+            background: rgba(255, 140, 0, 0.02);
+            transform: translateX(8px);
+        }
+
+        .submodule-icon-box {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.6rem;
+            color: #484f58;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .submodule-item:hover .submodule-icon-box {
+            color: var(--cyber-orange);
+            background: rgba(255, 140, 0, 0.08);
+        }
+
+        .submodule-info {
+            flex-grow: 1;
+        }
+
+        .submodule-number {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            color: var(--cyber-orange);
+            display: block;
+            margin-bottom: 2px;
+            opacity: 0.8;
+        }
+
+        .submodule-title {
+            font-size: 1.0rem;
+            font-weight: 600;
+            color: #e6edf3;
+            display: block;
+        }
+
+        .submodule-desc {
+            font-size: 0.75rem;
+            color: #8b949e;
+        }
+
+        .submodule-arrow {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        .submodule-item:hover .submodule-arrow {
+            color: var(--cyber-orange);
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 3rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #484f58;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="cyber-header">
+        <a href="../index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Voltar ao Terminal
+        </a>
+        <div class="font-black text-xl tracking-tighter">CYBER<span style="color: var(--cyber-orange)">DUO</span></div>
+    </header>
+
+    <main class="main-container">
+        
+        <header class="module-header">
+            <span class="module-id">Módulo 5</span>
+            <h1 class="module-name">Exploração de Redes Sem Fio e Com Fio</h1>
+        </header>
+
+        <div class="submodule-list">
+            
+            <a href="../lessons/5.0-introducao.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">5.0</span>
+                    <span class="submodule-title">Introdução</span>
+                    <span class="submodule-desc">Objetivos e panorama geral de ataques em LANs.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+
+            <a href="../lessons/5.1-vulnerabilidades-rede.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-server"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">5.1</span>
+                    <span class="submodule-title">Vulnerabilidades de Rede</span>
+                    <span class="submodule-desc">SMB, SNMP, SMTP, Pass-the-Hash, Kerberos e ataques MITM.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+
+            <a href="../lessons/5.2-vulnerabilidades-wireless.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-wifi"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">5.2</span>
+                    <span class="submodule-title">Vulnerabilidades Sem Fio</span>
+                    <span class="submodule-desc">WEP, WPA/WPA2/WPA3, Rogue AP, Evil Twin e Bluetooth.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+
+        </div>
+
+    </main>
+
+    <footer>
+        A cibersegurança eficaz não é um produto, mas sim um processo.
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Clickjacking 6.9</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00f2ff;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 242, 255, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
+        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+
+        .highlight-cyan { color: #00f2ff; font-weight: 700; }
+        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
+        .highlight-red { color: var(--cyber-red); font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+
+        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+
+        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 242, 255, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+
+        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #0099a1; }
+
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
+        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-06.html'"></i>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const phases = [
+            {
+                icon: 'fa-mouse',
+                concept: 'Conceito de Clickjacking',
+                desc: 'O <span class="highlight-cyan">Clickjacking</span> envolve o uso de várias camadas transparentes ou opacas para induzir um usuário a clicar em um botão da Web em uma página onde ele não pretendia clicar.',
+                task: 'Como o Clickjacking também é referido na literatura de cibersegurança?',
+                options: [
+                    'Ataque de redirecionamento de UI',
+                    'Injeção de cabeçalhos de rede física',
+                    'Quebra de chaves simétricas AES-256'
+                ],
+                correctText: 'Ataque de redirecionamento de UI',
+                explanation: 'O atacante redireciona o "clique" do usuário de uma camada visível para uma camada oculta maliciosa.'
+            },
+            {
+                icon: 'fa-layer-group',
+                concept: 'Mecânica com Iframes',
+                desc: 'Atacantes usam <span class="highlight-yellow">iframes invisíveis</span> sobrepostos a sites legítimos. O usuário acredita estar clicando na página visível, mas está clicando no frame oculto.',
+                task: 'Qual a técnica base para renderizar um site invisível sobre uma interface legítima?',
+                options: [
+                    'Uso de planilhas de estilo CSS e iframes transparentes',
+                    'Envio massivo de pacotes ICMP para o endereço IP do alvo',
+                    'Criptografia de todo o tráfego HTTP com chaves PGP públicas'
+                ],
+                correctText: 'Uso de planilhas de estilo CSS e iframes transparentes',
+                explanation: 'CSS é usado para posicionar o iframe malicioso exatamente sobre os botões do site legítimo.'
+            },
+            {
+                icon: 'fa-keyboard',
+                concept: 'Sequestro de Teclas',
+                desc: 'Além de cliques, as <span class="highlight-cyan">teclas do usuário</span> também podem ser sequestradas. Camadas invisíveis podem capturar o foco do teclado para caixas de texto ocultas.',
+                task: 'O que pode ser sequestrado em ataques de redirecionamento de UI além do clique?',
+                options: [
+                    'As entradas de teclado digitadas pelo usuário (keystrokes)',
+                    'O endereço MAC físico da placa de rede do computador',
+                    'A velocidade de rotação do cooler do processador da vítima'
+                ],
+                correctText: 'As entradas de teclado digitadas pelo usuário (keystrokes)',
+                explanation: 'Se o foco estiver no elemento invisível, o usuário digita senhas diretamente para o atacante.'
+            },
+            {
+                icon: 'fa-shield-halved',
+                concept: 'Defesa X-Frame-Options',
+                desc: 'O cabeçalho <span class="highlight-green">X-Frame-Options (XFO)</span> informa ao navegador se ele deve permitir que a página seja renderizada dentro de um frame.',
+                task: 'Quais os dois valores comuns do cabeçalho X-Frame-Options usados na defesa?',
+                options: [
+                    'DENY e SAMEORIGIN',
+                    'ALLOW e ALL-DOMAINS',
+                    'BLOCK e REDIRECT-ONLY'
+                ],
+                correctText: 'DENY e SAMEORIGIN',
+                explanation: 'DENY impede qualquer enquadramento; SAMEORIGIN permite apenas pelo próprio domínio.'
+            },
+            {
+                icon: 'fa-shield-check',
+                concept: 'Content Security Policy (CSP)',
+                desc: 'A diretiva modernizada <span class="highlight-cyan">frame-ancestors</span> da CSP é a sucessora do XFO, permitindo um controle muito mais fino sobre a origem de frames.',
+                task: 'Qual diretiva da CSP ajuda a mitigar ataques de Clickjacking?',
+                options: [
+                    'frame-ancestors',
+                    'script-src-elem',
+                    'connect-src self'
+                ],
+                correctText: 'frame-ancestors',
+                explanation: 'frame-ancestors define exatamente quais domínios podem carregar seu site em iframes.'
+            },
+            {
+                icon: 'fa-book-open',
+                concept: 'Guia de Defesa OWASP',
+                desc: 'O <span class="highlight-yellow">Guia Rápido de Defesa do Clickjacking</span> do OWASP fornece as melhores práticas para mitigar redirecionamentos de UI.',
+                task: 'Onde profissionais devem buscar o guia de referência para mitigar Clickjacking?',
+                options: [
+                    'No Guia de Defesa do Clickjacking do OWASP',
+                    'Em canais de fórum sobre edição de vídeo e fotografia',
+                    'No manual de usuário de seu smartphone Android atual'
+                ],
+                correctText: 'No Guia de Defesa do Clickjacking do OWASP',
+                explanation: 'OWASP é a fonte definitiva para checklists de segurança de aplicações web.'
+            },
+            {
+                icon: 'fa-bug',
+                concept: 'Invisibilidade do Vetor',
+                desc: 'O Clickjacking é perigoso porque é <span class="highlight-red">totalmente transparente</span> para o usuário. Ele acredita estar em um site seguro enquanto realiza ações em outro.',
+                task: 'Por que o Clickjacking é difícil de ser detectado pelo usuário final?',
+                options: [
+                    'Porque as camadas maliciosas são invisíveis e sobrepõem a interface real',
+                    'Porque o ataque formata o computador da vítima instantaneamente',
+                    'Porque o hacker envia uma mensagem de texto avisando do ataque'
+                ],
+                correctText: 'Porque as camadas maliciosas são invisíveis e sobrepõem a interface real',
+                explanation: 'A sobreposição perfeita torna a fraude indetectável a olho nu.'
+            },
+            {
+                icon: 'fa-user-lock',
+                concept: 'Conclusão da Mitigação',
+                desc: 'A defesa robusta exige a implementação de <span class="highlight-green">XFO e CSP</span> no lado do servidor para garantir proteção em navegadores antigos e modernos.',
+                task: 'Qual a recomendação final para proteger um site contra Clickjacking?',
+                options: [
+                    'Implementar X-Frame-Options e frame-ancestors na CSP do servidor',
+                    'Apenas ocultar o botão de logout de usuários anônimos',
+                    'Remover todo o código CSS das páginas públicas do site'
+                ],
+                correctText: 'Implementar X-Frame-Options e frame-ancestors na CSP do servidor',
+                explanation: 'Defesa em camadas é a única forma de garantir a integridade da UI.'
+            }
+        ];
+
+        let currentStep = 0;
+        let selectedIdx = null;
+        let hearts = 5;
+        let shuffledOptions = [];
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function render() {
+            if (currentStep >= phases.length) { showVictory(); return; }
+            const step = phases[currentStep];
+            const area = document.getElementById('gameArea');
+            const checkBtn = document.getElementById('checkBtn');
+            const progress = (currentStep / phases.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            selectedIdx = null;
+            checkBtn.disabled = true;
+            checkBtn.classList.remove('active');
+            updateHearts();
+
+            shuffledOptions = shuffle([...step.options]);
+
+            area.innerHTML = `
+                <div class="fixation-card">
+                    <i class="fas ${step.icon} concept-icon" style="color: var(--cyber-blue)"></i>
+                    <div class="text-[0.6rem] font-black uppercase tracking-widest mb-1" style="color: var(--cyber-blue)">6.9 • CLICKJACKING • Nível ${currentStep + 1}</div>
+                    <div class="concept-text">${step.concept}</div>
+                    <div class="concept-desc">${step.desc}</div>
+                    <div class="question-title">${step.task}</div>
+                    <div class="options-grid">
+                        ${shuffledOptions.map((opt, i) => `
+                            <div class="option-card" onclick="select(${i})">
+                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            area.scrollTop = 0;
+        }
+
+        function select(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function checkResponse() {
+            const step = phases[currentStep];
+            const isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            const popup = document.getElementById('feedbackPopup');
+            
+            document.querySelectorAll('.option-card').forEach((c, i) => {
+                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                else if (i === selectedIdx) c.classList.add('wrong');
+                c.classList.add('disabled', 'pointer-events-none');
+            });
+
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerText = "CLIQUE VALIDADO!";
+                document.getElementById('fbTitle').className = "text-green-500 font-bold";
+                document.getElementById('fbMsg').innerText = step.explanation;
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                updateHearts();
+                document.getElementById('fbTitle').innerText = "CLIQUE SEQUESTRADO!";
+                document.getElementById('fbTitle').className = "text-red-500 font-bold";
+                document.getElementById('fbMsg').innerText = "O correto era: " + step.correctText;
+                popup.className = "feedback-overlay show wrong";
+                if (hearts <= 0) setTimeout(() => { alert("INTERFACE COMPROMETIDA. Reiniciando!"); location.reload(); }, 500);
+            }
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            render();
+        }
+
+        function updateHearts() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            document.getElementById('gameArea').innerHTML = `
+                <div class="fixation-card text-center items-center flex flex-col" style="border-color: var(--cyber-green)">
+                    <i class="fas fa-medal text-5xl text-yellow-400 mb-2"></i>
+                    <h2 class="text-xl font-bold text-white mb-1">UI DOMINADA!</h2>
+                    <p class="text-[0.7rem] text-gray-400 mb-4">Você compreendeu exaustivamente os riscos e defesas contra Clickjacking no Módulo 6.9.</p>
+                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-06.html'" style="background: var(--cyber-green); color: black;">VOLTAR AO MÓDULO</button>
+                </div>
+            `;
+        }
+
+        render();
+    </script>
+</body>
+</html>

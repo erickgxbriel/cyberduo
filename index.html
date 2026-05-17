@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Hub de Treinamento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00f2ff;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --cyber-purple: #ff00ff;
+            --cyber-orange: #ff8c00;
+            --cyber-emerald: #00ffa3;
+            --cyber-violet: #8a2be2;
+            --cyber-cobalt: #2d5af5;
+            --cyber-teal: #00facd;
+            --cyber-silver: #8b949e;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e6edf3;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cyber-header {
+            padding: 6rem 1rem 5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo-container {
+            display: inline-block;
+            position: relative;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            color: var(--cyber-blue);
+            letter-spacing: 2px;
+            margin-bottom: 1.2rem;
+            opacity: 0.8;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--cyber-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--cyber-blue);
+            animation: statusPulse 2s infinite;
+        }
+
+        @keyframes statusPulse {
+            0% { opacity: 0.4; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.4; transform: scale(0.9); }
+        }
+
+        .cyber-title {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(3rem, 10vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -3px;
+            color: white;
+            line-height: 0.85;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .cyber-title .highlight {
+            color: var(--cyber-blue);
+            font-weight: 300;
+            text-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
+        }
+
+        .tagline-box {
+            margin-top: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tagline {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: white;
+            letter-spacing: 4px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .bracket {
+            color: var(--cyber-blue);
+            font-weight: 300;
+            font-size: 1.4rem;
+            opacity: 0.6;
+        }
+
+        .cyber-subtitle {
+            font-size: 0.7rem;
+            color: #484f58;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+            margin-top: 0.4rem;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 2rem 5rem;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .module-card {
+            background: #0d1117;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.2rem;
+            padding: 2rem 1.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--card-color);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .module-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--card-color);
+            opacity: 0.3;
+            transition: opacity 0.3s;
+        }
+
+        .module-card:hover::before {
+            opacity: 1;
+        }
+
+        .module-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: var(--card-color);
+            margin-bottom: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .module-card:hover .module-icon {
+            background: var(--card-color);
+            color: black;
+            transform: scale(1.1);
+        }
+
+        .module-number {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            color: var(--card-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.4rem;
+        }
+
+        .module-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 0.8rem;
+        }
+
+        .module-stats {
+            margin-top: auto;
+            display: flex;
+            gap: 1rem;
+            font-size: 0.7rem;
+            color: #484f58;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 3rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #484f58;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="cyber-header">
+        <div class="logo-container">
+            <div class="system-status">
+                <span class="status-dot"></span>
+                <span>NÚCLEO DE APRENDIZADO ATIVO</span>
+            </div>
+            <h1 class="cyber-title">CYBER<span class="highlight">DUO</span></h1>
+            <div class="tagline-box">
+                <div class="tagline">
+                    <span class="bracket">[</span> Plataforma de Treinamento em Cibersegurança <span class="bracket">]</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        
+        <div class="module-grid">
+            
+            <a href="modules/modulo-00.html" class="module-card" style="--card-color: var(--cyber-green)">
+                <div class="module-icon"><i class="fas fa-terminal"></i></div>
+                <span class="module-number">Módulo 0</span>
+                <h2 class="module-title">Introdução ao Curso</h2>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 1 Lição</span><span><i class="fas fa-microchip mr-1"></i> 6 Skills</span></div>
+            </a>
+
+            <a href="modules/modulo-01.html" class="module-card" style="--card-color: var(--cyber-cobalt)">
+                <div class="module-icon"><i class="fas fa-user-secret"></i></div>
+                <span class="module-number">Módulo 1</span>
+                <h2 class="module-title">Hacking Ético e Pentest</h2>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 4 Lições</span><span><i class="fas fa-microchip mr-1"></i> 30 Skills</span></div>
+            </a>
+
+            <a href="modules/modulo-02.html" class="module-card" style="--card-color: var(--cyber-yellow)">
+                <div class="module-icon"><i class="fas fa-clipboard-list"></i></div>
+                <span class="module-number">Módulo 2</span>
+                <h2 class="module-title">Planejamento e Escopo</h2>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 4 Lições</span><span><i class="fas fa-microchip mr-1"></i> 28 Skills</span></div>
+            </a>
+
+            <a href="modules/modulo-03.html" class="module-card" style="--card-color: var(--cyber-teal)">
+                <div class="module-icon"><i class="fas fa-bullseye"></i></div>
+                <span class="module-number">Módulo 3</span>
+                <h2 class="module-title">Coleta e Varredura</h2>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 5 Lições</span><span><i class="fas fa-microchip mr-1"></i> 47 Skills</span></div>
+            </a>
+
+            <a href="modules/modulo-04.html" class="module-card" style="--card-color: var(--cyber-purple)">
+                <div class="module-icon"><i class="fas fa-people-group"></i></div>
+                <span class="module-number">Módulo 4</span>
+                <h2 class="module-title">Engenharia Social</h2>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 6 Lições</span><span><i class="fas fa-microchip mr-1"></i> 53 Skills</span></div>
+            </a>
+
+            <a href="modules/modulo-05.html" class="module-card" style="--card-color: var(--cyber-orange)">
+                <div class="module-icon"><i class="fas fa-network-wired"></i></div>
+                <span class="module-number">Módulo 5</span>
+                <h2 class="module-title">Exploração de Redes</h2>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 3 Lições</span><span><i class="fas fa-microchip mr-1"></i> 38 Skills</span></div>
+            </a>
+
+            <a href="modules/modulo-06.html" class="module-card" style="--card-color: var(--cyber-blue)">
+                <div class="module-icon"><i class="fas fa-globe"></i></div>
+                <span class="module-number">Módulo 6</span>
+                <h2 class="module-title">Aplicações Web</h2>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 13 Lições</span><span><i class="fas fa-microchip mr-1"></i> 120 Skills</span></div>
+            </a>
+
+            <a href="modules/modulo-07.html" class="module-card" style="--card-color: #e6edf3">
+                <div class="module-icon"><i class="fas fa-cloud"></i></div>
+                <span class="module-number">Módulo 7</span>
+                <h2 class="module-title">Nuvem, Móvel e IoT</h2>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 3 Lições</span><span><i class="fas fa-microchip mr-1"></i> 35 Skills</span></div>
+            </a>
+
+            <a href="modules/modulo-08.html" class="module-card" style="--card-color: var(--cyber-red)">
+                <div class="module-icon"><i class="fas fa-skull-crossbones"></i></div>
+                <span class="module-number">Módulo 8</span>
+                <h2 class="module-title">Pós-Exploração</h2>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 3 Lições</span><span><i class="fas fa-microchip mr-1"></i> 24 Skills</span></div>
+            </a>
+
+            <a href="modules/modulo-09.html" class="module-card" style="--card-color: var(--cyber-emerald)">
+                <div class="module-icon"><i class="fas fa-file-signature"></i></div>
+                <span class="module-number">Módulo 9</span>
+                <h2 class="module-title">Relatórios e Comunicação</h2>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 5 Lições</span><span><i class="fas fa-microchip mr-1"></i> 32 Skills</span></div>
+            </a>
+
+            <a href="modules/modulo-10.html" class="module-card" style="--card-color: var(--cyber-violet)">
+                <div class="module-icon"><i class="fas fa-code"></i></div>
+                <span class="module-number">Módulo 10</span>
+                <h2 class="module-title">Ferramentas e Código</h2>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 3 Lições</span><span><i class="fas fa-microchip mr-1"></i> 20 Skills</span></div>
+            </a>
+
+            <!-- Módulo Especial: THE BLACK BOX -->
+            <a href="modules/blackbox.html" class="module-card" style="--card-color: #ffffff; border-style: dashed; border-width: 2px;">
+                <div class="module-icon"><i class="fas fa-vault"></i></div>
+                <span class="module-number">Especial</span>
+                <h2 class="module-title">THE BLACK BOX</h2>
+                <div class="module-stats"><span><i class="fas fa-folder-open mr-1"></i> Arsenal Hacker</span><span><i class="fas fa-unlock mr-1"></i> Acesso Livre</span></div>
+            </a>
+
+        </div>
+
+    </main>
+
+    <footer>
+        A cibersegurança eficaz não é um produto, mas sim um processo.
+    </footer>
+
+</body>
+</html>

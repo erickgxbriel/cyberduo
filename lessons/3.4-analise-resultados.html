@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Análise de Resultados 3.4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00facd;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 250, 205, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
+        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+
+        .highlight-cyan { color: #00f2ff; font-weight: 700; }
+        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
+        .highlight-red { color: var(--cyber-red); font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+
+        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+
+        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 250, 205, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+
+        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00b3a4; }
+
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
+        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-03.html'"></i>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const phases = [
+            {
+                icon: 'fa-magnifying-glass-chart',
+                concept: 'Análise de Resultados',
+                desc: 'A execução da varredura é apenas a primeira parte. O trabalho real consiste em eliminar <span class="highlight-red">falsos positivos</span> e priorizar as vulnerabilidades que representam risco real.',
+                task: 'O que deve ser priorizado após a conclusão de uma varredura de vulnerabilidades?',
+                options: [
+                    'Eliminar falsos positivos e focar em vulnerabilidades de alta gravidade',
+                    'Imprimir o relatório imediatamente e entregá-lo sem análise ao cliente',
+                    'Desligar o scanner e apagar todos os logs de execução do sistema'
+                ],
+                correctText: 'Eliminar falsos positivos e focar em vulnerabilidades de alta gravidade',
+                explanation: 'A priorização baseada em risco real economiza recursos e protege ativos críticos primeiro.'
+            },
+            {
+                icon: 'fa-file-shield',
+                concept: 'CVE (Vulnerabilidades Comuns)',
+                desc: 'O sistema <span class="highlight-yellow">CVE</span> fornece nomes universais para vulnerabilidades conhecidas (ex: CVE-2019-6111), facilitando o compartilhamento de informações entre ferramentas e profissionais.',
+                task: 'Qual a finalidade principal do identificador CVE na cibersegurança?',
+                options: [
+                    'Fornecer uma nomenclatura universal para vulnerabilidades e exposições conhecidas',
+                    'Criptografar as comunicações entre o servidor de banco de dados e o site',
+                    'Armazenar as senhas de todos os usuários do sistema em um local seguro'
+                ],
+                correctText: 'Fornecer uma nomenclatura universal para vulnerabilidades e exposições conhecidas',
+                explanation: 'O CVE permite que todos os profissionais falem a mesma "língua" técnica sobre uma falha.'
+            },
+            {
+                icon: 'fa-bug',
+                concept: 'CWE (Fraquezas Comuns)',
+                desc: 'A <span class="highlight-cyan">CWE</span> é uma lista de tipos de fraquezas de software que são as causas básicas das vulnerabilidades, criando uma linguagem comum para desenvolvedores.',
+                task: 'Qual a diferença fundamental entre CVE e CWE?',
+                options: [
+                    'CVE foca em instâncias específicas de falhas; CWE foca no tipo de erro de software',
+                    'CVE é para redes Wi-Fi e CWE é exclusivamente para cabos Ethernet',
+                    'Não há diferença; ambos são nomes para o mesmo banco de dados do MITRE'
+                ],
+                correctText: 'CVE foca em instâncias específicas de falhas; CWE foca no tipo de erro de software',
+                explanation: 'CWE é a "doença" (ex: injeção); CVE é o "caso específico" (ex: falha no Apache v2.4).'
+            },
+            {
+                icon: 'fa-gauge-high',
+                concept: 'Pontuação CVSS',
+                desc: 'O <span class="highlight-green">CVSS</span> calcula a gravidade de uma falha em uma escala de 0 a 10, considerando métricas base (intrínsecas), temporais e ambientais.',
+                task: 'No sistema CVSS, qual pontuação representa uma vulnerabilidade de gravidade crítica?',
+                options: [
+                    '9.0 a 10.0',
+                    '1.0 a 3.0',
+                    '5.0 a 6.0'
+                ],
+                correctText: '9.0 a 10.0',
+                explanation: 'Pontuações acima de 9 indicam falhas que permitem controle total do sistema com facilidade.'
+            },
+            {
+                icon: 'fa-shield-halved',
+                concept: 'Priorização Estratégica',
+                desc: 'Vulnerabilidades em <span class="highlight-red">sistemas críticos</span> devem ser tratadas primeiro, mesmo que tenham gravidade menor que falhas em sistemas não essenciais.',
+                task: 'Além da pontuação CVSS, qual fator deve ditar a prioridade de correção?',
+                options: [
+                    'A criticidade do sistema para a missão do negócio do cliente',
+                    'A ordem alfabética dos nomes dos servidores na rede local',
+                    'A cor da interface de administração do software de servidor'
+                ],
+                correctText: 'A criticidade do sistema para a missão do negócio do cliente',
+                explanation: 'Proteger o "coração" da empresa é mais importante que corrigir falhas periféricas.'
+            },
+            {
+                icon: 'fa-tower-broadcast',
+                concept: 'US-CERT e JPCERT',
+                desc: 'Organizações como o <span class="highlight-cyan">US-CERT</span> e o JPCERT coordenam a divulgação de vulnerabilidades e promovem a resiliência das infraestruturas de internet nacionais.',
+                task: 'Qual o principal papel das equipes de CERT na comunidade global?',
+                options: [
+                    'Coordenar a divulgação de falhas e aumentar a eficiência do compartilhamento de dados',
+                    'Hackear proativamente outros governos para testar suas defesas nacionais',
+                    'Vender licenças de antivírus para cidadãos de baixa renda em seus países'
+                ],
+                correctText: 'Coordenar a divulgação de falhas e aumentar a eficiência do compartilhamento de dados',
+                explanation: 'Eles atuam como centros de resposta e inteligência contra ameaças em larga escala.'
+            },
+            {
+                icon: 'fa-microchip',
+                concept: 'CAPEC',
+                desc: 'A <span class="highlight-yellow">CAPEC</span> é um dicionário de padrões de ataque conhecidos, ajudando a identificar ameaças ativas com base em comportamentos vistos no mundo real.',
+                task: 'O que o catálogo CAPEC oferece aos profissionais de segurança?',
+                options: [
+                    'Um dicionário estruturado de padrões de ataque observados no mundo real',
+                    'Uma lista de preços para ferramentas físicas de hacking (como Rubber Ducky)',
+                    'Um manual de instruções sobre como trocar placas-mãe de servidores'
+                ],
+                correctText: 'Um dicionário estruturado de padrões de ataque observados no mundo real',
+                explanation: 'Mapear como os ataques acontecem ajuda a desenhar defesas mais inteligentes.'
+            },
+            {
+                icon: 'fa-bolt',
+                concept: 'Cadeia de Exploit',
+                desc: 'Vulnerabilidades de baixa gravidade podem ser perigosas se puderem ser <span class="highlight-red">encadeadas</span> para formar um ataque crítico.',
+                task: 'O que o termo "encadeamento de explorações" (exploit chaining) significa?',
+                options: [
+                    'Usar múltiplas vulnerabilidades em sequência para comprometer um sistema',
+                    'Mudar as senhas de todos os usuários para a mesma sequência de números',
+                    'Bloquear o acesso de rede de todos os hosts usando um único comando'
+                ],
+                correctText: 'Usar múltiplas vulnerabilidades em sequência para comprometer um sistema',
+                explanation: 'Pequenas brechas juntas podem levar ao controle total do domínio.'
+            },
+            {
+                icon: 'fa-check-double',
+                concept: 'Conclusão da Análise',
+                desc: 'A validação final de um achado é a <span class="highlight-green">exploração</span>. Se uma falha possui um módulo no Metasploit, ela deve ser considerada de alta prioridade.',
+                task: 'Qual o método definitivo para validar se um achado de scanner é real?',
+                options: [
+                    'Tentar explorar a vulnerabilidade (validação via exploração)',
+                    'Ler o manual de usuário do software para ver se ele cita o erro',
+                    'Reiniciar o servidor e ver se a mensagem de erro desaparece sozinha'
+                ],
+                correctText: 'Tentar explorar a vulnerabilidade (validação via exploração)',
+                explanation: 'A prova real da falha é conseguir explorá-la com sucesso.'
+            }
+        ];
+
+        let currentStep = 0;
+        let selectedIdx = null;
+        let hearts = 5;
+        let shuffledOptions = [];
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function render() {
+            if (currentStep >= phases.length) { showVictory(); return; }
+            const step = phases[currentStep];
+            const area = document.getElementById('gameArea');
+            const checkBtn = document.getElementById('checkBtn');
+            const progress = (currentStep / phases.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            selectedIdx = null;
+            checkBtn.disabled = true;
+            checkBtn.classList.remove('active');
+            updateHearts();
+
+            shuffledOptions = shuffle([...step.options]);
+
+            area.innerHTML = `
+                <div class="fixation-card">
+                    <i class="fas ${step.icon} concept-icon" style="color: var(--cyber-blue)"></i>
+                    <div class="text-[0.6rem] font-black uppercase tracking-widest mb-1" style="color: var(--cyber-blue)">3.4 • ANÁLISE DE RESULTADOS • Nível ${currentStep + 1}</div>
+                    <div class="concept-text">${step.concept}</div>
+                    <div class="concept-desc">${step.desc}</div>
+                    <div class="question-title">${step.task}</div>
+                    <div class="options-grid">
+                        ${shuffledOptions.map((opt, i) => `
+                            <div class="option-card" onclick="select(${i})">
+                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            area.scrollTop = 0;
+        }
+
+        function select(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function checkResponse() {
+            const step = phases[currentStep];
+            const isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            const popup = document.getElementById('feedbackPopup');
+            
+            document.querySelectorAll('.option-card').forEach((c, i) => {
+                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                else if (i === selectedIdx) c.classList.add('wrong');
+                c.classList.add('disabled', 'pointer-events-none');
+            });
+
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerText = "ANÁLISE VALIDADA!";
+                document.getElementById('fbTitle').className = "text-green-500 font-bold";
+                document.getElementById('fbMsg').innerText = step.explanation;
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                updateHearts();
+                document.getElementById('fbTitle').innerText = "ERRO DE TRIAGEM!";
+                document.getElementById('fbTitle').className = "text-red-500 font-bold";
+                document.getElementById('fbMsg').innerText = "O correto era: " + step.correctText;
+                popup.className = "feedback-overlay show wrong";
+                if (hearts <= 0) setTimeout(() => { alert("ACESSO NEGADO. Reiniciando!"); location.reload(); }, 500);
+            }
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            render();
+        }
+
+        function updateHearts() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            document.getElementById('gameArea').innerHTML = `
+                <div class="fixation-card text-center items-center flex flex-col" style="border-color: var(--cyber-blue)">
+                    <i class="fas fa-medal text-5xl text-yellow-400 mb-2"></i>
+                    <h2 class="text-xl font-bold text-white mb-1">AUDITOR DE VULNERABILIDADES!</h2>
+                    <p class="text-[0.7rem] text-gray-400 mb-4">Você compreendeu como analisar, priorizar e validar vulnerabilidades no Módulo 3.4.</p>
+                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-03.html'" style="background: var(--cyber-blue); color: black;">VOLTAR AO MÓDULO</button>
+                </div>
+            `;
+        }
+
+        render();
+    </script>
+</body>
+</html>

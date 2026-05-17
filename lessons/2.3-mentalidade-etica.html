@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Mentalidade e Ética 2.3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #ffb800;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(255, 184, 0, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
+        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+
+        .highlight-cyan { color: #00f2ff; font-weight: 700; }
+        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
+        .highlight-red { color: var(--cyber-red); font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+
+        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+
+        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(255, 184, 0, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+
+        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b38600; }
+
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
+        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-02.html'"></i>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const phases = [
+            {
+                icon: 'fa-user-check',
+                concept: 'Profissionalismo e Integridade',
+                desc: 'Hackers éticos usam ferramentas que seriam ilegais para fins legítimos. A <span class="highlight-cyan">ética</span> é o que diferencia o pentester de um criminoso comum.',
+                task: 'O que as empresas de teste de penetração fazem para garantir que seus funcionários sejam confiáveis?',
+                options: [
+                    'Realizam extensas verificações de antecedentes e exigem a assinatura de códigos de conduta',
+                    'Obrigam os funcionários a compartilhar suas senhas pessoais com o RH',
+                    'Permitem que os funcionários trabalhem sem qualquer tipo de contrato ou NDA'
+                ],
+                correctText: 'Realizam extensas verificações de antecedentes e exigem a assinatura de códigos de conduta',
+                explanation: 'A confiança é a base do relacionamento entre o auditor e o cliente.'
+            },
+            {
+                icon: 'fa-file-shield',
+                concept: 'NDA (Acordo de Confidencialidade)',
+                desc: 'Os <span class="highlight-yellow">Acordos de Não Divulgação (NDAs)</span> estabelecem penalidades rigorosas para o vazamento de informações sensíveis coletadas durante o teste.',
+                task: 'Qual a finalidade de um NDA em um compromisso de teste de penetração?',
+                options: [
+                    'Garantir que os dados e descobertas do teste permaneçam confidenciais',
+                    'Permitir que o testador venda as falhas encontradas para a concorrência',
+                    'Ocultar o valor total que será pago pelo serviço de auditoria'
+                ],
+                correctText: 'Garantir que os dados e descobertas do teste permaneçam confidenciais',
+                explanation: 'O vazamento de um relatório de pentest pode ser catastrófico para a segurança do cliente.'
+            },
+            {
+                icon: 'fa-handcuffs',
+                concept: 'Atividades Criminosas Reais',
+                desc: 'Caso o pentester descubra que um agressor real já comprometeu o sistema, ele deve <span class="highlight-red">identificar e relatar imediatamente</span> todas as atividades criminosas detectadas.',
+                task: 'O que você deve fazer ao encontrar evidências de uma invasão real em andamento durante seu teste?',
+                options: [
+                    'Interromper o teste e relatar a atividade criminosa ao cliente imediatamente',
+                    'Tentar disputar o controle do servidor com o outro hacker sem avisar ninguém',
+                    'Ignorar a presença do invasor e continuar com as tarefas do seu escopo'
+                ],
+                correctText: 'Interromper o teste e relatar a atividade criminosa ao cliente imediatamente',
+                explanation: 'A segurança do cliente é a prioridade; um ataque real exige resposta imediata da equipe de incidente.'
+            },
+            {
+                icon: 'fa-scale-unbalanced',
+                concept: 'Tolerância ao Risco',
+                desc: 'A <span class="highlight-cyan">Tolerância ao Risco</span> é a medida de quanto de um resultado indesejável uma organização aceita em troca de um benefício potencial.',
+                task: 'O que define a "Aceitação de Risco" em uma estratégia de governança?',
+                options: [
+                    'Indica que a organização está disposta a conviver com o nível de risco de uma atividade',
+                    'Significa que a empresa removeu 100% de todos os riscos cibernéticos existentes',
+                    'É o ato de culpar o testador de penetração por todas as falhas encontradas'
+                ],
+                correctText: 'Indica que a organização está disposta a conviver com o nível de risco de uma atividade',
+                explanation: 'Nem todo risco pode ser eliminado; alguns devem ser aceitos se o custo de correção for proibitivo.'
+            },
+            {
+                icon: 'fa-building-columns',
+                concept: 'Governança de Cibersegurança',
+                desc: 'Um programa de <span class="highlight-green">governança</span> examina o ambiente e a cultura da empresa, alinhando a conformidade com a tolerância ao risco organizacional.',
+                task: 'Qual o papel de um bom programa de governança em cibersegurança?',
+                options: [
+                    'Integrar processos comerciais com a conformidade e tolerância ao risco',
+                    'Substituir o departamento de TI por softwares de inteligência artificial',
+                    'Garantir que todos os funcionários usem a mesma marca de computador'
+                ],
+                correctText: 'Integrar processos comerciais com a conformidade e tolerância ao risco',
+                explanation: 'A governança garante que a segurança suporte os objetivos de negócio, não os atrapalhe.'
+            },
+            {
+                icon: 'fa-shield-heart',
+                concept: 'Responsabilidade Ética',
+                desc: 'Com grande poder vem <span class="highlight-yellow">grande responsabilidade</span>. O hacker ético defende os princípios de práticas responsáveis e legais.',
+                task: 'Por que o pentester deve limitar a verbosidade e invasividade de suas ferramentas?',
+                options: [
+                    'Para evitar interrupções desnecessárias nos sistemas e missões do cliente',
+                    'Para que o servidor não perceba que está sendo testado e esconda as falhas',
+                    'Porque ferramentas ruidosas consomem muita bateria do notebook do hacker'
+                ],
+                correctText: 'Para evitar interrupções desnecessárias nos sistemas e missões do cliente',
+                explanation: 'O teste deve ser o mais discreto possível para não prejudicar a operação do dia a dia.'
+            }
+        ];
+
+        let currentStep = 0;
+        let selectedIdx = null;
+        let hearts = 5;
+        let shuffledOptions = [];
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function render() {
+            if (currentStep >= phases.length) { showVictory(); return; }
+            const step = phases[currentStep];
+            const area = document.getElementById('gameArea');
+            const checkBtn = document.getElementById('checkBtn');
+            const progress = (currentStep / phases.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            selectedIdx = null;
+            checkBtn.disabled = true;
+            checkBtn.classList.remove('active');
+            updateHearts();
+
+            shuffledOptions = shuffle([...step.options]);
+
+            area.innerHTML = `
+                <div class="fixation-card">
+                    <i class="fas ${step.icon} concept-icon" style="color: var(--cyber-blue)"></i>
+                    <div class="text-[0.6rem] font-black uppercase tracking-widest mb-1" style="color: var(--cyber-blue)">2.3 • MENTALIDADE E ÉTICA • Nível ${currentStep + 1}</div>
+                    <div class="concept-text">${step.concept}</div>
+                    <div class="concept-desc">${step.desc}</div>
+                    <div class="question-title">${step.task}</div>
+                    <div class="options-grid">
+                        ${shuffledOptions.map((opt, i) => `
+                            <div class="option-card" onclick="select(${i})">
+                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            area.scrollTop = 0;
+        }
+
+        function select(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function checkResponse() {
+            const step = phases[currentStep];
+            const isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            const popup = document.getElementById('feedbackPopup');
+            
+            document.querySelectorAll('.option-card').forEach((c, i) => {
+                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                else if (i === selectedIdx) c.classList.add('wrong');
+                c.classList.add('disabled', 'pointer-events-none');
+            });
+
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerText = "VETOR VALIDADO!";
+                document.getElementById('fbTitle').className = "text-green-500 font-bold";
+                document.getElementById('fbMsg').innerText = step.explanation;
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                updateHearts();
+                document.getElementById('fbTitle').innerText = "PACOTE CORROMPIDO!";
+                document.getElementById('fbTitle').className = "text-red-500 font-bold";
+                document.getElementById('fbMsg').innerText = "O correto era: " + step.correctText;
+                popup.className = "feedback-overlay show wrong";
+                if (hearts <= 0) setTimeout(() => { alert("ACESSO BLOQUEADO. Reiniciando!"); location.reload(); }, 500);
+            }
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            render();
+        }
+
+        function updateHearts() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            document.getElementById('gameArea').innerHTML = `
+                <div class="fixation-card text-center items-center flex flex-col" style="border-color: var(--cyber-blue)">
+                    <i class="fas fa-medal text-5xl text-yellow-400 mb-2"></i>
+                    <h2 class="text-xl font-bold text-white mb-1">ÉTICA DOMINADA!</h2>
+                    <p class="text-[0.7rem] text-gray-400 mb-4">Você compreendeu o profissionalismo, integridade e gestão de risco necessários no Módulo 2.3.</p>
+                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-02.html'" style="background: var(--cyber-blue); color: black;">VOLTAR AO MÓDULO</button>
+                </div>
+            `;
+        }
+
+        render();
+    </script>
+</body>
+</html>

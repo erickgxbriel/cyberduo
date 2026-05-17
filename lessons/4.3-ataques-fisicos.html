@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Ataques Físicos 4.3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #ff00ff;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(255, 0, 255, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
+        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+
+        .highlight-cyan { color: #00f2ff; font-weight: 700; }
+        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
+        .highlight-red { color: var(--cyber-red); font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+        .highlight-magenta { color: #ff00ff; font-weight: 700; }
+
+        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+
+        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(255, 0, 255, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+
+        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #990099; }
+
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
+        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-04.html'"></i>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const phases = [
+            {
+                icon: 'fa-door-open',
+                concept: 'Tailgating e Piggybacking',
+                desc: 'No <span class="highlight-magenta">Tailgating</span>, uma pessoa não autorizada entra logo atrás de uma autorizada sem permissão. No <span class="highlight-magenta">Piggybacking</span>, há consentimento da pessoa autorizada.',
+                task: 'Qual a diferença fundamental entre Tailgating e Piggybacking?',
+                options: [
+                    'O consentimento da pessoa autorizada para a entrada',
+                    'O tipo de fechadura eletrônica utilizada',
+                    'A velocidade com que as portas se fecham'
+                ],
+                correctText: 'O consentimento da pessoa autorizada para a entrada',
+                explanation: 'Enquanto o tailgater se aproveita da porta aberta, o piggybacker convence o funcionário a segurá-la.'
+            },
+            {
+                icon: 'fa-shield-virus',
+                concept: 'Vestíbulos de Controle',
+                desc: 'Vestíbulos de controle de acesso (mantraps) usam <span class="highlight-green">dois conjuntos de portas</span> onde a primeira deve fechar antes da segunda abrir.',
+                task: 'Qual o principal benefício de um vestíbulo de controle de acesso (mantrap)?',
+                options: [
+                    'Prevenir o tailgating permitindo apenas uma pessoa por vez',
+                    'Aumentar o fluxo de pessoas na entrada da empresa',
+                    'Economizar energia elétrica no sistema de climatização'
+                ],
+                correctText: 'Prevenir o tailgating permitindo apenas uma pessoa por vez',
+                explanation: 'A identificação obrigatória em um espaço confinado impede entradas em grupo não autorizadas.'
+            },
+            {
+                icon: 'fa-trash-can',
+                concept: 'Dumpster Diving',
+                desc: 'O <span class="highlight-yellow">Dumpster Diving</span> (mergulho em lixeira) busca informações privadas em contêineres de lixo e reciclagem da organização.',
+                task: 'Qual a melhor prática para evitar o vazamento de dados via Dumpster Diving?',
+                options: [
+                    'Triturar ou incinerar todos os documentos confidenciais',
+                    'Colocar cadeados plásticos em todas as lixeiras',
+                    'Misturar lixo orgânico com documentos de papel'
+                ],
+                correctText: 'Triturar ou incinerar todos os documentos confidenciais',
+                explanation: 'Informações em papel, discos rígidos ou mídias removíveis descartadas incorretamente são minas de ouro para hackers.'
+            },
+            {
+                icon: 'fa-eye',
+                concept: 'Shoulder Surfing',
+                desc: 'A <span class="highlight-red">Espionagem Visual</span> ocorre quando alguém observa senhas ou PII espiando por cima do ombro da vítima ou usando câmeras ocultas.',
+                task: 'Onde a espionagem visual (shoulder surfing) tende a ser mais bem-sucedida?',
+                options: [
+                    'Em locais públicos lotados e cafeterias',
+                    'Em servidores de bancos de dados isolados',
+                    'Dentro de cabines de votação eletrônica'
+                ],
+                correctText: 'Em locais públicos lotados e cafeterias',
+                explanation: 'A falta de filtros de tela e a proximidade física facilitam a observação de dados sensíveis.'
+            },
+            {
+                icon: 'fa-id-card-clip',
+                concept: 'Clonagem de Crachás',
+                desc: 'A <span class="highlight-cyan">Clonagem</span> de crachás usa hardware especializado para copiar as capacidades de radiofrequência (RF) de cartões de acesso.',
+                task: 'Como um agressor pode obter informações para criar um crachá falso convincente?',
+                options: [
+                    'Analisando fotos de funcionários com crachás expostos em redes sociais',
+                    'Ligando para a recepção e pedindo o modelo do cartão',
+                    'Comprando crachás genéricos em papelarias comuns'
+                ],
+                correctText: 'Analisando fotos de funcionários com crachás expostos em redes sociais',
+                explanation: 'Fotos em redes sociais como LinkedIn ou Instagram revelam o design e os detalhes visuais necessários para personificação.'
+            },
+            {
+                icon: 'fa-camera',
+                concept: 'Câmeras e Filtros',
+                desc: 'A prevenção contra ataques físicos envolve o uso de <span class="highlight-green">videovigilância</span> e filtros de tela que limitam o ângulo de visão lateral.',
+                task: 'Qual acessório físico ajuda a mitigar o Shoulder Surfing em laptops?',
+                options: [
+                    'Filtros de tela especiais para privacidade',
+                    'Aumento do brilho máximo do monitor',
+                    'Uso de teclados mecânicos barulhentos'
+                ],
+                correctText: 'Filtros de tela especiais para privacidade',
+                explanation: 'Filtros de privacidade tornam a tela preta para quem olha de lado, protegendo o conteúdo.'
+            },
+            {
+                icon: 'fa-biohazard',
+                concept: 'Mídia Removível',
+                desc: 'Mergulhadores de lixeira não buscam apenas papel; eles procuram <span class="highlight-red">discos rígidos</span> e mídias USB que não foram destruídas fisicamente.',
+                task: 'Além de papel, o que mais pode ser alvo de dumpster diving tecnológico?',
+                options: [
+                    'Discos rígidos e mídias removíveis descartadas',
+                    'Cabos de força e adaptadores de tomada',
+                    'Embalagens de papelão de novos servidores'
+                ],
+                correctText: 'Discos rígidos e mídias removíveis descartadas',
+                explanation: 'A destruição lógica (apagar arquivos) muitas vezes não é suficiente; a destruição física é recomendada.'
+            },
+            {
+                icon: 'fa-person-walking-arrow-right',
+                concept: 'Controles Preventivos',
+                desc: 'Catracas e seguranças são <span class="highlight-green">controles de segurança preventivos</span>, embora menos eficazes que os vestíbulos automatizados.',
+                task: 'Qual destes é um exemplo de controle preventivo contra entrada física não autorizada?',
+                options: [
+                    'Uso de vestíbulos de controle de acesso (mantraps)',
+                    'Análise de logs de rede após uma invasão',
+                    'Backup semanal dos arquivos do servidor'
+                ],
+                correctText: 'Uso de vestíbulos de controle de acesso (mantraps)',
+                explanation: 'Controles preventivos visam impedir o incidente antes que ele ocorra fisicamente.'
+            }
+        ];
+
+        let currentStep = 0;
+        let hearts = 5;
+        let selectedOption = null;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderHearts() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function loadPhase() {
+            if (currentStep >= phases.length) { showVictory(); return; }
+            const phase = phases[currentStep];
+            const area = document.getElementById('gameArea');
+            const shuffledOptions = shuffle([...phase.options]);
+
+            area.innerHTML = `
+                <div class="fixation-card">
+                    <i class="fas ${phase.icon} concept-icon text-fuchsia-500"></i>
+                    <div class="text-[0.6rem] text-fuchsia-500 font-black uppercase tracking-widest mb-1">4.3 • ATAQUES FÍSICOS • Nível ${currentStep + 1}</div>
+                    <div class="concept-text">${phase.concept}</div>
+                    <div class="concept-desc">${phase.desc}</div>
+                    <div class="question-title">${phase.task}</div>
+                    <div class="options-grid">
+                        ${shuffledOptions.map((opt, i) => `
+                            <div class="option-card" onclick="select(this)">
+                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            document.getElementById('progressFill').style.width = `${(currentStep / phases.length) * 100}%`;
+            document.getElementById('checkBtn').disabled = true;
+            document.getElementById('checkBtn').classList.remove('active');
+            selectedOption = null;
+            area.scrollTop = 0;
+        }
+
+        function select(el) {
+            if (document.getElementById('feedbackPopup').classList.contains('show')) return;
+            document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedOption = el;
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function checkResponse() {
+            const phase = phases[currentStep];
+            const isCorrect = selectedOption.innerText.trim().includes(phase.correctText);
+            const popup = document.getElementById('feedbackPopup');
+            
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerText = "PERÍMETRO PROTEGIDO!";
+                document.getElementById('fbTitle').className = "text-green-500 font-bold";
+                document.getElementById('fbMsg').innerText = phase.explanation;
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                renderHearts();
+                document.getElementById('fbTitle').innerText = "BRECHA FÍSICA DETECTADA!";
+                document.getElementById('fbTitle').className = "text-red-500 font-bold";
+                document.getElementById('fbMsg').innerText = "O correto era: " + phase.correctText;
+                popup.className = "feedback-overlay show wrong";
+                if (hearts <= 0) setTimeout(() => { alert("ACESSO FÍSICO NEGADO. Reiniciando!"); location.reload(); }, 500);
+            }
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            loadPhase();
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            document.getElementById('gameArea').innerHTML = `
+                <div class="fixation-card text-center items-center flex flex-col" style="border-color: #ff00ff">
+                    <i class="fas fa-medal text-5xl text-yellow-400 mb-2"></i>
+                    <h2 class="text-xl font-bold text-white mb-1">AUDITORIA FÍSICA CONCLUÍDA!</h2>
+                    <p class="text-[0.7rem] text-gray-400 mb-4">Você dominou as skills de proteção de perímetro e acesso físico do Módulo 4.3.</p>
+                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-04.html'" style="background: #ff00ff; color: white; border-bottom: 4px solid #990099;">VOLTAR AO MÓDULO</button>
+                </div>
+            `;
+        }
+
+        renderHearts();
+        loadPhase();
+    </script>
+</body>
+</html>

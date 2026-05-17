@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Ataques de Engenharia Social 4.2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #ff00ff;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(255, 0, 255, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
+        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+
+        .highlight-cyan { color: #00f2ff; font-weight: 700; }
+        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
+        .highlight-red { color: var(--cyber-red); font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+        .highlight-magenta { color: #ff00ff; font-weight: 700; }
+
+        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+
+        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(255, 0, 255, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+
+        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #990099; }
+
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
+        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-04.html'"></i>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const phases = [
+            {
+                icon: 'fa-envelope',
+                concept: 'Mecânica do Phishing',
+                desc: 'No <span class="highlight-magenta">Phishing</span>, o agressor apresenta um link ou anexo que parece confiável para induzir a vítima a revelar credenciais ou baixar malware.',
+                task: 'Qual a tática comum de phishing observada pela Protego em honeypots?',
+                options: [
+                    'E-mails sobre descontos falsos, prêmios ou recalls de produtos',
+                    'Ataques de força bruta contra senhas de roteadores',
+                    'Substituição física de hardware em data centers'
+                ],
+                correctText: 'E-mails sobre descontos falsos, prêmios ou recalls de produtos',
+                explanation: 'Ofertas falsas e alertas de recall são iscas altamente eficazes para atrair cliques.'
+            },
+            {
+                icon: 'fa-crosshairs',
+                concept: 'Spear Phishing',
+                desc: 'O <span class="highlight-yellow">Spear Phishing</span> é altamente direcionado. O agressor estuda a vítima para fazer o e-mail parecer vir de uma fonte confiável dentro da empresa.',
+                task: 'O que caracteriza o Spear Phishing (Phishing de Lança)?',
+                options: [
+                    'É uma tentativa construída de forma específica e destinada a alvos selecionados',
+                    'É um ataque enviado para milhões de usuários aleatórios mundialmente',
+                    'É um ataque que ocorre exclusivamente via rádio de alta frequência'
+                ],
+                correctText: 'É uma tentativa construída de forma específica e destinada a alvos selecionados',
+                explanation: 'A personalização baseada em pesquisa prévia aumenta drasticamente a taxa de sucesso.'
+            },
+            {
+                icon: 'fa-crown',
+                concept: 'Whaling (Caça à Baleia)',
+                desc: 'O <span class="highlight-red">Whaling</span> atinge executivos de alto perfil (CEO, diretores) com e-mails sérios e oficiais sobre temas críticos de negócios.',
+                task: 'Qual o alvo principal de um ataque de Whaling?',
+                options: [
+                    'Executivos de alto perfil e indivíduos-chave na empresa',
+                    'Estagiários e novos contratados sem privilégios de acesso',
+                    'Apenas usuários de redes sociais públicas e gratuitas'
+                ],
+                correctText: 'Executivos de alto perfil e indivíduos-chave na empresa',
+                explanation: 'O objetivo é roubar informações confidenciais ou comprometer contas de alto valor organizacional.'
+            },
+            {
+                icon: 'fa-phone-volume',
+                concept: 'Vishing (Voice Phishing)',
+                desc: 'O <span class="highlight-cyan">Vishing</span> ocorre via conversação telefônica. O agressor falsifica o ID de chamada para convencer a vítima a revelar dados privados.',
+                task: 'Qual o objetivo típico de um ataque de Vishing?',
+                options: [
+                    'Roubar números de cartão de crédito e Previdência Social por telefone',
+                    'Aumentar a velocidade da conexão de internet do alvo',
+                    'Atualizar o firmware do celular da vítima remotamente'
+                ],
+                correctText: 'Roubar números de cartão de crédito e Previdência Social por telefone',
+                explanation: 'A voz e a personificação de autoridade facilitam a extração de dados financeiros.'
+            },
+            {
+                icon: 'fa-comment-sms',
+                concept: 'Smishing e SMS',
+                desc: 'O <span class="highlight-magenta">Smishing</span> usa SMS para enviar links maliciosos (ex: golpes de bitcoin ou problemas com pedidos) para enganar o usuário.',
+                task: 'Como mitigar ataques de phishing via SMS (Smishing)?',
+                options: [
+                    'Não clicar em links de remetentes desconhecidos e verificar no site oficial',
+                    'Responder ao SMS pedindo para o hacker parar o ataque',
+                    'Desligar o sinal de celular permanentemente em áreas urbanas'
+                ],
+                correctText: 'Não clicar em links de remetentes desconhecidos e verificar no site oficial',
+                explanation: 'Ir direto à fonte (app do banco ou site da Amazon) evita o redirecionamento malicioso.'
+            },
+            {
+                icon: 'fa-usb',
+                concept: 'USB Key Drop',
+                desc: 'Ataques de <span class="highlight-red">Drop de Chave USB</span> exploram a curiosidade humana ao deixar pendrives infectados em locais estratégicos (ex: estacionamento).',
+                task: 'De acordo com pesquisas do Google, qual a eficácia do ataque de USB Drop?',
+                options: [
+                    'Cerca de 45% das pessoas conectam a unidade e clicam nos arquivos',
+                    'Menos de 1% das pessoas se sentem tentadas a pegar o pendrive',
+                    'O ataque é impossível em sistemas operacionais modernos'
+                ],
+                correctText: 'Cerca de 45% das pessoas conectam a unidade e clicam nos arquivos',
+                explanation: 'A curiosidade e o desejo de devolver o objeto superam a cautela de segurança.'
+            },
+            {
+                icon: 'fa-droplet',
+                concept: 'Watering Hole',
+                desc: 'No <span class="highlight-magenta">Watering Hole</span>, o agressor compromete sites que a vítima acessa habitualmente, injetando código que redireciona para um exploit.',
+                task: 'O que acontece em um ataque de Watering Hole (Ponto de Dessedentação)?',
+                options: [
+                    'O agressor infecta um site legítimo que o alvo frequenta habitualmente',
+                    'O agressor envia milhares de e-mails para um servidor de e-mail público',
+                    'O agressor desativa fisicamente a rede elétrica da empresa alvo'
+                ],
+                correctText: 'O agressor infecta um site legítimo que o alvo frequenta habitualmente',
+                explanation: 'É um ataque direcionado que espera a vítima "ir até o bebedouro" (site conhecido).'
+            },
+            {
+                icon: 'fa-arrows-split-up-and-left',
+                concept: 'Ataque de Pivô',
+                desc: 'O <span class="highlight-yellow">Ataque de Pivô</span> ocorre quando o redirecionamento malicioso é usado para obter uma base na rede interna por espionagem.',
+                task: 'Qual o objetivo de um ataque de pivô no contexto de sites comprometidos?',
+                options: [
+                    'Obter uma base na rede da organização para espionagem ou outros ataques',
+                    'Aumentar o número de seguidores nas redes sociais da vítima',
+                    'Formatar todos os computadores conectados ao Wi-Fi público'
+                ],
+                correctText: 'Obter uma base na rede da organização para espionagem ou outros ataques',
+                explanation: 'O pivô usa um sistema comprometido para atacar outros sistemas internos protegidos.'
+            },
+            {
+                icon: 'fa-user-shield',
+                concept: 'Mitigação Estratégica',
+                desc: 'A defesa envolve <span class="highlight-green">políticas de segurança</span>, educação do usuário, navegadores virtuais seguros e atualizações frequentes.',
+                task: 'Qual a medida fundamental para evitar ataques de Watering Hole em empresas?',
+                options: [
+                    'Educação do usuário e uso de navegadores virtuais seguros',
+                    'Desativação completa de todos os sites de notícias e blogs',
+                    'Troca de todas as senhas dos funcionários a cada 2 horas'
+                ],
+                correctText: 'Educação do usuário e uso de navegadores virtuais seguros',
+                explanation: 'O isolamento do navegador impede que o código de exploit afete o sistema principal.'
+            }
+        ];
+
+        let currentStep = 0;
+        let hearts = 5;
+        let selectedOption = null;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderHearts() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function loadPhase() {
+            if (currentStep >= phases.length) { showVictory(); return; }
+            const phase = phases[currentStep];
+            const area = document.getElementById('gameArea');
+            const shuffledOptions = shuffle([...phase.options]);
+
+            area.innerHTML = `
+                <div class="fixation-card">
+                    <i class="fas ${phase.icon} concept-icon text-fuchsia-500"></i>
+                    <div class="text-[0.6rem] text-fuchsia-500 font-black uppercase tracking-widest mb-1">4.2 • ATAQUES SOCIAIS • Nível ${currentStep + 1}</div>
+                    <div class="concept-text">${phase.concept}</div>
+                    <div class="concept-desc">${phase.desc}</div>
+                    <div class="question-title">${phase.task}</div>
+                    <div class="options-grid">
+                        ${shuffledOptions.map((opt, i) => `
+                            <div class="option-card" onclick="select(this)">
+                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            document.getElementById('progressFill').style.width = `${(currentStep / phases.length) * 100}%`;
+            document.getElementById('checkBtn').disabled = true;
+            document.getElementById('checkBtn').classList.remove('active');
+            selectedOption = null;
+            area.scrollTop = 0;
+        }
+
+        function select(el) {
+            if (document.getElementById('feedbackPopup').classList.contains('show')) return;
+            document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedOption = el;
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function checkResponse() {
+            const phase = phases[currentStep];
+            const isCorrect = selectedOption.innerText.trim().includes(phase.correctText);
+            const popup = document.getElementById('feedbackPopup');
+            
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerText = "VETOR BLOQUEADO!";
+                document.getElementById('fbTitle').className = "text-green-500 font-bold";
+                document.getElementById('fbMsg').innerText = phase.explanation;
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                renderHearts();
+                document.getElementById('fbTitle').innerText = "VÍTIMA COMPROMETIDA!";
+                document.getElementById('fbTitle').className = "text-red-500 font-bold";
+                document.getElementById('fbMsg').innerText = "O correto era: " + phase.correctText;
+                popup.className = "feedback-overlay show wrong";
+                if (hearts <= 0) setTimeout(() => { alert("FALHA CRÍTICA. Reiniciando!"); location.reload(); }, 500);
+            }
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            loadPhase();
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            document.getElementById('gameArea').innerHTML = `
+                <div class="fixation-card text-center items-center flex flex-col" style="border-color: #ff00ff">
+                    <i class="fas fa-bullseye text-5xl text-magenta-400 mb-2" style="color: #ff00ff"></i>
+                    <h2 class="text-xl font-bold text-white mb-1">DEFESA SOCIAL CONCLUÍDA!</h2>
+                    <p class="text-[0.7rem] text-gray-400 mb-4">Você dominou exaustivamente todos os vetores de ataque social do Módulo 4.2.</p>
+                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-04.html'" style="background: #ff00ff; color: white; border-bottom: 4px solid #990099;">VOLTAR AO MÓDULO</button>
+                </div>
+            `;
+        }
+
+        renderHearts();
+        loadPhase();
+    </script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Código Inseguro 6.12</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00f2ff;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 242, 255, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
+        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+
+        .highlight-cyan { color: var(--cyber-blue); font-weight: 700; }
+        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
+        .highlight-red { color: var(--cyber-red) !important; font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+
+        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+
+        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 242, 255, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+
+        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #0099a1; }
+
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
+        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-06.html'"></i>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const phases = [
+            {
+                icon: 'fa-user-ninja',
+                concept: 'Segurança Shift-Left',
+                desc: 'A abordagem <span class="highlight-cyan">Shift-Left</span> envolve os desenvolvedores na correção ativa de práticas inseguras desde o início do ciclo de vida do software.',
+                task: 'O que caracteriza a abordagem "Shift-Left" na segurança de software?',
+                options: [
+                    'Desenvolvedores assumem responsabilidade ativa pela segurança durante a codificação',
+                    'Testes de segurança são feitos apenas após o produto ser lançado no mercado',
+                    'Remoção completa de todos os scanners automáticos de código do repositório'
+                ],
+                correctText: 'Desenvolvedores assumem responsabilidade ativa pela segurança durante a codificação',
+                explanation: 'Mover a segurança para a "esquerda" significa integrá-la às fases iniciais do desenvolvimento.'
+            },
+            {
+                icon: 'fa-bug',
+                concept: 'Vazamento em Comentários',
+                desc: 'A <span class="highlight-yellow">CWE-615</span> aborda a exposição de informações sensíveis (senhas, chaves de API) deixadas por desenvolvedores em comentários do código-fonte.',
+                task: 'Qual o risco de deixar detalhes técnicos em comentários no código-fonte?',
+                options: [
+                    'Fornecer informações sensíveis que um atacante pode descobrir e usar',
+                    'Aumentar o tamanho do arquivo binário final de forma descontrolada',
+                    'Reduzir a velocidade de processamento do processador central (CPU)'
+                ],
+                correctText: 'Fornecer informações sensíveis que um atacante pode descobrir e usar',
+                explanation: 'Atacantes frequentemente revisam o código em busca de segredos esquecidos.'
+            },
+            {
+                icon: 'fa-triangle-exclamation',
+                concept: 'Tratamento de Erros',
+                desc: 'Tratamento de erro <span class="highlight-red">inadequado</span> pode fornecer dumps de banco de dados e rastreamentos de pilha valiosos para um atacante.',
+                task: 'Qual a prática recomendada para mensagens de erro em produção?',
+                options: [
+                    'Fornecer mensagens amigáveis ao usuário e sem detalhes técnicos para atacantes',
+                    'Exibir o rastreio completo da pilha (stack trace) para qualquer visitante',
+                    'Desligar o servidor sempre que um erro de processamento ocorrer'
+                ],
+                correctText: 'Fornecer mensagens amigáveis ao usuário e sem detalhes técnicos para atacantes',
+                explanation: 'Informações de diagnóstico devem ser enviadas apenas para logs internos protegidos.'
+            },
+            {
+                icon: 'fa-key',
+                concept: 'Credenciais Hardcoded',
+                desc: 'Credenciais com <span class="highlight-red">código fixo</span> (CWE-798) são falhas catastróficas que permitem o comprometimento total de um sistema.',
+                task: 'Por que credenciais "hardcoded" são consideradas um risco crítico?',
+                options: [
+                    'Porque são difíceis de alterar e podem ser extraídas do código por qualquer um',
+                    'Porque tornam o código mais legível e fácil de manter pela equipe',
+                    'Porque impedem que o software seja instalado em sistemas operacionais móveis'
+                ],
+                correctText: 'Porque são difíceis de alterar e podem ser extraídas do código por qualquer um',
+                explanation: 'Senhas nunca devem estar no código; use cofres de segredos ou variáveis de ambiente.'
+            },
+            {
+                icon: 'fa-bolt',
+                concept: 'Condição de Corrida',
+                desc: 'Uma <span class="highlight-yellow">Condição de Corrida</span> (TOCTOU) ocorre quando um sistema tenta realizar operações simultâneas que dependem de uma sequência específica.',
+                task: 'O que o termo TOCTOU (Time of Check to Time of Use) descreve?',
+                options: [
+                    'A janela de tempo entre a verificação de segurança e a execução da ação',
+                    'O tempo total que o usuário leva para digitar sua senha de acesso',
+                    'A velocidade com que os dados viajam entre o cliente e o servidor'
+                ],
+                correctText: 'A janela de tempo entre a verificação de segurança e a execução da ação',
+                explanation: 'O atacante tenta agir exatamente nesse intervalo para burlar o controle de segurança.'
+            },
+            {
+                icon: 'fa-network-wired',
+                concept: 'Protocolos de API',
+                desc: 'APIs modernas utilizam tecnologias como <span class="highlight-cyan">SOAP</span> (XML), <span class="highlight-cyan">REST</span> (JSON) e <span class="highlight-cyan">GraphQL</span> (linguagem de consulta).',
+                task: 'Qual tecnologia de API é baseada exclusivamente em XML e XSD?',
+                options: [
+                    'SOAP (Simple Object Access Protocol)',
+                    'REST (Representational State Transfer)',
+                    'GraphQL'
+                ],
+                correctText: 'SOAP (Simple Object Access Protocol)',
+                explanation: 'O SOAP é um protocolo rígido que utiliza XML para mensagens, comum em sistemas legados.'
+            },
+            {
+                icon: 'fa-book-atlas',
+                concept: 'Documentação de API',
+                desc: 'Pentesters usam documentos como <span class="highlight-yellow">Swagger (OpenAPI)</span>, WSDL e WADL para identificar roteiros e vetores de ataque em APIs.',
+                task: 'Qual framework é a base da Especificação OpenAPI (OAS) para documentação de APIs?',
+                options: [
+                    'Swagger',
+                    'Wireshark',
+                    'Metasploit'
+                ],
+                correctText: 'Swagger',
+                explanation: 'A documentação Swagger fornece detalhes valiosos sobre os endpoints e parâmetros da API.'
+            },
+            {
+                icon: 'fa-filter',
+                concept: 'Fuzzing de API',
+                desc: 'O <span class="highlight-red">Fuzzing</span> automatizado injeta dados malformados (caracteres especiais, valores gigantes) para encontrar bugs de implementação.',
+                task: 'De acordo com o OWASP, o que caracteriza a técnica de Fuzzing?',
+                options: [
+                    'Encontrar bugs usando injeção automática de dados malformados',
+                    'Criptografar todas as comunicações entre o cliente e o servidor',
+                    'Desativar o suporte a cookies no navegador do desenvolvedor'
+                ],
+                correctText: 'Encontrar bugs usando injeção automática de dados malformados',
+                explanation: 'O fuzzing ajuda a descobrir falhas inesperadas na lógica de tratamento de entrada.'
+            },
+            {
+                icon: 'fa-shield-halved',
+                concept: 'Mitigação de APIs',
+                desc: 'Práticas essenciais incluem <span class="highlight-green">saneamento de dados</span>, uso de HTTPS/TLS forte e autenticação robusta para todos os endpoints.',
+                task: 'Qual a recomendação primária para proteger serviços de API?',
+                options: [
+                    'Fornecer pontos de saída HTTPS apenas com versões fortes do TLS',
+                    'Permitir que qualquer usuário anônimo acesse a documentação interna',
+                    'Ocultar o endereço IP do servidor web usando um proxy gratuito'
+                ],
+                correctText: 'Fornecer pontos de saída HTTPS apenas com versões fortes do TLS',
+                explanation: 'A criptografia em trânsito é o requisito básico para qualquer comunicação segura de API.'
+            },
+            {
+                icon: 'fa-signature',
+                concept: 'Assinatura de Código',
+                desc: 'A <span class="highlight-cyan">Assinatura Digital</span> verifica se o software não foi modificado. O par de chaves identifica e autentica o desenvolvedor.',
+                task: 'O que acontece se um software assinado for modificado por um atacante?',
+                options: [
+                    'A chave pública não conseguirá verificar a autenticidade da assinatura',
+                    'O software rodará mais rápido devido à remoção de metadados',
+                    'O sistema operacional ignorará a alteração e executará o código normalmente'
+                ],
+                correctText: 'A chave pública não conseguirá verificar a autenticidade da assinatura',
+                explanation: 'A quebra da assinatura alerta o sistema de que o binário foi corrompido ou adulterado.'
+            },
+            {
+                icon: 'fa-shield-halved',
+                concept: 'Subresource Integrity (SRI)',
+                desc: 'O <span class="highlight-green">SRI</span> permite que o navegador forneça um hash de busca de arquivo para garantir que bibliotecas JS não foram manipuladas.',
+                task: 'Como o SRI garante que os arquivos entregues são legítimos?',
+                options: [
+                    'Comparando o hash do arquivo buscado com um valor de verificação esperado',
+                    'Bloqueando o download de qualquer arquivo que não venha do GitHub',
+                    'Criptografando o código JavaScript no lado do servidor'
+                ],
+                correctText: 'Comparando o hash do arquivo buscado com um valor de verificação esperado',
+                explanation: 'Se o hash for diferente, o navegador recusa a execução do script manipulado.'
+            },
+            {
+                icon: 'fa-magnifying-glass',
+                concept: 'Proxies de Interceptação',
+                desc: 'Ferramentas como <span class="highlight-cyan">Burp Suite</span> e <span class="highlight-cyan">OWASP ZAP</span> permitem interceptar e modificar transações entre o navegador e o servidor.',
+                task: 'Qual a função de um proxy da web em um teste de penetração?',
+                options: [
+                    'Interceptar, modificar ou excluir transações entre o navegador e o app',
+                    'Proteger o computador do atacante contra vírus de internet',
+                    'Aumentar a velocidade de download de arquivos do servidor alvo'
+                ],
+                correctText: 'Interceptar, modificar ou excluir transações entre o navegador e o app',
+                explanation: 'Proxies são ferramentas indispensáveis para análise manual de tráfego HTTP/HTTPS.'
+            },
+            {
+                icon: 'fa-list-check',
+                concept: 'Enumeração de Diretórios',
+                desc: 'Ferramentas modernas como <span class="highlight-yellow">gobuster</span> usam listas de palavras para enumerar arquivos e diretórios ocultos em servidores.',
+                task: 'O que as ferramentas de enumeração utilizam para descobrir caminhos ocultos?',
+                options: [
+                    'Listas de palavras (wordlists) contendo inúmeros termos comuns',
+                    'Sinais de rádio de alta frequência emitidos pelo servidor',
+                    'Consultas diretas ao administrador do sistema via chat'
+                ],
+                correctText: 'Listas de palavras (wordlists) contendo inúmeros termos comuns',
+                explanation: 'A força bruta de diretórios revela superfícies de ataque que não estão linkadas publicamente.'
+            },
+            {
+                icon: 'fa-book-open',
+                concept: 'Metodologia WSTG',
+                desc: 'O <span class="highlight-green">Web Security Testing Guide (WSTG)</span> do OWASP é o guia padrão para testar uma ampla gama de vulnerabilidades web.',
+                task: 'Por que o guia WSTG do OWASP é considerado indispensável para profissionais?',
+                options: [
+                    'Oferece recomendações concretas e metodologias para teste de vulnerabilidades',
+                    'É um manual de instalação para placas de vídeo de alta performance',
+                    'Contém as senhas padrão de todos os roteadores do mercado'
+                ],
+                correctText: 'Oferece recomendações concretas e metodologias para teste de vulnerabilidades',
+                explanation: 'O WSTG padroniza como auditorias de segurança devem ser realizadas mundialmente.'
+            }
+        ];
+
+        let currentStep = 0;
+        let selectedIdx = null;
+        let hearts = 5;
+        let shuffledOptions = [];
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function render() {
+            if (currentStep >= phases.length) { showVictory(); return; }
+            const step = phases[currentStep];
+            const area = document.getElementById('gameArea');
+            const checkBtn = document.getElementById('checkBtn');
+            const progress = (currentStep / phases.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            selectedIdx = null;
+            checkBtn.disabled = true;
+            checkBtn.classList.remove('active');
+            updateHearts();
+
+            shuffledOptions = shuffle([...step.options]);
+
+            area.innerHTML = `
+                <div class="fixation-card">
+                    <i class="fas ${step.icon} concept-icon text-cyan-400"></i>
+                    <div class="text-[0.6rem] text-cyan-400 font-black uppercase tracking-widest mb-1">6.12 • CÓDIGO INSEGURO • Nível ${currentStep + 1}</div>
+                    <div class="concept-text">${step.concept}</div>
+                    <div class="concept-desc">${step.desc}</div>
+                    <div class="question-title">${step.task}</div>
+                    <div class="options-grid">
+                        ${shuffledOptions.map((opt, i) => `
+                            <div class="option-card" onclick="select(${i})">
+                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            area.scrollTop = 0;
+        }
+
+        function select(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function checkResponse() {
+            const step = phases[currentStep];
+            const isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            const popup = document.getElementById('feedbackPopup');
+            
+            document.querySelectorAll('.option-card').forEach((c, i) => {
+                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                else if (i === selectedIdx) c.classList.add('wrong');
+                c.classList.add('disabled', 'pointer-events-none');
+            });
+
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerText = "CÓDIGO VALIDADO!";
+                document.getElementById('fbTitle').className = "text-green-500 font-bold";
+                document.getElementById('fbMsg').innerText = step.explanation;
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                updateHearts();
+                document.getElementById('fbTitle').innerText = "VULNERABILIDADE DETECTADA!";
+                document.getElementById('fbTitle').className = "text-red-500 font-bold";
+                document.getElementById('fbMsg').innerText = "O correto era: " + step.correctText;
+                popup.className = "feedback-overlay show wrong";
+                if (hearts <= 0) setTimeout(() => { alert("DEBUG FALHOU. Reiniciando!"); location.reload(); }, 500);
+            }
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            render();
+        }
+
+        function updateHearts() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            document.getElementById('gameArea').innerHTML = `
+                <div class="fixation-card text-center items-center flex flex-col" style="border-color: var(--cyber-green)">
+                    <i class="fas fa-medal text-5xl text-yellow-400 mb-2"></i>
+                    <h2 class="text-xl font-bold text-white mb-1">CÓDIGO SEGURO!</h2>
+                    <p class="text-[0.7rem] text-gray-400 mb-4">Você dominou as práticas de desenvolvimento seguro, APIs e ferramentas profissionais no Módulo 6.12.</p>
+                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-06.html'" style="background: var(--cyber-green); color: black;">VOLTAR AO MÓDULO</button>
+                </div>
+            `;
+        }
+
+        render();
+    </script>
+</body>
+</html>

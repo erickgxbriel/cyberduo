@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberDuo - Falhas de Lógica 6.3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00f2ff;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 242, 255, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
+        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+
+        .highlight-cyan { color: #00f2ff; font-weight: 700; }
+        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
+        .highlight-red { color: var(--cyber-red); font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+
+        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+
+        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 242, 255, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+
+        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #0099a1; }
+
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
+        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-06.html'"></i>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const phases = [
+            {
+                icon: 'fa-brain',
+                concept: 'Lógica de Negócios',
+                desc: 'Falhas de <span class="highlight-cyan">lógica de negócios</span> permitem que um atacante use fluxos legítimos do app para obter resultados negativos não previstos pelos desenvolvedores.',
+                task: 'O que diferencia uma falha de lógica de negócios de uma vulnerabilidade técnica comum (como XSS)?',
+                options: [
+                    'Ela explora o fluxo legítimo do processo em vez de erros de código',
+                    'Ela só ocorre em servidores de banco de dados SQL legados',
+                    'Ela é facilmente detectada por scanners de vulnerabilidade automáticos'
+                ],
+                correctText: 'Ela explora o fluxo legítimo do processo em vez de erros de código',
+                explanation: 'A lógica está "certa" no código, mas o processo permite abusos (ex: pular etapas de pagamento).'
+            },
+            {
+                icon: 'fa-search-minus',
+                concept: 'Desafio da Detecção',
+                desc: 'Um grande desafio das falhas lógicas é que elas <span class="highlight-yellow">não podem ser encontradas</span> usando scanners automáticos, exigindo análise manual profunda.',
+                task: 'Por que scanners de segurança normalmente falham em encontrar erros de lógica?',
+                options: [
+                    'Porque não compreendem o contexto e as regras de negócio do aplicativo',
+                    'Porque scanners só funcionam em redes locais sem acesso à internet',
+                    'Porque erros de lógica não existem em linguagens modernas como Python'
+                ],
+                correctText: 'Porque não compreendem o contexto e as regras de negócio do aplicativo',
+                explanation: 'A máquina segue padrões; a lógica exige entender o "porquê" de cada etapa do processo.'
+            },
+            {
+                icon: 'fa-list-ul',
+                concept: 'Exemplos do MITRE (CWE-840)',
+                desc: 'O MITRE classifica estas falhas sob a <span class="highlight-cyan">CWE-840</span>. Exemplos incluem ignorar autenticação via canais alternativos ou desvios de autorização por chaves de usuário.',
+                task: 'Qual destes é um exemplo de falha de lógica de negócios citada pelo MITRE?',
+                options: [
+                    'Mecanismo de recuperação de senha fraco ou falho',
+                    'Uso de cabos de rede sem certificação de categoria 6',
+                    'Falta de ar condicionado na sala dos servidores principais'
+                ],
+                correctText: 'Mecanismo de recuperação de senha fraco ou falho',
+                explanation: 'Se a recuperação de senha permite "adivinhar" a resposta, o fluxo lógico está quebrado.'
+            },
+            {
+                icon: 'fa-shield-halved',
+                concept: 'Prevenção e Mitigação',
+                desc: 'A prevenção envolve a <span class="highlight-green">validação rigorosa de dados</span> e o uso de modelos de ameaça detalhados para prever comportamentos abusivos.',
+                task: 'Como as organizações podem mitigar os efeitos de falhas lógicas de negócios?',
+                options: [
+                    'Através da validação de dados e modelagem de ameaças detalhada',
+                    'Aumentando a velocidade de download de todos os arquivos do site',
+                    'Removendo a documentação técnica de todos os desenvolvedores'
+                ],
+                correctText: 'Através da validação de dados e modelagem de ameaças detalhada',
+                explanation: 'Modelar ameaças ajuda a pensar como um atacante usaria o fluxo de forma maliciosa.'
+            },
+            {
+                icon: 'fa-arrows-to-circle',
+                concept: 'Propriedade não Verificada',
+                desc: 'Ocorre quando o app permite que um usuário <span class="highlight-red">altere dados</span> de outro usuário apenas mudando um parâmetro (ex: id de conta) sem checar a posse.',
+                task: 'Qual o risco de uma propriedade de registro não ser verificada pelo servidor?',
+                options: [
+                    'Permitir que um atacante manipule ou visualize dados de terceiros',
+                    'O servidor web reiniciar automaticamente a cada 24 horas',
+                    'A expiração imediata de todos os certificados digitais SSL'
+                ],
+                correctText: 'Permitir que um atacante manipule ou visualize dados de terceiros',
+                explanation: 'O sistema deve sempre confirmar se o usuário X tem direito sobre o registro Y.'
+            },
+            {
+                icon: 'fa-battery-empty',
+                concept: 'Alocação Sem Limites',
+                desc: 'Falhas de lógica podem permitir que um atacante realize <span class="highlight-yellow">alocação de recursos</span> sem limites (ex: criar 1 milhão de perfis falsos), causando DoS.',
+                task: 'Como a falta de limites em processos de negócio pode afetar a disponibilidade?',
+                options: [
+                    'Permitindo o esgotamento de recursos do sistema por ações repetitivas',
+                    'Aumentando a vida útil da bateria dos servidores do data center',
+                    'Criptografando todos os logs de acesso para impedir auditorias'
+                ],
+                correctText: 'Permitindo o esgotamento de recursos do sistema por ações repetitivas',
+                explanation: 'Processos que consomem recursos (tempo de CPU, espaço) devem ter limites lógicos.'
+            },
+            {
+                icon: 'fa-route',
+                concept: 'Desvio de Fluxo (Workflow)',
+                desc: 'A <span class="highlight-red">aplicação inadequada de fluxos</span> permite que atacantes pulem etapas obrigatórias (ex: pular o pagamento e ir direto para o download).',
+                task: 'O que caracteriza um desvio de fluxo de trabalho comportamental?',
+                options: [
+                    'Pular etapas críticas de um processo para obter um resultado indevido',
+                    'Mudar a ordem das pastas no diretório home do usuário Linux',
+                    'Utilizar um navegador diferente do recomendado pela empresa'
+                ],
+                correctText: 'Pular etapas críticas de um processo para obter um resultado indevido',
+                explanation: 'O atacante tenta acessar a "Página de Sucesso" sem passar pela "Página de Validação".'
+            },
+            {
+                icon: 'fa-user-lock',
+                concept: 'Canais Alternativos',
+                desc: 'Ignorar autenticação usando um <span class="highlight-cyan">canal alternativo</span> (ex: versão mobile do site que não pede senha) é uma falha de lógica comum.',
+                task: 'Qual o perigo de canais de acesso paralelos sem a mesma segurança do canal principal?',
+                options: [
+                    'Serem usados como pontos de entrada para ignorar controles de segurança',
+                    'Reduzirem a latência de rede para usuários que vivem em outros países',
+                    'Forçarem o uso de protocolos de criptografia quântica obsoletos'
+                ],
+                correctText: 'Serem usados como pontos de entrada para ignorar controles de segurança',
+                explanation: 'A segurança deve ser uniforme em todos os pontos de entrada do aplicativo.'
+            }
+        ];
+
+        let currentStep = 0;
+        let selectedIdx = null;
+        let hearts = 5;
+        let shuffledOptions = [];
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function render() {
+            if (currentStep >= phases.length) { showVictory(); return; }
+            const step = phases[currentStep];
+            const area = document.getElementById('gameArea');
+            const checkBtn = document.getElementById('checkBtn');
+            const progress = (currentStep / phases.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            selectedIdx = null;
+            checkBtn.disabled = true;
+            checkBtn.classList.remove('active');
+            updateHearts();
+
+            shuffledOptions = shuffle([...step.options]);
+
+            area.innerHTML = `
+                <div class="fixation-card">
+                    <i class="fas ${step.icon} concept-icon" style="color: var(--cyber-blue)"></i>
+                    <div class="text-[0.6rem] font-black uppercase tracking-widest mb-1" style="color: var(--cyber-blue)">6.3 • LÓGICA DE NEGÓCIO • Nível ${currentStep + 1}</div>
+                    <div class="concept-text">${step.concept}</div>
+                    <div class="concept-desc">${step.desc}</div>
+                    <div class="question-title">${step.task}</div>
+                    <div class="options-grid">
+                        ${shuffledOptions.map((opt, i) => `
+                            <div class="option-card" onclick="select(${i})">
+                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            area.scrollTop = 0;
+        }
+
+        function select(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function checkResponse() {
+            const step = phases[currentStep];
+            const isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            const popup = document.getElementById('feedbackPopup');
+            
+            document.querySelectorAll('.option-card').forEach((c, i) => {
+                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                else if (i === selectedIdx) c.classList.add('wrong');
+                c.classList.add('disabled', 'pointer-events-none');
+            });
+
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerText = "LÓGICA VALIDADA!";
+                document.getElementById('fbTitle').className = "text-green-500 font-bold";
+                document.getElementById('fbMsg').innerText = step.explanation;
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                updateHearts();
+                document.getElementById('fbTitle').innerText = "ABUSO DE PROCESSO!";
+                document.getElementById('fbTitle').className = "text-red-500 font-bold";
+                document.getElementById('fbMsg').innerText = "O correto era: " + step.correctText;
+                popup.className = "feedback-overlay show wrong";
+                if (hearts <= 0) setTimeout(() => { alert("PROCESSO INTERROMPIDO. Reiniciando!"); location.reload(); }, 500);
+            }
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            render();
+        }
+
+        function updateHearts() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            document.getElementById('gameArea').innerHTML = `
+                <div class="fixation-card text-center items-center flex flex-col" style="border-color: var(--cyber-green)">
+                    <i class="fas fa-medal text-5xl text-yellow-400 mb-2"></i>
+                    <h2 class="text-xl font-bold text-white mb-1">PENSAMENTO ANALÍTICO!</h2>
+                    <p class="text-[0.7rem] text-gray-400 mb-4">Você dominou as nuances das falhas de lógica de negócios no Módulo 6.3.</p>
+                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-06.html'" style="background: var(--cyber-green); color: black;">VOLTAR AO MÓDULO</button>
+                </div>
+            `;
+        }
+
+        render();
+    </script>
+</body>
+</html>
