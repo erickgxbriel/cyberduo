@@ -96,6 +96,7 @@
             color: var(--cyber-blue);
             font-weight: 300;
             text-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
+            animation: cyberGlitch 4s infinite;
         }
 
         .tagline-box {
@@ -246,12 +247,31 @@
             100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes cyberGlitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
+            0%, 94%, 100% { 
+                transform: translate(0);
+                color: var(--cyber-blue);
+                text-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
+            }
+            95% { 
+                transform: translate(-2px, 2px);
+                color: #fff;
+                text-shadow: 3px 0 var(--cyber-red), -3px 0 var(--cyber-blue);
+            }
+            96% { 
+                transform: translate(-2px, -2px);
+                color: #fff;
+                text-shadow: 3px 0 var(--cyber-red), -3px 0 var(--cyber-blue);
+            }
+            98% { 
+                transform: translate(2px, 2px);
+                color: #fff;
+                text-shadow: 3px 0 var(--cyber-red), -3px 0 var(--cyber-blue);
+            }
+            99% { 
+                transform: translate(2px, -2px);
+                color: #fff;
+                text-shadow: 3px 0 var(--cyber-red), -3px 0 var(--cyber-blue);
+            }
         }
         .module-card {
             animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -269,11 +289,7 @@
         .module-card:nth-child(11) { animation-delay: 0.55s; }
         .module-card:nth-child(12) { animation-delay: 0.60s; }
         
-        .cyber-title:hover .highlight {
-            animation: cyberGlitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
-            color: #fff;
-            text-shadow: 3px 0 var(--cyber-red), -3px 0 var(--cyber-blue);
-        }
+
     </style>
 </head>
 <body>
