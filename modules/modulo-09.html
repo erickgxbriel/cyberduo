@@ -59,7 +59,7 @@
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
-            padding: 0 2rem  1.5rem;
+            padding: 0 clamp(1rem, 4vw, 2rem) 1.5rem;
         }
 
         .module-header {
@@ -96,7 +96,7 @@
             background: #0d1117;
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 0.8rem;
-            padding: 1rem 1.5rem;
+            padding: 1rem clamp(1rem, 3vw, 1.5rem); -webkit-tap-highlight-color: transparent;
             transition: all 0.2s ease;
             text-decoration: none;
             color: inherit;
@@ -192,6 +192,12 @@
         .submodule-item:nth-child(10) { animation-delay: 0.50s; }
         .submodule-item:nth-child(11) { animation-delay: 0.55s; }
         .submodule-item:nth-child(12) { animation-delay: 0.60s; }
+    
+        .submodule-item:active {
+            transform: scale(0.98);
+            background: rgba(0, 255, 65, 0.05);
+        }
+    
     </style>
 </head>
 <body>
@@ -214,64 +220,63 @@
             
             <a href="../lessons/9.0-introducao.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-file-signature"></i>
+                    <i class="fas fa-file-alt"></i>
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">9.0</span>
-                    <span class="submodule-title">Introdução</span>
-                    <span class="submodule-desc">Importância da documentação e relatórios profissionais.</span>
+                    <span class="submodule-title">Relatórios</span>
+                    <span class="submodule-desc">O relatório é o produto final do pentest.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
+            
             <a href="../lessons/9.1-componentes-relatorio.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-users-viewfinder"></i>
+                    <i class="fas fa-list"></i>
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">9.1</span>
                     <span class="submodule-title">Componentes do Relatório</span>
-                    <span class="submodule-desc">Audiência, C-Suite, CVSS e métodos de distribuição.</span>
+                    <span class="submodule-desc">Componentes essenciais: Escopo, Metodologia, Executive Summary, Achados (com ...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
+            
             <a href="../lessons/9.2-analise-recomendacoes.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-microchip"></i>
+                    <i class="fas fa-wrench"></i>
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">9.2</span>
                     <span class="submodule-title">Análise e Recomendações</span>
-                    <span class="submodule-desc">Controles técnicos, administrativos, operacionais e físicos.</span>
+                    <span class="submodule-desc">Cada achado deve ter uma recomendação específica: não apenas 'corrigir SQLi',...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
+            
             <a href="../lessons/9.3-comunicacao-escalonamento.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-comments"></i>
+                    <i class="fas fa-bullhorn"></i>
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">9.3</span>
-                    <span class="submodule-title">Comunicação e Escalonamento</span>
-                    <span class="submodule-desc">Caminhos de escalonamento e relato de atividades criminosas.</span>
+                    <span class="submodule-title">Comunicação</span>
+                    <span class="submodule-desc">O pentester deve manter comunicação constante com o ponto de contato.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
+            
             <a href="../lessons/9.4-atividades-pos-entrega.html" class="submodule-item">
                 <div class="submodule-icon-box">
                     <i class="fas fa-broom"></i>
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">9.4</span>
-                    <span class="submodule-title">Atividades Pós-Entrega</span>
-                    <span class="submodule-desc">Limpeza (Cleanup), retestes e destruição de dados.</span>
+                    <span class="submodule-title">Pós-Entrega</span>
+                    <span class="submodule-desc">Após o teste, o pentester deve remover todos os artefatos: web shells, contas...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
         </div>
 
     </main>

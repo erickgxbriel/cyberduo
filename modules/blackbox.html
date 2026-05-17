@@ -56,7 +56,7 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            padding: 0 1.5rem 5rem;
+            padding: 0 clamp(1rem, 4vw, 1.5rem) 5rem;
         }
 
         .vault-header {
@@ -83,7 +83,7 @@
 
         .resource-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 1.2rem;
         }
 
@@ -144,6 +144,7 @@
             font-weight: 600;
             transition: all 0.2s;
             border: 1px solid transparent;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .resource-link:hover {
@@ -216,6 +217,12 @@
         .submodule-item:nth-child(10) { animation-delay: 0.50s; }
         .submodule-item:nth-child(11) { animation-delay: 0.55s; }
         .submodule-item:nth-child(12) { animation-delay: 0.60s; }
+    
+        .resource-link:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
     </style>
 </head>
 <body>

@@ -53,14 +53,30 @@ Este documento define o padrão técnico, visual e didático para a criação de
 
 ## 📊 Estrutura de Dados (JSON)
 
-Para replicar o jogo em um novo módulo, o array `phases` deve seguir este esquema:
+Para replicar o jogo em um novo módulo, o array `steps` deve substituir a antiga lógica de quizzes puros, usando 5 tipos de interações para criar uma aula rica e interativa no estilo Duolingo.
 
 ```javascript
-const phases = [
+const steps = [
+    // Tipo TEACH — Tela de ensino (sem pergunta)
     {
-        icon: 'fa-lock', // Ícone FontAwesome
-        concept: 'Nome da Skill', // Ex: "Criptografia de Chave"
-        desc: 'Explicação curta com <span class="highlight-cyan">termos coloridos</span>.', 
+        type: 'teach',
+        icon: 'fa-shield-halved', // Ícone FontAwesome
+        title: 'Segurança Ofensiva',
+        content: 'O <b>Red Team</b> ataca de forma simulada para encontrar falhas. O <b>Blue Team</b> usa esse conhecimento para defender e melhorar os sistemas.',
+        highlight: 'Segurança Ofensiva' // Texto opcional destacado no rodapé do card
+    },
+    // Tipo EXAMPLE — Exemplo prático
+    {
+        type: 'example',
+        icon: 'fa-terminal',
+        title: 'Na Prática',
+        scenario: 'Descrição de um cenário real ou uso prático.',
+        code: 'nmap -sV -p 80 banco.com', // Opcional: Bloco de código/comando simulado
+        takeaway: 'Resumo ou lição principal deste exemplo.'
+    },
+    // Tipo QUIZ — Múltipla escolha
+    {
+        type: 'quiz',
         task: 'Pergunta que induz o raciocínio técnico?',
         options: [
             'Opção errada 1',
@@ -69,6 +85,24 @@ const phases = [
         ],
         correctText: 'Opção correta (texto exato)',
         explanation: 'O "porquê" da resposta ser esta, focado em gravar na mente.'
+    },
+    // Tipo FILL — Completar a frase
+    {
+        type: 'fill',
+        sentence: 'O ___ ataca de forma simulada para encontrar falhas.', // Use ___ para representar o espaço em branco
+        options: ['Red Team', 'Blue Team', 'Firewall'],
+        correctText: 'Red Team',
+        explanation: 'Red team é a equipe ofensiva.'
+    },
+    // Tipo MATCH — Associação de pares
+    {
+        type: 'match',
+        title: 'Associe os Termos',
+        pairs: [
+            { term: 'Red Team', definition: 'Simula ataques para achar falhas' },
+            { term: 'Blue Team', definition: 'Defende sistemas e monitora' },
+            { term: 'Hacker Ético', definition: 'Ataca com autorização' }
+        ]
     }
 ];
 ```
@@ -77,12 +111,14 @@ const phases = [
 
 ## ⚙️ Lógica de Motor (JS)
 
-Para manter a qualidade, o motor deve implementar:
+Para manter a qualidade e as mecânicas, o motor de `render()` deve suportar:
 
-1.  **Shuffle (Aleatoriedade):** Algoritmo de Fisher-Yates para embaralhar o array de opções a cada renderização.
-2.  **Validação por Texto:** Comparar `selectedOptionText === correctText` em vez de índices fixos (evita vício de posição).
-3.  **Scroll Reset:** `area.scrollTop = 0` in cada nova lição para garantir que o usuário veja o topo do card.
-4.  **Lives Management:** Decrementar corações no erro e disparar `location.reload()` (Game Over) se chegar a zero.
+1.  **Renderização Dinâmica:** Despachar layouts diferentes de acordo com o `step.type` (`teach`, `example`, `quiz`, `fill`, `match`).
+2.  **Shuffle (Aleatoriedade):** Algoritmo de Fisher-Yates para embaralhar o array de opções (`quiz` e `fill`) e os arrays de pares (`match`) a cada renderização.
+3.  **Validação por Texto:** No caso de `quiz` e `fill`, comparar `shuffledOptions[selectedIdx] === correctText` em vez de índices fixos (evita vício de posição).
+4.  **Corações Imunes:** Telas do tipo `teach` e `example` apenas avançam, e NUNCA retiram corações ou exigem verificação de feedback.
+5.  **Scroll Reset:** `area.scrollTop = 0` em cada nova lição para garantir que o usuário veja o topo do card.
+6.  **Lives Management:** Decrementar corações no erro (para `quiz`, `fill`, e associações incorretas em `match`) e disparar `location.reload()` (Game Over) se chegar a zero.
 
 ---
 
@@ -91,8 +127,8 @@ Para manter a qualidade, o motor deve implementar:
 1.  **Entrada de Dados (HTML/Texto):** O conteúdo base pode ser enviado via chat ou **colocado diretamente na pasta `/content/`** (ex: salvos via SingleFile).
 2.  **Extração Autônoma:** Quando arquivos HTML externos forem fornecidos em `/content/`, utilizar ferramentas como `grep`, `run_shell_command` ou `read_file` para identificar os blocos de texto pedagógico (`<p>`, `<li>`, `<strong>`), filtrando scripts e estilos irrelevantes.
 3.  **Filtragem de Conteúdo:** Seguir rigorosamente o mandato de **Foco em Certificação** e **Neutralidade de Contexto**, removendo nomes de empresas ou laboratórios fictícios durante a extração.
-4.  **Transformação Didática:** Identificar os tópicos principais no texto (do básico ao avançado) e converter cada tópico em uma lição visual (Card + Pergunta Explicativa) focada em fixação.
-5.  **Boilerplate & Injeção:** Utilizar o template HTML/CSS padrão (baseado no Módulo 6) e substituir o array `phases`.
+4.  **Transformação Didática:** Identificar os tópicos principais no texto e formatá-los no novo modelo de fluxo didático: **Ensinar (`teach`) -> Exemplificar (`example`) -> Testar (`quiz`, `fill` ou `match`)**.
+5.  **Boilerplate & Injeção:** Utilizar o novo template HTML/CSS padrão de interações Duolingo (baseado na lição 0.0) e substituir o array `steps`.
 
 ---
 

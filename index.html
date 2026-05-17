@@ -38,7 +38,7 @@
         }
 
         .cyber-header {
-            padding: 6rem 1rem 5rem;
+            padding: clamp(3rem, 10vw, 6rem) 1rem clamp(2rem, 8vw, 5rem);
             text-align: center;
             position: relative;
         }
@@ -79,9 +79,9 @@
 
         .cyber-title {
             font-family: 'Inter', sans-serif;
-            font-size: clamp(3rem, 10vw, 4.5rem);
+            font-size: clamp(2.2rem, 7vw, 3.2rem);
             font-weight: 900;
-            letter-spacing: -3px;
+            letter-spacing: -2px;
             color: white;
             line-height: 0.85;
             margin-bottom: 0.5rem;
@@ -89,7 +89,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 12px;
+        }
+
+        .cyber-title i {
+            color: var(--cyber-blue);
+            font-size: 0.85em;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
         }
 
         .cyber-title .highlight {
@@ -140,20 +146,20 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            padding: 0 2rem  1.5rem;
+            padding: 0 clamp(1rem, 4vw, 2rem) 1.5rem;
         }
 
         .module-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: clamp(1rem, 3vw, 1.5rem);
         }
 
         .module-card {
             background: #0d1117;
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 1.2rem;
-            padding: 2rem 1.5rem;
+            padding: 2rem clamp(1rem, 3vw, 1.5rem);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             color: inherit;
@@ -163,6 +169,12 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .module-card:active {
+            transform: scale(0.98);
+            border-color: var(--card-color);
         }
 
         .module-card:hover {
@@ -300,7 +312,7 @@
                 <span class="status-dot"></span>
                 <span>SISTEMA ONLINE // ACESSO AUTORIZADO</span>
             </div>
-            <h1 class="cyber-title">CYBER<span class="highlight">DUO</span></h1>
+            <h1 class="cyber-title"><i class="fas fa-shield-halved"></i> CYBER<span class="highlight">DUO</span></h1>
             <div class="tagline-box">
                 <div class="tagline">
                     <span class="bracket">[</span> Plataforma de Treinamento em Cibersegurança <span class="bracket">]</span>
@@ -317,77 +329,77 @@
                 <div class="module-icon"><i class="fas fa-terminal"></i></div>
                 <span class="module-number">Módulo 0</span>
                 <h2 class="module-title">Introdução ao Curso</h2>
-                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 1 Lição</span><span><i class="fas fa-microchip mr-1"></i> 6 Skills</span></div>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 1 Lição</span><span><i class="fas fa-microchip mr-1"></i> 1 Skills</span></div>
             </a>
 
             <a href="modules/modulo-01.html" class="module-card" style="--card-color: var(--cyber-cobalt)">
                 <div class="module-icon"><i class="fas fa-user-secret"></i></div>
                 <span class="module-number">Módulo 1</span>
                 <h2 class="module-title">Hacking Ético e Pentest</h2>
-                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 4 Lições</span><span><i class="fas fa-microchip mr-1"></i> 30 Skills</span></div>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 4 Lições</span><span><i class="fas fa-microchip mr-1"></i> 41 Skills</span></div>
             </a>
 
             <a href="modules/modulo-02.html" class="module-card" style="--card-color: var(--cyber-yellow)">
                 <div class="module-icon"><i class="fas fa-clipboard-list"></i></div>
                 <span class="module-number">Módulo 2</span>
                 <h2 class="module-title">Planejamento e Escopo</h2>
-                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 4 Lições</span><span><i class="fas fa-microchip mr-1"></i> 28 Skills</span></div>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 4 Lições</span><span><i class="fas fa-microchip mr-1"></i> 32 Skills</span></div>
             </a>
 
             <a href="modules/modulo-03.html" class="module-card" style="--card-color: var(--cyber-teal)">
                 <div class="module-icon"><i class="fas fa-bullseye"></i></div>
                 <span class="module-number">Módulo 3</span>
                 <h2 class="module-title">Coleta e Varredura</h2>
-                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 5 Lições</span><span><i class="fas fa-microchip mr-1"></i> 47 Skills</span></div>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 7 Lições</span><span><i class="fas fa-microchip mr-1"></i> 50 Skills</span></div>
             </a>
 
             <a href="modules/modulo-04.html" class="module-card" style="--card-color: var(--cyber-purple)">
                 <div class="module-icon"><i class="fas fa-people-group"></i></div>
                 <span class="module-number">Módulo 4</span>
                 <h2 class="module-title">Engenharia Social</h2>
-                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 6 Lições</span><span><i class="fas fa-microchip mr-1"></i> 53 Skills</span></div>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 6 Lições</span><span><i class="fas fa-microchip mr-1"></i> 38 Skills</span></div>
             </a>
 
             <a href="modules/modulo-05.html" class="module-card" style="--card-color: var(--cyber-orange)">
                 <div class="module-icon"><i class="fas fa-network-wired"></i></div>
                 <span class="module-number">Módulo 5</span>
                 <h2 class="module-title">Exploração de Redes</h2>
-                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 3 Lições</span><span><i class="fas fa-microchip mr-1"></i> 38 Skills</span></div>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 5 Lições</span><span><i class="fas fa-microchip mr-1"></i> 39 Skills</span></div>
             </a>
 
             <a href="modules/modulo-06.html" class="module-card" style="--card-color: var(--cyber-blue)">
                 <div class="module-icon"><i class="fas fa-globe"></i></div>
                 <span class="module-number">Módulo 6</span>
                 <h2 class="module-title">Aplicações Web</h2>
-                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 13 Lições</span><span><i class="fas fa-microchip mr-1"></i> 120 Skills</span></div>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 15 Lições</span><span><i class="fas fa-microchip mr-1"></i> 75 Skills</span></div>
             </a>
 
             <a href="modules/modulo-07.html" class="module-card" style="--card-color: #e6edf3">
                 <div class="module-icon"><i class="fas fa-cloud"></i></div>
                 <span class="module-number">Módulo 7</span>
                 <h2 class="module-title">Nuvem, Móvel e IoT</h2>
-                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 3 Lições</span><span><i class="fas fa-microchip mr-1"></i> 35 Skills</span></div>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 5 Lições</span><span><i class="fas fa-microchip mr-1"></i> 28 Skills</span></div>
             </a>
 
             <a href="modules/modulo-08.html" class="module-card" style="--card-color: var(--cyber-red)">
                 <div class="module-icon"><i class="fas fa-skull-crossbones"></i></div>
                 <span class="module-number">Módulo 8</span>
                 <h2 class="module-title">Pós-Exploração</h2>
-                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 3 Lições</span><span><i class="fas fa-microchip mr-1"></i> 24 Skills</span></div>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 3 Lições</span><span><i class="fas fa-microchip mr-1"></i> 15 Skills</span></div>
             </a>
 
             <a href="modules/modulo-09.html" class="module-card" style="--card-color: var(--cyber-emerald)">
                 <div class="module-icon"><i class="fas fa-file-signature"></i></div>
                 <span class="module-number">Módulo 9</span>
                 <h2 class="module-title">Relatórios e Comunicação</h2>
-                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 5 Lições</span><span><i class="fas fa-microchip mr-1"></i> 32 Skills</span></div>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 5 Lições</span><span><i class="fas fa-microchip mr-1"></i> 25 Skills</span></div>
             </a>
 
             <a href="modules/modulo-10.html" class="module-card" style="--card-color: var(--cyber-violet)">
                 <div class="module-icon"><i class="fas fa-code"></i></div>
                 <span class="module-number">Módulo 10</span>
                 <h2 class="module-title">Ferramentas e Código</h2>
-                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 3 Lições</span><span><i class="fas fa-microchip mr-1"></i> 20 Skills</span></div>
+                <div class="module-stats"><span><i class="fas fa-book-open mr-1"></i> 7 Lições</span><span><i class="fas fa-microchip mr-1"></i> 57 Skills</span></div>
             </a>
 
             <!-- Módulo Especial: THE BLACK BOX -->

@@ -6,7 +6,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Ataques de Engenharia Social 4.2</title>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <title>CyberDuo - Ataques Sociais 4.2</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,65 +27,84 @@
         html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
         body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
 
-        .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(255, 0, 255, 0.2); z-index: 60; }
-        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
-        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+        .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 255, 65, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 12px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; border-radius: 10px;}
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 80px; justify-content: flex-end; font-size: 1.1rem; }
 
-        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
         .game-content::-webkit-scrollbar { display: none; }
 
-        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        .game-card { width: 100%; animation: slideUp 0.3s ease-out; display: flex; flex-direction: column; gap: 0.8rem; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
-        .concept-text { font-size: clamp(0.95rem, 3.8vw, 1.1rem); color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
-        .concept-desc { color: #b1bac4; font-size: clamp(0.9rem, 3.5vw, 1rem); line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
-
+        /* General Typography */
+        .module-subtitle { font-size: 0.7rem; font-weight: 900; color: var(--cyber-blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .title-main { font-size: clamp(1.4rem, 5vw, 1.8rem); font-weight: 800; color: white; line-height: 1.2; margin-bottom: 0.5rem; }
+        .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
+        .text-body b { color: white; }
+        
+        
+        /* Utility Classes */
+        .mr-1 { margin-right: 0.25rem; }
+        .mr-2 { margin-right: 0.5rem; }
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
         .highlight-cyan { color: #00f2ff; font-weight: 700; }
-        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
-        .highlight-red { color: var(--cyber-red); font-weight: 700; }
         .highlight-green { color: var(--cyber-green); font-weight: 700; }
-        .highlight-magenta { color: #ff00ff; font-weight: 700; }
 
-        .question-title { font-size: clamp(1rem, 4vw, 1.15rem); font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+        /* TYPE: TEACH */
+        .teach-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .teach-icon { font-size: 2.5rem; color: var(--cyber-blue); margin-bottom: 1rem; }
+        .teach-highlight { display: flex; align-items: center; gap: 0.6rem; background: rgba(0, 255, 65, 0.1); border-left: 3px solid var(--cyber-green); padding: 0.8rem; margin-top: 1rem; font-weight: 600; color: var(--cyber-green); border-radius: 0 0.5rem 0.5rem 0; }
 
-        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
-        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: clamp(0.9rem, 3.5vw, 1rem); -webkit-tap-highlight-color: transparent;  min-height: 48px;}
-        .option-card.selected { border-color: var(--cyber-blue); background: rgba(255, 0, 255, 0.05); }
+        /* TYPE: EXAMPLE */
+        .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .example-scenario { background: #161b22; border: 1px solid #21262d; border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; }
+        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.9rem; color: #00ff41; border: 1px solid #30363d; }
+        .example-takeaway { display: flex; gap: 0.8rem; align-items: flex-start; margin-top: 1rem; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
+
+        /* TYPE: QUIZ */
+        .quiz-title { font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 800; color: white; margin-bottom: 1.5rem; line-height: 1.3; }
+        .options-grid { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
+        .option-card { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.8rem, 3vw, 1rem); border-radius: 1rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: clamp(0.95rem, 4vw, 1.05rem); -webkit-tap-highlight-color: transparent; }
+        .option-card:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.05); }
         .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
         .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+        .option-card.disabled { pointer-events: none; opacity: 0.6; }
+        .option-number { width: 28px; height: 28px; flex-shrink: 0; border: 2px solid #484f58; border-radius: 0.4rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; color: #8b949e; }
+        .option-card.selected .option-number { border-color: var(--cyber-blue); color: var(--cyber-blue); }
 
+        /* TYPE: FILL */
+        .fill-sentence { font-size: clamp(1.1rem, 5vw, 1.3rem); font-weight: 600; line-height: 1.6; color: white; margin-bottom: 2rem; background: #0d1117; padding: clamp(1rem, 4vw, 1.5rem); border-radius: 1.2rem; border: 1px solid #30363d; }
+        .fill-slot { display: inline-block; min-width: 120px; height: 34px; border-bottom: 3px solid #484f58; margin: 0 0.5rem; vertical-align: middle; text-align: center; color: var(--cyber-blue); font-weight: 800; transition: all 0.2s; }
+        .fill-slot.filled { border-bottom-color: var(--cyber-blue); }
+
+        /* TYPE: MATCH */
+        .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
+        /* .match-column removed */
+        .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
+        .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
+        .match-item.matched { border-color: var(--cyber-green); background: rgba(0, 255, 65, 0.05); color: var(--cyber-green); opacity: 0.5; pointer-events: none; }
+        .match-item.error { border-color: var(--cyber-red); animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        /* FOOTER & BUTTONS */
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
-        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px;  min-height: 48px;}
+        .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
+        .check-btn:active { transform: scale(0.98); }
         .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #990099; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #990099; }
 
-        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        /* FEEDBACK OVERLAY */
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
         .feedback-overlay.show { bottom: 0; }
-        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
-        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
-        .feedback-title { font-size: clamp(1rem, 4vw, 1.2rem); font-weight: 800; margin-bottom: 0.3rem; }
-        .feedback-msg { font-size: clamp(0.9rem, 3.5vw, 1rem); color: #8b949e; line-height: 1.4; }
-    
-        /* Design Spells: Interactive Magic */
-        .option-card {
-            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        @media (hover: hover) and (pointer: fine) {
-            .option-card:hover:not(.disabled) {
-                transform: translateX(6px);
-                border-color: rgba(0, 242, 255, 0.5);
-                box-shadow: -4px 0 10px rgba(0, 242, 255, 0.1);
-            }
-            .check-btn.active:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 15px rgba(0, 255, 65, 0.3), 0 4px 0 #008f20;
-            }
-        }
-        .check-btn.active:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #008f20;
-        }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 4px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 4px solid var(--cyber-red); }
+        .feedback-title { font-size: clamp(1.2rem, 5vw, 1.4rem); font-weight: 800; margin-bottom: 0.5rem; width: 100%; max-width: 400px; display: flex; align-items: center; gap: 0.5rem; }
+        .feedback-msg { font-size: clamp(0.95rem, 4vw, 1.05rem); color: #8b949e; line-height: 1.5; width: 100%; max-width: 400px; margin-bottom: 1.5rem; }
     </style>
 </head>
 <body>
@@ -98,7 +120,7 @@
     <div id="feedbackPopup" class="feedback-overlay">
         <div class="feedback-title" id="fbTitle"></div>
         <div class="feedback-msg" id="fbMsg"></div>
-        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+        <button class="check-btn active w-full" style="max-width: 400px;" onclick="handleContinue()">Continuar</button>
     </div>
 
     <footer class="game-footer" id="footerArea">
@@ -106,224 +128,387 @@
     </footer>
 
     <script>
-        const phases = [
+        const steps = [
             {
-                icon: 'fa-envelope',
-                concept: 'Mecânica do Phishing',
-                desc: 'No <span class="highlight-magenta">Phishing</span>, o agressor apresenta um link ou anexo que parece confiável para induzir a vítima a revelar credenciais ou baixar malware.',
-                task: 'Qual a tática comum de phishing observada pela Protego em honeypots?',
-                options: [
-                    'E-mails sobre descontos falsos, prêmios ou recalls de produtos',
-                    'Ataques de força bruta contra senhas de roteadores',
-                    'Substituição física de hardware em data centers'
-                ],
-                correctText: 'E-mails sobre descontos falsos, prêmios ou recalls de produtos',
-                explanation: 'Ofertas falsas e alertas de recall são iscas altamente eficazes para atrair cliques.'
+                        "type": "teach",
+                        "icon": "fa-envelope-open-text",
+                        "title": "Phishing",
+                        "content": "<b>Phishing</b> é enviar e-mails falsos que imitam empresas legítimas para roubar credenciais ou instalar malware. É o ataque mais comum e mais eficaz da engenharia social.",
+                        "highlight": "90% dos ataques começam com phishing"
             },
             {
-                icon: 'fa-crosshairs',
-                concept: 'Spear Phishing',
-                desc: 'O <span class="highlight-yellow">Spear Phishing</span> é altamente direcionado. O agressor estuda a vítima para fazer o e-mail parecer vir de uma fonte confiável dentro da empresa.',
-                task: 'O que caracteriza o Spear Phishing (Phishing de Lança)?',
-                options: [
-                    'É uma tentativa construída de forma específica e destinada a alvos selecionados',
-                    'É um ataque enviado para milhões de usuários aleatórios mundialmente',
-                    'É um ataque que ocorre exclusivamente via rádio de alta frequência'
-                ],
-                correctText: 'É uma tentativa construída de forma específica e destinada a alvos selecionados',
-                explanation: 'A personalização baseada em pesquisa prévia aumenta drasticamente a taxa de sucesso.'
+                        "type": "teach",
+                        "icon": "fa-bullseye",
+                        "title": "Spear Phishing e Whaling",
+                        "content": "<b>Spear Phishing</b>: ataque direcionado a uma pessoa específica, usando informações pessoais. <b>Whaling</b>: spear phishing direcionado a executivos de alto escalão (CEO, CFO).",
+                        "highlight": "Quanto mais direcionado, mais eficaz"
             },
             {
-                icon: 'fa-crown',
-                concept: 'Whaling (Caça à Baleia)',
-                desc: 'O <span class="highlight-red">Whaling</span> atinge executivos de alto perfil (CEO, diretores) com e-mails sérios e oficiais sobre temas críticos de negócios.',
-                task: 'Qual o alvo principal de um ataque de Whaling?',
-                options: [
-                    'Executivos de alto perfil e indivíduos-chave na empresa',
-                    'Estagiários e novos contratados sem privilégios de acesso',
-                    'Apenas usuários de redes sociais públicas e gratuitas'
-                ],
-                correctText: 'Executivos de alto perfil e indivíduos-chave na empresa',
-                explanation: 'O objetivo é roubar informações confidenciais ou comprometer contas de alto valor organizacional.'
+                        "type": "teach",
+                        "icon": "fa-comment-sms",
+                        "title": "Smishing e Vishing",
+                        "content": "<b>Smishing</b> = phishing via SMS. <b>Vishing</b> = phishing via voz/telefone. Ambos usam as mesmas técnicas de manipulação mas em canais diferentes.",
+                        "highlight": "Phishing se adapta ao canal de comunicação"
             },
             {
-                icon: 'fa-phone-volume',
-                concept: 'Vishing (Voice Phishing)',
-                desc: 'O <span class="highlight-cyan">Vishing</span> ocorre via conversação telefônica. O agressor falsifica o ID de chamada para convencer a vítima a revelar dados privados.',
-                task: 'Qual o objetivo típico de um ataque de Vishing?',
-                options: [
-                    'Roubar números de cartão de crédito e Previdência Social por telefone',
-                    'Aumentar a velocidade da conexão de internet do alvo',
-                    'Atualizar o firmware do celular da vítima remotamente'
-                ],
-                correctText: 'Roubar números de cartão de crédito e Previdência Social por telefone',
-                explanation: 'A voz e a personificação de autoridade facilitam a extração de dados financeiros.'
+                        "type": "match",
+                        "title": "Tipo de Phishing → Canal",
+                        "pairs": [
+                                    {
+                                                "term": "Phishing",
+                                                "definition": "E-mail"
+                                    },
+                                    {
+                                                "term": "Smishing",
+                                                "definition": "SMS"
+                                    },
+                                    {
+                                                "term": "Vishing",
+                                                "definition": "Ligação telefônica"
+                                    },
+                                    {
+                                                "term": "Whaling",
+                                                "definition": "E-mail para executivos"
+                                    }
+                        ]
             },
             {
-                icon: 'fa-comment-sms',
-                concept: 'Smishing e SMS',
-                desc: 'O <span class="highlight-magenta">Smishing</span> usa SMS para enviar links maliciosos (ex: golpes de bitcoin ou problemas com pedidos) para enganar o usuário.',
-                task: 'Como mitigar ataques de phishing via SMS (Smishing)?',
-                options: [
-                    'Não clicar em links de remetentes desconhecidos e verificar no site oficial',
-                    'Responder ao SMS pedindo para o hacker parar o ataque',
-                    'Desligar o sinal de celular permanentemente em áreas urbanas'
-                ],
-                correctText: 'Não clicar em links de remetentes desconhecidos e verificar no site oficial',
-                explanation: 'Ir direto à fonte (app do banco ou site da Amazon) evita o redirecionamento malicioso.'
+                        "type": "quiz",
+                        "task": "Qual tipo de phishing é direcionado especificamente a executivos C-Level?",
+                        "options": [
+                                    "Whaling",
+                                    "Smishing",
+                                    "Vishing"
+                        ],
+                        "correctText": "Whaling",
+                        "explanation": "Whaling (caça à baleia) mira especificamente CEOs, CFOs e outros executivos de alto nível."
             },
             {
-                icon: 'fa-usb',
-                concept: 'USB Key Drop',
-                desc: 'Ataques de <span class="highlight-red">Drop de Chave USB</span> exploram a curiosidade humana ao deixar pendrives infectados em locais estratégicos (ex: estacionamento).',
-                task: 'De acordo com pesquisas do Google, qual a eficácia do ataque de USB Drop?',
-                options: [
-                    'Cerca de 45% das pessoas conectam a unidade e clicam nos arquivos',
-                    'Menos de 1% das pessoas se sentem tentadas a pegar o pendrive',
-                    'O ataque é impossível em sistemas operacionais modernos'
-                ],
-                correctText: 'Cerca de 45% das pessoas conectam a unidade e clicam nos arquivos',
-                explanation: 'A curiosidade e o desejo de devolver o objeto superam a cautela de segurança.'
+                        "type": "teach",
+                        "icon": "fa-water",
+                        "title": "Watering Hole",
+                        "content": "<b>Watering Hole</b>: o atacante infecta um site frequentemente visitado pelo alvo. Quando o alvo acessa o site comprometido, é infectado automaticamente.",
+                        "highlight": "Infectar o site que o alvo já confia"
             },
             {
-                icon: 'fa-droplet',
-                concept: 'Watering Hole',
-                desc: 'No <span class="highlight-magenta">Watering Hole</span>, o agressor compromete sites que a vítima acessa habitualmente, injetando código que redireciona para um exploit.',
-                task: 'O que acontece em um ataque de Watering Hole (Ponto de Dessedentação)?',
-                options: [
-                    'O agressor infecta um site legítimo que o alvo frequenta habitualmente',
-                    'O agressor envia milhares de e-mails para um servidor de e-mail público',
-                    'O agressor desativa fisicamente a rede elétrica da empresa alvo'
-                ],
-                correctText: 'O agressor infecta um site legítimo que o alvo frequenta habitualmente',
-                explanation: 'É um ataque direcionado que espera a vítima "ir até o bebedouro" (site conhecido).'
-            },
-            {
-                icon: 'fa-arrows-split-up-and-left',
-                concept: 'Ataque de Pivô',
-                desc: 'O <span class="highlight-yellow">Ataque de Pivô</span> ocorre quando o redirecionamento malicioso é usado para obter uma base na rede interna por espionagem.',
-                task: 'Qual o objetivo de um ataque de pivô no contexto de sites comprometidos?',
-                options: [
-                    'Obter uma base na rede da organização para espionagem ou outros ataques',
-                    'Aumentar o número de seguidores nas redes sociais da vítima',
-                    'Formatar todos os computadores conectados ao Wi-Fi público'
-                ],
-                correctText: 'Obter uma base na rede da organização para espionagem ou outros ataques',
-                explanation: 'O pivô usa um sistema comprometido para atacar outros sistemas internos protegidos.'
-            },
-            {
-                icon: 'fa-user-shield',
-                concept: 'Mitigação Estratégica',
-                desc: 'A defesa envolve <span class="highlight-green">políticas de segurança</span>, educação do usuário, navegadores virtuais seguros e atualizações frequentes.',
-                task: 'Qual a medida fundamental para evitar ataques de Watering Hole em empresas?',
-                options: [
-                    'Educação do usuário e uso de navegadores virtuais seguros',
-                    'Desativação completa de todos os sites de notícias e blogs',
-                    'Troca de todas as senhas dos funcionários a cada 2 horas'
-                ],
-                correctText: 'Educação do usuário e uso de navegadores virtuais seguros',
-                explanation: 'O isolamento do navegador impede que o código de exploit afete o sistema principal.'
+                        "type": "fill",
+                        "sentence": "O ataque que infecta sites frequentados pelo alvo é chamado de ___.",
+                        "options": [
+                                    "Watering Hole",
+                                    "Brute Force",
+                                    "Man-in-the-Middle"
+                        ],
+                        "correctText": "Watering Hole",
+                        "explanation": "Watering Hole = 'poço d'água' — como predadores que esperam a presa ir beber."
             }
-        ];
+];
 
         let currentStep = 0;
+        let selectedIdx = null; // For quiz and fill
         let hearts = 5;
-        let selectedOption = null;
+        let shuffledOptions = [];
+        
+        // Match state
+        let matchLeft = [];
+        let matchRight = [];
+        let selectedLeft = null;
+        let selectedRight = null;
+        let matchesFound = 0;
 
         function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
             }
             return array;
         }
 
-        function renderHearts() {
+        function updateProgress() {
+            const progress = (currentStep / steps.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            
             const container = document.getElementById('heartsContainer');
             container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
-        function loadPhase() {
-            if (currentStep >= phases.length) { showVictory(); return; }
-            const phase = phases[currentStep];
+        function render() {
+            if (currentStep >= steps.length) { showVictory(); return; }
+            const step = steps[currentStep];
             const area = document.getElementById('gameArea');
-            const shuffledOptions = shuffle([...phase.options]);
+            const checkBtn = document.getElementById('checkBtn');
+            
+            updateProgress();
+            
+            // Reset states
+            selectedIdx = null;
+            checkBtn.disabled = true;
+            checkBtn.classList.remove('active');
+            checkBtn.innerText = (step.type === 'teach' || step.type === 'example') ? 'Continuar' : 'Verificar';
+            
+            if (step.type === 'teach' || step.type === 'example') {
+                checkBtn.disabled = false;
+                checkBtn.classList.add('active');
+            }
 
-            area.innerHTML = `
-                <div class="fixation-card">
-                    <i class="fas ${phase.icon} concept-icon text-fuchsia-500"></i>
-                    <div class="text-[0.6rem] text-fuchsia-500 font-black uppercase tracking-widest mb-1">4.2 • ATAQUES SOCIAIS • Nível ${currentStep + 1}</div>
-                    <div class="concept-text">${phase.concept}</div>
-                    <div class="concept-desc">${phase.desc}</div>
-                    <div class="question-title">${phase.task}</div>
-                    <div class="options-grid">
-                        ${shuffledOptions.map((opt, i) => `
-                            <div class="option-card" onclick="select(this)">
-                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
-                                <span>${opt}</span>
-                            </div>
-                        `).join('')}
+            area.innerHTML = '';
+
+            if (step.type === 'teach') {
+                area.innerHTML = `
+                    <div class="game-card teach-card">
+                        <div class="module-subtitle"><i class="fas ${step.icon}"></i> NOVO CONCEITO</div>
+                        <h2 class="title-main">${step.title}</h2>
+                        <div class="text-body">${step.content}</div>
+                        ${step.highlight ? `<div class="teach-highlight"><i class="fas fa-lightbulb mr-2"></i>${step.highlight}</div>` : ''}
                     </div>
-                </div>
-            `;
-            document.getElementById('progressFill').style.width = `${(currentStep / phases.length) * 100}%`;
-            document.getElementById('checkBtn').disabled = true;
-            document.getElementById('checkBtn').classList.remove('active');
-            selectedOption = null;
+                `;
+            } 
+            else if (step.type === 'example') {
+                area.innerHTML = `
+                    <div class="game-card example-card">
+                        <div class="module-subtitle"><i class="fas ${step.icon}"></i> NA PRÁTICA</div>
+                        <h2 class="title-main">${step.title}</h2>
+                        <div class="example-scenario text-body">${step.scenario}</div>
+                        ${step.code ? `<div class="example-code">${step.code}</div>` : ''}
+                        <div class="example-takeaway"><i class="fas fa-arrow-right mt-1" style="color: var(--cyber-blue)"></i> ${step.takeaway}</div>
+                    </div>
+                `;
+            }
+            else if (step.type === 'quiz') {
+                shuffledOptions = shuffle([...step.options]);
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="quiz-title">${step.task}</div>
+                        <div class="options-grid">
+                            ${shuffledOptions.map((opt, i) => `
+                                <div class="option-card" onclick="selectQuiz(${i})" id="opt-${i}">
+                                    <div class="option-number">${i+1}</div>
+                                    <span>${opt}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            else if (step.type === 'fill') {
+                shuffledOptions = shuffle([...step.options]);
+                const sentenceParts = step.sentence.split('___');
+                
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="module-subtitle"><i class="fas fa-pen-to-square"></i> COMPLETE A FRASE</div>
+                        <div class="fill-sentence">
+                            ${sentenceParts[0]}<span class="fill-slot" id="fillSlot"></span>${sentenceParts[1]}
+                        </div>
+                        <div class="options-grid">
+                            ${shuffledOptions.map((opt, i) => `
+                                <div class="option-card" style="justify-content: center;" onclick="selectFill(${i})" id="opt-${i}">
+                                    <span>${opt}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            else if (step.type === 'match') {
+                matchesFound = 0;
+                matchLeft = shuffle(step.pairs.map((p, i) => ({text: p.term, id: i})));
+                
+                let isDeranged = false;
+                while (!isDeranged) {
+                    matchRight = shuffle(step.pairs.map((p, i) => ({text: p.definition, id: i})));
+                    isDeranged = true;
+                    for (let j = 0; j < matchLeft.length; j++) {
+                        if (matchLeft[j].id === matchRight[j].id) {
+                            if (matchLeft.length > 1) {
+                                isDeranged = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                selectedLeft = null;
+                selectedRight = null;
+                
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="module-subtitle"><i class="fas fa-link"></i> ASSOCIE OS PARES</div>
+                        <div class="quiz-title">${step.title}</div>
+                        <div class="match-container">
+                                ${matchLeft.map((item, i) => `
+                                    <div class="match-item" id="left-${i}" onclick="selectMatch('left', ${i}, ${item.id})">${item.text}</div>
+                                    <div class="match-item" id="right-${i}" onclick="selectMatch('right', ${i}, ${matchRight[i].id})">${matchRight[i].text}</div>
+                                `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
             area.scrollTop = 0;
         }
 
-        function select(el) {
-            if (document.getElementById('feedbackPopup').classList.contains('show')) return;
-            document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-            el.classList.add('selected');
-            selectedOption = el;
+        // Interactivity Handlers
+        function selectQuiz(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
             document.getElementById('checkBtn').disabled = false;
             document.getElementById('checkBtn').classList.add('active');
         }
 
+        function selectFill(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            const slot = document.getElementById('fillSlot');
+            slot.innerText = shuffledOptions[idx];
+            slot.classList.add('filled');
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function selectMatch(side, idx, pairId) {
+            const item = document.getElementById(`${side}-${idx}`);
+            if (item.classList.contains('matched')) return;
+
+            // Clear previous selection on same side
+            document.querySelectorAll(`.match-item[id^='${side}-']`).forEach(el => {
+                if(!el.classList.contains('matched')) el.classList.remove('selected');
+            });
+            
+            item.classList.add('selected');
+
+            if (side === 'left') selectedLeft = {el: item, id: pairId};
+            else selectedRight = {el: item, id: pairId};
+
+            if (selectedLeft && selectedRight) {
+                // Check match
+                if (selectedLeft.id === selectedRight.id) {
+                    selectedLeft.el.classList.remove('selected');
+                    selectedLeft.el.classList.add('matched');
+                    selectedRight.el.classList.remove('selected');
+                    selectedRight.el.classList.add('matched');
+                    matchesFound++;
+                    
+                    if (matchesFound === steps[currentStep].pairs.length) {
+                        document.getElementById('checkBtn').disabled = false;
+                        document.getElementById('checkBtn').classList.add('active');
+                    }
+                } else {
+                    let errLeft = selectedLeft;
+                    let errRight = selectedRight;
+                    selectedLeft = null;
+                    selectedRight = null;
+
+                    errLeft.el.classList.remove('selected');
+                    errLeft.el.classList.add('error');
+                    errRight.el.classList.remove('selected');
+                    errRight.el.classList.add('error');
+                    
+                    // Lose heart for wrong match
+                    hearts--;
+                    updateProgress();
+                    if(hearts <= 0) triggerGameOver();
+
+                    setTimeout(() => {
+                        errLeft.el.classList.remove('error');
+                        errRight.el.classList.remove('error');
+                    }, 500);
+                    return;
+                }
+                selectedLeft = null;
+                selectedRight = null;
+            }
+        }
+
+        // Logic Check
         function checkResponse() {
-            const phase = phases[currentStep];
-            const isCorrect = selectedOption.innerText.trim().includes(phase.correctText);
+            const step = steps[currentStep];
+            const checkBtn = document.getElementById('checkBtn');
             const popup = document.getElementById('feedbackPopup');
             
+            // Non-interactive steps just advance
+            if (step.type === 'teach' || step.type === 'example') {
+                currentStep++;
+                render();
+                return;
+            }
+
+            let isCorrect = false;
+
+            if (step.type === 'quiz' || step.type === 'fill') {
+                isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+                
+                document.querySelectorAll('.option-card').forEach((c, i) => {
+                    if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                    else if (i === selectedIdx) c.classList.add('wrong');
+                    c.classList.add('disabled');
+                });
+            } else if (step.type === 'match') {
+                isCorrect = true; // Button only enables when all matches found
+            }
+
             if (isCorrect) {
-                document.getElementById('fbTitle').innerText = "VETOR BLOQUEADO!";
-                document.getElementById('fbTitle').className = "text-green-500 font-bold";
-                document.getElementById('fbMsg').innerText = phase.explanation;
+                document.getElementById('fbTitle').innerHTML = '<i class="fas fa-check-circle"></i> Excelente!';
+                document.getElementById('fbTitle').className = "feedback-title text-green-500";
+                document.getElementById('fbMsg').innerText = step.explanation || "Você dominou esse conceito.";
                 popup.className = "feedback-overlay show correct";
             } else {
                 hearts--;
-                renderHearts();
-                document.getElementById('fbTitle').innerText = "VÍTIMA COMPROMETIDA!";
-                document.getElementById('fbTitle').className = "text-red-500 font-bold";
-                document.getElementById('fbMsg').innerText = "O correto era: " + phase.correctText;
+                updateProgress();
+                document.getElementById('fbTitle').innerHTML = '<i class="fas fa-times-circle"></i> Incorreto!';
+                document.getElementById('fbTitle').className = "feedback-title text-red-500";
+                document.getElementById('fbMsg').innerText = step.explanation || "O correto era: " + step.correctText;
                 popup.className = "feedback-overlay show wrong";
-                if (hearts <= 0) setTimeout(() => { alert("FALHA CRÍTICA. Reiniciando!"); location.reload(); }, 500);
+                
+                if (hearts <= 0) {
+                    setTimeout(triggerGameOver, 600);
+                }
             }
+        }
+
+        function triggerGameOver() {
+            alert("VOCÊ FICOU SEM VIDAS. O treinamento será reiniciado."); 
+            location.reload();
         }
 
         function handleContinue() {
             document.getElementById('feedbackPopup').classList.remove('show');
             currentStep++;
-            loadPhase();
+            render();
         }
 
         function showVictory() {
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
+            
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/4.3-ataques-fisicos.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #990099; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            }
+
             document.getElementById('gameArea').innerHTML = `
-                <div class="fixation-card text-center items-center flex flex-col" style="border-color: #ff00ff">
-                    <i class="fas fa-bullseye text-5xl text-magenta-400 mb-2" style="color: #ff00ff"></i>
-                    <h2 class="text-xl font-bold text-white mb-1">DEFESA SOCIAL CONCLUÍDA!</h2>
-                    <p class="text-[0.7rem] text-gray-400 mb-4">Você dominou exaustivamente todos os vetores de ataque social do Módulo 4.2.</p>
-                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-04.html'" style="background: #ff00ff; color: white; border-bottom: 4px solid #990099;">VOLTAR AO MÓDULO</button>
+                <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
+                    <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
+                    <h2 class="title-main mb-2">ATAQUES SOCIAIS MAPEADOS!</h2>
+                    <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
+                    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
+                        ${nextBtnHtml}
+                        <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">
+                            <button class="check-btn" onclick="location.reload()" style="flex: 1; background: #161b22; border: 2px solid #30363d; color: #c9d1d9; box-shadow: 0 4px 0 #0d1117; padding: 0.8rem 0.5rem;">
+                                <i class="fas fa-rotate-right mb-1 block text-lg"></i>
+                                <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
+                            </button>
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-04.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                                <i class="fas fa-layer-group mb-1 block text-lg"></i>
+                                <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             `;
         }
 
-        renderHearts();
-        loadPhase();
+        render();
     </script>
 </body>
 </html>

@@ -59,7 +59,7 @@
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
-            padding: 0 2rem  1.5rem;
+            padding: 0 clamp(1rem, 4vw, 2rem) 1.5rem;
         }
 
         .module-header {
@@ -96,7 +96,7 @@
             background: #0d1117;
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 0.8rem;
-            padding: 1rem 1.5rem;
+            padding: 1rem clamp(1rem, 3vw, 1.5rem); -webkit-tap-highlight-color: transparent;
             transition: all 0.2s ease;
             text-decoration: none;
             color: inherit;
@@ -192,6 +192,12 @@
         .submodule-item:nth-child(10) { animation-delay: 0.50s; }
         .submodule-item:nth-child(11) { animation-delay: 0.55s; }
         .submodule-item:nth-child(12) { animation-delay: 0.60s; }
+    
+        .submodule-item:active {
+            transform: scale(0.98);
+            background: rgba(0, 255, 65, 0.05);
+        }
+    
     </style>
 </head>
 <body>
@@ -218,36 +224,83 @@
                 </div>
                 <div class="submodule-info">
                     <span class="submodule-number">10.0</span>
-                    <span class="submodule-title">Introdução</span>
-                    <span class="submodule-desc">Casos de uso, aceleração de testes e automação.</span>
+                    <span class="submodule-title">Ferramentas</span>
+                    <span class="submodule-desc">Este módulo final cobre scripting (Bash, Python, PowerShell), automação de te...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
-            <a href="../lessons/10.1-scripts-desenvolvimento.html" class="submodule-item">
+            
+            <a href="../lessons/10.2a-recon-enum-tools.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-file-code"></i>
+                    <i class="fas fa-binoculars"></i>
                 </div>
                 <div class="submodule-info">
-                    <span class="submodule-number">10.1</span>
-                    <span class="submodule-title">Scripts e Desenvolvimento de Software</span>
-                    <span class="submodule-desc">Linguagens de script, lógica de programação e automação.</span>
+                    <span class="submodule-number">10.2a</span>
+                    <span class="submodule-title">Ferramentas de Recon e Enumeração</span>
+                    <span class="submodule-desc">As ferramentas de pentest são organizadas por fase do ataque: reconhecimento,...</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
-            <a href="../lessons/10.2-ferramentas-analise.html" class="submodule-item">
+            
+            <a href="../lessons/10.2b-vuln-cred-tools.html" class="submodule-item">
                 <div class="submodule-icon-box">
-                    <i class="fas fa-magnifying-glass-bug"></i>
+                    <i class="fas fa-bug"></i>
                 </div>
                 <div class="submodule-info">
-                    <span class="submodule-number">10.2</span>
-                    <span class="submodule-title">Diferentes Casos de Uso e Código de Exploit</span>
-                    <span class="submodule-desc">Kali Linux, ferramentas OSINT, recon ativo e scanners.</span>
+                    <span class="submodule-number">10.2b</span>
+                    <span class="submodule-title">Ferramentas de Vuln e Credencial</span>
+                    <span class="submodule-desc">Nessus: scanner comercial líder.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
-
+            
+            <a href="../lessons/10.2c-persist-evasion-tools.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-anchor"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">10.2c</span>
+                    <span class="submodule-title">Ferramentas de Persistência e Evasão</span>
+                    <span class="submodule-desc">Netcat: 'canivete suíço' de rede (bind/reverse shells).</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            
+            <a href="../lessons/10.2d-forense-special-tools.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">10.2d</span>
+                    <span class="submodule-title">Ferramentas Forenses e Especiais</span>
+                    <span class="submodule-desc">Ghidra: descompilador da NSA (gratuito).</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            
+            <a href="../lessons/10.1a-fundamentos-script.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">10.1a</span>
+                    <span class="submodule-title">Fundamentos de Script</span>
+                    <span class="submodule-desc">Construções essenciais para scripts: if/else (condicionais), for/while (loops...</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            
+            <a href="../lessons/10.1b-linguagens-pratica.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-terminal"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">10.1b</span>
+                    <span class="submodule-title">Linguagens e Prática</span>
+                    <span class="submodule-desc">Bash é a cola entre ferramentas Linux.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
         </div>
 
     </main>

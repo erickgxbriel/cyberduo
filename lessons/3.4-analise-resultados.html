@@ -6,6 +6,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <title>CyberDuo - Análise de Resultados 3.4</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
@@ -24,64 +27,84 @@
         html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
         body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
 
-        .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 250, 205, 0.2); z-index: 60; }
-        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
-        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+        .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 255, 65, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 12px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; border-radius: 10px;}
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 80px; justify-content: flex-end; font-size: 1.1rem; }
 
-        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
         .game-content::-webkit-scrollbar { display: none; }
 
-        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        .game-card { width: 100%; animation: slideUp 0.3s ease-out; display: flex; flex-direction: column; gap: 0.8rem; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
-        .concept-text { font-size: clamp(0.95rem, 3.8vw, 1.1rem); color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
-        .concept-desc { color: #b1bac4; font-size: clamp(0.9rem, 3.5vw, 1rem); line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
-
+        /* General Typography */
+        .module-subtitle { font-size: 0.7rem; font-weight: 900; color: var(--cyber-blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .title-main { font-size: clamp(1.4rem, 5vw, 1.8rem); font-weight: 800; color: white; line-height: 1.2; margin-bottom: 0.5rem; }
+        .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
+        .text-body b { color: white; }
+        
+        
+        /* Utility Classes */
+        .mr-1 { margin-right: 0.25rem; }
+        .mr-2 { margin-right: 0.5rem; }
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
         .highlight-cyan { color: #00f2ff; font-weight: 700; }
-        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
-        .highlight-red { color: var(--cyber-red); font-weight: 700; }
         .highlight-green { color: var(--cyber-green); font-weight: 700; }
 
-        .question-title { font-size: clamp(1rem, 4vw, 1.15rem); font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+        /* TYPE: TEACH */
+        .teach-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .teach-icon { font-size: 2.5rem; color: var(--cyber-blue); margin-bottom: 1rem; }
+        .teach-highlight { display: flex; align-items: center; gap: 0.6rem; background: rgba(0, 255, 65, 0.1); border-left: 3px solid var(--cyber-green); padding: 0.8rem; margin-top: 1rem; font-weight: 600; color: var(--cyber-green); border-radius: 0 0.5rem 0.5rem 0; }
 
-        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
-        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: clamp(0.9rem, 3.5vw, 1rem); -webkit-tap-highlight-color: transparent;  min-height: 48px;}
-        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 250, 205, 0.05); }
+        /* TYPE: EXAMPLE */
+        .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .example-scenario { background: #161b22; border: 1px solid #21262d; border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; }
+        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.9rem; color: #00ff41; border: 1px solid #30363d; }
+        .example-takeaway { display: flex; gap: 0.8rem; align-items: flex-start; margin-top: 1rem; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
+
+        /* TYPE: QUIZ */
+        .quiz-title { font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 800; color: white; margin-bottom: 1.5rem; line-height: 1.3; }
+        .options-grid { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
+        .option-card { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.8rem, 3vw, 1rem); border-radius: 1rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: clamp(0.95rem, 4vw, 1.05rem); -webkit-tap-highlight-color: transparent; }
+        .option-card:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.05); }
         .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
         .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+        .option-card.disabled { pointer-events: none; opacity: 0.6; }
+        .option-number { width: 28px; height: 28px; flex-shrink: 0; border: 2px solid #484f58; border-radius: 0.4rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; color: #8b949e; }
+        .option-card.selected .option-number { border-color: var(--cyber-blue); color: var(--cyber-blue); }
 
+        /* TYPE: FILL */
+        .fill-sentence { font-size: clamp(1.1rem, 5vw, 1.3rem); font-weight: 600; line-height: 1.6; color: white; margin-bottom: 2rem; background: #0d1117; padding: clamp(1rem, 4vw, 1.5rem); border-radius: 1.2rem; border: 1px solid #30363d; }
+        .fill-slot { display: inline-block; min-width: 120px; height: 34px; border-bottom: 3px solid #484f58; margin: 0 0.5rem; vertical-align: middle; text-align: center; color: var(--cyber-blue); font-weight: 800; transition: all 0.2s; }
+        .fill-slot.filled { border-bottom-color: var(--cyber-blue); }
+
+        /* TYPE: MATCH */
+        .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
+        /* .match-column removed */
+        .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
+        .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
+        .match-item.matched { border-color: var(--cyber-green); background: rgba(0, 255, 65, 0.05); color: var(--cyber-green); opacity: 0.5; pointer-events: none; }
+        .match-item.error { border-color: var(--cyber-red); animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        /* FOOTER & BUTTONS */
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
-        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px;  min-height: 48px;}
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00b3a4; }
+        .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
+        .check-btn:active { transform: scale(0.98); }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #009e80; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #009e80; }
 
-        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        /* FEEDBACK OVERLAY */
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
         .feedback-overlay.show { bottom: 0; }
-        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
-        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
-        .feedback-title { font-size: clamp(1rem, 4vw, 1.2rem); font-weight: 800; margin-bottom: 0.3rem; }
-        .feedback-msg { font-size: clamp(0.9rem, 3.5vw, 1rem); color: #8b949e; line-height: 1.4; }
-    
-        /* Design Spells: Interactive Magic */
-        .option-card {
-            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        @media (hover: hover) and (pointer: fine) {
-            .option-card:hover:not(.disabled) {
-                transform: translateX(6px);
-                border-color: rgba(0, 242, 255, 0.5);
-                box-shadow: -4px 0 10px rgba(0, 242, 255, 0.1);
-            }
-            .check-btn.active:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 15px rgba(0, 255, 65, 0.3), 0 4px 0 #008f20;
-            }
-        }
-        .check-btn.active:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #008f20;
-        }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 4px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 4px solid var(--cyber-red); }
+        .feedback-title { font-size: clamp(1.2rem, 5vw, 1.4rem); font-weight: 800; margin-bottom: 0.5rem; width: 100%; max-width: 400px; display: flex; align-items: center; gap: 0.5rem; }
+        .feedback-msg { font-size: clamp(0.95rem, 4vw, 1.05rem); color: #8b949e; line-height: 1.5; width: 100%; max-width: 400px; margin-bottom: 1.5rem; }
     </style>
 </head>
 <body>
@@ -97,7 +120,7 @@
     <div id="feedbackPopup" class="feedback-overlay">
         <div class="feedback-title" id="fbTitle"></div>
         <div class="feedback-msg" id="fbMsg"></div>
-        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+        <button class="check-btn active w-full" style="max-width: 400px;" onclick="handleContinue()">Continuar</button>
     </div>
 
     <footer class="game-footer" id="footerArea">
@@ -105,130 +128,88 @@
     </footer>
 
     <script>
-        const phases = [
+        const steps = [
             {
-                icon: 'fa-magnifying-glass-chart',
-                concept: 'Análise de Resultados',
-                desc: 'A execução da varredura é apenas a primeira parte. O trabalho real consiste em eliminar <span class="highlight-red">falsos positivos</span> e priorizar as vulnerabilidades que representam risco real.',
-                task: 'O que deve ser priorizado após a conclusão de uma varredura de vulnerabilidades?',
-                options: [
-                    'Eliminar falsos positivos e focar em vulnerabilidades de alta gravidade',
-                    'Imprimir o relatório imediatamente e entregá-lo sem análise ao cliente',
-                    'Desligar o scanner e apagar todos os logs de execução do sistema'
-                ],
-                correctText: 'Eliminar falsos positivos e focar em vulnerabilidades de alta gravidade',
-                explanation: 'A priorização baseada em risco real economiza recursos e protege ativos críticos primeiro.'
+                        "type": "teach",
+                        "icon": "fa-chart-bar",
+                        "title": "Analisando Resultados",
+                        "content": "Após o scan, o pentester recebe centenas de achados. O trabalho é <b>priorizar</b> por gravidade (CVSS), <b>validar</b> falsos positivos e <b>correlacionar</b> vulnerabilidades para encontrar cadeias de ataque.",
+                        "highlight": "Priorização > Quantidade"
             },
             {
-                icon: 'fa-file-shield',
-                concept: 'CVE (Vulnerabilidades Comuns)',
-                desc: 'O sistema <span class="highlight-yellow">CVE</span> fornece nomes universais para vulnerabilidades conhecidas (ex: CVE-2019-6111), facilitando o compartilhamento de informações entre ferramentas e profissionais.',
-                task: 'Qual a finalidade principal do identificador CVE na cibersegurança?',
-                options: [
-                    'Fornecer uma nomenclatura universal para vulnerabilidades e exposições conhecidas',
-                    'Criptografar as comunicações entre o servidor de banco de dados e o site',
-                    'Armazenar as senhas de todos os usuários do sistema em um local seguro'
-                ],
-                correctText: 'Fornecer uma nomenclatura universal para vulnerabilidades e exposições conhecidas',
-                explanation: 'O CVE permite que todos os profissionais falem a mesma "língua" técnica sobre uma falha.'
+                        "type": "teach",
+                        "icon": "fa-layer-group",
+                        "title": "Classificação de Severidade",
+                        "content": "<b>Crítico (9.0-10.0)</b>: exploração trivial, impacto total. <b>Alto (7.0-8.9)</b>: exploração provável. <b>Médio (4.0-6.9)</b>: exploração possível. <b>Baixo (0.1-3.9)</b>: impacto limitado.",
+                        "highlight": "Foque nos Críticos e Altos primeiro"
             },
             {
-                icon: 'fa-bug',
-                concept: 'CWE (Fraquezas Comuns)',
-                desc: 'A <span class="highlight-cyan">CWE</span> é uma lista de tipos de fraquezas de software que são as causas básicas das vulnerabilidades, criando uma linguagem comum para desenvolvedores.',
-                task: 'Qual a diferença fundamental entre CVE e CWE?',
-                options: [
-                    'CVE foca em instâncias específicas de falhas; CWE foca no tipo de erro de software',
-                    'CVE é para redes Wi-Fi e CWE é exclusivamente para cabos Ethernet',
-                    'Não há diferença; ambos são nomes para o mesmo banco de dados do MITRE'
-                ],
-                correctText: 'CVE foca em instâncias específicas de falhas; CWE foca no tipo de erro de software',
-                explanation: 'CWE é a "doença" (ex: injeção); CVE é o "caso específico" (ex: falha no Apache v2.4).'
+                        "type": "example",
+                        "icon": "fa-link",
+                        "title": "Cadeia de Ataque",
+                        "scenario": "Individualmente: porta FTP aberta (médio) + senha fraca (médio) = acesso total ao servidor. <b>Combinadas</b>, duas vulnerabilidades médias criam um <b>risco crítico</b>.",
+                        "takeaway": "Vulnerabilidades se combinam. Analise o contexto, não apenas o score individual."
             },
             {
-                icon: 'fa-gauge-high',
-                concept: 'Pontuação CVSS',
-                desc: 'O <span class="highlight-green">CVSS</span> calcula a gravidade de uma falha em uma escala de 0 a 10, considerando métricas base (intrínsecas), temporais e ambientais.',
-                task: 'No sistema CVSS, qual pontuação representa uma vulnerabilidade de gravidade crítica?',
-                options: [
-                    '9.0 a 10.0',
-                    '1.0 a 3.0',
-                    '5.0 a 6.0'
-                ],
-                correctText: '9.0 a 10.0',
-                explanation: 'Pontuações acima de 9 indicam falhas que permitem controle total do sistema com facilidade.'
+                        "type": "quiz",
+                        "task": "Por que o pentester deve validar manualmente os resultados do scanner?",
+                        "options": [
+                                    "Para eliminar falsos positivos e confirmar vulnerabilidades reais",
+                                    "Porque scanners nunca encontram nada útil",
+                                    "Para aumentar o número de páginas do relatório"
+                        ],
+                        "correctText": "Para eliminar falsos positivos e confirmar vulnerabilidades reais",
+                        "explanation": "Scanners automatizados geram falsos positivos. Validação manual é essencial."
             },
             {
-                icon: 'fa-shield-halved',
-                concept: 'Priorização Estratégica',
-                desc: 'Vulnerabilidades em <span class="highlight-red">sistemas críticos</span> devem ser tratadas primeiro, mesmo que tenham gravidade menor que falhas em sistemas não essenciais.',
-                task: 'Além da pontuação CVSS, qual fator deve ditar a prioridade de correção?',
-                options: [
-                    'A criticidade do sistema para a missão do negócio do cliente',
-                    'A ordem alfabética dos nomes dos servidores na rede local',
-                    'A cor da interface de administração do software de servidor'
-                ],
-                correctText: 'A criticidade do sistema para a missão do negócio do cliente',
-                explanation: 'Proteger o "coração" da empresa é mais importante que corrigir falhas periféricas.'
+                        "type": "teach",
+                        "icon": "fa-file-medical",
+                        "title": "Documentação dos Achados",
+                        "content": "Cada vulnerabilidade validada deve ser documentada com: <b>descrição</b>, <b>evidência</b> (screenshot/log), <b>impacto</b>, <b>CVSS</b>, e <b>recomendação de correção</b>.",
+                        "highlight": "Sem evidência = achado descartável"
             },
             {
-                icon: 'fa-tower-broadcast',
-                concept: 'US-CERT e JPCERT',
-                desc: 'Organizações como o <span class="highlight-cyan">US-CERT</span> e o JPCERT coordenam a divulgação de vulnerabilidades e promovem a resiliência das infraestruturas de internet nacionais.',
-                task: 'Qual o principal papel das equipes de CERT na comunidade global?',
-                options: [
-                    'Coordenar a divulgação de falhas e aumentar a eficiência do compartilhamento de dados',
-                    'Hackear proativamente outros governos para testar suas defesas nacionais',
-                    'Vender licenças de antivírus para cidadãos de baixa renda em seus países'
-                ],
-                correctText: 'Coordenar a divulgação de falhas e aumentar a eficiência do compartilhamento de dados',
-                explanation: 'Eles atuam como centros de resposta e inteligência contra ameaças em larga escala.'
+                        "type": "fill",
+                        "sentence": "A pontuação CVSS de 9.0 a 10.0 classifica uma vulnerabilidade como ___.",
+                        "options": [
+                                    "Crítica",
+                                    "Alta",
+                                    "Média"
+                        ],
+                        "correctText": "Crítica",
+                        "explanation": "CVSS 9.0+ = Crítico, geralmente com exploração trivial e impacto máximo."
             },
             {
-                icon: 'fa-microchip',
-                concept: 'CAPEC',
-                desc: 'A <span class="highlight-yellow">CAPEC</span> é um dicionário de padrões de ataque conhecidos, ajudando a identificar ameaças ativas com base em comportamentos vistos no mundo real.',
-                task: 'O que o catálogo CAPEC oferece aos profissionais de segurança?',
-                options: [
-                    'Um dicionário estruturado de padrões de ataque observados no mundo real',
-                    'Uma lista de preços para ferramentas físicas de hacking (como Rubber Ducky)',
-                    'Um manual de instruções sobre como trocar placas-mãe de servidores'
-                ],
-                correctText: 'Um dicionário estruturado de padrões de ataque observados no mundo real',
-                explanation: 'Mapear como os ataques acontecem ajuda a desenhar defesas mais inteligentes.'
-            },
-            {
-                icon: 'fa-bolt',
-                concept: 'Cadeia de Exploit',
-                desc: 'Vulnerabilidades de baixa gravidade podem ser perigosas se puderem ser <span class="highlight-red">encadeadas</span> para formar um ataque crítico.',
-                task: 'O que o termo "encadeamento de explorações" (exploit chaining) significa?',
-                options: [
-                    'Usar múltiplas vulnerabilidades em sequência para comprometer um sistema',
-                    'Mudar as senhas de todos os usuários para a mesma sequência de números',
-                    'Bloquear o acesso de rede de todos os hosts usando um único comando'
-                ],
-                correctText: 'Usar múltiplas vulnerabilidades em sequência para comprometer um sistema',
-                explanation: 'Pequenas brechas juntas podem levar ao controle total do domínio.'
-            },
-            {
-                icon: 'fa-check-double',
-                concept: 'Conclusão da Análise',
-                desc: 'A validação final de um achado é a <span class="highlight-green">exploração</span>. Se uma falha possui um módulo no Metasploit, ela deve ser considerada de alta prioridade.',
-                task: 'Qual o método definitivo para validar se um achado de scanner é real?',
-                options: [
-                    'Tentar explorar a vulnerabilidade (validação via exploração)',
-                    'Ler o manual de usuário do software para ver se ele cita o erro',
-                    'Reiniciar o servidor e ver se a mensagem de erro desaparece sozinha'
-                ],
-                correctText: 'Tentar explorar a vulnerabilidade (validação via exploração)',
-                explanation: 'A prova real da falha é conseguir explorá-la com sucesso.'
+                        "type": "match",
+                        "title": "CVSS → Severidade",
+                        "pairs": [
+                                    {
+                                                "term": "9.0 - 10.0",
+                                                "definition": "Crítico"
+                                    },
+                                    {
+                                                "term": "7.0 - 8.9",
+                                                "definition": "Alto"
+                                    },
+                                    {
+                                                "term": "4.0 - 6.9",
+                                                "definition": "Médio"
+                                    }
+                        ]
             }
-        ];
+];
 
         let currentStep = 0;
-        let selectedIdx = null;
+        let selectedIdx = null; // For quiz and fill
         let hearts = 5;
         let shuffledOptions = [];
+        
+        // Match state
+        let matchLeft = [];
+        let matchRight = [];
+        let selectedLeft = null;
+        let selectedRight = null;
+        let matchesFound = 0;
 
         function shuffle(array) {
             let currentIndex = array.length, randomIndex;
@@ -240,73 +221,250 @@
             return array;
         }
 
+        function updateProgress() {
+            const progress = (currentStep / steps.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
         function render() {
-            if (currentStep >= phases.length) { showVictory(); return; }
-            const step = phases[currentStep];
+            if (currentStep >= steps.length) { showVictory(); return; }
+            const step = steps[currentStep];
             const area = document.getElementById('gameArea');
             const checkBtn = document.getElementById('checkBtn');
-            const progress = (currentStep / phases.length) * 100;
             
-            document.getElementById('progressFill').style.width = `${progress}%`;
+            updateProgress();
+            
+            // Reset states
             selectedIdx = null;
             checkBtn.disabled = true;
             checkBtn.classList.remove('active');
-            updateHearts();
+            checkBtn.innerText = (step.type === 'teach' || step.type === 'example') ? 'Continuar' : 'Verificar';
+            
+            if (step.type === 'teach' || step.type === 'example') {
+                checkBtn.disabled = false;
+                checkBtn.classList.add('active');
+            }
 
-            shuffledOptions = shuffle([...step.options]);
+            area.innerHTML = '';
 
-            area.innerHTML = `
-                <div class="fixation-card">
-                    <i class="fas ${step.icon} concept-icon" style="color: var(--cyber-blue)"></i>
-                    <div class="text-[0.6rem] font-black uppercase tracking-widest mb-1" style="color: var(--cyber-blue)">3.4 • ANÁLISE DE RESULTADOS • Nível ${currentStep + 1}</div>
-                    <div class="concept-text">${step.concept}</div>
-                    <div class="concept-desc">${step.desc}</div>
-                    <div class="question-title">${step.task}</div>
-                    <div class="options-grid">
-                        ${shuffledOptions.map((opt, i) => `
-                            <div class="option-card" onclick="select(${i})">
-                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
-                                <span>${opt}</span>
-                            </div>
-                        `).join('')}
+            if (step.type === 'teach') {
+                area.innerHTML = `
+                    <div class="game-card teach-card">
+                        <div class="module-subtitle"><i class="fas ${step.icon}"></i> NOVO CONCEITO</div>
+                        <h2 class="title-main">${step.title}</h2>
+                        <div class="text-body">${step.content}</div>
+                        ${step.highlight ? `<div class="teach-highlight"><i class="fas fa-lightbulb mr-2"></i>${step.highlight}</div>` : ''}
                     </div>
-                </div>
-            `;
+                `;
+            } 
+            else if (step.type === 'example') {
+                area.innerHTML = `
+                    <div class="game-card example-card">
+                        <div class="module-subtitle"><i class="fas ${step.icon}"></i> NA PRÁTICA</div>
+                        <h2 class="title-main">${step.title}</h2>
+                        <div class="example-scenario text-body">${step.scenario}</div>
+                        ${step.code ? `<div class="example-code">${step.code}</div>` : ''}
+                        <div class="example-takeaway"><i class="fas fa-arrow-right mt-1" style="color: var(--cyber-blue)"></i> ${step.takeaway}</div>
+                    </div>
+                `;
+            }
+            else if (step.type === 'quiz') {
+                shuffledOptions = shuffle([...step.options]);
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="quiz-title">${step.task}</div>
+                        <div class="options-grid">
+                            ${shuffledOptions.map((opt, i) => `
+                                <div class="option-card" onclick="selectQuiz(${i})" id="opt-${i}">
+                                    <div class="option-number">${i+1}</div>
+                                    <span>${opt}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            else if (step.type === 'fill') {
+                shuffledOptions = shuffle([...step.options]);
+                const sentenceParts = step.sentence.split('___');
+                
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="module-subtitle"><i class="fas fa-pen-to-square"></i> COMPLETE A FRASE</div>
+                        <div class="fill-sentence">
+                            ${sentenceParts[0]}<span class="fill-slot" id="fillSlot"></span>${sentenceParts[1]}
+                        </div>
+                        <div class="options-grid">
+                            ${shuffledOptions.map((opt, i) => `
+                                <div class="option-card" style="justify-content: center;" onclick="selectFill(${i})" id="opt-${i}">
+                                    <span>${opt}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            else if (step.type === 'match') {
+                matchesFound = 0;
+                matchLeft = shuffle(step.pairs.map((p, i) => ({text: p.term, id: i})));
+                
+                let isDeranged = false;
+                while (!isDeranged) {
+                    matchRight = shuffle(step.pairs.map((p, i) => ({text: p.definition, id: i})));
+                    isDeranged = true;
+                    for (let j = 0; j < matchLeft.length; j++) {
+                        if (matchLeft[j].id === matchRight[j].id) {
+                            if (matchLeft.length > 1) {
+                                isDeranged = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                selectedLeft = null;
+                selectedRight = null;
+                
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="module-subtitle"><i class="fas fa-link"></i> ASSOCIE OS PARES</div>
+                        <div class="quiz-title">${step.title}</div>
+                        <div class="match-container">
+                                ${matchLeft.map((item, i) => `
+                                    <div class="match-item" id="left-${i}" onclick="selectMatch('left', ${i}, ${item.id})">${item.text}</div>
+                                    <div class="match-item" id="right-${i}" onclick="selectMatch('right', ${i}, ${matchRight[i].id})">${matchRight[i].text}</div>
+                                `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
             area.scrollTop = 0;
         }
 
-        function select(idx) {
+        // Interactivity Handlers
+        function selectQuiz(idx) {
             selectedIdx = idx;
             document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
             document.getElementById('checkBtn').disabled = false;
             document.getElementById('checkBtn').classList.add('active');
         }
 
+        function selectFill(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            const slot = document.getElementById('fillSlot');
+            slot.innerText = shuffledOptions[idx];
+            slot.classList.add('filled');
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function selectMatch(side, idx, pairId) {
+            const item = document.getElementById(`${side}-${idx}`);
+            if (item.classList.contains('matched')) return;
+
+            // Clear previous selection on same side
+            document.querySelectorAll(`.match-item[id^='${side}-']`).forEach(el => {
+                if(!el.classList.contains('matched')) el.classList.remove('selected');
+            });
+            
+            item.classList.add('selected');
+
+            if (side === 'left') selectedLeft = {el: item, id: pairId};
+            else selectedRight = {el: item, id: pairId};
+
+            if (selectedLeft && selectedRight) {
+                // Check match
+                if (selectedLeft.id === selectedRight.id) {
+                    selectedLeft.el.classList.remove('selected');
+                    selectedLeft.el.classList.add('matched');
+                    selectedRight.el.classList.remove('selected');
+                    selectedRight.el.classList.add('matched');
+                    matchesFound++;
+                    
+                    if (matchesFound === steps[currentStep].pairs.length) {
+                        document.getElementById('checkBtn').disabled = false;
+                        document.getElementById('checkBtn').classList.add('active');
+                    }
+                } else {
+                    let errLeft = selectedLeft;
+                    let errRight = selectedRight;
+                    selectedLeft = null;
+                    selectedRight = null;
+
+                    errLeft.el.classList.remove('selected');
+                    errLeft.el.classList.add('error');
+                    errRight.el.classList.remove('selected');
+                    errRight.el.classList.add('error');
+                    
+                    // Lose heart for wrong match
+                    hearts--;
+                    updateProgress();
+                    if(hearts <= 0) triggerGameOver();
+
+                    setTimeout(() => {
+                        errLeft.el.classList.remove('error');
+                        errRight.el.classList.remove('error');
+                    }, 500);
+                    return;
+                }
+                selectedLeft = null;
+                selectedRight = null;
+            }
+        }
+
+        // Logic Check
         function checkResponse() {
-            const step = phases[currentStep];
-            const isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            const step = steps[currentStep];
+            const checkBtn = document.getElementById('checkBtn');
             const popup = document.getElementById('feedbackPopup');
             
-            document.querySelectorAll('.option-card').forEach((c, i) => {
-                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
-                else if (i === selectedIdx) c.classList.add('wrong');
-                c.classList.add('disabled', 'pointer-events-none');
-            });
+            // Non-interactive steps just advance
+            if (step.type === 'teach' || step.type === 'example') {
+                currentStep++;
+                render();
+                return;
+            }
+
+            let isCorrect = false;
+
+            if (step.type === 'quiz' || step.type === 'fill') {
+                isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+                
+                document.querySelectorAll('.option-card').forEach((c, i) => {
+                    if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                    else if (i === selectedIdx) c.classList.add('wrong');
+                    c.classList.add('disabled');
+                });
+            } else if (step.type === 'match') {
+                isCorrect = true; // Button only enables when all matches found
+            }
 
             if (isCorrect) {
-                document.getElementById('fbTitle').innerText = "ANÁLISE VALIDADA!";
-                document.getElementById('fbTitle').className = "text-green-500 font-bold";
-                document.getElementById('fbMsg').innerText = step.explanation;
+                document.getElementById('fbTitle').innerHTML = '<i class="fas fa-check-circle"></i> Excelente!';
+                document.getElementById('fbTitle').className = "feedback-title text-green-500";
+                document.getElementById('fbMsg').innerText = step.explanation || "Você dominou esse conceito.";
                 popup.className = "feedback-overlay show correct";
             } else {
                 hearts--;
-                updateHearts();
-                document.getElementById('fbTitle').innerText = "ERRO DE TRIAGEM!";
-                document.getElementById('fbTitle').className = "text-red-500 font-bold";
-                document.getElementById('fbMsg').innerText = "O correto era: " + step.correctText;
+                updateProgress();
+                document.getElementById('fbTitle').innerHTML = '<i class="fas fa-times-circle"></i> Incorreto!';
+                document.getElementById('fbTitle').className = "feedback-title text-red-500";
+                document.getElementById('fbMsg').innerText = step.explanation || "O correto era: " + step.correctText;
                 popup.className = "feedback-overlay show wrong";
-                if (hearts <= 0) setTimeout(() => { alert("ACESSO NEGADO. Reiniciando!"); location.reload(); }, 500);
+                
+                if (hearts <= 0) {
+                    setTimeout(triggerGameOver, 600);
+                }
             }
+        }
+
+        function triggerGameOver() {
+            alert("VOCÊ FICOU SEM VIDAS. O treinamento será reiniciado."); 
+            location.reload();
         }
 
         function handleContinue() {
@@ -315,20 +473,33 @@
             render();
         }
 
-        function updateHearts() {
-            const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
-        }
-
         function showVictory() {
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
+            
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/4.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #009e80; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            }
+
             document.getElementById('gameArea').innerHTML = `
-                <div class="fixation-card text-center items-center flex flex-col" style="border-color: var(--cyber-blue)">
-                    <i class="fas fa-medal text-5xl text-yellow-400 mb-2"></i>
-                    <h2 class="text-xl font-bold text-white mb-1">AUDITOR DE VULNERABILIDADES!</h2>
-                    <p class="text-[0.7rem] text-gray-400 mb-4">Você compreendeu como analisar, priorizar e validar vulnerabilidades no Módulo 3.4.</p>
-                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-03.html'" style="background: var(--cyber-blue); color: black;">VOLTAR AO MÓDULO</button>
+                <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
+                    <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
+                    <h2 class="title-main mb-2">ANÁLISE DE VULNS CONCLUÍDA!</h2>
+                    <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
+                    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
+                        ${nextBtnHtml}
+                        <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">
+                            <button class="check-btn" onclick="location.reload()" style="flex: 1; background: #161b22; border: 2px solid #30363d; color: #c9d1d9; box-shadow: 0 4px 0 #0d1117; padding: 0.8rem 0.5rem;">
+                                <i class="fas fa-rotate-right mb-1 block text-lg"></i>
+                                <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
+                            </button>
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-03.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                                <i class="fas fa-layer-group mb-1 block text-lg"></i>
+                                <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             `;
         }

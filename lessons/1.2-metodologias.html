@@ -6,7 +6,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Metodologias de Teste 1.2</title>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <title>CyberDuo - Metodologias de Pentest 1.2</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,64 +27,84 @@
         html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
         body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
 
-        .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(45, 90, 245, 0.2); z-index: 60; }
-        .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
-        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
+        .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 255, 65, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 12px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; border-radius: 10px;}
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 80px; justify-content: flex-end; font-size: 1.1rem; }
 
-        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
         .game-content::-webkit-scrollbar { display: none; }
 
-        .fixation-card { background: #0d1117; border: 1px solid var(--cyber-blue); padding: clamp(1rem, 4vw, 1.3rem); border-radius: 1.2rem; width: 100%; box-sizing: border-box; margin-top: auto; margin-bottom: auto; animation: slideUp 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 0.3rem; }
+        .game-card { width: 100%; animation: slideUp 0.3s ease-out; display: flex; flex-direction: column; gap: 0.8rem; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
-        .concept-text { font-size: clamp(0.95rem, 3.8vw, 1.1rem); color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
-        .concept-desc { color: #b1bac4; font-size: clamp(0.9rem, 3.5vw, 1rem); line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
-
+        /* General Typography */
+        .module-subtitle { font-size: 0.7rem; font-weight: 900; color: var(--cyber-blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .title-main { font-size: clamp(1.4rem, 5vw, 1.8rem); font-weight: 800; color: white; line-height: 1.2; margin-bottom: 0.5rem; }
+        .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
+        .text-body b { color: white; }
+        
+        
+        /* Utility Classes */
+        .mr-1 { margin-right: 0.25rem; }
+        .mr-2 { margin-right: 0.5rem; }
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
         .highlight-cyan { color: #00f2ff; font-weight: 700; }
-        .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
-        .highlight-red { color: var(--cyber-red); font-weight: 700; }
         .highlight-green { color: var(--cyber-green); font-weight: 700; }
 
-        .question-title { font-size: clamp(1rem, 4vw, 1.15rem); font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+        /* TYPE: TEACH */
+        .teach-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .teach-icon { font-size: 2.5rem; color: var(--cyber-blue); margin-bottom: 1rem; }
+        .teach-highlight { display: flex; align-items: center; gap: 0.6rem; background: rgba(0, 255, 65, 0.1); border-left: 3px solid var(--cyber-green); padding: 0.8rem; margin-top: 1rem; font-weight: 600; color: var(--cyber-green); border-radius: 0 0.5rem 0.5rem 0; }
 
-        .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
-        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: clamp(0.9rem, 3.5vw, 1rem); -webkit-tap-highlight-color: transparent;  min-height: 48px;}
-        .option-card.selected { border-color: var(--cyber-blue); background: rgba(45, 90, 245, 0.05); }
+        /* TYPE: EXAMPLE */
+        .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .example-scenario { background: #161b22; border: 1px solid #21262d; border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; }
+        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.9rem; color: #00ff41; border: 1px solid #30363d; }
+        .example-takeaway { display: flex; gap: 0.8rem; align-items: flex-start; margin-top: 1rem; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
+
+        /* TYPE: QUIZ */
+        .quiz-title { font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 800; color: white; margin-bottom: 1.5rem; line-height: 1.3; }
+        .options-grid { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
+        .option-card { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.8rem, 3vw, 1rem); border-radius: 1rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: clamp(0.95rem, 4vw, 1.05rem); -webkit-tap-highlight-color: transparent; }
+        .option-card:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.05); }
         .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
         .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+        .option-card.disabled { pointer-events: none; opacity: 0.6; }
+        .option-number { width: 28px; height: 28px; flex-shrink: 0; border: 2px solid #484f58; border-radius: 0.4rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; color: #8b949e; }
+        .option-card.selected .option-number { border-color: var(--cyber-blue); color: var(--cyber-blue); }
 
+        /* TYPE: FILL */
+        .fill-sentence { font-size: clamp(1.1rem, 5vw, 1.3rem); font-weight: 600; line-height: 1.6; color: white; margin-bottom: 2rem; background: #0d1117; padding: clamp(1rem, 4vw, 1.5rem); border-radius: 1.2rem; border: 1px solid #30363d; }
+        .fill-slot { display: inline-block; min-width: 120px; height: 34px; border-bottom: 3px solid #484f58; margin: 0 0.5rem; vertical-align: middle; text-align: center; color: var(--cyber-blue); font-weight: 800; transition: all 0.2s; }
+        .fill-slot.filled { border-bottom-color: var(--cyber-blue); }
+
+        /* TYPE: MATCH */
+        .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
+        /* .match-column removed */
+        .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
+        .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
+        .match-item.matched { border-color: var(--cyber-green); background: rgba(0, 255, 65, 0.05); color: var(--cyber-green); opacity: 0.5; pointer-events: none; }
+        .match-item.error { border-color: var(--cyber-red); animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        /* FOOTER & BUTTONS */
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
-        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px;  min-height: 48px;}
-        .check-btn.active { background: var(--cyber-blue); color: white; box-shadow: 0 4px 0 #1a3fb3; }
+        .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
+        .check-btn:active { transform: scale(0.98); }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #1a3fb3; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #1a3fb3; }
 
-        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        /* FEEDBACK OVERLAY */
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
         .feedback-overlay.show { bottom: 0; }
-        .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
-        .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
-        .feedback-title { font-size: clamp(1rem, 4vw, 1.2rem); font-weight: 800; margin-bottom: 0.3rem; }
-        .feedback-msg { font-size: clamp(0.9rem, 3.5vw, 1rem); color: #8b949e; line-height: 1.4; }
-    
-        /* Design Spells: Interactive Magic */
-        .option-card {
-            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        @media (hover: hover) and (pointer: fine) {
-            .option-card:hover:not(.disabled) {
-                transform: translateX(6px);
-                border-color: rgba(0, 242, 255, 0.5);
-                box-shadow: -4px 0 10px rgba(0, 242, 255, 0.1);
-            }
-            .check-btn.active:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 15px rgba(0, 255, 65, 0.3), 0 4px 0 #008f20;
-            }
-        }
-        .check-btn.active:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #008f20;
-        }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 4px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 4px solid var(--cyber-red); }
+        .feedback-title { font-size: clamp(1.2rem, 5vw, 1.4rem); font-weight: 800; margin-bottom: 0.5rem; width: 100%; max-width: 400px; display: flex; align-items: center; gap: 0.5rem; }
+        .feedback-msg { font-size: clamp(0.95rem, 4vw, 1.05rem); color: #8b949e; line-height: 1.5; width: 100%; max-width: 400px; margin-bottom: 1.5rem; }
     </style>
 </head>
 <body>
@@ -97,7 +120,7 @@
     <div id="feedbackPopup" class="feedback-overlay">
         <div class="feedback-title" id="fbTitle"></div>
         <div class="feedback-msg" id="fbMsg"></div>
-        <button class="check-btn active w-full mt-4" onclick="handleContinue()">Continuar</button>
+        <button class="check-btn active w-full" style="max-width: 400px;" onclick="handleContinue()">Continuar</button>
     </div>
 
     <footer class="game-footer" id="footerArea">
@@ -105,117 +128,113 @@
     </footer>
 
     <script>
-        const phases = [
+        const steps = [
             {
-                icon: 'fa-vial-circle-check',
-                concept: 'Metodologias de Teste',
-                desc: 'Seguir métodos conhecidos é vital para uma abordagem <span class="highlight-cyan">organizada e sistemática</span>, garantindo que nenhum vetor seja esquecido e que os resultados sejam defensáveis.',
-                task: 'Por que utilizar uma metodologia comprovada durante um pentest para um cliente?',
-                options: [
-                    'Para garantir prestação de contas e resultados defensáveis e sistemáticos',
-                    'Para terminar o teste o mais rápido possível e receber o pagamento',
-                    'Para permitir que qualquer pessoa da internet acesse a rede do cliente'
-                ],
-                correctText: 'Para garantir prestação de contas e resultados defensáveis e sistemáticos',
-                explanation: 'Metodologias dão credibilidade e estrutura profissional ao trabalho do pentester.'
+                        "type": "teach",
+                        "icon": "fa-sitemap",
+                        "title": "Por que Seguir uma Metodologia?",
+                        "content": "Uma metodologia garante que o pentest seja <b>repetível</b>, <b>documentável</b> e cubra <b>todos os vetores de ataque</b>. Sem ela, áreas críticas podem ser ignoradas por acidente.",
+                        "highlight": "Metodologia = cobertura completa"
             },
             {
-                icon: 'fa-ghost',
-                concept: 'Ambiente Desconhecido',
-                desc: 'No teste de <span class="highlight-yellow">ambiente desconhecido</span> (Caixa Preta), o testador não possui conhecimento prévio da infraestrutura, simulando um ataque externo real.',
-                task: 'Qual a principal característica de um teste de "Caixa Preta"?',
-                options: [
-                    'O auditor possui pouco ou nenhum conhecimento prévio do alvo',
-                    'O auditor possui acesso total ao código-fonte e senhas de administrador',
-                    'O teste é realizado apenas em servidores que estão desligados'
-                ],
-                correctText: 'O auditor possui pouco ou nenhum conhecimento prévio do alvo',
-                explanation: 'Este método avalia o que um agressor externo veria e conseguiria explorar.'
+                        "type": "teach",
+                        "icon": "fa-clipboard-list",
+                        "title": "PTES (Penetration Testing Execution Standard)",
+                        "content": "O <b>PTES</b> define 7 fases: Pré-engajamento, Coleta de Inteligência, Modelagem de Ameaças, Análise de Vulnerabilidades, Exploração, Pós-Exploração e Relatório.",
+                        "highlight": "7 fases do início ao relatório"
             },
             {
-                icon: 'fa-eye',
-                concept: 'Ambiente Conhecido',
-                desc: 'No teste de <span class="highlight-cyan">ambiente conhecido</span> (Caixa Branca), o auditor tem acesso total a documentação, diagramas de rede e até código-fonte.',
-                task: 'Qual a vantagem de realizar um teste de "Caixa Branca"?',
-                options: [
-                    'Permite uma auditoria profunda e exaustiva de todos os componentes internos',
-                    'É o método mais barato pois exige menos tempo de investigação',
-                    'Garante que o hacker criminoso nunca descubra a existência da rede'
-                ],
-                correctText: 'Permite uma auditoria profunda e exaustiva de todos os componentes internos',
-                explanation: 'Com acesso aos dados, o pentester pode encontrar falhas que seriam difíceis de ver de fora.'
+                        "type": "teach",
+                        "icon": "fa-book",
+                        "title": "OWASP Testing Guide",
+                        "content": "O <b>OWASP Testing Guide</b> é focado em segurança de <b>aplicações web</b>. Ele cobre testes de autenticação, gerenciamento de sessão, validação de entrada, criptografia e lógica de negócios.",
+                        "highlight": "O padrão para segurança web"
             },
             {
-                icon: 'fa-diagram-project',
-                concept: 'MITRE ATT&CK',
-                desc: 'O framework <span class="highlight-red">MITRE ATT&CK</span> é uma base de conhecimento global de táticas, técnicas e procedimentos (TTPs) baseada em observações do mundo real.',
-                task: 'Como profissionais utilizam a matriz MITRE ATT&CK no dia a dia?',
-                options: [
-                    'Para aprender e mapear as táticas e técnicas reais usadas por adversários',
-                    'Para hospedar sites pessoais e portfólios de design gráfico',
-                    'Para realizar chamadas de vídeo criptografadas com outros países'
-                ],
-                correctText: 'Para aprender e mapear as táticas e técnicas reais usadas por adversários',
-                explanation: 'O MITRE fornece a linguagem comum para descrever comportamentos de ataque.'
+                        "type": "teach",
+                        "icon": "fa-network-wired",
+                        "title": "NIST SP 800-115",
+                        "content": "O <b>NIST SP 800-115</b> é um guia técnico do governo americano para condução de avaliações de segurança, incluindo revisão de documentos, análise de rede, scan de vulnerabilidades e testes de penetração.",
+                        "highlight": "Padrão governamental de referência"
             },
             {
-                icon: 'fa-magnifying-glass-chart',
-                concept: 'OWASP WSTG',
-                desc: 'O <span class="highlight-cyan">WSTG (Web Security Testing Guide)</span> é o guia mais detalhado para testes de aplicações web, cobrindo vetores como XSS e SQLi.',
-                task: 'Qual o foco principal do guia OWASP WSTG na indústria de segurança?',
-                options: [
-                    'Fornecer uma metodologia exaustiva para testes de segurança em aplicações web',
-                    'Ensinar a montar infraestruturas de rede física em grandes prédios',
-                    'Vender licenças de software antivírus para o governo federal'
-                ],
-                correctText: 'Fornecer uma metodologia exaustiva para testes de segurança em aplicações web',
-                explanation: 'É o padrão de ouro para auditoria técnica de sites e sistemas web.'
+                        "type": "match",
+                        "title": "Associe Metodologia → Foco",
+                        "pairs": [
+                                    {
+                                                "term": "PTES",
+                                                "definition": "Pentest geral (7 fases)"
+                                    },
+                                    {
+                                                "term": "OWASP",
+                                                "definition": "Segurança de apps web"
+                                    },
+                                    {
+                                                "term": "NIST 800-115",
+                                                "definition": "Avaliações técnicas governamentais"
+                                    }
+                        ]
             },
             {
-                icon: 'fa-building-shield',
-                concept: 'NIST SP 800-115',
-                desc: 'A publicação <span class="highlight-yellow">NIST SP 800-115</span> fornece diretrizes fundamentais para o planejamento e realização de testes de segurança da informação.',
-                task: 'Qual organização criou o documento padrão SP 800-115 usado na indústria?',
-                options: [
-                    'NIST (National Institute of Standards and Technology)',
-                    'FBI (Federal Bureau of Investigation)',
-                    'OWASP Foundation'
-                ],
-                correctText: 'NIST (National Institute of Standards and Technology)',
-                explanation: 'O NIST define muitos dos padrões de conformidade e auditoria seguidos globalmente.'
+                        "type": "teach",
+                        "icon": "fa-flask",
+                        "title": "Considerações Ambientais",
+                        "content": "Antes de iniciar um teste, é crucial entender o <b>ambiente do alvo</b>: é uma rede interna ou externa? Há sistemas legados frágeis? Qual é a janela de manutenção? Tudo isso afeta a abordagem.",
+                        "highlight": "O ambiente define a estratégia"
             },
             {
-                icon: 'fa-list-ol',
-                concept: 'Fases do PTES',
-                desc: 'O <span class="highlight-cyan">PTES</span> define sete fases, desde a pré-interação até o relatório final, focando em ferramentas e métodos atuais de ataque.',
-                task: 'Quantas fases distintas compõem o Padrão de Execução de Teste de Penetração (PTES)?',
-                options: [
-                    '7 fases',
-                    '3 fases',
-                    '10 fases'
-                ],
-                correctText: '7 fases',
-                explanation: 'As fases incluem inteligência, modelagem de ameaças, análise de vulnerabilidades, entre outras.'
+                        "type": "teach",
+                        "icon": "fa-eye",
+                        "title": "Black Box, White Box, Grey Box",
+                        "content": "<b>Black Box</b>: pentester não tem informação prévia. <b>White Box</b>: pentester tem acesso total (código-fonte, diagramas). <b>Grey Box</b>: pentester tem informação parcial (credenciais limitadas).",
+                        "highlight": "Três níveis de informação, três abordagens"
             },
             {
-                icon: 'fa-bug',
-                concept: 'Bug Bounties',
-                desc: 'Programas de <span class="highlight-green">Recompensa por Bugs</span> permitem que pesquisadores recebam compensação financeira por encontrar falhas de forma ética.',
-                task: 'Qual a diferença entre Pentest tradicional e programas de Bug Bounty?',
-                options: [
-                    'Bug Bounty é contínuo e aberto a muitos pesquisadores; Pentest é por contrato e prazo',
-                    'Pentest é ilegal; Bug Bounty é a única forma legal de praticar hacking',
-                    'Não há diferença técnica ou contratual entre os dois modelos'
-                ],
-                correctText: 'Bug Bounty é contínuo e aberto a muitos pesquisadores; Pentest é por contrato e prazo',
-                explanation: 'Empresas usam Bug Bounties para ter uma multidão de olhos testando seus sistemas 24/7.'
+                        "type": "quiz",
+                        "task": "Em qual tipo de teste o pentester NÃO recebe nenhuma informação prévia sobre o alvo?",
+                        "options": [
+                                    "Black Box",
+                                    "White Box",
+                                    "Grey Box"
+                        ],
+                        "correctText": "Black Box",
+                        "explanation": "No Black Box, o pentester simula um atacante externo sem nenhum conhecimento interno."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "O teste em que o pentester recebe acesso total ao código-fonte e diagramas é chamado de ___.",
+                        "options": [
+                                    "White Box",
+                                    "Black Box",
+                                    "Grey Box"
+                        ],
+                        "correctText": "White Box",
+                        "explanation": "White Box dá visibilidade completa para encontrar falhas em nível de código."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual metodologia define 7 fases desde o pré-engajamento até o relatório final?",
+                        "options": [
+                                    "PTES",
+                                    "OWASP Testing Guide",
+                                    "NIST SP 800-115"
+                        ],
+                        "correctText": "PTES",
+                        "explanation": "O PTES (Penetration Testing Execution Standard) organiza todo o pentest em 7 fases sequenciais."
             }
-        ];
+];
 
         let currentStep = 0;
-        let selectedIdx = null;
+        let selectedIdx = null; // For quiz and fill
         let hearts = 5;
         let shuffledOptions = [];
+        
+        // Match state
+        let matchLeft = [];
+        let matchRight = [];
+        let selectedLeft = null;
+        let selectedRight = null;
+        let matchesFound = 0;
 
         function shuffle(array) {
             let currentIndex = array.length, randomIndex;
@@ -227,73 +246,250 @@
             return array;
         }
 
+        function updateProgress() {
+            const progress = (currentStep / steps.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
         function render() {
-            if (currentStep >= phases.length) { showVictory(); return; }
-            const step = phases[currentStep];
+            if (currentStep >= steps.length) { showVictory(); return; }
+            const step = steps[currentStep];
             const area = document.getElementById('gameArea');
             const checkBtn = document.getElementById('checkBtn');
-            const progress = (currentStep / phases.length) * 100;
             
-            document.getElementById('progressFill').style.width = `${progress}%`;
+            updateProgress();
+            
+            // Reset states
             selectedIdx = null;
             checkBtn.disabled = true;
             checkBtn.classList.remove('active');
-            updateHearts();
+            checkBtn.innerText = (step.type === 'teach' || step.type === 'example') ? 'Continuar' : 'Verificar';
+            
+            if (step.type === 'teach' || step.type === 'example') {
+                checkBtn.disabled = false;
+                checkBtn.classList.add('active');
+            }
 
-            shuffledOptions = shuffle([...step.options]);
+            area.innerHTML = '';
 
-            area.innerHTML = `
-                <div class="fixation-card">
-                    <i class="fas ${step.icon} concept-icon" style="color: var(--cyber-blue)"></i>
-                    <div class="text-[0.6rem] font-black uppercase tracking-widest mb-1" style="color: var(--cyber-blue)">1.2 • METODOLOGIAS • Nível ${currentStep + 1}</div>
-                    <div class="concept-text">${step.concept}</div>
-                    <div class="concept-desc">${step.desc}</div>
-                    <div class="question-title">${step.task}</div>
-                    <div class="options-grid">
-                        ${shuffledOptions.map((opt, i) => `
-                            <div class="option-card" onclick="select(${i})">
-                                <div class="w-5 h-5 border border-gray-600 rounded-full flex items-center justify-center text-[9px] font-bold">${i+1}</div>
-                                <span>${opt}</span>
-                            </div>
-                        `).join('')}
+            if (step.type === 'teach') {
+                area.innerHTML = `
+                    <div class="game-card teach-card">
+                        <div class="module-subtitle"><i class="fas ${step.icon}"></i> NOVO CONCEITO</div>
+                        <h2 class="title-main">${step.title}</h2>
+                        <div class="text-body">${step.content}</div>
+                        ${step.highlight ? `<div class="teach-highlight"><i class="fas fa-lightbulb mr-2"></i>${step.highlight}</div>` : ''}
                     </div>
-                </div>
-            `;
+                `;
+            } 
+            else if (step.type === 'example') {
+                area.innerHTML = `
+                    <div class="game-card example-card">
+                        <div class="module-subtitle"><i class="fas ${step.icon}"></i> NA PRÁTICA</div>
+                        <h2 class="title-main">${step.title}</h2>
+                        <div class="example-scenario text-body">${step.scenario}</div>
+                        ${step.code ? `<div class="example-code">${step.code}</div>` : ''}
+                        <div class="example-takeaway"><i class="fas fa-arrow-right mt-1" style="color: var(--cyber-blue)"></i> ${step.takeaway}</div>
+                    </div>
+                `;
+            }
+            else if (step.type === 'quiz') {
+                shuffledOptions = shuffle([...step.options]);
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="quiz-title">${step.task}</div>
+                        <div class="options-grid">
+                            ${shuffledOptions.map((opt, i) => `
+                                <div class="option-card" onclick="selectQuiz(${i})" id="opt-${i}">
+                                    <div class="option-number">${i+1}</div>
+                                    <span>${opt}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            else if (step.type === 'fill') {
+                shuffledOptions = shuffle([...step.options]);
+                const sentenceParts = step.sentence.split('___');
+                
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="module-subtitle"><i class="fas fa-pen-to-square"></i> COMPLETE A FRASE</div>
+                        <div class="fill-sentence">
+                            ${sentenceParts[0]}<span class="fill-slot" id="fillSlot"></span>${sentenceParts[1]}
+                        </div>
+                        <div class="options-grid">
+                            ${shuffledOptions.map((opt, i) => `
+                                <div class="option-card" style="justify-content: center;" onclick="selectFill(${i})" id="opt-${i}">
+                                    <span>${opt}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            else if (step.type === 'match') {
+                matchesFound = 0;
+                matchLeft = shuffle(step.pairs.map((p, i) => ({text: p.term, id: i})));
+                
+                let isDeranged = false;
+                while (!isDeranged) {
+                    matchRight = shuffle(step.pairs.map((p, i) => ({text: p.definition, id: i})));
+                    isDeranged = true;
+                    for (let j = 0; j < matchLeft.length; j++) {
+                        if (matchLeft[j].id === matchRight[j].id) {
+                            if (matchLeft.length > 1) {
+                                isDeranged = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                selectedLeft = null;
+                selectedRight = null;
+                
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="module-subtitle"><i class="fas fa-link"></i> ASSOCIE OS PARES</div>
+                        <div class="quiz-title">${step.title}</div>
+                        <div class="match-container">
+                                ${matchLeft.map((item, i) => `
+                                    <div class="match-item" id="left-${i}" onclick="selectMatch('left', ${i}, ${item.id})">${item.text}</div>
+                                    <div class="match-item" id="right-${i}" onclick="selectMatch('right', ${i}, ${matchRight[i].id})">${matchRight[i].text}</div>
+                                `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
             area.scrollTop = 0;
         }
 
-        function select(idx) {
+        // Interactivity Handlers
+        function selectQuiz(idx) {
             selectedIdx = idx;
             document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
             document.getElementById('checkBtn').disabled = false;
             document.getElementById('checkBtn').classList.add('active');
         }
 
+        function selectFill(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            const slot = document.getElementById('fillSlot');
+            slot.innerText = shuffledOptions[idx];
+            slot.classList.add('filled');
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function selectMatch(side, idx, pairId) {
+            const item = document.getElementById(`${side}-${idx}`);
+            if (item.classList.contains('matched')) return;
+
+            // Clear previous selection on same side
+            document.querySelectorAll(`.match-item[id^='${side}-']`).forEach(el => {
+                if(!el.classList.contains('matched')) el.classList.remove('selected');
+            });
+            
+            item.classList.add('selected');
+
+            if (side === 'left') selectedLeft = {el: item, id: pairId};
+            else selectedRight = {el: item, id: pairId};
+
+            if (selectedLeft && selectedRight) {
+                // Check match
+                if (selectedLeft.id === selectedRight.id) {
+                    selectedLeft.el.classList.remove('selected');
+                    selectedLeft.el.classList.add('matched');
+                    selectedRight.el.classList.remove('selected');
+                    selectedRight.el.classList.add('matched');
+                    matchesFound++;
+                    
+                    if (matchesFound === steps[currentStep].pairs.length) {
+                        document.getElementById('checkBtn').disabled = false;
+                        document.getElementById('checkBtn').classList.add('active');
+                    }
+                } else {
+                    let errLeft = selectedLeft;
+                    let errRight = selectedRight;
+                    selectedLeft = null;
+                    selectedRight = null;
+
+                    errLeft.el.classList.remove('selected');
+                    errLeft.el.classList.add('error');
+                    errRight.el.classList.remove('selected');
+                    errRight.el.classList.add('error');
+                    
+                    // Lose heart for wrong match
+                    hearts--;
+                    updateProgress();
+                    if(hearts <= 0) triggerGameOver();
+
+                    setTimeout(() => {
+                        errLeft.el.classList.remove('error');
+                        errRight.el.classList.remove('error');
+                    }, 500);
+                    return;
+                }
+                selectedLeft = null;
+                selectedRight = null;
+            }
+        }
+
+        // Logic Check
         function checkResponse() {
-            const step = phases[currentStep];
-            const isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            const step = steps[currentStep];
+            const checkBtn = document.getElementById('checkBtn');
             const popup = document.getElementById('feedbackPopup');
             
-            document.querySelectorAll('.option-card').forEach((c, i) => {
-                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
-                else if (i === selectedIdx) c.classList.add('wrong');
-                c.classList.add('disabled', 'pointer-events-none');
-            });
+            // Non-interactive steps just advance
+            if (step.type === 'teach' || step.type === 'example') {
+                currentStep++;
+                render();
+                return;
+            }
+
+            let isCorrect = false;
+
+            if (step.type === 'quiz' || step.type === 'fill') {
+                isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+                
+                document.querySelectorAll('.option-card').forEach((c, i) => {
+                    if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                    else if (i === selectedIdx) c.classList.add('wrong');
+                    c.classList.add('disabled');
+                });
+            } else if (step.type === 'match') {
+                isCorrect = true; // Button only enables when all matches found
+            }
 
             if (isCorrect) {
-                document.getElementById('fbTitle').innerText = "PROCESSO VALIDADO!";
-                document.getElementById('fbTitle').className = "text-green-500 font-bold";
-                document.getElementById('fbMsg').innerText = step.explanation;
+                document.getElementById('fbTitle').innerHTML = '<i class="fas fa-check-circle"></i> Excelente!';
+                document.getElementById('fbTitle').className = "feedback-title text-green-500";
+                document.getElementById('fbMsg').innerText = step.explanation || "Você dominou esse conceito.";
                 popup.className = "feedback-overlay show correct";
             } else {
                 hearts--;
-                updateHearts();
-                document.getElementById('fbTitle').innerText = "DESVIO DE ESCOPO!";
-                document.getElementById('fbTitle').className = "text-red-500 font-bold";
-                document.getElementById('fbMsg').innerText = "O correto era: " + step.correctText;
+                updateProgress();
+                document.getElementById('fbTitle').innerHTML = '<i class="fas fa-times-circle"></i> Incorreto!';
+                document.getElementById('fbTitle').className = "feedback-title text-red-500";
+                document.getElementById('fbMsg').innerText = step.explanation || "O correto era: " + step.correctText;
                 popup.className = "feedback-overlay show wrong";
-                if (hearts <= 0) setTimeout(() => { alert("METODOLOGIA CORROMPIDA. Reiniciando!"); location.reload(); }, 500);
+                
+                if (hearts <= 0) {
+                    setTimeout(triggerGameOver, 600);
+                }
             }
+        }
+
+        function triggerGameOver() {
+            alert("VOCÊ FICOU SEM VIDAS. O treinamento será reiniciado."); 
+            location.reload();
         }
 
         function handleContinue() {
@@ -302,20 +498,33 @@
             render();
         }
 
-        function updateHearts() {
-            const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
-        }
-
         function showVictory() {
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
+            
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.3-laboratorio-proprio.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #1a3fb3; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            }
+
             document.getElementById('gameArea').innerHTML = `
-                <div class="fixation-card text-center items-center flex flex-col" style="border-color: var(--cyber-blue)">
-                    <i class="fas fa-medal text-5xl text-yellow-400 mb-2"></i>
-                    <h2 class="text-xl font-bold text-white mb-1">METODOLOGIAS DOMINADAS!</h2>
-                    <p class="text-[0.7rem] text-gray-400 mb-4">Você compreendeu os padrões e processos que guiam um teste de penetração profissional no Módulo 1.2.</p>
-                    <button class="check-btn active w-full" onclick="window.location.href='../modules/modulo-01.html'" style="background: var(--cyber-blue); color: white;">VOLTAR AO MÓDULO</button>
+                <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
+                    <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
+                    <h2 class="title-main mb-2">METODOLOGIAS ASSIMILADAS!</h2>
+                    <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
+                    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
+                        ${nextBtnHtml}
+                        <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">
+                            <button class="check-btn" onclick="location.reload()" style="flex: 1; background: #161b22; border: 2px solid #30363d; color: #c9d1d9; box-shadow: 0 4px 0 #0d1117; padding: 0.8rem 0.5rem;">
+                                <i class="fas fa-rotate-right mb-1 block text-lg"></i>
+                                <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
+                            </button>
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-01.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                                <i class="fas fa-layer-group mb-1 block text-lg"></i>
+                                <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             `;
         }

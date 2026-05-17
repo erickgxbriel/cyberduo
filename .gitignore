@@ -1,0 +1,7 @@
+# Ignorar diretório de conteúdos pesados (Arquivos > 100MB que bloqueiam o push no GitHub)
+content/
+
+# Ignorar arquivos temporários e do sistema
+.DS_Store
+Thumbs.db
+*.log
