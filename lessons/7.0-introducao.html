@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <title>CyberDuo - Introdução 7.0</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
@@ -20,7 +23,7 @@
         html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
         body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
 
-        .game-header { flex-shrink: 0; padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(230, 237, 243, 0.2); z-index: 60; }
+        .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(230, 237, 243, 0.2); z-index: 60; }
         .progress-container { flex-grow: 1; height: 8px; background: #1f2937; border-radius: 10px; overflow: hidden; }
         .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; }
         .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 100px; justify-content: flex-end; }
@@ -32,38 +35,58 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .concept-icon { font-size: 1.8rem; margin-bottom: 0.2rem; display: block; }
-        .concept-text { font-size: 1.05rem; color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
-        .concept-desc { color: #b1bac4; font-size: 0.95rem; line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
+        .concept-text { font-size: clamp(0.95rem, 3.8vw, 1.1rem); color: var(--cyber-blue); font-weight: 800; text-transform: uppercase; margin-bottom: 0.1rem; }
+        .concept-desc { color: #b1bac4; font-size: clamp(0.9rem, 3.5vw, 1rem); line-height: 1.4; text-align: left; margin-bottom: 0.8rem; border-left: 3px solid var(--cyber-blue); padding-left: 0.8rem; }
 
         .highlight-cyan { color: #00f2ff; font-weight: 700; }
         .highlight-yellow { color: var(--cyber-yellow); font-weight: 700; }
         .highlight-red { color: var(--cyber-red); font-weight: 700; }
         .highlight-green { color: var(--cyber-green); font-weight: 700; }
 
-        .question-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
+        .question-title { font-size: clamp(1rem, 4vw, 1.15rem); font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; color: white; padding-top: 0.8rem; border-top: 1px solid #1f2937; text-align: left; }
 
         .options-grid { display: grid; gap: 0.4rem; width: 100%; text-align: left; }
-        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; -webkit-tap-highlight-color: transparent; }
+        .option-card { background: #161b22; border: 1px solid #30363d; border-bottom-width: 3px; padding: 0.7rem; border-radius: 0.8rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: clamp(0.9rem, 3.5vw, 1rem); -webkit-tap-highlight-color: transparent;  min-height: 48px;}
         .option-card.selected { border-color: var(--cyber-blue); background: rgba(230, 237, 243, 0.05); }
         .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
         .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
 
-        .game-footer { flex-shrink: 0; padding: 1rem; background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
-        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 0.9rem; border-radius: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 0.9rem; letter-spacing: 1px;  min-height: 48px;}
         .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b1bac4; }
 
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem; transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
         .feedback-overlay.show { bottom: 0; }
         .feedback-overlay.correct { background: #0d1a10; border-top: 3px solid var(--cyber-green); }
         .feedback-overlay.wrong { background: #1a0d0d; border-top: 3px solid var(--cyber-red); }
-        .feedback-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
-        .feedback-msg { font-size: 0.95rem; color: #8b949e; line-height: 1.4; }
+        .feedback-title { font-size: clamp(1rem, 4vw, 1.2rem); font-weight: 800; margin-bottom: 0.3rem; }
+        .feedback-msg { font-size: clamp(0.9rem, 3.5vw, 1rem); color: #8b949e; line-height: 1.4; }
+    
+        /* Design Spells: Interactive Magic */
+        .option-card {
+            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .option-card:hover:not(.disabled) {
+                transform: translateX(6px);
+                border-color: rgba(0, 242, 255, 0.5);
+                box-shadow: -4px 0 10px rgba(0, 242, 255, 0.1);
+            }
+            .check-btn.active:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0, 255, 65, 0.3), 0 4px 0 #008f20;
+            }
+        }
+        .check-btn.active:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #008f20;
+        }
     </style>
 </head>
 <body>
 
     <div class="game-header">
-        <i class="fas fa-times cursor-pointer text-gray-500" onclick="window.location.href='../modules/modulo-07.html'"></i>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-07.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
