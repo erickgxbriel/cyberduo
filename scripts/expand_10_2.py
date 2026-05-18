@@ -1,5 +1,5 @@
 import json
-P='/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json'
+P='/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json'
 with open(P,'r') as f: L=json.load(f)
 
 # Remove old 10.2, replace with 10.2a/b/c/d

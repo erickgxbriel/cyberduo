@@ -1,5 +1,5 @@
 import json
-with open('/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json','r') as f: lessons=json.load(f)
+with open('/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json','r') as f: lessons=json.load(f)
 lessons.extend([
 {"filename":"10.0-introducao.html","module":"10","title":"Ferramentas 10.0","victory_msg":"FERRAMENTAS INICIADAS!","steps":[
 {"type":"teach","icon":"fa-toolbox","title":"Ferramentas e Scripts","content":"Este módulo final cobre <b>scripting</b> (Bash, Python, PowerShell), <b>automação de testes</b> e <b>análise de código de exploits</b>. Saber programar diferencia um pentester profissional.","highlight":"Script = automação = eficiência"},
@@ -26,5 +26,5 @@ lessons.extend([
 {"type":"fill","sentence":"O payload avançado do Metasploit que fornece shell interativo com pivoting é o ___.","options":["Meterpreter","Netcat","Bash"],"correctText":"Meterpreter","explanation":"Meterpreter é um payload avançado com upload, download, pivoting, keylogger e mais."}
 ]}
 ])
-with open('/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json','w') as f: json.dump(lessons,f,ensure_ascii=False,indent=2)
+with open('/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json','w') as f: json.dump(lessons,f,ensure_ascii=False,indent=2)
 print(f"✅ {len(lessons)} lessons (added Module 10 — ALL MODULES COMPLETE)")

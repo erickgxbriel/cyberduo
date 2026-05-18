@@ -1,5 +1,10 @@
-# Ignorar diretório de conteúdos pesados (Arquivos > 100MB que bloqueiam o push no GitHub)
+# Ignorar diretório de conteúdos originais pesados
 content/
+
+# Ignorar pastas de desenvolvimento e automações internas
+extracted/
+scripts/
+docs/
 
 # Ignorar arquivos temporários e do sistema
 .DS_Store

@@ -2,7 +2,7 @@ import os
 import glob
 import re
 
-modules_dir = "/home/gabriel/Downloads/64Gram Desktop/CyberDuo/modules"
+modules_dir = "/home/gabriel/Documentos/dev/cyberduo/modules"
 
 print("🚀 Starting Mobile Optimization Script for Module Index Pages...")
 

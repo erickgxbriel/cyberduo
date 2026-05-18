@@ -1,5 +1,5 @@
 import json
-with open('/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json','r') as f: lessons=json.load(f)
+with open('/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json','r') as f: lessons=json.load(f)
 lessons.extend([
 {"filename":"8.0-introducao.html","module":"8","title":"Pós-Exploração 8.0","victory_msg":"PÓS-EXPLORAÇÃO INICIADA!","steps":[
 {"type":"teach","icon":"fa-door-open","title":"Pós-Exploração","content":"Após comprometer um sistema, o atacante precisa <b>manter acesso</b> (persistência), <b>mover-se lateralmente</b> pela rede e <b>evitar detecção</b>.","highlight":"Entrar é só o começo"},
@@ -26,5 +26,5 @@ lessons.extend([
 {"type":"fill","sentence":"A técnica de alterar timestamps de arquivos maliciosos para parecerem legítimos é o ___.","options":["timestomping","phishing","spoofing"],"correctText":"timestomping","explanation":"Timestomping modifica datas de criação/modificação para dificultar análise forense."}
 ]}
 ])
-with open('/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json','w') as f: json.dump(lessons,f,ensure_ascii=False,indent=2)
+with open('/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json','w') as f: json.dump(lessons,f,ensure_ascii=False,indent=2)
 print(f"✅ {len(lessons)} lessons (added Module 8)")

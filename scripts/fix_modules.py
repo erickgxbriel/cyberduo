@@ -3,7 +3,7 @@ import re
 import os
 import glob
 
-P='/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json'
+P='/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json'
 with open(P,'r') as f: L=json.load(f)
 
 # Group lessons by module
@@ -44,7 +44,7 @@ for mod_num, items in modules.items():
         title = item['title']
         item['title'] = re.sub(r'\s*\d+\.\d+[a-z]?$', '', title).strip()
 
-modules_dir = '/home/gabriel/Downloads/64Gram Desktop/CyberDuo/modules'
+modules_dir = '/home/gabriel/Documentos/dev/cyberduo/modules'
 for mod_file in glob.glob(os.path.join(modules_dir, 'modulo-*.html')):
     m = re.search(r'modulo-(\d+)\.html', mod_file)
     if not m: continue

@@ -138,6 +138,31 @@
             },
             {
                         "type": "teach",
+                        "icon": "fa-exchange",
+                        "title": "Protocolos de Transporte: TCP vs UDP",
+                        "content": "O <b>TCP</b> é orientado à conexão (confiável, usa handshake de 3 vias). O <b>UDP</b> não é orientado à conexão (rápido, ideal para streaming/DNS). Pentesters analisam as portas abertas de ambos os protocolos.",
+                        "highlight": "TCP = Confiável (handshake). UDP = Rápido (sem confirmação)."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-route",
+                        "title": "Roteamento e DHCP",
+                        "content": "O <b>roteamento</b> define os caminhos que os pacotes fazem entre redes distintas. O protocolo <b>DHCP</b> automatiza a distribuição de endereços IP nas redes. Ataques como <i>DHCP Starvation</i> podem indisponibilizar a rede.",
+                        "highlight": "Roteamento direciona pacotes. DHCP entrega IPs."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual protocolo de transporte é orientado à conexão e garante a entrega dos pacotes?",
+                        "options": [
+                                    "TCP",
+                                    "UDP",
+                                    "ICMP"
+                        ],
+                        "correctText": "TCP",
+                        "explanation": "O TCP usa o mecanismo de handshake de 3 vias e numeração de pacotes para garantir que todos cheguem intactos."
+            },
+            {
+                        "type": "teach",
                         "icon": "fa-shield-halved",
                         "title": "Man-in-the-Middle (MITM)",
                         "content": "No <b>MITM</b>, o atacante intercepta a comunicação entre duas partes. Pode <b>ler</b>, <b>modificar</b> e <b>injetar</b> dados. Ferramentas: <b>Ettercap</b>, <b>Bettercap</b>, <b>mitmproxy</b>.",

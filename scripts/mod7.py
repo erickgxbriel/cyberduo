@@ -1,5 +1,5 @@
 import json
-with open('/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json','r') as f: lessons=json.load(f)
+with open('/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json','r') as f: lessons=json.load(f)
 lessons.extend([
 {"filename":"7.0-introducao.html","module":"7","title":"Cloud e IoT 7.0","victory_msg":"CLOUD/IOT INICIADO!","steps":[
 {"type":"teach","icon":"fa-cloud","title":"Ataques em Cloud e IoT","content":"Este módulo cobre ataques a <b>ambientes cloud</b> (AWS, Azure, GCP), <b>dispositivos IoT</b>, <b>sistemas de armazenamento</b>, <b>VMs</b> e <b>containers</b>.","highlight":"Cloud e IoT são a nova superfície de ataque"},
@@ -33,5 +33,5 @@ lessons.extend([
 {"type":"fill","sentence":"Containers rodando em modo ___ têm acesso total ao kernel do host, tornando escape trivial.","options":["privileged","detached","readonly"],"correctText":"privileged","explanation":"Docker --privileged dá ao container capacidades equivalentes ao root do host."}
 ]}
 ])
-with open('/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json','w') as f: json.dump(lessons,f,ensure_ascii=False,indent=2)
+with open('/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json','w') as f: json.dump(lessons,f,ensure_ascii=False,indent=2)
 print(f"✅ {len(lessons)} lessons (added Module 7)")

@@ -146,6 +146,24 @@
         "takeaway": "A demanda por profissionais de segurança ofensiva cresce a cada ano."
       },
       {
+        "type": "teach",
+        "icon": "fa-handshake",
+        "title": "O Compromisso do Hacker Ético",
+        "content": "Assumir um <b>compromisso</b> ético significa atuar estritamente dentro da legalidade, garantindo sigilo absoluto dos dados descobertos e respeitando as restrições contratuais.",
+        "highlight": "Ética em pentest exige compromisso inabalável com o cliente"
+      },
+      {
+        "type": "quiz",
+        "task": "Qual o compromisso fundamental do hacker ético com seu cliente?",
+        "options": [
+          "Manter sigilo absoluto e atuar rigorosamente dentro do escopo",
+          "Divulgar as vulnerabilidades publicamente nas redes sociais",
+          "Cobrar uma taxa extra para corrigir cada falha encontrada"
+        ],
+        "correctText": "Manter sigilo absoluto e atuar rigorosamente dentro do escopo",
+        "explanation": "O compromisso ético garante a confiança, sigilo e limites legais entre o pentester e a organização."
+      },
+      {
         "type": "quiz",
         "task": "O que define um hacker ético?",
         "options": [
@@ -845,6 +863,13 @@
         "takeaway": "CVSS 10.0 = exploração trivial com impacto máximo."
       },
       {
+        "type": "teach",
+        "icon": "fa-spider",
+        "title": "Varredura Web com Nikto",
+        "content": "O <b>Nikto</b> é um scanner de vulnerabilidades web de código aberto muito popular. Ele busca por arquivos perigosos, softwares de servidores desatualizados, configurações incorretas e problemas de SSL/TLS.",
+        "highlight": "Nikto: o scanner rápido focado em servidores web."
+      },
+      {
         "type": "quiz",
         "task": "O que representa a pontuação CVSS de uma vulnerabilidade?",
         "options": [
@@ -888,6 +913,24 @@
           {
             "term": "Qualys",
             "definition": "Scanner baseado em nuvem"
+          }
+        ]
+      },
+      {
+        "type": "match",
+        "title": "Ferramenta → Alvo de Varredura",
+        "pairs": [
+          {
+            "term": "Nessus",
+            "definition": "Scanner geral de infraestrutura"
+          },
+          {
+            "term": "Nikto",
+            "definition": "Scanner especializado em servidores web"
+          },
+          {
+            "term": "OpenVAS",
+            "definition": "Scanner corporativo open-source"
           }
         ]
       }
@@ -2324,64 +2367,46 @@
     "steps": [
       {
         "type": "teach",
-        "icon": "fa-broom",
-        "title": "Limpeza Pós-Teste",
-        "content": "Após o teste, o pentester deve <b>remover</b> todos os artefatos: <b>web shells</b>, <b>contas criadas</b>, <b>backdoors</b>, <b>arquivos temporários</b>. Deixar restos é irresponsável.",
-        "highlight": "Limpe tudo que você criou durante o teste"
+        "icon": "fa-handshake-angle",
+        "title": "Atividades Pós-Entrega e Entregáveis",
+        "content": "As <b>atividades pós-entrega</b> incluem o fechamento seguro do pentest. Os principais <b>entregáveis</b> são o relatório técnico/executivo, a lista de evidências de exploração e os scripts usados.",
+        "highlight": "Pós-entrega garante a transição segura para a correção de falhas."
       },
       {
         "type": "teach",
-        "icon": "fa-handshake",
-        "title": "Debriefing",
-        "content": "O <b>debriefing</b> é a reunião pós-entrega onde o pentester apresenta os achados, responde dúvidas e ajuda a equipe técnica a entender as recomendações.",
-        "highlight": "Debriefing garante que as correções serão feitas"
+        "icon": "fa-folder-open",
+        "title": "Documentação e Evidências",
+        "content": "Toda a <b>documentação</b> do pentest (incluindo logs de ferramentas, prints de telas e caminhos de acesso) deve ser guardada de forma segura pelo período contratado para auditorias posteriores.",
+        "highlight": "Documentar com rigor protege o pentester e ajuda na auditoria."
       },
       {
         "type": "teach",
-        "icon": "fa-rotate-right",
-        "title": "Retest",
-        "content": "Após o cliente corrigir as vulnerabilidades, o pentester realiza um <b>retest</b> para verificar se as correções foram eficazes e não introduziram novos problemas.",
-        "highlight": "Retest confirma que as correções funcionaram"
+        "icon": "fa-screwdriver-wrench",
+        "title": "Remediação e Re-teste",
+        "content": "A <b>remediação</b> é a correção das falhas pelo time de defesa da empresa. Após as correções, o pentester conduz o <b>re-teste</b> (validação de remediação) para verificar se as falhas foram realmente sanadas.",
+        "highlight": "Remediação efetiva é o verdadeiro objetivo de um teste ético."
       },
       {
         "type": "quiz",
-        "task": "O que o pentester deve fazer com web shells e backdoors após o teste?",
+        "task": "O que constitui a etapa de remediação de um pentest?",
         "options": [
-          "Remover todos completamente",
-          "Deixar para futuras referências",
-          "Compartilhar com colegas"
+          "A correção das vulnerabilidades encontradas pelo time de TI",
+          "A invasão de novos servidores sem avisar o cliente",
+          "O apagamento de todos os backups do cliente"
         ],
-        "correctText": "Remover todos completamente",
-        "explanation": "Artefatos deixados no sistema são uma vulnerabilidade real que poderia ser explorada."
-      },
-      {
-        "type": "match",
-        "title": "Atividade → Momento",
-        "pairs": [
-          {
-            "term": "Limpeza de artefatos",
-            "definition": "Imediatamente após o teste"
-          },
-          {
-            "term": "Debriefing",
-            "definition": "Após entrega do relatório"
-          },
-          {
-            "term": "Retest",
-            "definition": "Após o cliente corrigir os achados"
-          }
-        ]
+        "correctText": "A correção das vulnerabilidades encontradas pelo time de TI",
+        "explanation": "Remediação consiste em aplicar patches, atualizar softwares e mudar configurações para sanar os problemas relatados."
       },
       {
         "type": "fill",
-        "sentence": "A reunião onde o pentester apresenta os achados ao cliente é chamada de ___.",
+        "sentence": "Para comprovar que o cliente corrigiu os problemas listados no relatório, o pentester realiza o ___-___.",
         "options": [
-          "debriefing",
-          "kickoff",
-          "standup"
+          "re-teste",
+          "scan completo",
+          "relatório final"
         ],
-        "correctText": "debriefing",
-        "explanation": "Debriefing é a sessão final de apresentação e discussão dos resultados."
+        "correctText": "re-teste",
+        "explanation": "O re-teste valida se as correções (remediação) foram aplicadas corretamente e se a falha deixou de existir."
       }
     ]
   },
@@ -2756,6 +2781,24 @@
       },
       {
         "type": "teach",
+        "icon": "fa-network-wired",
+        "title": "Análise de Tráfego com Wireshark",
+        "content": "O <b>Wireshark</b> é o analisador de protocolos de rede mais famoso do mundo. Ele permite capturar e interagir com o tráfego que passa pela rede em tempo real, auxiliando em auditorias, debugging e forense de ataques.",
+        "highlight": "Wireshark intercepta pacotes de rede e traduz em formato legível."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual ferramenta captura e analisa pacotes de rede em tempo real para debugging e segurança?",
+        "options": [
+          "Wireshark",
+          "Ghidra",
+          "Autopsy"
+        ],
+        "correctText": "Wireshark",
+        "explanation": "O Wireshark captura frames da placa de rede (em modo promíscuo) e decodifica centenas de protocolos diferentes."
+      },
+      {
+        "type": "teach",
         "icon": "fa-hard-drive",
         "title": "10.2.17 Ferramentas Forenses",
         "content": "<b>Autopsy</b>: análise forense de discos. <b>Volatility</b>: análise de memória RAM. <b>FTK Imager</b>: criação de imagens forenses. <b>Sleuth Kit</b>: análise de sistemas de arquivo.",
@@ -2939,6 +2982,13 @@
         "title": "theHarvester",
         "content": "<b>theHarvester</b> coleta <b>e-mails</b>, <b>nomes</b>, <b>subdomínios</b>, <b>IPs</b> e <b>URLs</b> de fontes públicas (Google, Bing, LinkedIn, Shodan, Hunter.io).",
         "highlight": "theHarvester = coleta massiva de intel"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-globe",
+        "title": "Enumeração de DNS com DNSRecon",
+        "content": "A ferramenta <b>dnsrecon</b> permite fazer enumeração ativa e passiva de registros DNS, incluindo transferências de zona (zone transfers), subdomínios via brute-force e resolução de registros SRV/TXT.",
+        "highlight": "DNSRecon mapeia toda a infraestrutura DNS de um domínio."
       },
       {
         "type": "example",
@@ -3708,6 +3758,20 @@
         "highlight": "Um SSH key garante acesso invisível e permanente"
       },
       {
+        "type": "teach",
+        "icon": "fa-stairs",
+        "title": "Escalada de Privilégios",
+        "content": "A <b>escalada</b> de privilégios é o ato de obter direitos administrativos superiores (root no Linux, SYSTEM no Windows) a partir de um acesso inicial limitado. É fundamental para controle total do alvo.",
+        "highlight": "Escalada = Subir degraus de permissão de usuário a administrador."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-crown",
+        "title": "Empire C2 Framework",
+        "content": "O <b>PowerShell Empire</b> (ou apenas Empire) é um framework C2 pós-exploração que permite controle remoto avançado de agentes, escalada de privilégios integrada e execução furtiva na memória.",
+        "highlight": "Empire facilita a automação de scripts maliciosos em hosts Windows e Linux."
+      },
+      {
         "type": "example",
         "icon": "fa-terminal",
         "title": "Backdoor via .bashrc",
@@ -3751,6 +3815,24 @@
         "title": "Movimento Lateral: Execução",
         "content": "Após obter um hash (Pass-the-Hash) ou ticket (Pass-the-Ticket), o atacante precisa executar comandos remotamente. Ferramentas: <b>PsExec</b> (via SMB), <b>WMIExec</b>, <b>WinRM</b> (Powershell Remoting).",
         "highlight": "Mover-se = autenticar e executar código noutro host"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-shuffle",
+        "title": "Pivotagem (Pivoting)",
+        "content": "A <b>pivotagem</b> é o uso de um sistema comprometido como ponte ou proxy para atacar e acessar outros sistemas da rede interna que não são diretamente acessíveis da internet.",
+        "highlight": "Pivotagem transforma um host dominado em trampolim de ataque."
+      },
+      {
+        "type": "quiz",
+        "task": "Como se chama a técnica de usar um computador já invadido para alcançar outros dispositivos da rede interna?",
+        "options": [
+          "Pivotagem (Pivoting)",
+          "Phishing",
+          "Buffer Overflow"
+        ],
+        "correctText": "Pivotagem (Pivoting)",
+        "explanation": "A pivotagem permite que o pentester 'pule' para áreas restritas da infraestrutura corporativa interna."
       },
       {
         "type": "teach",
@@ -3821,6 +3903,31 @@
         "title": "ARP Spoofing",
         "content": "<b>ARP Spoofing</b> envia respostas ARP falsas para associar o MAC do atacante ao IP do gateway. Todo o tráfego da vítima passa pelo atacante (<b>Man-in-the-Middle</b>).",
         "highlight": "ARP Spoofing = redirecionar tráfego para si"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-exchange",
+        "title": "Protocolos de Transporte: TCP vs UDP",
+        "content": "O <b>TCP</b> é orientado à conexão (confiável, usa handshake de 3 vias). O <b>UDP</b> não é orientado à conexão (rápido, ideal para streaming/DNS). Pentesters analisam as portas abertas de ambos os protocolos.",
+        "highlight": "TCP = Confiável (handshake). UDP = Rápido (sem confirmação)."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-route",
+        "title": "Roteamento e DHCP",
+        "content": "O <b>roteamento</b> define os caminhos que os pacotes fazem entre redes distintas. O protocolo <b>DHCP</b> automatiza a distribuição de endereços IP nas redes. Ataques como <i>DHCP Starvation</i> podem indisponibilizar a rede.",
+        "highlight": "Roteamento direciona pacotes. DHCP entrega IPs."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual protocolo de transporte é orientado à conexão e garante a entrega dos pacotes?",
+        "options": [
+          "TCP",
+          "UDP",
+          "ICMP"
+        ],
+        "correctText": "TCP",
+        "explanation": "O TCP usa o mecanismo de handshake de 3 vias e numeração de pacotes para garantir que todos cheguem intactos."
       },
       {
         "type": "teach",
@@ -4083,6 +4190,21 @@
         "title": "Karma Attack",
         "content": "<b>Karma</b>: o AP falso responde a <b>TODAS</b> as probe requests, fingindo ser qualquer rede que o dispositivo já conhece. O celular da vítima conecta automaticamente.",
         "highlight": "Karma = 'eu sou a rede que você procura'"
+      },
+      {
+        "type": "teach",
+        "icon": "fa-wifi",
+        "title": "Ataques a Redes Wi-Fi com Aircrack-ng",
+        "content": "O <b>aircrack-ng</b> é a suite de ferramentas padrão da indústria para auditoria e quebra de criptografia de redes sem fio (Wi-Fi). Permite monitoramento, ataques de injeção de pacotes e decodificação de WEP/WPA/WPA2.",
+        "highlight": "Aircrack-ng quebra chaves de segurança Wi-Fi via brute-force de handshake."
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Quebrando chave WPA2 com Aircrack-ng",
+        "scenario": "O pentester captura o handshake de 4 vias da rede alvo e usa o aircrack com um dicionário de senhas para revelar a chave pré-compartilhada (PSK).",
+        "code": "aircrack-ng -w wordlist.txt -b 00:11:22:33:44:55 captura.cap",
+        "takeaway": "O aircrack-ng compara o hash do handshake capturado com senhas do dicionário."
       },
       {
         "type": "teach",
