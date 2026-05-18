@@ -121,6 +121,7 @@
             color: #484f58;
             font-size: 1.2rem;
             transition: all 0.2s ease;
+            flex-shrink: 0;
         }
 
         .submodule-item:hover .submodule-icon-box {
@@ -156,6 +157,7 @@
         .submodule-arrow {
             font-size: 0.8rem;
             color: rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
         }
 
         .submodule-item:hover .submodule-arrow {
@@ -205,7 +207,7 @@
         <a href="../index.html" class="back-link">
             <i class="fas fa-arrow-left"></i> Voltar ao Terminal
         </a>
-        <div class="font-black text-xl tracking-tighter">CYBER<span style="color: var(--cyber-red)">DUO</span></div>
+        <div class="font-black text-lg tracking-tighter flex items-center gap-2"><i class="fas fa-shield-halved" style="color: var(--cyber-red); text-shadow: 0 0 10px rgba(255, 0, 60, 0.4);"></i> CYBER<span style="color: var(--cyber-red)">DUO</span></div>
     </header>
 
     <main class="main-container">
@@ -223,7 +225,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">8.0</span>
                     <span class="submodule-title">Pós-Exploração</span>
-                    <span class="submodule-desc">Após comprometer um sistema, o atacante precisa manter acesso (persistência),...</span>
+                    <span class="submodule-desc">Conceitos de escalação de privilégios locais e técnicas pós-comprometimento.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -234,7 +236,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">8.1a</span>
                     <span class="submodule-title">Persistência Avançada</span>
-                    <span class="submodule-desc">Além de scheduled tasks e contas locais, atacantes mantêm acesso via: Registr...</span>
+                    <span class="submodule-desc">Instalação de web shells, backdoors persistentes e modificação de serviços.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -245,7 +247,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">8.2a</span>
                     <span class="submodule-title">Mov. Lateral e Exfiltração</span>
-                    <span class="submodule-desc">Após obter um hash (Pass-the-Hash) ou ticket (Pass-the-Ticket), o atacante pr...</span>
+                    <span class="submodule-desc">Técnicas de movimentação lateral, pivoting de rede e exfiltração segura.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -254,7 +256,7 @@
     </main>
 
     <footer>
-        A cibersegurança eficaz não é um produto, mas sim um processo.
+        
     </footer>
 
 </body>

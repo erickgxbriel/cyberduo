@@ -122,6 +122,7 @@
             color: #484f58;
             font-size: 1.2rem;
             transition: all 0.2s ease;
+            flex-shrink: 0;
         }
 
         .submodule-item:hover .submodule-icon-box {
@@ -157,6 +158,7 @@
         .submodule-arrow {
             font-size: 0.8rem;
             color: rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
         }
 
         .submodule-item:hover .submodule-arrow {
@@ -206,7 +208,7 @@
         <a href="../index.html" class="back-link">
             <i class="fas fa-arrow-left"></i> Voltar ao Terminal
         </a>
-        <div class="font-black text-xl tracking-tighter">CYBER<span style="color: var(--cyber-teal)">DUO</span></div>
+        <div class="font-black text-lg tracking-tighter flex items-center gap-2"><i class="fas fa-shield-halved" style="color: var(--cyber-teal); text-shadow: 0 0 10px rgba(0, 250, 205, 0.4);"></i> CYBER<span style="color: var(--cyber-teal)">DUO</span></div>
     </header>
 
     <main class="main-container">
@@ -224,29 +226,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">3.0</span>
                     <span class="submodule-title">Introdução ao Módulo</span>
-                    <span class="submodule-desc">Antes de atacar, o pentester precisa conhecer o alvo.</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/3.3-varredura-vulnerabilidade.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-bug"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">3.3</span>
-                    <span class="submodule-title">Varredura de Vulnerabilidades</span>
-                    <span class="submodule-desc">A varredura automatizada compara os serviços encontrados contra um banco de d...</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/3.4-analise-resultados.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-chart-bar"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">3.4</span>
-                    <span class="submodule-title">Análise de Resultados</span>
-                    <span class="submodule-desc">Após o scan, o pentester recebe centenas de achados.</span>
+                    <span class="submodule-desc">Conceitos básicos de coleta de informações e inteligência de ameaças.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -257,7 +237,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">3.1a</span>
                     <span class="submodule-title">OSINT e Buscas</span>
-                    <span class="submodule-desc">OSINT coleta informações de fontes públicas: motores de busca, redes sociais,...</span>
+                    <span class="submodule-desc">Técnicas de OSINT para buscas eficientes de dados públicos expostos.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -268,7 +248,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">3.1b</span>
                     <span class="submodule-title">Ferramentas OSINT</span>
-                    <span class="submodule-desc">Recon-ng é um framework OSINT modular (similar ao Metasploit).</span>
+                    <span class="submodule-desc">Exploração de ferramentas para automação de coleta OSINT.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -279,7 +259,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">3.2a</span>
                     <span class="submodule-title">Recon Ativo de Rede</span>
-                    <span class="submodule-desc">Ao contrário do OSINT, no recon ativo enviamos pacotes diretamente ao alvo.</span>
+                    <span class="submodule-desc">Técnicas de varredura ativa e descoberta de hosts em redes.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -290,7 +270,29 @@
                 <div class="submodule-info">
                     <span class="submodule-number">3.2b</span>
                     <span class="submodule-title">Enumeração de Serviços</span>
-                    <span class="submodule-desc">SMB (porta 445/139) é essencial no Windows.</span>
+                    <span class="submodule-desc">Identificação de portas abertas, serviços e versões ativas.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/3.3-varredura-vulnerabilidade.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-bug"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">3.3</span>
+                    <span class="submodule-title">Varredura de Vulnerabilidades</span>
+                    <span class="submodule-desc">Uso de ferramentas automatizadas para mapeamento de falhas de segurança.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/3.4-analise-resultados.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">3.4</span>
+                    <span class="submodule-title">Análise de Resultados</span>
+                    <span class="submodule-desc">Triagem de falso-positivos e classificação de riscos encontrados.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -299,7 +301,7 @@
     </main>
 
     <footer>
-        A cibersegurança eficaz não é um produto, mas sim um processo.
+        
     </footer>
 
 </body>
