@@ -1,5 +1,5 @@
 import json
-P='/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json'
+P='/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json'
 with open(P,'r') as f: L=json.load(f)
 
 L = [l for l in L if l['filename'] != '7.2-sistemas-especializados.html']

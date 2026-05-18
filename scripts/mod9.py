@@ -1,5 +1,5 @@
 import json
-with open('/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json','r') as f: lessons=json.load(f)
+with open('/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json','r') as f: lessons=json.load(f)
 lessons.extend([
 {"filename":"9.0-introducao.html","module":"9","title":"Relatórios 9.0","victory_msg":"RELATÓRIOS INICIADOS!","steps":[
 {"type":"teach","icon":"fa-file-alt","title":"A Importância do Relatório","content":"O relatório é o <b>produto final</b> do pentest. Um relatório mal escrito invalida todo o trabalho técnico. Deve ser claro para <b>executivos</b> e detalhado para <b>técnicos</b>.","highlight":"Relatório ruim = pentest inútil"},
@@ -37,5 +37,5 @@ lessons.extend([
 {"type":"fill","sentence":"A reunião onde o pentester apresenta os achados ao cliente é chamada de ___.","options":["debriefing","kickoff","standup"],"correctText":"debriefing","explanation":"Debriefing é a sessão final de apresentação e discussão dos resultados."}
 ]}
 ])
-with open('/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json','w') as f: json.dump(lessons,f,ensure_ascii=False,indent=2)
+with open('/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json','w') as f: json.dump(lessons,f,ensure_ascii=False,indent=2)
 print(f"✅ {len(lessons)} lessons (added Module 9)")

@@ -145,6 +145,21 @@
             },
             {
                         "type": "teach",
+                        "icon": "fa-wifi",
+                        "title": "Ataques a Redes Wi-Fi com Aircrack-ng",
+                        "content": "O <b>aircrack-ng</b> é a suite de ferramentas padrão da indústria para auditoria e quebra de criptografia de redes sem fio (Wi-Fi). Permite monitoramento, ataques de injeção de pacotes e decodificação de WEP/WPA/WPA2.",
+                        "highlight": "Aircrack-ng quebra chaves de segurança Wi-Fi via brute-force de handshake."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Quebrando chave WPA2 com Aircrack-ng",
+                        "scenario": "O pentester captura o handshake de 4 vias da rede alvo e usa o aircrack com um dicionário de senhas para revelar a chave pré-compartilhada (PSK).",
+                        "code": "aircrack-ng -w wordlist.txt -b 00:11:22:33:44:55 captura.cap",
+                        "takeaway": "O aircrack-ng compara o hash do handshake capturado com senhas do dicionário."
+            },
+            {
+                        "type": "teach",
                         "icon": "fa-ban",
                         "title": "Deauthentication Attack",
                         "content": "Frames de <b>deautenticação 802.11</b> não são autenticados. O atacante envia deauth frames para desconectar clientes, forçando reconexão ao Evil Twin ou captura de handshake.",

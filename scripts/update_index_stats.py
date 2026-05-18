@@ -1,7 +1,7 @@
 import json
 import re
 
-P = '/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json'
+P = '/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json'
 with open(P, 'r') as f:
     L = json.load(f)
 
@@ -22,7 +22,7 @@ for mod in range(11):
     print(f"Módulo {m}: {stats[m]['lessons']} lições, {stats[m]['skills']} skills")
 
 # Update index.html
-index_file = '/home/gabriel/Downloads/64Gram Desktop/CyberDuo/index.html'
+index_file = '/home/gabriel/Documentos/dev/cyberduo/index.html'
 with open(index_file, 'r') as f:
     html = f.read()
 

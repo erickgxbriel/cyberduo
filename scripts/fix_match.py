@@ -1,7 +1,7 @@
 import os
 import re
 
-bp_path = '/home/gabriel/Downloads/64Gram Desktop/CyberDuo/lessons/0.0-boas-vindas.html'
+bp_path = '/home/gabriel/Documentos/dev/cyberduo/lessons/0.0-boas-vindas.html'
 
 with open(bp_path, 'r') as f:
     content = f.read()
@@ -67,4 +67,4 @@ if old_select in content:
 with open(bp_path, 'w') as f:
     f.write(content)
 
-os.system('cd "/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts" && python3 generate_lessons.py')
+os.system('cd "/home/gabriel/Documentos/dev/cyberduo/scripts" && python3 generate_lessons.py')

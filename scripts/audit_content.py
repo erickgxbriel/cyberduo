@@ -3,8 +3,8 @@ import glob
 from bs4 import BeautifulSoup
 import json
 
-content_dir = '/home/gabriel/Downloads/64Gram Desktop/CyberDuo/content'
-lesson_file = '/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json'
+content_dir = '/home/gabriel/Documentos/dev/cyberduo/content'
+lesson_file = '/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json'
 
 with open(lesson_file, 'r') as f:
     lessons = json.load(f)

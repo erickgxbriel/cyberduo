@@ -1,5 +1,5 @@
 import json
-P='/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json'
+P='/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json'
 with open(P,'r') as f: L=json.load(f)
 
 # Replace 5.1 with expanded version (8→20 steps)

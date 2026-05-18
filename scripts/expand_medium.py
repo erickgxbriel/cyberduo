@@ -1,5 +1,5 @@
 import json
-P='/home/gabriel/Downloads/64Gram Desktop/CyberDuo/scripts/lesson_definitions.json'
+P='/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json'
 with open(P,'r') as f: L=json.load(f)
 
 # Expand 3.2 (Reconhecimento Ativo) -> 3.2a, 3.2b

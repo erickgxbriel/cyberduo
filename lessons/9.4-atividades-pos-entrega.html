@@ -131,64 +131,46 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-broom",
-                        "title": "Limpeza Pós-Teste",
-                        "content": "Após o teste, o pentester deve <b>remover</b> todos os artefatos: <b>web shells</b>, <b>contas criadas</b>, <b>backdoors</b>, <b>arquivos temporários</b>. Deixar restos é irresponsável.",
-                        "highlight": "Limpe tudo que você criou durante o teste"
+                        "icon": "fa-handshake-angle",
+                        "title": "Atividades Pós-Entrega e Entregáveis",
+                        "content": "As <b>atividades pós-entrega</b> incluem o fechamento seguro do pentest. Os principais <b>entregáveis</b> são o relatório técnico/executivo, a lista de evidências de exploração e os scripts usados.",
+                        "highlight": "Pós-entrega garante a transição segura para a correção de falhas."
             },
             {
                         "type": "teach",
-                        "icon": "fa-handshake",
-                        "title": "Debriefing",
-                        "content": "O <b>debriefing</b> é a reunião pós-entrega onde o pentester apresenta os achados, responde dúvidas e ajuda a equipe técnica a entender as recomendações.",
-                        "highlight": "Debriefing garante que as correções serão feitas"
+                        "icon": "fa-folder-open",
+                        "title": "Documentação e Evidências",
+                        "content": "Toda a <b>documentação</b> do pentest (incluindo logs de ferramentas, prints de telas e caminhos de acesso) deve ser guardada de forma segura pelo período contratado para auditorias posteriores.",
+                        "highlight": "Documentar com rigor protege o pentester e ajuda na auditoria."
             },
             {
                         "type": "teach",
-                        "icon": "fa-rotate-right",
-                        "title": "Retest",
-                        "content": "Após o cliente corrigir as vulnerabilidades, o pentester realiza um <b>retest</b> para verificar se as correções foram eficazes e não introduziram novos problemas.",
-                        "highlight": "Retest confirma que as correções funcionaram"
+                        "icon": "fa-screwdriver-wrench",
+                        "title": "Remediação e Re-teste",
+                        "content": "A <b>remediação</b> é a correção das falhas pelo time de defesa da empresa. Após as correções, o pentester conduz o <b>re-teste</b> (validação de remediação) para verificar se as falhas foram realmente sanadas.",
+                        "highlight": "Remediação efetiva é o verdadeiro objetivo de um teste ético."
             },
             {
                         "type": "quiz",
-                        "task": "O que o pentester deve fazer com web shells e backdoors após o teste?",
+                        "task": "O que constitui a etapa de remediação de um pentest?",
                         "options": [
-                                    "Remover todos completamente",
-                                    "Deixar para futuras referências",
-                                    "Compartilhar com colegas"
+                                    "A correção das vulnerabilidades encontradas pelo time de TI",
+                                    "A invasão de novos servidores sem avisar o cliente",
+                                    "O apagamento de todos os backups do cliente"
                         ],
-                        "correctText": "Remover todos completamente",
-                        "explanation": "Artefatos deixados no sistema são uma vulnerabilidade real que poderia ser explorada."
-            },
-            {
-                        "type": "match",
-                        "title": "Atividade → Momento",
-                        "pairs": [
-                                    {
-                                                "term": "Limpeza de artefatos",
-                                                "definition": "Imediatamente após o teste"
-                                    },
-                                    {
-                                                "term": "Debriefing",
-                                                "definition": "Após entrega do relatório"
-                                    },
-                                    {
-                                                "term": "Retest",
-                                                "definition": "Após o cliente corrigir os achados"
-                                    }
-                        ]
+                        "correctText": "A correção das vulnerabilidades encontradas pelo time de TI",
+                        "explanation": "Remediação consiste em aplicar patches, atualizar softwares e mudar configurações para sanar os problemas relatados."
             },
             {
                         "type": "fill",
-                        "sentence": "A reunião onde o pentester apresenta os achados ao cliente é chamada de ___.",
+                        "sentence": "Para comprovar que o cliente corrigiu os problemas listados no relatório, o pentester realiza o ___-___.",
                         "options": [
-                                    "debriefing",
-                                    "kickoff",
-                                    "standup"
+                                    "re-teste",
+                                    "scan completo",
+                                    "relatório final"
                         ],
-                        "correctText": "debriefing",
-                        "explanation": "Debriefing é a sessão final de apresentação e discussão dos resultados."
+                        "correctText": "re-teste",
+                        "explanation": "O re-teste valida se as correções (remediação) foram aplicadas corretamente e se a falha deixou de existir."
             }
 ];
 
