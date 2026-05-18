@@ -139,7 +139,7 @@
                         "type": "example",
                         "icon": "fa-link",
                         "title": "Link Malicioso",
-                        "scenario": "O hacker envia um link pro e-mail da vítima: `site.com/busca?q=<script>alert(1)</script>`. Quando ela clica, o site carrega a busca e executa o script.",
+                        "scenario": "O hacker envia um link pro e-mail da vítima: `site.com/busca?q=&lt;script&gt;alert(1)&lt;/script&gt;`. Quando ela clica, o site carrega a busca e executa o script.",
                         "takeaway": "Requer engenharia social para a vítima clicar no link."
             },
             {
@@ -163,7 +163,7 @@
                         "type": "example",
                         "icon": "fa-users",
                         "title": "Ataque em Massa",
-                        "scenario": "O hacker comenta num fórum: `<script>roubar_cookie()</script>`. Todo mundo que entrar na página do fórum terá seu cookie roubado silenciosamente.",
+                        "scenario": "O hacker comenta num fórum: `&lt;script&gt;roubar_cookie()&lt;/script&gt;`. Todo mundo que entrar na página do fórum terá seu cookie roubado silenciosamente.",
                         "takeaway": "Não precisa enviar links. A própria aplicação espalha o ataque."
             },
             {
@@ -187,7 +187,7 @@
                         "type": "example",
                         "icon": "fa-code",
                         "title": "Manipulação Local",
-                        "scenario": "A URL possui `site.com/#bemvindo=<script>alert(1)</script>`. O JavaScript do site pega esse texto depois da hashtag e coloca na tela sem validação. O servidor nem lê a hashtag.",
+                        "scenario": "A URL possui `site.com/#bemvindo=&lt;script&gt;alert(1)&lt;/script&gt;`. O JavaScript do site pega esse texto depois da hashtag e coloca na tela sem validação. O servidor nem lê a hashtag.",
                         "takeaway": "A validação deve ocorrer no próprio JavaScript do frontend."
             },
             {
