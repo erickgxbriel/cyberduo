@@ -157,7 +157,7 @@
                         "type": "teach",
                         "icon": "fa-syringe",
                         "title": "Análise Dinâmica e Hooking",
-                        "content": "Muitas vezes o app tem proteções e a análise estática falha. O atacante precisa analisar o app *enquanto ele roda* na memória. Usando o <b>Frida</b> e o <b>Objection</b>, o hacker injeta scripts (hooking) para modificar o comportamento do app ao vivo, como burlar o login ou o detector de Root/Jailbreak."
+                        "content": "Muitas vezes o app tem proteções e a análise estática falha. O atacante precisa analisar o app <i>enquanto ele roda</i> na memória. Usando o <b>Frida</b> e o <b>Objection</b>, o hacker injeta scripts (hooking) para modificar o comportamento do app ao vivo, como burlar o login ou o detector de Root/Jailbreak."
             },
             {
                         "type": "example",
@@ -176,6 +176,45 @@
                         ],
                         "correctText": "Frida",
                         "explanation": "Frida permite injetar trechos de JavaScript em aplicativos nativos rodando no celular."
+            },
+            {
+                        "type": "match",
+                        "title": "Associe as Ferramentas Mobile",
+                        "pairs": [
+                                    {
+                                                "term": "Drozer",
+                                                "definition": "Framework de Teste e Exploits"
+                                    },
+                                    {
+                                                "term": "ApkX",
+                                                "definition": "Descompilador de APK"
+                                    },
+                                    {
+                                                "term": "MobSF",
+                                                "definition": "Análise Estática Automatizada"
+                                    },
+                                    {
+                                                "term": "Frida",
+                                                "definition": "Injeção Dinâmica (Hooking)"
+                                    }
+                        ]
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-server",
+                        "title": "Testes em APIs e Interceptação",
+                        "content": "Para sistemas que se comunicam via API, a ferramenta padrão da indústria para envio e análise de requisições é o <b>Postman</b>. Já em redes onde é possível realizar um ataque On-Path (Man-in-the-Middle), ferramentas como <b>Ettercap</b> e <b>Bettercap</b> interceptam e modificam o tráfego em tempo real."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual dessas ferramentas é amplamente utilizada para testar e desenvolver requisições em APIs?",
+                        "options": [
+                                    "Postman",
+                                    "ApkX",
+                                    "Kube-hunter"
+                        ],
+                        "correctText": "Postman",
+                        "explanation": "O Postman permite criar, testar e documentar requisições para APIs web de forma estruturada."
             },
             {
                         "type": "teach",
@@ -248,12 +287,46 @@
                         ],
                         "correctText": "Obter acesso direto à interface do sistema e extrair o Firmware do dispositivo.",
                         "explanation": "Essas portas são usadas por engenheiros na fábrica, mas exploradas por hackers."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-boxes-stacked",
+                        "title": "Segurança de Contêineres",
+                        "content": "Contêineres (como Docker) podem conter vulnerabilidades nas bibliotecas instaladas. Ferramentas como o <b>Anchore's Grype</b> e o <b>Dagda</b> escaneiam as imagens de contêineres <i>antes</i> de rodarem, detectando pacotes desatualizados ou senhas vazadas."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-dharmachakra",
+                        "title": "Avaliando Kubernetes",
+                        "content": "Para clusters <b>Kubernetes</b>, o atacante e o defensor usam ferramentas focadas. O <b>Kube-hunter</b> procura ativamente por fraquezas no cluster. O <b>Kube-bench</b> verifica se o cluster segue as boas práticas (CIS). Já o <b>Falco</b> funciona em tempo de execução para alertar se um contêiner for invadido."
+            },
+            {
+                        "type": "match",
+                        "title": "Associe a Ferramenta Cloud/Container",
+                        "pairs": [
+                                    {
+                                                "term": "Grype / Dagda",
+                                                "definition": "Varredura de Imagens de Contêineres"
+                                    },
+                                    {
+                                                "term": "Kube-bench",
+                                                "definition": "Verificação de Conformidade (CIS)"
+                                    },
+                                    {
+                                                "term": "Kube-hunter",
+                                                "definition": "Caça ativa a vulnerabilidades no K8s"
+                                    },
+                                    {
+                                                "term": "Falco",
+                                                "definition": "Monitoramento de ameaças em tempo de execução"
+                                    }
+                        ]
             }
 ];
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
-        let hearts = 5;
+        let hearts = 7;
         let shuffledOptions = [];
         
         // Match state
@@ -278,7 +351,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(7).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {

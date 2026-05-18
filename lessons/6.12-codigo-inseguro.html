@@ -185,18 +185,11 @@
                         "highlight": "Falha de concorrência em sistemas multithread."
             },
             {
-                        "type": "teach",
-                        "icon": "fa-boxes-packing",
-                        "title": "Insecure Deserialization",
-                        "content": "<b>Desserialização</b> é transformar dados (JSON, XML, Objetos em disco) de volta em objetos de código. Se o aplicativo desserializar objetos manipulados por um usuário, ele pode invocar classes arbitrárias.",
-                        "highlight": "Desserialização sem validação gera RCE imediato."
-            },
-            {
                         "type": "example",
-                        "icon": "fa-bug",
-                        "title": "O Ataque Mágico",
-                        "scenario": "O Java recebe um objeto serializado do usuário contendo o estado da sessão. O hacker envia um objeto malicioso que, ao ser 'desempacotado' (desserializado) pelo Java, dispara a abertura do terminal bash.",
-                        "takeaway": "Nunca deserialize dados provindos do usuário sem assinaturas criptográficas."
+                        "icon": "fa-running",
+                        "title": "Transferência Concorrente",
+                        "scenario": "Uma API de banco checa se saldo >= valor, e depois deduz o valor. O hacker envia 100 requisições de saque concorrentes em milissegundos. A API executa a verificação para todas antes de deduzir o saldo do primeiro saque, sacando 100x mais do que tinha.",
+                        "takeaway": "Use mecanismos de bloqueio de transação (locks) ou filas para serializar operações sensíveis."
             },
             {
                         "type": "fill",
@@ -208,12 +201,59 @@
                         ],
                         "correctText": "Race Condition",
                         "explanation": "A verificação de saldo e a dedução ocorrem de forma assíncrona, falhando na proteção."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-boxes-packing",
+                        "title": "Insecure Deserialization",
+                        "content": "<b>Desserialização Insegura</b> é transformar dados de fora (JSON, XML, Objetos Java/Python em disco) de volta em objetos na memória da aplicação. Se o aplicativo aceitar dados manipulados sem verificar, o hacker pode injetar classes perigosas.",
+                        "highlight": "Gera Execução Remota de Código (RCE) imediata."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-bug",
+                        "title": "O Ataque Mágico",
+                        "scenario": "O Java recebe um objeto serializado do usuário contendo o estado da sessão. O hacker envia um objeto malicioso que, ao ser 'desempacotado' (desserializado) pelo Java, dispara a abertura do terminal bash.",
+                        "takeaway": "Nunca deserialize dados provindos do usuário sem assinaturas criptográficas ou use JSON puro."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual é o principal perigo de aceitar e desserializar objetos fornecidos diretamente por usuários não confiáveis?",
+                        "options": [
+                                    "Execução Remota de Código (RCE) através da reconstrução de objetos maliciosos.",
+                                    "Aumento insignificante no consumo de banda de rede.",
+                                    "Exposição do banco de dados a ataques de injeção de SQL."
+                        ],
+                        "correctText": "Execução Remota de Código (RCE) através da reconstrução de objetos maliciosos.",
+                        "explanation": "O processo de desserialização pode instanciar e invocar métodos de classes arbitrárias pré-existentes na aplicação."
+            },
+            {
+                        "type": "match",
+                        "title": "Associe as Falhas e Características",
+                        "pairs": [
+                                    {
+                                                "term": "Buffer Overflow",
+                                                "definition": "Escrita fora dos limites de memória em C/C++"
+                                    },
+                                    {
+                                                "term": "Use-After-Free",
+                                                "definition": "Acesso a ponteiro que aponta para memória liberada"
+                                    },
+                                    {
+                                                "term": "Race Condition",
+                                                "definition": "Falha de concorrência por falta de sincronização"
+                                    },
+                                    {
+                                                "term": "Insecure Deserialization",
+                                                "definition": "RCE ao instanciar objetos maliciosos do usuário"
+                                    }
+                        ]
             }
 ];
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
-        let hearts = 5;
+        let hearts = 7;
         let shuffledOptions = [];
         
         // Match state
@@ -238,7 +278,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(7).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {

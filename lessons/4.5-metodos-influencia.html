@@ -155,6 +155,24 @@
             },
             {
                         "type": "teach",
+                        "icon": "fa-circle-check",
+                        "title": "Compromisso e Coerência",
+                        "content": "O gatilho de <b>Compromisso e Coerência</b> afirma que as pessoas buscam obsessivamente parecer coerentes com suas atitudes e escolhas anteriores. Quando assumem um pequeno <b>compromisso</b> público ou inicial, sentem-se muito mais inclinadas a aceitar exigências maiores depois.",
+                        "highlight": "Assumir um pequeno compromisso dificulta dizer 'não' no futuro."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual gatilho psicológico é abusado quando um hacker faz a vítima aceitar um pequeno pedido inofensivo para depois fazê-la realizar algo prejudicial sob o pretexto de ser coerente?",
+                        "options": [
+                                    "Compromisso e Coerência",
+                                    "Escassez",
+                                    "Simpatia"
+                        ],
+                        "correctText": "Compromisso e Coerência",
+                        "explanation": "Pessoas têm a necessidade interna e social de agir de acordo com decisões passadas."
+            },
+            {
+                        "type": "teach",
                         "icon": "fa-user-tie",
                         "title": "Autoridade",
                         "content": "O gatilho de <b>Autoridade</b> explora nossa tendência instintiva a obedecer figuras de poder, chefes e policiais, muitas vezes desligando nosso senso crítico."
@@ -203,6 +221,10 @@
                                                 "definition": "Obediência instintiva a superiores e figuras de poder."
                                     },
                                     {
+                                                "term": "Compromisso",
+                                                "definition": "A tendência de honrar pequenos acordos iniciais."
+                                    },
+                                    {
                                                 "term": "Escassez",
                                                 "definition": "O medo de perder uma oportunidade devido a limite de tempo."
                                     }
@@ -212,7 +234,7 @@
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
-        let hearts = 5;
+        let hearts = 6;
         let shuffledOptions = [];
         
         // Match state
@@ -237,7 +259,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(6).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {
