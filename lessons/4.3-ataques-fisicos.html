@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Ataques Físicos 4.3</title>
+    <title>CyberDuo - Engenharia Social Física</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -133,66 +133,108 @@
                         "type": "teach",
                         "icon": "fa-door-open",
                         "title": "Tailgating",
-                        "content": "<b>Tailgating</b> (ou piggybacking) é seguir um funcionário autorizado pela porta sem usar crachá. O atacante aproveita a cortesia da vítima que segura a porta.",
-                        "highlight": "Nunca segure a porta para desconhecidos"
+                        "content": "<b>Tailgating</b> (ou piggybacking) é seguir um funcionário autorizado pela porta sem usar crachá. O atacante se aproveita da cortesia da vítima, que segura a porta por educação."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-coffee",
+                        "title": "O Homem do Café",
+                        "scenario": "O hacker chega com as duas mãos ocupadas segurando copos de café e uma caixa. O funcionário legítimo abre a porta com o crachá e segura a porta para ele entrar no prédio corporativo.",
+                        "takeaway": "Em segurança física, a polidez humana é uma vulnerabilidade."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual é a vulnerabilidade central explorada no ataque de Tailgating?",
+                        "options": [
+                                    "A cortesia e a norma social de segurar a porta para os outros.",
+                                    "A quebra do código de criptografia das portas RFID.",
+                                    "A clonagem biométrica das digitais dos funcionários."
+                        ],
+                        "correctText": "A cortesia e a norma social de segurar a porta para os outros.",
+                        "explanation": "O ataque confia que as pessoas não querem ser rudes ao fechar a porta na cara de alguém."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-trash",
+                        "title": "Dumpster Diving",
+                        "content": "<b>Dumpster Diving</b> (Mergulho na Lixeira) é a técnica de vasculhar o lixo físico da empresa em busca de informações úteis. Senhas anotadas em post-its, organogramas antigos e faturas jogadas fora sem serem trituradas são ouro para engenheiros sociais."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-file-invoice",
+                        "title": "A Senha no Lixo",
+                        "scenario": "O atacante veste um uniforme de gari, abre as lixeiras do estacionamento e encontra a pauta de uma reunião impressa, onde no rodapé estava escrita a senha do Wi-Fi de Convidados.",
+                        "takeaway": "Destruidora de papel (shredder) é um equipamento de segurança essencial."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "A prática de coletar informações sensíveis vasculhando documentos descartados fisicamente no lixo é conhecida como ___ Diving.",
+                        "options": [
+                                    "Dumpster",
+                                    "Shoulder",
+                                    "Trash"
+                        ],
+                        "correctText": "Dumpster",
+                        "explanation": "Do inglês 'Dumpster' (Lixeira)."
             },
             {
                         "type": "teach",
                         "icon": "fa-usb",
                         "title": "USB Dropping",
-                        "content": "<b>USB Dropping</b>: o atacante deixa pendrives infectados em estacionamentos ou cafeterias. A curiosidade faz alguém conectar o USB, instalando malware automaticamente.",
-                        "highlight": "Curiosidade é o vetor de ataque"
+                        "content": "<b>USB Dropping</b> (Isolamento de Pendrive): o atacante deixa pendrives com malwares espalhados estrategicamente em locais comuns (estacionamentos, refeitórios). Ele confia na curiosidade da vítima para conectá-lo."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-box",
+                        "title": "Salários.xlsx.exe",
+                        "scenario": "Um pendrive escrito 'Bônus Diretoria 2024' é deixado no chão do elevador. Um funcionário acha, coloca no PC para ver os salários e executa um backdoor silencioso.",
+                        "takeaway": "O dispositivo malicioso precisa de um gatilho emocional escrito por fora."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Por que o USB Dropping é tão eficaz, apesar dos funcionários terem treinamento de segurança cibernética?",
+                        "options": [
+                                    "Porque ele atinge um forte gatilho de curiosidade e ganância que muitas vezes sobrepuja o treinamento racional.",
+                                    "Porque o pendrive desliga o antivírus a 5 metros de distância.",
+                                    "Porque o sistema Windows sempre auto-executa tudo obrigatoriamente."
+                        ],
+                        "correctText": "Porque ele atinge um forte gatilho de curiosidade e ganância que muitas vezes sobrepuja o treinamento racional.",
+                        "explanation": "O atacante fisga a curiosidade escrevendo rótulos tentadores no pendrive."
             },
             {
                         "type": "teach",
                         "icon": "fa-eye",
                         "title": "Shoulder Surfing",
-                        "content": "<b>Shoulder Surfing</b>: observar por cima do ombro da vítima enquanto ela digita senhas ou PINs. Pode ser feito presencialmente ou com câmeras.",
-                        "highlight": "Olhos podem roubar senhas"
+                        "content": "<b>Shoulder Surfing</b>: observar por cima do ombro da vítima enquanto ela digita senhas, PINs ou abre documentos sensíveis no laptop durante um voo ou num café."
             },
             {
-                        "type": "quiz",
-                        "task": "O que é tailgating?",
-                        "options": [
-                                    "Seguir um funcionário pela porta sem autorização",
-                                    "Enviar e-mails de phishing",
-                                    "Escanear portas de rede remotamente"
-                        ],
-                        "correctText": "Seguir um funcionário pela porta sem autorização",
-                        "explanation": "Tailgating explora a cortesia humana de segurar a porta para outros."
+                        "type": "example",
+                        "icon": "fa-camera",
+                        "title": "A Câmera do Café",
+                        "scenario": "O atacante senta na mesa de trás no Starbucks, saca o celular e usa o zoom da câmera para filmar os dedos do diretor digitando a senha mestra do sistema no teclado.",
+                        "takeaway": "O campo visual físico deve ser tratado com o mesmo cuidado da tela."
             },
             {
                         "type": "match",
-                        "title": "Ataque Físico → Técnica",
+                        "title": "Ataques Físicos → Gatilhos",
                         "pairs": [
                                     {
                                                 "term": "Tailgating",
-                                                "definition": "Seguir alguém pela porta"
-                                    },
-                                    {
-                                                "term": "USB Dropping",
-                                                "definition": "Pendrive infectado no chão"
-                                    },
-                                    {
-                                                "term": "Shoulder Surfing",
-                                                "definition": "Espiar senhas sendo digitadas"
+                                                "definition": "Explora a cortesia humana e educação."
                                     },
                                     {
                                                 "term": "Dumpster Diving",
-                                                "definition": "Vasculhar o lixo por documentos"
+                                                "definition": "Explora o descarte inadequado de papel."
+                                    },
+                                    {
+                                                "term": "USB Dropping",
+                                                "definition": "Explora a curiosidade incontrolável."
+                                    },
+                                    {
+                                                "term": "Shoulder Surfing",
+                                                "definition": "Explora a exposição visual de dados em público."
                                     }
                         ]
-            },
-            {
-                        "type": "fill",
-                        "sentence": "O ataque que consiste em deixar pendrives infectados para serem encontrados é o ___.",
-                        "options": [
-                                    "USB Dropping",
-                                    "Phishing",
-                                    "Brute Force"
-                        ],
-                        "correctText": "USB Dropping",
-                        "explanation": "USB Dropping explora a curiosidade humana para instalar malware via pendrive."
             }
 ];
 

@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Ferramentas de Recon e Enumeração 10.2a</title>
+    <title>CyberDuo - Movimentação Lateral e Exfiltração</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #8a2be2;
+            --cyber-blue: #ff003c;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #5e1d80; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #5e1d80; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b3002a; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b3002a; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-10.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-08.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,86 +131,51 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-binoculars",
-                        "title": "10.2.1 Visão Geral",
-                        "content": "As ferramentas de pentest são organizadas por <b>fase do ataque</b>: reconhecimento, varredura, exploração, pós-exploração, evasão, forense e relatório.",
-                        "highlight": "Cada fase tem suas ferramentas especializadas"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-linux",
-                        "title": "10.2.2 Distribuições Linux",
-                        "content": "<b>Kali Linux</b>: a distro mais popular, 600+ ferramentas. <b>Parrot OS</b>: alternativa leve com foco em privacidade. <b>BlackArch</b>: rolling release com 2800+ ferramentas.",
-                        "highlight": "Kali = padrão, Parrot = leve, BlackArch = completo"
-            },
-            {
-                        "type": "match",
-                        "title": "Distro → Característica",
-                        "pairs": [
-                                    {
-                                                "term": "Kali Linux",
-                                                "definition": "600+ ferramentas, padrão da indústria"
-                                    },
-                                    {
-                                                "term": "Parrot OS",
-                                                "definition": "Leve, foco em privacidade"
-                                    },
-                                    {
-                                                "term": "BlackArch",
-                                                "definition": "2800+ ferramentas, rolling release"
-                                    }
-                        ]
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-magnifying-glass",
-                        "title": "10.2.3 Ferramentas de Reconhecimento",
-                        "content": "<b>Nmap</b>: scanner de rede. <b>Recon-ng</b>: framework OSINT modular. <b>theHarvester</b>: e-mails e subdomínios. <b>Maltego</b>: visualização de relações. <b>Shodan</b>: busca de dispositivos. <b>Censys</b>: certificados TLS.",
-                        "highlight": "Cada ferramenta cobre um aspecto do recon"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-folder-tree",
-                        "title": "Enumeração com Enum4linux",
-                        "content": "<b>Enum4linux</b> enumera informações de hosts Windows/Samba: <b>shares</b>, <b>usuários</b>, <b>grupos</b>, <b>políticas de senha</b> e <b>SIDs</b>. Usa protocolos SMB e RPC.",
-                        "highlight": "Enum4linux = raio-X de servidores Windows/Samba"
+                        "icon": "fa-arrows-left-right",
+                        "title": "Movimentação Lateral",
+                        "content": "A máquina que o atacante invade primeiro quase nunca é o objetivo final. <b>Movimentação Lateral</b> é o ato de usar senhas ou exploits da primeira máquina para invadir os outros computadores da rede interna."
             },
             {
                         "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "Enum4linux em Ação",
-                        "scenario": "O pentester roda enum4linux contra um servidor Windows e descobre shares abertos, lista de usuários e política de senhas fraca.",
-                        "code": "enum4linux -a 192.168.1.100",
-                        "takeaway": "-a = modo agressivo, enumera tudo que conseguir."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-sitemap",
-                        "title": "DNSRecon e Subfinder",
-                        "content": "<b>DNSRecon</b>: enumeração DNS completa (zone transfer, brute force de subdomínios). <b>Subfinder</b>: descoberta passiva de subdomínios via APIs públicas.",
-                        "highlight": "Subdomínios esquecidos são portas de entrada"
+                        "icon": "fa-network-wired",
+                        "title": "Saltando de Máquina",
+                        "scenario": "Hacker invade o PC da Recepção. Lá ele extrai a senha de administrador local (que é igual em todos os PCs). Ele usa essa senha para logar no Servidor Financeiro via RDP.",
+                        "takeaway": "Uma senha reciclada compromete o domínio inteiro."
             },
             {
                         "type": "quiz",
-                        "task": "Qual ferramenta enumera shares, usuários e grupos de servidores Windows via SMB?",
+                        "task": "O que melhor define a 'Movimentação Lateral' em um cenário de Post-Exploitation?",
                         "options": [
-                                    "Enum4linux",
-                                    "Nmap",
-                                    "Wireshark"
+                                    "O processo de expandir o acesso e comprometer outras máquinas dentro da mesma rede corporativa.",
+                                    "Enviar arquivos infectados para o exterior do país.",
+                                    "Esconder vírus no HD do computador infectado."
                         ],
-                        "correctText": "Enum4linux",
-                        "explanation": "Enum4linux usa SMB/RPC para extrair informações detalhadas de hosts Windows."
+                        "correctText": "O processo de expandir o acesso e comprometer outras máquinas dentro da mesma rede corporativa.",
+                        "explanation": "O invasor salta de máquina em máquina (lateralmente)."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-file-export",
+                        "title": "Exfiltração de Dados",
+                        "content": "A etapa final e fatal: empacotar terabytes de projetos secretos e bancos de dados de clientes, enviando tudo furtivamente para servidores controlados pelo atacante na internet."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-cloud-upload-alt",
+                        "title": "DNS Tunneling",
+                        "scenario": "Para evitar que o firewall perceba o envio dos dados, o hacker disfarça os arquivos confidenciais dentro de requisições DNS inofensivas. O servidor sai da empresa parecendo apenas navegação normal.",
+                        "takeaway": "Ransomwares modernos exigem exfiltração antes de criptografar (Dupla Extorsão)."
             },
             {
                         "type": "fill",
-                        "sentence": "A ferramenta ___ descobre subdomínios passivamente usando APIs de fontes públicas.",
+                        "sentence": "Tirar silenciosamente dados confidenciais de uma rede invadida rumo aos servidores do atacante recebe o nome de ___.",
                         "options": [
-                                    "Subfinder",
-                                    "Nmap",
-                                    "Metasploit"
+                                    "Exfiltração",
+                                    "Movimentação Lateral",
+                                    "Buffer Overflow"
                         ],
-                        "correctText": "Subfinder",
-                        "explanation": "Subfinder consulta fontes como VirusTotal, Shodan e Censys para encontrar subdomínios."
+                        "correctText": "Exfiltração",
+                        "explanation": "A extração de dados sensíveis."
             }
 ];
 
@@ -492,15 +457,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/10.2b-vuln-cred-tools.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/9.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #5e1d80; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b3002a; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">FERRAMENTAS DE RECON DOMINADAS!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -509,7 +474,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-10.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-08.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

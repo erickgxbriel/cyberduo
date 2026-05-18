@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Ataques de Senha e Kerberos 5.1b</title>
+    <title>CyberDuo - Reconhecimento Ativo e Enumeração de Serviços</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #ff8c00;
+            --cyber-blue: #00facd;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b36200; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b36200; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #009e80; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #009e80; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-05.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-03.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,90 +131,51 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-key",
-                        "title": "Brute Force e Dictionary",
-                        "content": "<b>Brute Force</b>: testa TODAS as combinações. <b>Dictionary</b>: testa palavras de uma lista. <b>Hybrid</b>: combina dicionário + regras (ex: Password1!, Password2!).",
-                        "highlight": "Dicionário é mais rápido, brute force é mais completo"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-unlock",
-                        "title": "Pass-the-Hash",
-                        "content": "No <b>Pass-the-Hash</b>, o atacante usa o hash NTLM capturado para autenticar em serviços Windows <b>sem precisar da senha em texto claro</b>. Funciona com <b>psexec</b> e <b>wmiexec</b>.",
-                        "highlight": "Hash NTLM = equivalente à senha no Windows"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-ticket",
-                        "title": "Kerberoasting",
-                        "content": "<b>Kerberoasting</b>: solicita tickets Kerberos TGS para contas de serviço e tenta crackar offline. Contas de serviço frequentemente têm senhas fracas e privilégios altos.",
-                        "highlight": "Service accounts = alvo fácil com alto impacto"
+                        "icon": "fa-bolt",
+                        "title": "Reconhecimento Ativo",
+                        "content": "Diferente do OSINT (Passivo), no <b>Reconhecimento Ativo</b> nós enviamos pacotes diretamente aos servidores da vítima. O grande problema? Isso gera alertas nos firewalls (IDS/IPS) da empresa."
             },
             {
                         "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "Kerberoasting com Impacket",
-                        "scenario": "O pentester solicita tickets TGS para todas as contas de serviço do AD e tenta crackar com Hashcat.",
-                        "code": "GetUserSPNs.py domain/user:pass -dc-ip 10.0.0.1 -outputfile tgs.txt\nhashcat -m 13100 tgs.txt rockyou.txt",
-                        "takeaway": "Kerberoasting não requer privilégios elevados no AD."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-id-card",
-                        "title": "AS-REP Roasting",
-                        "content": "<b>AS-REP Roasting</b>: explora contas com <b>Kerberos pre-auth desabilitado</b>. O atacante solicita o AS-REP e cracka offline sem precisar de credenciais válidas.",
-                        "highlight": "Pre-auth desabilitado = senha crackável sem login"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-database",
-                        "title": "Credential Stuffing",
-                        "content": "<b>Credential Stuffing</b>: usa pares <b>email:senha</b> de vazamentos (breaches) para tentar login em outros serviços. 65% das pessoas reutilizam senhas.",
-                        "highlight": "Reutilização de senhas = porta aberta"
+                        "icon": "fa-shield",
+                        "title": "Barulho na Rede",
+                        "scenario": "O hacker roda um `nmap -A` (agressivo). O firewall da vítima detecta 500 pacotes estranhos por segundo e bloqueia o IP do hacker instantaneamente.",
+                        "takeaway": "Ativo significa toque direto. Requer furtividade."
             },
             {
                         "type": "quiz",
-                        "task": "Qual ataque solicita tickets Kerberos TGS para crackar senhas de service accounts offline?",
+                        "task": "Qual é a principal desvantagem do Reconhecimento Ativo em comparação com o Passivo?",
                         "options": [
-                                    "Kerberoasting",
-                                    "Phishing",
-                                    "ARP Spoofing"
+                                    "Ele interage diretamente com o alvo, o que pode gerar logs de segurança e alertas.",
+                                    "Ele é mais devagar e impreciso.",
+                                    "Ele só funciona em redes Wi-Fi."
                         ],
-                        "correctText": "Kerberoasting",
-                        "explanation": "Kerberoasting explora contas de serviço com SPNs registrados no Active Directory."
+                        "correctText": "Ele interage diretamente com o alvo, o que pode gerar logs de segurança e alertas.",
+                        "explanation": "A interação direta levanta suspeitas dos administradores."
             },
             {
-                        "type": "match",
-                        "title": "Ataque → Requisito",
-                        "pairs": [
-                                    {
-                                                "term": "Pass-the-Hash",
-                                                "definition": "Hash NTLM capturado"
-                                    },
-                                    {
-                                                "term": "Kerberoasting",
-                                                "definition": "Acesso ao AD (qualquer user)"
-                                    },
-                                    {
-                                                "term": "AS-REP Roasting",
-                                                "definition": "Pre-auth desabilitado"
-                                    },
-                                    {
-                                                "term": "Credential Stuffing",
-                                                "definition": "Lista de credenciais vazadas"
-                                    }
-                        ]
+                        "type": "teach",
+                        "icon": "fa-folder-tree",
+                        "title": "Enumeração SMB (Windows)",
+                        "content": "O <b>SMB</b> (porta 445) é o protocolo de compartilhamento de arquivos e impressoras do Windows. Em redes corporativas, listar o SMB frequentemente revela pastas mal configuradas cheias de planilhas e senhas."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-unlock",
+                        "title": "Acesso Nulo",
+                        "scenario": "O hacker executa `smbclient -L //192.168.0.10 -N` (Null Session). O servidor Windows, mal configurado, aceita a conexão sem senha e lista a pasta 'Backup_RH'.",
+                        "takeaway": "Sessões Nulas são erros clássicos de configuração do Active Directory."
             },
             {
                         "type": "fill",
-                        "sentence": "O ataque que explora contas com Kerberos pre-authentication desabilitado é o ___.",
+                        "sentence": "A enumeração do protocolo de compartilhamento do Windows que opera na porta TCP 445 é chamada de Enumeração ___.",
                         "options": [
-                                    "AS-REP Roasting",
-                                    "Kerberoasting",
-                                    "Pass-the-Hash"
+                                    "SMB",
+                                    "HTTP",
+                                    "SNMP"
                         ],
-                        "correctText": "AS-REP Roasting",
-                        "explanation": "AS-REP Roasting funciona sem credenciais se a pre-auth estiver desabilitada."
+                        "correctText": "SMB",
+                        "explanation": "Server Message Block."
             }
 ];
 
@@ -496,15 +457,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/5.2a-wireless-fundamentals.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/3.3-varredura-vulnerabilidade.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b36200; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #009e80; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">ATAQUES DE SENHA DOMINADOS!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -513,7 +474,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-05.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-03.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

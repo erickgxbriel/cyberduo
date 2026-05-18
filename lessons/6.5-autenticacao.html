@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Autenticação 6.5</title>
+    <title>CyberDuo - Quebra de Autenticação</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -132,38 +132,93 @@
             {
                         "type": "teach",
                         "icon": "fa-right-to-bracket",
-                        "title": "Falhas de Autenticação",
-                        "content": "<b>Broken Authentication</b> permite que atacantes comprometam senhas, tokens ou sessões. Inclui: senhas fracas, falta de MFA, session fixation e brute force sem limitação.",
-                        "highlight": "Autenticação quebrada = identidade roubada"
+                        "title": "Broken Authentication",
+                        "content": "A <b>Quebra de Autenticação</b> ocorre quando a aplicação implementa mal o gerenciamento de sessões ou verificação de identidade. Isso permite que um atacante assuma a identidade de usuários legítimos. A mitigação ideal para senhas fracas é forçar o MFA (Multi-Factor Authentication).",
+                        "highlight": "Autenticação fraca = porta da frente aberta."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-key",
+                        "title": "Ataque de Força Bruta",
+                        "scenario": "A tela de login do site não possui limite de tentativas (Rate Limiting). O atacante usa o Hydra com uma wordlist de 10.000 senhas comuns e descobre a senha do 'admin'.",
+                        "takeaway": "Sempre implemente bloqueios após X tentativas falhas."
             },
             {
                         "type": "teach",
-                        "icon": "fa-key",
-                        "title": "Session Hijacking",
-                        "content": "<b>Session Hijacking</b>: o atacante rouba o cookie de sessão da vítima (via XSS ou sniffing) e assume a sessão autenticada sem precisar de senha.",
-                        "highlight": "Cookie roubado = sessão completa"
+                        "icon": "fa-spray-can",
+                        "title": "Password Spraying",
+                        "content": "Ao invés de testar muitas senhas num único usuário, o <b>Password Spraying</b> testa 1 senha comum (ex: 'Verão2024') contra centenas de usuários diferentes para evitar bloqueios de conta.",
+                        "highlight": "Eficaz contra políticas de bloqueio rígidas."
             },
             {
                         "type": "quiz",
-                        "task": "O que é Session Hijacking?",
+                        "task": "Qual é a principal diferença entre Brute Force tradicional e Password Spraying?",
                         "options": [
-                                    "Roubar o cookie de sessão para assumir a conta da vítima",
-                                    "Alterar a senha do usuário pelo painel admin",
-                                    "Enviar e-mails de phishing para o suporte"
+                                    "Brute force foca em um usuário com muitas senhas; Spraying foca em muitos usuários com uma senha.",
+                                    "Spraying é feito fisicamente no servidor.",
+                                    "Brute force só funciona em senhas numéricas."
                         ],
-                        "correctText": "Roubar o cookie de sessão para assumir a conta da vítima",
-                        "explanation": "Com o cookie de sessão, o atacante é tratado como o usuário legítimo pelo servidor."
+                        "correctText": "Brute force foca em um usuário com muitas senhas; Spraying foca em muitos usuários com uma senha.",
+                        "explanation": "Isso evita o bloqueio por múltiplas tentativas na mesma conta."
             },
             {
                         "type": "fill",
-                        "sentence": "A técnica de roubar cookies de sessão para assumir a identidade da vítima é o ___.",
+                        "sentence": "A ausência de duplo fator de autenticação, também conhecido como ___, aumenta criticamente o risco de contas comprometidas.",
                         "options": [
-                                    "Session Hijacking",
-                                    "SQL Injection",
-                                    "Brute Force"
+                                    "MFA",
+                                    "HTTPS",
+                                    "DNS"
                         ],
-                        "correctText": "Session Hijacking",
-                        "explanation": "Session Hijacking permite assumir sessões sem conhecer credenciais."
+                        "correctText": "MFA",
+                        "explanation": "Multi-Factor Authentication exige algo que você sabe (senha) e algo que você tem (token)."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-cookie-bite",
+                        "title": "Session Hijacking",
+                        "content": "A <b>Sessão</b> do usuário é mantida por um Cookie. Se um atacante roubar esse cookie, ele não precisa da senha; ele vira a vítima imediatamente no servidor. Proteger cookies com a flag HttpOnly previne o roubo via XSS."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-user-ninja",
+                        "title": "O Roubo Silencioso",
+                        "scenario": "O atacante injeta um script XSS num fórum. Quando o Admin entra, o script extrai o Cookie dele e manda para o servidor do hacker.",
+                        "takeaway": "O servidor web confia no cookie, não na pessoa."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "A flag ___ em um cookie impede que scripts client-side (como JavaScript) leiam seu valor, mitigando o roubo de sessão via XSS.",
+                        "options": [
+                                    "HttpOnly",
+                                    "Secure",
+                                    "SameSite"
+                        ],
+                        "correctText": "HttpOnly",
+                        "explanation": "Sem a flag HttpOnly, o comando document.cookie expõe a chave da sessão."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-thumbtack",
+                        "title": "Session Fixation",
+                        "content": "No <b>Session Fixation</b>, o ataque inverte a lógica. O atacante <i>força</i> a vítima a usar um cookie de sessão que ele já conhece e gerou no seu próprio PC."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-link",
+                        "title": "A Armadilha",
+                        "scenario": "O atacante manda um link: `banco.com/?session_id=12345`. A vítima faz login por esse link. Agora, a sessão 12345 é do admin. O hacker, que tem o 12345, entra como admin.",
+                        "takeaway": "O servidor deve gerar um ID novo no exato momento do login."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual é a principal diferença entre Session Hijacking e Session Fixation?",
+                        "options": [
+                                    "No Hijacking o atacante rouba um cookie válido; no Fixation ele obriga a vítima a usar um cookie criado por ele.",
+                                    "Hijacking ataca o banco de dados; Fixation ataca a rede local.",
+                                    "Não há diferença."
+                        ],
+                        "correctText": "No Hijacking o atacante rouba um cookie válido; no Fixation ele obriga a vítima a usar um cookie criado por ele.",
+                        "explanation": "Fixation = fixar uma sessão predeterminada."
             }
 ];
 
@@ -453,7 +508,7 @@
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">AUTENTICAÇÃO ANALISADA!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}

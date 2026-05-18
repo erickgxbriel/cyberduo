@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Ferramentas Sociais 4.4</title>
+    <title>CyberDuo - Ferramentas de Engenharia Social (SET e GoPhish)</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -131,65 +131,51 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-toolbox",
-                        "title": "SET (Social Engineering Toolkit)",
-                        "content": "O <b>SET</b> é a principal ferramenta de engenharia social do Kali Linux. Ele automatiza ataques de phishing, clonagem de sites, criação de payloads e campanhas de spear phishing.",
-                        "highlight": "SET = automação de engenharia social"
+                        "icon": "fa-clone",
+                        "title": "Social-Engineer Toolkit (SET)",
+                        "content": "O <b>SET</b> é a principal ferramenta do Kali Linux voltada para engenharia social. Ele permite clonar sites inteiros (como a tela do Facebook) em segundos para roubar senhas."
             },
             {
                         "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "Clonando um Site com SET",
-                        "scenario": "Usando o SET, você clona a página de login do e-mail corporativo do alvo. Quando um funcionário digita suas credenciais na página falsa, elas são capturadas pelo pentester.",
-                        "code": "setoolkit > 1 > 2 > 3 > site_do_alvo.com",
-                        "takeaway": "SET clona páginas de login em segundos para captura de credenciais."
+                        "icon": "fa-laptop-code",
+                        "title": "Site Credential Harvester",
+                        "scenario": "O atacante escolhe a opção 'Site Cloner' no SET e digita a URL do Gmail. O SET hospeda uma cópia perfeita localmente. Quando a vítima tenta logar na cópia, a senha pisca no terminal do hacker.",
+                        "takeaway": "Automatiza a criação de infraestrutura maliciosa de alto nível."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Para que serve a técnica de 'Credential Harvester' dentro da ferramenta SET?",
+                        "options": [
+                                    "Clonar páginas web reais para hospedar cópias falsas e capturar as senhas digitadas pelas vítimas.",
+                                    "Executar brute-force num servidor de banco de dados offline.",
+                                    "Infectar o firmware do roteador."
+                        ],
+                        "correctText": "Clonar páginas web reais para hospedar cópias falsas e capturar as senhas digitadas pelas vítimas.",
+                        "explanation": "O SET facilita o roubo criando o cenário perfeito de clonagem."
             },
             {
                         "type": "teach",
                         "icon": "fa-fish",
                         "title": "GoPhish",
-                        "content": "<b>GoPhish</b> é uma plataforma open source para gerenciar campanhas de phishing. Ela permite criar templates de e-mail, rastrear quem abriu, clicou e inseriu credenciais.",
-                        "highlight": "GoPhish = gestão profissional de campanhas de phishing"
+                        "content": "Enquanto o SET ajuda a clonar sites, o <b>GoPhish</b> é a plataforma definitiva de código aberto para *disparar e gerenciar* campanhas gigantes de Phishing em massa."
             },
             {
-                        "type": "quiz",
-                        "task": "Qual ferramenta do Kali Linux automatiza ataques de engenharia social?",
-                        "options": [
-                                    "SET (Social Engineering Toolkit)",
-                                    "Nmap",
-                                    "Wireshark"
-                        ],
-                        "correctText": "SET (Social Engineering Toolkit)",
-                        "explanation": "O SET é dedicado exclusivamente a ataques de engenharia social."
+                        "type": "example",
+                        "icon": "fa-chart-line",
+                        "title": "Dashboard do Engano",
+                        "scenario": "O hacker cadastra 5.000 e-mails no GoPhish e cria um modelo de e-mail de 'Bônus de Natal'. O painel mostra em tempo real quem abriu o e-mail, quem clicou no link e quem digitou a senha.",
+                        "takeaway": "Phishing moderno é gerido como campanhas de marketing digital profissional."
             },
             {
                         "type": "fill",
-                        "sentence": "A plataforma open source para gerenciar campanhas de phishing é o ___.",
+                        "sentence": "A ferramenta de código aberto que fornece um painel de controle centralizado para orquestrar e medir campanhas de phishing é o ___.",
                         "options": [
                                     "GoPhish",
-                                    "Metasploit",
-                                    "Burp Suite"
+                                    "Nmap",
+                                    "Wireshark"
                         ],
                         "correctText": "GoPhish",
-                        "explanation": "GoPhish permite criar, enviar e rastrear campanhas de phishing de forma organizada."
-            },
-            {
-                        "type": "match",
-                        "title": "Ferramenta → Uso",
-                        "pairs": [
-                                    {
-                                                "term": "SET",
-                                                "definition": "Automação de ataques sociais"
-                                    },
-                                    {
-                                                "term": "GoPhish",
-                                                "definition": "Gestão de campanhas phishing"
-                                    },
-                                    {
-                                                "term": "BeEF",
-                                                "definition": "Exploração de browsers via XSS"
-                                    }
-                        ]
+                        "explanation": "Ele gerencia todo o ciclo de vida do e-mail malicioso."
             }
 ];
 

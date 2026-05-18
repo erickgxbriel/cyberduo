@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Ataques Sociais 4.2</title>
+    <title>CyberDuo - Phishing e Ataques Sociais</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -132,74 +132,26 @@
             {
                         "type": "teach",
                         "icon": "fa-envelope-open-text",
-                        "title": "Phishing",
-                        "content": "<b>Phishing</b> é enviar e-mails falsos que imitam empresas legítimas para roubar credenciais ou instalar malware. É o ataque mais comum e mais eficaz da engenharia social.",
-                        "highlight": "90% dos ataques começam com phishing"
+                        "title": "Phishing vs Spear Phishing",
+                        "content": "<b>Phishing</b> é atirar com uma rede: enviar e-mails falsos para milhões de pessoas. <b>Spear Phishing</b> é atirar com um rifle: criar um e-mail ultra-personalizado direcionado a uma única pessoa (ex: o CEO)."
             },
             {
-                        "type": "teach",
-                        "icon": "fa-bullseye",
-                        "title": "Spear Phishing e Whaling",
-                        "content": "<b>Spear Phishing</b>: ataque direcionado a uma pessoa específica, usando informações pessoais. <b>Whaling</b>: spear phishing direcionado a executivos de alto escalão (CEO, CFO).",
-                        "highlight": "Quanto mais direcionado, mais eficaz"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-comment-sms",
-                        "title": "Smishing e Vishing",
-                        "content": "<b>Smishing</b> = phishing via SMS. <b>Vishing</b> = phishing via voz/telefone. Ambos usam as mesmas técnicas de manipulação mas em canais diferentes.",
-                        "highlight": "Phishing se adapta ao canal de comunicação"
-            },
-            {
-                        "type": "match",
-                        "title": "Tipo de Phishing → Canal",
-                        "pairs": [
-                                    {
-                                                "term": "Phishing",
-                                                "definition": "E-mail"
-                                    },
-                                    {
-                                                "term": "Smishing",
-                                                "definition": "SMS"
-                                    },
-                                    {
-                                                "term": "Vishing",
-                                                "definition": "Ligação telefônica"
-                                    },
-                                    {
-                                                "term": "Whaling",
-                                                "definition": "E-mail para executivos"
-                                    }
-                        ]
-            },
-            {
-                        "type": "quiz",
-                        "task": "Qual tipo de phishing é direcionado especificamente a executivos C-Level?",
-                        "options": [
-                                    "Whaling",
-                                    "Smishing",
-                                    "Vishing"
-                        ],
-                        "correctText": "Whaling",
-                        "explanation": "Whaling (caça à baleia) mira especificamente CEOs, CFOs e outros executivos de alto nível."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-water",
-                        "title": "Watering Hole",
-                        "content": "<b>Watering Hole</b>: o atacante infecta um site frequentemente visitado pelo alvo. Quando o alvo acessa o site comprometido, é infectado automaticamente.",
-                        "highlight": "Infectar o site que o alvo já confia"
+                        "type": "example",
+                        "icon": "fa-crosshairs",
+                        "title": "Ataque Direcionado",
+                        "scenario": "O atacante descobre que a CFO ama a banda X. Ele envia um e-mail forjado da banda oferecendo ingressos VIP em um anexo PDF. A CFO clica e infecta a rede.",
+                        "takeaway": "Spear Phishing requer reconhecimento e coleta de inteligência (OSINT) prévia."
             },
             {
                         "type": "fill",
-                        "sentence": "O ataque que infecta sites frequentados pelo alvo é chamado de ___.",
+                        "sentence": "Enquanto o Phishing tradicional visa quantidade, o ___ Phishing visa alvos de alto valor com mensagens altamente personalizadas.",
                         "options": [
-                                    "Watering Hole",
-                                    "Brute Force",
-                                    "Man-in-the-Middle"
+                                    "Spear",
+                                    "Whaling",
+                                    "Vishing"
                         ],
-                        "correctText": "Watering Hole",
-                        "explanation": "Watering Hole = 'poço d'água' — como predadores que esperam a presa ir beber."
+                        "correctText": "Spear",
+                        "explanation": "A palavra 'Spear' significa lança, indicando a precisão do ataque."
             }
 ];
 

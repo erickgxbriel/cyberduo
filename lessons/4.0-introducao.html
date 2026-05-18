@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Engenharia Social 4.0</title>
+    <title>CyberDuo - O Fator Humano</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -131,62 +131,56 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-people-arrows",
-                        "title": "Engenharia Social",
-                        "content": "<b>Engenharia Social</b> é a arte de manipular <b>pessoas</b> para que revelem informações ou executem ações. O elo mais fraco da segurança é sempre o <b>fator humano</b>.",
-                        "highlight": "Pessoas são o alvo mais fácil"
+                        "icon": "fa-brain",
+                        "title": "O Elo Mais Fraco",
+                        "content": "<b>Engenharia Social</b> é a arte de manipular pessoas para que forneçam informações confidenciais ou realizem ações inseguras. Enquanto a segurança foca em firewalls, a engenharia social ataca o cérebro humano."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-fire",
+                        "title": "Bypass Humano",
+                        "scenario": "A empresa gastou R$ 1 milhão em firewalls modernos. O atacante ligou para a recepcionista fingindo ser do suporte técnico e pediu a senha dela. Ela entregou. Fim do firewall.",
+                        "takeaway": "Não existe patch de segurança para a estupidez humana."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual é a essência da Engenharia Social na área de segurança cibernética?",
+                        "options": [
+                                    "A exploração das vulnerabilidades psicológicas e comportamentais do ser humano (o 'elo mais fraco').",
+                                    "O uso de redes neurais artificiais para adivinhar senhas.",
+                                    "Engenharia voltada à construção física de data centers seguros."
+                        ],
+                        "correctText": "A exploração das vulnerabilidades psicológicas e comportamentais do ser humano (o 'elo mais fraco').",
+                        "explanation": "O ser humano confia naturalmente nos outros, o que facilita o ataque."
             },
             {
                         "type": "teach",
                         "icon": "fa-masks-theater",
-                        "title": "Pretexting",
-                        "content": "<b>Pretexting</b> é criar um cenário falso (pretexto) para enganar a vítima. O atacante assume uma identidade falsa, como um técnico de TI, para obter acesso ou informações.",
-                        "highlight": "Pretexto = história inventada para enganar"
+                        "title": "Enganação por Múltiplos Canais",
+                        "content": "Os ataques de engenharia social não acontecem apenas por e-mail (Phishing). Eles podem ocorrer pelo telefone (Vishing), mensagens de SMS (Smishing) e até interações físicas presenciais (Tailgating)."
             },
             {
                         "type": "example",
-                        "icon": "fa-phone",
-                        "title": "Ligação Falsa de TI",
-                        "scenario": "O atacante liga para um funcionário fingindo ser do suporte técnico: 'Oi, sou do TI. Precisamos atualizar sua conta. Me passe sua senha atual para eu migrar.'",
-                        "takeaway": "Nunca forneça credenciais por telefone — TI legítimo não pede senhas."
-            },
-            {
-                        "type": "quiz",
-                        "task": "O que é pretexting em engenharia social?",
-                        "options": [
-                                    "Criar uma identidade falsa para manipular a vítima",
-                                    "Usar força bruta para quebrar senhas",
-                                    "Escanear portas de rede com Nmap"
-                        ],
-                        "correctText": "Criar uma identidade falsa para manipular a vítima",
-                        "explanation": "Pretexting = inventar um cenário convincente para que a vítima coopere."
-            },
-            {
-                        "type": "fill",
-                        "sentence": "O elo mais fraco da segurança da informação é o fator ___.",
-                        "options": [
-                                    "humano",
-                                    "tecnológico",
-                                    "financeiro"
-                        ],
-                        "correctText": "humano",
-                        "explanation": "Pessoas podem ser manipuladas, independente da qualidade da tecnologia."
+                        "icon": "fa-mobile-screen",
+                        "title": "Smishing Bancário",
+                        "scenario": "O usuário recebe um SMS urgente: 'Seu cartão foi bloqueado! Clique no link para verificar'. O link leva a uma tela idêntica à do banco. O pânico cega a vítima.",
+                        "takeaway": "O pânico e a urgência são combustíveis da engenharia social."
             },
             {
                         "type": "match",
-                        "title": "Tipos de Engenharia Social",
+                        "title": "Engenharia Social → Vetor",
                         "pairs": [
                                     {
                                                 "term": "Phishing",
-                                                "definition": "E-mail falso com link malicioso"
+                                                "definition": "Ataques disparados por e-mail falso."
                                     },
                                     {
-                                                "term": "Pretexting",
-                                                "definition": "Cenário inventado para enganar"
+                                                "term": "Vishing",
+                                                "definition": "Ataques disparados por ligações telefônicas."
                                     },
                                     {
-                                                "term": "Tailgating",
-                                                "definition": "Seguir alguém pela porta sem crachá"
+                                                "term": "Smishing",
+                                                "definition": "Ataques disparados por SMS."
                                     }
                         ]
             }

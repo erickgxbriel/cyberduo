@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Linguagens e Prática 10.1b</title>
+    <title>CyberDuo - Falhas de Memória, Lógica e Deserialização</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #8a2be2;
+            --cyber-blue: #00f2ff;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #5e1d80; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #5e1d80; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00a8b3; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #00a8b3; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-10.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-06.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,101 +131,83 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-terminal",
-                        "title": "10.1.12 Bash Scripting",
-                        "content": "<b>Bash</b> é a cola entre ferramentas Linux. Automatiza: varreduras em massa, parsing de saída, enumeração de hosts. Essencial para qualquer pentester em Linux.",
-                        "highlight": "Bash = automação nativa do Linux"
+                        "icon": "fa-memory",
+                        "title": "Buffer Overflow",
+                        "content": "<b>Buffer Overflow</b> ocorre quando o programa escreve mais dados num bloco de memória do que ele suporta, transbordando e sobrescrevendo áreas vizinhas na RAM. Falhas de memória são comuns nas linguagens C/C++."
             },
             {
                         "type": "example",
-                        "icon": "fa-code",
-                        "title": "Scan em Massa com Bash",
-                        "scenario": "Script que varre uma subnet inteira e salva hosts com portas abertas.",
-                        "code": "#!/bin/bash\nfor ip in $(seq 1 254); do\n  (ping -c1 -W1 192.168.1.$ip > /dev/null 2>&1 && echo \"192.168.1.$ip UP\") &\ndone\nwait",
-                        "takeaway": "Bash com & (background) paraleliza tarefas."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-snake",
-                        "title": "10.1.13 Python para Pentest",
-                        "content": "<b>Python</b> é a linguagem nº1: <b>requests</b> (web), <b>scapy</b> (pacotes), <b>pwntools</b> (exploits), <b>impacket</b> (Windows/AD), <b>paramiko</b> (SSH), <b>beautifulsoup</b> (parsing HTML).",
-                        "highlight": "Python = canivete suíço do pentester"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-windows",
-                        "title": "10.1.15 PowerShell para AD",
-                        "content": "<b>PowerShell</b> domina ambientes Windows/AD: <b>Get-ADUser</b>, <b>Invoke-Command</b>, <b>Download cradle</b>. Também é usado ofensivamente: <b>PowerView</b>, <b>PowerUp</b>, <b>Invoke-Mimikatz</b>.",
-                        "highlight": "PowerShell = ferramenta #1 para atacar AD"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-gem",
-                        "title": "10.1.14 Ruby",
-                        "content": "<b>Ruby</b> é a linguagem do <b>Metasploit Framework</b>. Escrever módulos Metasploit requer Ruby. Também usado em ferramentas como <b>WPScan</b> e <b>BeEF</b>.",
-                        "highlight": "Ruby = linguagem do Metasploit"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-js",
-                        "title": "10.1.17 JavaScript",
-                        "content": "<b>JavaScript</b> é essencial para ataques web: <b>XSS payloads</b>, <b>DOM manipulation</b>, <b>WebSocket hijacking</b>. Node.js expande para server-side.",
-                        "highlight": "JS = linguagem dos ataques web client-side"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-file-code",
-                        "title": "10.1.10 Análise de Código",
-                        "content": "Saber <b>ler e entender</b> código de exploits é tão importante quanto saber escrever. Identifique: <b>CVE alvo</b>, <b>vetor de ataque</b>, <b>payload</b>, <b>condições de sucesso</b>.",
-                        "highlight": "Leia o exploit ANTES de executar"
-            },
-            {
-                        "type": "match",
-                        "title": "Linguagem → Uso Principal",
-                        "pairs": [
-                                    {
-                                                "term": "Python",
-                                                "definition": "Scripts, exploits, automação geral"
-                                    },
-                                    {
-                                                "term": "Bash",
-                                                "definition": "Automação Linux, cola de ferramentas"
-                                    },
-                                    {
-                                                "term": "PowerShell",
-                                                "definition": "Ataques AD e automação Windows"
-                                    },
-                                    {
-                                                "term": "Ruby",
-                                                "definition": "Módulos Metasploit"
-                                    },
-                                    {
-                                                "term": "JavaScript",
-                                                "definition": "XSS e ataques client-side"
-                                    }
-                        ]
+                        "icon": "fa-water",
+                        "title": "O Copo Cheio",
+                        "scenario": "Imagine um copo de 100ml. O hacker despeja 500ml de água ('A's). A água transborda para o circuito elétrico (ponteiro de retorno) e muda o funcionamento da máquina.",
+                        "takeaway": "Linguagens como C/C++ são vulneráveis porque não checam limites de memória."
             },
             {
                         "type": "quiz",
-                        "task": "Qual linguagem é usada para escrever módulos do Metasploit Framework?",
+                        "task": "O que um atacante busca atingir sobrescrevendo o ponteiro de retorno (Return Pointer) num Buffer Overflow?",
                         "options": [
-                                    "Ruby",
-                                    "Python",
-                                    "C++"
+                                    "Mudar o fluxo do programa para executar um Shellcode malicioso.",
+                                    "Apagar logs de rede.",
+                                    "Ler o código fonte do site HTML."
                         ],
-                        "correctText": "Ruby",
-                        "explanation": "Metasploit é escrito em Ruby e seus módulos de exploit também são em Ruby."
+                        "correctText": "Mudar o fluxo do programa para executar um Shellcode malicioso.",
+                        "explanation": "Redirecionando o ponteiro, o atacante dita a próxima instrução do processador."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-bug",
+                        "title": "Dangling Pointers (UAF)",
+                        "content": "<b>Use-After-Free (UAF)</b>: O programa libera um bloco de memória, mas 'esquece' de limpar o ponteiro que aponta para lá. O hacker aloca dados novos naquele mesmo lugar, e o programa usa achando que era o antigo."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-ghost",
+                        "title": "O Quarto de Hotel",
+                        "scenario": "O cliente devolve a chave do quarto (Free). O hotel dá o quarto pro Hacker. Mas o hotel deixou uma cópia da chave com o primeiro cliente (Dangling Pointer), que ainda acha que o quarto é dele.",
+                        "takeaway": "Ponteiros inválidos corrompem a execução segura."
             },
             {
                         "type": "fill",
-                        "sentence": "A ferramenta PowerShell usada para enumerar Active Directory é o ___.",
+                        "sentence": "Ataques que miram o controle e alocação de dados diretamente na memória RAM são mais comuns em sistemas construídos com a linguagem ___.",
                         "options": [
-                                    "PowerView",
-                                    "PowerPoint",
-                                    "PowerBI"
+                                    "C/C++",
+                                    "JavaScript",
+                                    "Python"
                         ],
-                        "correctText": "PowerView",
-                        "explanation": "PowerView (parte do PowerSploit) enumera usuários, grupos, trusts e shares do AD."
+                        "correctText": "C/C++",
+                        "explanation": "Linguagens de baixo nível dão controle total (e risco total) de memória ao programador."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-stopwatch",
+                        "title": "Race Conditions",
+                        "content": "<b>Race Condition (Condição de Corrida)</b> ocorre quando a aplicação realiza ações simultâneas sem sincronização adequada. Ex: sacar dinheiro da conta duas vezes no exato mesmo milissegundo.",
+                        "highlight": "Falha de concorrência em sistemas multithread."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-boxes-packing",
+                        "title": "Insecure Deserialization",
+                        "content": "<b>Desserialização</b> é transformar dados (JSON, XML, Objetos em disco) de volta em objetos de código. Se o aplicativo desserializar objetos manipulados por um usuário, ele pode invocar classes arbitrárias.",
+                        "highlight": "Desserialização sem validação gera RCE imediato."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-bug",
+                        "title": "O Ataque Mágico",
+                        "scenario": "O Java recebe um objeto serializado do usuário contendo o estado da sessão. O hacker envia um objeto malicioso que, ao ser 'desempacotado' (desserializado) pelo Java, dispara a abertura do terminal bash.",
+                        "takeaway": "Nunca deserialize dados provindos do usuário sem assinaturas criptográficas."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "Sacar R$ 100 de uma conta que só tem R$ 100 disparando 50 requisições simultâneas para ganhar R$ 5000 é um exemplo clássico de ___.",
+                        "options": [
+                                    "Race Condition",
+                                    "SQL Injection",
+                                    "IDOR"
+                        ],
+                        "correctText": "Race Condition",
+                        "explanation": "A verificação de saldo e a dedução ocorrem de forma assíncrona, falhando na proteção."
             }
 ];
 
@@ -507,15 +489,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/3.2a-recon-ativo-rede.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/6.2-lab-setup.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #5e1d80; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00a8b3; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">LINGUAGENS DE PENTEST DOMINADAS!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -524,7 +506,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-10.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-06.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

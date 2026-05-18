@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Varredura de Vulnerabilidades 3.3</title>
+    <title>CyberDuo - Varredura de Vulnerabilidades</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -131,96 +131,51 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-bug",
+                        "icon": "fa-satellite-dish",
                         "title": "O que é Varredura de Vulnerabilidades?",
-                        "content": "A varredura automatizada compara os serviços encontrados contra um <b>banco de dados de vulnerabilidades conhecidas</b> (CVEs). Ferramentas como <b>Nessus</b>, <b>OpenVAS</b> e <b>Qualys</b> automatizam este processo.",
-                        "highlight": "Scanner = detecção automatizada em massa"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-database",
-                        "title": "CVE e CVSS",
-                        "content": "<b>CVE</b> é o identificador único de uma vulnerabilidade (ex: CVE-2021-44228). <b>CVSS</b> é a pontuação de gravidade (0-10). Score 9.0+ = Crítico.",
-                        "highlight": "CVE = ID da falha, CVSS = gravidade"
+                        "content": "A varredura automatizada compara a versão dos serviços encontrados (ex: Apache 2.4.49) contra um banco de dados global de vulnerabilidades conhecidas (CVEs). Cuidado: Scanners geram alarmes Falsos (falsos positivos)."
             },
             {
                         "type": "example",
-                        "icon": "fa-exclamation-triangle",
-                        "title": "Log4Shell (CVE-2021-44228)",
-                        "scenario": "O scanner Nessus identifica que o servidor alvo usa <b>Log4j 2.14</b>, vulnerável ao <b>Log4Shell</b> (CVSS 10.0). Essa falha permite execução remota de código com uma simples string no log.",
-                        "takeaway": "CVSS 10.0 = exploração trivial com impacto máximo."
+                        "icon": "fa-bolt",
+                        "title": "Como o Scanner Pensa",
+                        "scenario": "O scanner descobre a porta 443 aberta rodando OpenSSL 1.0.1. Ele consulta seu banco interno e diz: 'Alerta! Essa versão é vulnerável ao ataque Heartbleed'.",
+                        "takeaway": "Scanners economizam meses de pesquisa manual."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Como um scanner de vulnerabilidade tradicional descobre falhas em um servidor?",
+                        "options": [
+                                    "Comparando a versão dos serviços com um banco de dados de CVEs.",
+                                    "Injetando código malicioso em todos os campos do banco de dados.",
+                                    "Lendo o código-fonte do servidor."
+                        ],
+                        "correctText": "Comparando a versão dos serviços com um banco de dados de CVEs.",
+                        "explanation": "O scanner trabalha com assinaturas conhecidas (CVEs)."
             },
             {
                         "type": "teach",
                         "icon": "fa-spider",
                         "title": "Varredura Web com Nikto",
-                        "content": "O <b>Nikto</b> é um scanner de vulnerabilidades web de código aberto muito popular. Ele busca por arquivos perigosos, softwares de servidores desatualizados, configurações incorretas e problemas de SSL/TLS.",
-                        "highlight": "Nikto: o scanner rápido focado em servidores web."
+                        "content": "O <b>Nikto</b> é um scanner focado exclusivamente em servidores web. Ele procura por arquivos perigosos (`/admin.php`), configurações padrão inseguras e cabeçalhos faltando."
             },
             {
-                        "type": "quiz",
-                        "task": "O que representa a pontuação CVSS de uma vulnerabilidade?",
-                        "options": [
-                                    "A gravidade da vulnerabilidade (0 a 10)",
-                                    "O preço para corrigir a falha",
-                                    "O número de sistemas afetados"
-                        ],
-                        "correctText": "A gravidade da vulnerabilidade (0 a 10)",
-                        "explanation": "CVSS (Common Vulnerability Scoring System) vai de 0 (nenhum risco) a 10 (crítico)."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-circle-exclamation",
-                        "title": "Falsos Positivos",
-                        "content": "Scanners frequentemente reportam <b>falsos positivos</b> — vulnerabilidades que não existem na realidade. O pentester deve <b>validar manualmente</b> os resultados antes de reportar.",
-                        "highlight": "Sempre valide! Nunca confie cegamente no scanner."
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Rodando o Nikto",
+                        "scenario": "Comando `nikto -h site.com`. Ele testa milhares de arquivos e avisa: 'Encontrado diretório /backup/ com listagem ativada'.",
+                        "takeaway": "Nikto é barulhento, mas eficiente para encontrar lixo esquecido."
             },
             {
                         "type": "fill",
-                        "sentence": "Quando um scanner reporta uma vulnerabilidade que não existe de fato, chamamos de ___.",
+                        "sentence": "Scanners frequentemente reportam ___ positivos, que são vulnerabilidades que o software acha que existem, mas que na realidade não afetam o sistema.",
                         "options": [
-                                    "falso positivo",
-                                    "falso negativo",
-                                    "verdadeiro positivo"
+                                    "Falsos",
+                                    "Verdadeiros",
+                                    "Críticos"
                         ],
-                        "correctText": "falso positivo",
-                        "explanation": "Falso positivo = alerta sem vulnerabilidade real. Falso negativo = vulnerabilidade real não detectada."
-            },
-            {
-                        "type": "match",
-                        "title": "Ferramentas de Scanner",
-                        "pairs": [
-                                    {
-                                                "term": "Nessus",
-                                                "definition": "Scanner comercial líder de mercado"
-                                    },
-                                    {
-                                                "term": "OpenVAS",
-                                                "definition": "Scanner open source gratuito"
-                                    },
-                                    {
-                                                "term": "Qualys",
-                                                "definition": "Scanner baseado em nuvem"
-                                    }
-                        ]
-            },
-            {
-                        "type": "match",
-                        "title": "Ferramenta → Alvo de Varredura",
-                        "pairs": [
-                                    {
-                                                "term": "Nessus",
-                                                "definition": "Scanner geral de infraestrutura"
-                                    },
-                                    {
-                                                "term": "Nikto",
-                                                "definition": "Scanner especializado em servidores web"
-                                    },
-                                    {
-                                                "term": "OpenVAS",
-                                                "definition": "Scanner corporativo open-source"
-                                    }
-                        ]
+                        "correctText": "Falsos",
+                        "explanation": "A validação manual humana é necessária para eliminar falsos positivos."
             }
 ];
 
