@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Métodos de Influência 4.5</title>
+    <title>CyberDuo - Gatilhos Psicológicos de Influência</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -131,75 +131,82 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-brain",
-                        "title": "Princípios de Cialdini",
-                        "content": "Robert Cialdini identificou 6 princípios de influência usados em engenharia social: <b>Reciprocidade</b>, <b>Comprometimento</b>, <b>Prova Social</b>, <b>Autoridade</b>, <b>Escassez</b> e <b>Simpatia</b>.",
-                        "highlight": "6 gatilhos psicológicos da manipulação"
+                        "icon": "fa-handshake",
+                        "title": "Reciprocidade e Simpatia",
+                        "content": "Baseados nos gatilhos de Cialdini, a <b>Reciprocidade</b> afirma que pessoas se sentem obrigadas a retribuir favores. A <b>Simpatia</b> diz que preferimos dizer 'sim' a quem conhecemos ou de quem gostamos."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-gift",
+                        "title": "O Favor Falso",
+                        "scenario": "O hacker 'ajuda' a recepcionista a carregar uma caixa pesada para dentro. Depois, ele pede 'só para usar a impressora rapidinho'. Por gratidão (reciprocidade), ela deixa.",
+                        "takeaway": "Uma pequena ajuda artificial abre portas para grandes falhas de segurança."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Em engenharia social, se um atacante lhe oferece um brinde ou um favor não solicitado antes de pedir uma informação sensível, ele está abusando de qual princípio psicológico?",
+                        "options": [
+                                    "Reciprocidade",
+                                    "Medo",
+                                    "Força Bruta"
+                        ],
+                        "correctText": "Reciprocidade",
+                        "explanation": "A vítima sente que 'deve' algo ao atacante."
             },
             {
                         "type": "teach",
-                        "icon": "fa-hand-holding-heart",
-                        "title": "Reciprocidade",
-                        "content": "<b>Reciprocidade</b>: quando alguém faz algo por nós, sentimos obrigação de retribuir. 'Te ajudei com aquilo... agora preciso de um favor pequeno (sua senha)'.",
-                        "highlight": "Favor gera dívida psicológica"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-crown",
+                        "icon": "fa-user-tie",
                         "title": "Autoridade",
-                        "content": "<b>Autoridade</b>: tendemos a obedecer figuras de autoridade sem questionar. 'Sou o diretor de TI e preciso do acesso agora'. Uniformes, títulos e tom assertivo reforçam a ilusão.",
-                        "highlight": "Autoridade falsa = obediência cega"
+                        "content": "O gatilho de <b>Autoridade</b> explora nossa tendência instintiva a obedecer figuras de poder, chefes e policiais, muitas vezes desligando nosso senso crítico."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-gavel",
+                        "title": "Ordem do CEO",
+                        "scenario": "O funcionário de finanças recebe um e-mail do 'CEO' exigindo a transferência urgente de $10.000 para uma conta nova para fechar uma aquisição secreta. Ele obedece sem validar a ordem.",
+                        "takeaway": "Títulos hierárquicos intimidam e quebram barreiras de validação."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "Obedecer cegamente a comandos sem validar a veracidade, puramente por medo do cargo superior de quem os solicitou, caracteriza o gatilho mental da ___.",
+                        "options": [
+                                    "Autoridade",
+                                    "Escassez",
+                                    "Afeição"
+                        ],
+                        "correctText": "Autoridade",
+                        "explanation": "A figura de poder suprime o raciocínio crítico da vítima."
             },
             {
                         "type": "teach",
                         "icon": "fa-hourglass-half",
                         "title": "Escassez e Urgência",
-                        "content": "<b>Escassez</b>: quando algo é limitado ou urgente, tomamos decisões impulsivas. 'Esta oferta expira em 5 minutos!' ou 'Sua conta será bloqueada se não agir agora!'.",
-                        "highlight": "Tempo limitado = decisão sem análise"
+                        "content": "<b>Escassez</b> e <b>Urgência</b> exploram o medo de perder uma oportunidade ou sofrer uma penalidade (FOMO). Isso não dá tempo para a vítima pensar antes de agir."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-stopwatch",
+                        "title": "O Falso Prazo",
+                        "scenario": "E-mail: 'Sua conta bancária será suspensa PARA SEMPRE em 5 minutos se não atualizar seus dados neste link agora'. O pânico bloqueia a lógica racional.",
+                        "takeaway": "Nenhum sistema legítimo exige ações emergenciais sem prévio aviso sólido."
             },
             {
                         "type": "match",
-                        "title": "Princípio → Exemplo",
+                        "title": "Gatilhos Mentais → Descrição",
                         "pairs": [
                                     {
                                                 "term": "Reciprocidade",
-                                                "definition": "'Te ajudei, agora me ajude'"
+                                                "definition": "A sensação de dever retribuir um favor inicial."
                                     },
                                     {
                                                 "term": "Autoridade",
-                                                "definition": "'Sou o diretor, obedeça'"
+                                                "definition": "Obediência instintiva a superiores e figuras de poder."
                                     },
                                     {
                                                 "term": "Escassez",
-                                                "definition": "'Expira em 5 minutos!'"
-                                    },
-                                    {
-                                                "term": "Prova Social",
-                                                "definition": "'Todos já fizeram isso'"
+                                                "definition": "O medo de perder uma oportunidade devido a limite de tempo."
                                     }
                         ]
-            },
-            {
-                        "type": "quiz",
-                        "task": "Qual princípio de Cialdini faz a vítima obedecer por medo de uma figura de poder?",
-                        "options": [
-                                    "Autoridade",
-                                    "Reciprocidade",
-                                    "Simpatia"
-                        ],
-                        "correctText": "Autoridade",
-                        "explanation": "Autoridade explora nossa tendência de obedecer quem parece ter poder ou posição."
-            },
-            {
-                        "type": "fill",
-                        "sentence": "O princípio que cria pressão por tempo limitado é o da ___.",
-                        "options": [
-                                    "Escassez",
-                                    "Reciprocidade",
-                                    "Simpatia"
-                        ],
-                        "correctText": "Escassez",
-                        "explanation": "Escassez cria urgência artificial: 'aja agora ou perde a oportunidade'."
             }
 ];
 

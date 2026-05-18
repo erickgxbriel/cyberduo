@@ -56,7 +56,7 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            padding: 0 clamp(1rem, 4vw, 1.5rem) 5rem;
+            padding: 0 clamp(1rem, 4vw, 1.5rem) 1.5rem;
         }
 
         .vault-header {
@@ -65,20 +65,114 @@
             position: relative;
         }
 
-        .vault-title {
-            font-size: clamp(2rem, 8vw, 3.5rem);
+        .cyber-title {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(2rem, 7vw, 3rem);
             font-weight: 800;
             letter-spacing: -2px;
             color: white;
+            line-height: 1;
+            margin-bottom: 0.2rem;
             text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
-        .vault-subtitle {
+        .cyber-title .highlight {
+            font-weight: 800;
+            letter-spacing: -1px;
+            font-size: 1em;
+            padding: 0.4rem 1.2rem;
+            background: rgba(0, 242, 255, 0.03);
+            border: 1px solid rgba(0, 242, 255, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.05), inset 0 0 5px rgba(0, 242, 255, 0.02);
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            animation: emblemPulse 4s infinite ease-in-out;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .cyber-title .highlight i {
+            font-size: 0.85em;
+            color: var(--cyber-blue);
+            text-shadow: 0 0 10px rgba(0, 242, 255, 0.4);
+        }
+
+        .cyber-title .highlight::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border: 1px solid rgba(0, 242, 255, 0.08);
+            border-radius: 15px;
+            pointer-events: none;
+            animation: emblemBorderPulse 4s infinite ease-in-out;
+        }
+
+        @keyframes emblemPulse {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(0, 242, 255, 0.05), inset 0 0 5px rgba(0, 242, 255, 0.02);
+                border-color: rgba(0, 242, 255, 0.15);
+                background: rgba(0, 242, 255, 0.03);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(0, 242, 255, 0.15), inset 0 0 10px rgba(0, 242, 255, 0.05);
+                border-color: rgba(0, 242, 255, 0.3);
+                background: rgba(0, 242, 255, 0.05);
+            }
+        }
+
+        @keyframes emblemBorderPulse {
+            0%, 100% {
+                border-color: rgba(0, 242, 255, 0.03);
+            }
+            50% {
+                border-color: rgba(0, 242, 255, 0.15);
+            }
+        }
+
+        .tagline {
             font-family: 'Fira Code', monospace;
-            font-size: 0.9rem;
-            color: var(--cyber-silver);
-            margin-top: 0.5rem;
+            font-size: clamp(0.65rem, 2vw, 0.75rem);
+            color: var(--cyber-blue);
+            font-weight: 500;
+            margin-top: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1.2rem;
+            background: rgba(0, 242, 255, 0.03);
+            border: 1px solid rgba(0, 242, 255, 0.15);
+            border-radius: 100px;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.05), inset 0 0 10px rgba(0, 242, 255, 0.02);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .tagline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.15), transparent);
+            animation: tagline-shine 4s infinite;
+        }
+
+        @keyframes tagline-shine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
         }
 
         .resource-grid {
@@ -238,8 +332,10 @@
         
         <div class="vault-header">
             <div class="scanline"></div>
-            <h1 class="vault-title">Arsenal Hacker</h1>
-            <p class="vault-subtitle">Recursos operacionais e educacionais de elite para auditores.</p>
+            <h1 class="cyber-title">
+                <span class="highlight">ARSENAL <i class="fa-solid fa-box" style="margin: 0 8px;"></i> <span style="color: var(--cyber-blue);">HACKER</span></span>
+            </h1>
+            <div class="tagline">RECURSOS OPERACIONAIS DE ELITE PARA AUDITORES</div>
         </div>
 
         <div class="resource-grid">

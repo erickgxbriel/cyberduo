@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Mov. Lateral e Exfiltração 8.2a</title>
+    <title>CyberDuo - Ataques em Redes Sem Fio (Wireless)</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #ff003c;
+            --cyber-blue: #ff8c00;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b3002a; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b3002a; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b36200; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b36200; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-08.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-05.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,83 +131,65 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-arrows-left-right",
-                        "title": "Movimento Lateral: Execução",
-                        "content": "Após obter um hash (Pass-the-Hash) ou ticket (Pass-the-Ticket), o atacante precisa executar comandos remotamente. Ferramentas: <b>PsExec</b> (via SMB), <b>WMIExec</b>, <b>WinRM</b> (Powershell Remoting).",
-                        "highlight": "Mover-se = autenticar e executar código noutro host"
+                        "icon": "fa-wifi",
+                        "title": "Fundamentos Wireless",
+                        "content": "Redes <b>Wireless (802.11)</b> transmitem dados através de ondas de rádio no ar. O principal problema de segurança: qualquer pessoa no raio de alcance pode interceptar esses dados.",
+                        "highlight": "A rede é fisicamente invisível e exposta."
             },
             {
                         "type": "teach",
-                        "icon": "fa-shuffle",
-                        "title": "Pivotagem (Pivoting)",
-                        "content": "A <b>pivotagem</b> é o uso de um sistema comprometido como ponte ou proxy para atacar e acessar outros sistemas da rede interna que não são diretamente acessíveis da internet.",
-                        "highlight": "Pivotagem transforma um host dominado em trampolim de ataque."
-            },
-            {
-                        "type": "quiz",
-                        "task": "Como se chama a técnica de usar um computador já invadido para alcançar outros dispositivos da rede interna?",
-                        "options": [
-                                    "Pivotagem (Pivoting)",
-                                    "Phishing",
-                                    "Buffer Overflow"
-                        ],
-                        "correctText": "Pivotagem (Pivoting)",
-                        "explanation": "A pivotagem permite que o pentester 'pule' para áreas restritas da infraestrutura corporativa interna."
+                        "icon": "fa-lock",
+                        "title": "Evolução da Criptografia",
+                        "content": "O <b>WEP</b> foi quebrado rapidamente (minutos). O <b>WPA</b> melhorou, mas teve falhas via WPS. O <b>WPA2</b> (AES) é padrão, mas suscetível a força bruta no handshake de 4 vias. O <b>WPA3</b> modernizou com proteção contra ataques de dicionário.",
+                        "highlight": "WPA2 = vulnerável na troca da chave de conexão."
             },
             {
                         "type": "teach",
-                        "icon": "fa-upload",
-                        "title": "Exfiltração de Dados",
-                        "content": "O objetivo final muitas vezes é roubar dados (Exfiltração). Para não ser pego pelo firewall/DLP, o atacante usa canais encobertos: <b>DNS Tunneling</b>, ICMP, HTTPS, ou esteganografia.",
-                        "highlight": "Exfiltração = tirar o prêmio de dentro da rede"
+                        "icon": "fa-wifi",
+                        "title": "Captura de Handshake (WPA2)",
+                        "content": "Para invadir um Wi-Fi WPA2, o atacante precisa capturar o <b>4-way handshake</b> — os pacotes exatos trocados quando um celular se conecta legitimamente ao roteador."
             },
             {
                         "type": "example",
                         "icon": "fa-terminal",
-                        "title": "DNS Tunneling",
-                        "scenario": "O atacante encoda dados em base64 e os envia como subdomínios em requisições DNS para o servidor do atacante.",
-                        "code": "# Vítima tenta resolver:\ndados-secretos-base64.atacante.com\n\n# O servidor DNS do atacante recebe e decoda os dados",
-                        "takeaway": "O tráfego DNS raramente é bloqueado ou inspecionado a fundo por firewalls corporativos."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-user-ninja",
-                        "title": "Cobalt Strike e C2",
-                        "content": "Atores avançados (APTs e Ransomware) usam <b>Cobalt Strike</b> para movimentação lateral e evasão. Ele possui <b>Malleable C2</b>, que permite alterar a assinatura do tráfego para parecer com navegação web normal (Amazon, Gmail) e enganar o IDS/IPS.",
-                        "highlight": "Cobalt Strike = padrão ouro do malware avançado"
-            },
-            {
-                        "type": "match",
-                        "title": "Fase Pós-Exploração → Ferramenta/Técnica",
-                        "pairs": [
-                                    {
-                                                "term": "Execução Remota",
-                                                "definition": "PsExec, WMIExec"
-                                    },
-                                    {
-                                                "term": "Evasão de IDS/IPS",
-                                                "definition": "Malleable C2, Obfuscation"
-                                    },
-                                    {
-                                                "term": "Persistência (Win)",
-                                                "definition": "Registry Run Keys, WMI"
-                                    },
-                                    {
-                                                "term": "Exfiltração",
-                                                "definition": "DNS Tunneling"
-                                    }
-                        ]
+                        "title": "Desautenticação",
+                        "scenario": "O atacante não quer esperar alguém se conectar. Ele manda um pacote de 'Deauth' para derrubar a vítima do Wi-Fi. Quando o celular dela reconecta sozinho 1 segundo depois, o atacante captura o handshake.",
+                        "takeaway": "Você pode forçar a desconexão de qualquer pessoa em um Wi-Fi."
             },
             {
                         "type": "quiz",
-                        "task": "Qual ferramenta/tecnologia é usada em ataques de exfiltração para esconder dados enviados para fora da rede, passando por firewalls restritivos?",
+                        "task": "Por que o atacante envia pacotes de 'Desautenticação' em um ataque WPA2?",
                         "options": [
-                                    "DNS Tunneling",
-                                    "Nmap",
-                                    "Enum4linux"
+                                    "Para forçar a vítima a reconectar e, assim, capturar o Handshake criptografado.",
+                                    "Para destruir permanentemente o roteador.",
+                                    "Para aumentar a velocidade da sua própria internet."
                         ],
-                        "correctText": "DNS Tunneling",
-                        "explanation": "DNS Tunneling usa requisições de resolução de nomes comuns para extrair ou receber dados sorrateiramente."
+                        "correctText": "Para forçar a vítima a reconectar e, assim, capturar o Handshake criptografado.",
+                        "explanation": "Sem capturar o handshake, não há como fazer a quebra da senha offline."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-mask",
+                        "title": "Evil Twin / Rogue AP",
+                        "content": "No ataque <b>Evil Twin</b>, o hacker cria uma rede Wi-Fi falsa com o mesmo nome (SSID) da rede verdadeira (ex: 'Starbucks Wi-Fi'), mas com um sinal mais forte."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-fish",
+                        "title": "Pescando Dispositivos",
+                        "scenario": "O celular da vítima vê duas redes 'Starbucks'. Ele se conecta automaticamente na mais forte (a do hacker). O hacker cria uma página falsa dizendo 'Atualize seu firmware' e rouba os dados.",
+                        "takeaway": "Dispositivos confiam cegamente em SSIDs conhecidos."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "Criar um Ponto de Acesso falso que imita perfeitamente a rede legítima da empresa para atrair funcionários é conhecido como ataque de Evil ___.",
+                        "options": [
+                                    "Twin",
+                                    "Brother",
+                                    "Router"
+                        ],
+                        "correctText": "Twin",
+                        "explanation": "Traduz-se como 'Gêmeo Maligno', pois é idêntico ao original."
             }
 ];
 
@@ -489,15 +471,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/5.1a-protocolos-ataques.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/6.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b3002a; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b36200; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">MOVIMENTO LATERAL E EXFILTRAÇÃO DOMINADOS!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -506,7 +488,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-08.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-05.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

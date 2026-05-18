@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <title>CyberDuo - OSINT e Busca Avançada em Fontes Abertas</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../assets/tailwind.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00facd;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff003c;
+            --cyber-yellow: #ffb800;
+            --bg-dark: #05070a;
+            --card-dark: #0d1117;
+        }
+
+        html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+
+        .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 255, 65, 0.2); z-index: 60; }
+        .progress-container { flex-grow: 1; height: 12px; background: #1f2937; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; border-radius: 10px;}
+        .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 80px; justify-content: flex-end; font-size: 1.1rem; }
+
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content::-webkit-scrollbar { display: none; }
+
+        .game-card { width: 100%; animation: slideUp 0.3s ease-out; display: flex; flex-direction: column; gap: 0.8rem; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* General Typography */
+        .module-subtitle { font-size: 0.7rem; font-weight: 900; color: var(--cyber-blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .title-main { font-size: clamp(1.4rem, 5vw, 1.8rem); font-weight: 800; color: white; line-height: 1.2; margin-bottom: 0.5rem; }
+        .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
+        .text-body b { color: white; }
+        
+        
+        /* Utility Classes */
+        .mr-1 { margin-right: 0.25rem; }
+        .mr-2 { margin-right: 0.5rem; }
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .highlight-cyan { color: #00f2ff; font-weight: 700; }
+        .highlight-green { color: var(--cyber-green); font-weight: 700; }
+
+        /* TYPE: TEACH */
+        .teach-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .teach-icon { font-size: 2.5rem; color: var(--cyber-blue); margin-bottom: 1rem; }
+        .teach-highlight { display: flex; align-items: center; gap: 0.6rem; background: rgba(0, 255, 65, 0.1); border-left: 3px solid var(--cyber-green); padding: 0.8rem; margin-top: 1rem; font-weight: 600; color: var(--cyber-green); border-radius: 0 0.5rem 0.5rem 0; }
+
+        /* TYPE: EXAMPLE */
+        .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .example-scenario { background: #161b22; border: 1px solid #21262d; border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; }
+        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.9rem; color: #00ff41; border: 1px solid #30363d; }
+        .example-takeaway { display: flex; gap: 0.8rem; align-items: flex-start; margin-top: 1rem; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
+
+        /* TYPE: QUIZ */
+        .quiz-title { font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 800; color: white; margin-bottom: 1.5rem; line-height: 1.3; }
+        .options-grid { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
+        .option-card { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.8rem, 3vw, 1rem); border-radius: 1rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: clamp(0.95rem, 4vw, 1.05rem); -webkit-tap-highlight-color: transparent; }
+        .option-card:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.05); }
+        .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
+        .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
+        .option-card.disabled { pointer-events: none; opacity: 0.6; }
+        .option-number { width: 28px; height: 28px; flex-shrink: 0; border: 2px solid #484f58; border-radius: 0.4rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; color: #8b949e; }
+        .option-card.selected .option-number { border-color: var(--cyber-blue); color: var(--cyber-blue); }
+
+        /* TYPE: FILL */
+        .fill-sentence { font-size: clamp(1.1rem, 5vw, 1.3rem); font-weight: 600; line-height: 1.6; color: white; margin-bottom: 2rem; background: #0d1117; padding: clamp(1rem, 4vw, 1.5rem); border-radius: 1.2rem; border: 1px solid #30363d; }
+        .fill-slot { display: inline-block; min-width: 120px; height: 34px; border-bottom: 3px solid #484f58; margin: 0 0.5rem; vertical-align: middle; text-align: center; color: var(--cyber-blue); font-weight: 800; transition: all 0.2s; }
+        .fill-slot.filled { border-bottom-color: var(--cyber-blue); }
+
+        /* TYPE: MATCH */
+        .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
+        /* .match-column removed */
+        .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
+        .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
+        .match-item.matched { border-color: var(--cyber-green); background: rgba(0, 255, 65, 0.05); color: var(--cyber-green); opacity: 0.5; pointer-events: none; }
+        .match-item.error { border-color: var(--cyber-red); animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        /* FOOTER & BUTTONS */
+        .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
+        .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
+        .check-btn:active { transform: scale(0.98); }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #009e80; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #009e80; }
+
+        /* FEEDBACK OVERLAY */
+        .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
+        .feedback-overlay.show { bottom: 0; }
+        .feedback-overlay.correct { background: #0d1a10; border-top: 4px solid var(--cyber-green); }
+        .feedback-overlay.wrong { background: #1a0d0d; border-top: 4px solid var(--cyber-red); }
+        .feedback-title { font-size: clamp(1.2rem, 5vw, 1.4rem); font-weight: 800; margin-bottom: 0.5rem; width: 100%; max-width: 400px; display: flex; align-items: center; gap: 0.5rem; }
+        .feedback-msg { font-size: clamp(0.95rem, 4vw, 1.05rem); color: #8b949e; line-height: 1.5; width: 100%; max-width: 400px; margin-bottom: 1.5rem; }
+    </style>
+</head>
+<body>
+
+    <div class="game-header">
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-03.html'"><i class="fas fa-times"></i></div>
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <main class="game-content" id="gameArea"></main>
+
+    <div id="feedbackPopup" class="feedback-overlay">
+        <div class="feedback-title" id="fbTitle"></div>
+        <div class="feedback-msg" id="fbMsg"></div>
+        <button class="check-btn active w-full" style="max-width: 400px;" onclick="handleContinue()">Continuar</button>
+    </div>
+
+    <footer class="game-footer" id="footerArea">
+        <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
+    </footer>
+
+    <script>
+        const steps = [{
+                        "type": "teach",
+                        "icon": "fa-globe",
+                        "title": "OSINT Overview",
+                        "content": "<b>OSINT</b> coleta informações de fontes públicas: <b>motores de busca</b>, <b>redes sociais</b>, <b>registros DNS</b>, <b>WHOIS</b>, <b>certificados TLS</b>, <b>documentos vazados</b> e <b>metadados de arquivos</b>.",
+                        "highlight": "Fontes públicas = mina de ouro"
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-search",
+                        "title": "Google Dorking Avançado",
+                        "content": "Operadores: <b>site:</b> (domínio), <b>filetype:</b> (formato), <b>inurl:</b> (URL), <b>intitle:</b> (título), <b>intext:</b> (conteúdo), <b>cache:</b> (versão em cache). Combinações potencializam resultados.",
+                        "highlight": "Google Dorks revelam dados que não deveriam ser públicos"
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Dorks para Pentest",
+                        "scenario": "Buscando arquivos sensíveis expostos em um domínio alvo.",
+                        "code": "site:alvo.com filetype:sql\nsite:alvo.com filetype:env\nsite:alvo.com inurl:admin\nsite:alvo.com intitle:\"index of\"",
+                        "takeaway": "Combine operadores para buscas cirúrgicas."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-address-card",
+                        "title": "WHOIS e DNS Enumeration",
+                        "content": "<b>WHOIS</b>: proprietário, e-mails, nameservers. <b>dig/nslookup</b>: registros A, MX, NS, TXT. <b>Zone Transfer</b> (AXFR): se permitido, revela TODOS os registros DNS de uma zona.",
+                        "highlight": "Zone Transfer = mapa completo do DNS"
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "DNS Zone Transfer",
+                        "scenario": "Tentando um zone transfer contra o nameserver do alvo para obter todos os registros DNS.",
+                        "code": "dig axfr alvo.com @ns1.alvo.com",
+                        "takeaway": "Zone transfers mal configurados expõem toda a infraestrutura DNS."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual consulta DNS revela TODOS os registros de uma zona se estiver mal configurada?",
+                        "options": [
+                                    "Zone Transfer (AXFR)",
+                                    "Reverse DNS",
+                                    "DNS over HTTPS"
+                        ],
+                        "correctText": "Zone Transfer (AXFR)",
+                        "explanation": "AXFR transfere todos os registros DNS de uma zona — deve ser restrito apenas a servidores secundários."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-certificate",
+                        "title": "Certificate Transparency",
+                        "content": "<b>CT Logs</b> registram todos os certificados TLS emitidos. Ferramentas como <b>crt.sh</b> permitem descobrir subdomínios a partir dos certificados registrados.",
+                        "highlight": "Certificados TLS revelam subdomínios ocultos"
+            },
+            {
+                        "type": "fill",
+                        "sentence": "A plataforma ___ permite descobrir subdomínios a partir de logs de Certificate Transparency.",
+                        "options": [
+                                    "crt.sh",
+                                    "Google",
+                                    "Facebook"
+                        ],
+                        "correctText": "crt.sh",
+                        "explanation": "crt.sh indexa certificados TLS públicos e lista todos os domínios/subdomínios associados."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-search",
+                        "title": "Recon-ng",
+                        "content": "O <b>Recon-ng</b> é um framework OSINT modular (similar ao Metasploit). Ele permite buscar contatos, portas e repositórios em fontes públicas de forma unificada."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Usando Recon-ng",
+                        "scenario": "O atacante carrega o módulo `hackertarget`, define o domínio da empresa alvo e o Recon-ng varre a internet retornando dezenas de subdomínios ocultos.",
+                        "takeaway": "Frameworks unificam ferramentas menores."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual é a principal característica do Recon-ng?",
+                        "options": [
+                                    "Ele funciona baseado em módulos, similar ao Metasploit.",
+                                    "Ele quebra senhas de banco de dados offline.",
+                                    "Ele é usado apenas para varredura de redes locais (LAN)."
+                        ],
+                        "correctText": "Ele funciona baseado em módulos, similar ao Metasploit.",
+                        "explanation": "A modularidade permite plugar diversas APIs externas (Shodan, Twitter, etc)."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-envelope",
+                        "title": "theHarvester",
+                        "content": "O <b>theHarvester</b> é focado em coletar e-mails, nomes e subdomínios vasculhando o Google, Bing, LinkedIn e servidores PGP."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Extraindo E-mails",
+                        "scenario": "Comando: `theHarvester -d empresa.com -l 500 -b google`. O script retorna o e-mail de 15 diretores da empresa alvo.",
+                        "takeaway": "E-mails válidos são a munição para ataques de Phishing."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "Ao realizar OSINT com foco em obter listas de e-mails corporativos para campanhas de phishing, a ferramenta clássica recomendada é o ___.",
+                        "options": [
+                                    "theHarvester",
+                                    "Nmap",
+                                    "Wireshark"
+                        ],
+                        "correctText": "theHarvester",
+                        "explanation": "Seu próprio nome significa 'O Colheitador'."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-server",
+                        "title": "Shodan e Censys",
+                        "content": "Enquanto o Google indexa páginas web, o <b>Shodan</b> indexa dispositivos (câmeras, servidores, painéis industriais) conectados à internet, focando em portas abertas e banners."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-globe",
+                        "title": "Buscando Câmeras Expostas",
+                        "scenario": "No Shodan, o hacker digita `port:554 has_screenshot:true`. O site retorna milhares de câmeras de segurança sem senha que estão transmitindo vídeo ao vivo.",
+                        "takeaway": "O Shodan é o 'Google dos hackers'."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Se você precisa encontrar painéis de controle industrial (SCADA) expostos na internet de um país específico, qual motor de busca você utilizaria?",
+                        "options": [
+                                    "Shodan",
+                                    "Google",
+                                    "Yahoo"
+                        ],
+                        "correctText": "Shodan",
+                        "explanation": "O Shodan lê os banners de serviços em portas que não são HTTP."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Protego Security Solutions<br>Antes de se envolver na pesquisa do Pixel Paradise, você precisa melhorar suas habilidades de reconhecimento passivo. Neste módulo, você participará de uma série de atividades de aprendizagem que você pode aplicar às suas tarefas no teste de penetração em Pixel Paradise."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Reconhecimento<br>Reconhecimento é sempre o passo inicial de um ataque cibernético. Um atacante deve primeiro reunir informações sobre o alvo para ser bem-sucedido. Na verdade, o termo<br>reconhecimento<br>é amplamente usado no mundo militar para descrever a reunião de informações sobre o inimigo, como informações sobre a localização, capacidades e movimentos do inimigo. Esse tipo de informação é necessário para realizar um ataque com êxito. O reconhecimento em um teste de penetração normalmente consiste em varredura e enumeração. Mas como é o reconhecimento do ponto de vista do atacante?"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "\"Se você conhece o inimigo e se conhece, não precisa temer o resultado de cem batalhas. Se você se conhece, mas não o inimigo, para cada vitória ganha você também sofrerá uma derrota. Se você não conhecer o inimigo nem você mesmo, você sucumbirá em todas as batalhas.\"<br>― Sun Tzu, A Arte da Guerra"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "O reconhecimento<br>ativo é um método de coleta de informações em que as ferramentas usadas realmente enviam sondas para a rede ou sistemas de destino, a fim de obter respostas que são então usadas para determinar a postura da rede ou do sistema. Estas sondas podem usar vários protocolos e vários níveis de agressividade, normalmente com base no que está sendo escaneado e quando. Por exemplo, você pode estar fazendo a varredura de um dispositivo, como uma impressora, que não possui uma pilha TCP/IP muito robusta ou hardware de rede. Enviando sondas ativas, você pode derrubar tal dispositivo. A maioria dos dispositivos modernos não tem este problema; no entanto, é possível, portanto, ao fazer a varredura ativa, você deve estar consciente disso e ajustar as configurações do scanner de acordo.<br>O reconhecimento<br>passivo é um método de coleta de informações em que as ferramentas não interagem diretamente com o dispositivo de destino ou a rede. Há vários métodos de reconhecimento passivo. Algumas envolvem o uso de bancos de dados de terceiros para reunir informações. Outros também usam ferramentas de tal forma que não serão detectadas pelo alvo. Essas ferramentas, em particular, funcionam simplesmente ouvindo o tráfego na rede e usando inteligência para deduzir informações sobre a comunicação do dispositivo na rede. Essa abordagem é muito menos invasiva em uma rede, e é altamente improvável que este tipo de reconhecimento trave um sistema como uma impressora. Como não produz nenhum tráfego, é improvável que seja detectado e não levante nenhum alerta na rede que está pesquisando. Outro cenário em que um scanner passivo seria útil seria para um testador de penetração que precisa realizar análises em uma rede de produção que não pode ser interrompida. A técnica de reconhecimento passivo que você usa depende do tipo de informação que você deseja obter. Um dos aspectos mais importantes de aprender sobre testes de penetração é desenvolver uma boa metodologia que o ajudará a selecionar as ferramentas e tecnologias adequadas a serem usadas durante o engajamento.<br>Ferramentas e métodos de reconhecimento ativo comuns incluem as seguintes:<br>Enumeração de hosts<br>Enumeração de rede<br>Enumeração de usuários<br>Enumeração de grupos<br>Enumeração de compartilhamento de rede<br>Enumeração de páginas web<br>Enumeração de aplicações<br>Enumeração de serviços<br>Criação de pacotes<br>Ferramentas e métodos comuns de reconhecimento passivo incluem os seguintes:<br>Enumeração de domínio<br>Inspeção de pacotes<br>Inteligência de código aberto (OSINT)<br>Recon-ng<br>Escuta clandestina"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Tarefa da Protego Security Solutions<br>as informações de código aberto são um recurso valioso para aprender sobre organizações, suas redes e seus funcionários.Aqui em Protego, nós realmente gostamos de SpiderFoot e Recon-ng. Use esse laboratório de aprendizagem para familiarizar-se com o OSINT em geral e essas ferramentas em particular.<br>Acho que você vai gostar de explorar esses recursos. É divertido fazer o papel de detetive quando você faz reconhecimento de uma organização cliente."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Neste laboratório, você explorará várias ferramentas OSINT comumente usadas por pentesters.<br>Examine os recursos OSINT.<br>Use o SpiderFoot<br>Investigue o Recon-ng<br>Encontre arquivos interessantes com o Recon-ng"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "## Responda as seguintes perguntasdepoisde concluir o laboratório.<br>Responda as seguintes perguntas<br>depois<br>de concluir o laboratório."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Estou confiante sobre as habilidades que pratiquei com este laboratório.<br>Concordo"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Concluir este laboratório foi uma boa utilização do meu tempo.<br>Concordo"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Suponha, por exemplo, que um agressor tenha um alvo, h4cker.org, na mira. h4cker.org tem presença na Internet, como a maioria das empresas tem. Essa presença é um site hospedado no www.h4cker.org. Assim como um ladrão de casas precisaria determinar quais pontos de entrada e saída existem em uma casa antes que ele pudesse cometer um roubo, um agressor cibernético precisa determinar quais dos portos e protocolos do alvo são expostos à Internet. Um ladrão pode dar uma volta pelo lado de fora da casa, procurando portas e janelas, e então possivelmente dar uma olhada nas fechaduras nas portas para determinar suas fraquezas. Da mesma forma, um atacante cibernético realizaria tarefas como varrer e enumerar.<br>Normalmente, um atacante começaria com uma pequena quantidade de informações e reuniria mais informações enquanto varria, eventualmente passando para diferentes tipos de varreduras e reunindo informações adicionais. Por exemplo, o atacante que tenha como alvo h4cker.org pode começar usando<br>consultas DNS<br>para determinar o endereço IP ou os endereços usados pelo h4cker.org e qualquer outro subdomínio que possa estar em uso. Digamos que essas consultas revelem que o h4cker.org está usando os endereços IP 185.199.108.153 para www.h4cker.org, 185.199.110.153 para mail.h4cker.org e 185.199.110.153 para portal.h4cker.org. O exemplo 3-1 mostra um exemplo da ferramenta DNSRecon em Kali Linux sendo usada para consultar os registros de DNS de h4cker.org.<br>Exemplo 3-1 - DNSRecon"
+            }
+            ,{
+                "type": "example",
+                "icon": "fa-terminal",
+                "title": "Exemplo Prático (Terminal)",
+                "scenario": "Comandos e outputs detalhados:",
+                "code": "|--[omar@websploit]--[~]
+|--- $
+dnsrecon -d h4cker.org
+[*] Performing General Enumeration of Domain: h4cker.org
+/usr/share/dnsrecon/./dnsrecon.py:816: DeprecationWarning: please use
+dns.resolver.Resolver.resolve() instead
+answer = res._res.query(domain, 'DNSKEY')
+[*] DNSSEC is configured for h4cker.org
+[*] DNSKEYs:
+[*]   NSEC3 ZSK RSASHA256 030100019ed0af43a7dc09d07e1646d2 b4036075e9187c4c563519155f888b60 8fdffe9c6d8a0a01522f78d25d257772 0a8e97d1350e694b272ec63af9708609 b3721e6b53a2d7aa8839585714800319 dd98f97b39d8768f7e975a449c001ce9 55189ea83f30a4fe6b4dff7b3dd15f89 1cef3a8d84968a980bde65c0b1309d5b 825a0f23
+[*]   NSEC3 KSk RSASHA256 030100018403e0971df0dc1770f3b96a ca57eb68d03a84b4a712cadda60567fe a264f0e5d7ec4c8e0187300f0933f419 d22a17548c3a046636666300c06711f0 761200245149a220b79918b3f38a9a6e 8228425cb39b6466adba9f6f7fe28d76 c1bcf44e19f035f658eef65cb630638f 7aa15d7706cc572c863d65619bd48f77 425ea0844716709b9923117ade41d414 c94f8e581db9274cf1c8bb41fbbd7838 24978c0f9b7125b9ce3e8abe442a6bc7 4bf519790a18a27916c946f503c02b08 0a8550bc5b9b147d581a3f5f763df377 9e1d655c51c2e06aa2062d1f08f34abc 37947ac48403dc0da9af846c7a4caeae 7567bb8fdf625b1a179e6fd6faf35be9 09488cb9
+[*]   SOA ns-cloud-c1.googledomains.com 216.239.32.108
+[*]   NS ns-cloud-c1.googledomains.com 216.239.32.108
+[*]   NS ns-cloud-c1.googledomains.com 2001:4860:4802:32::6c
+[*]   NS ns-cloud-c2.googledomains.com 216.239.34.108
+[*]   NS ns-cloud-c2.googledomains.com 2001:4860:4802:34::6c
+[*]   NS ns-cloud-c3.googledomains.com 216.239.36.108
+[*]   NS ns-cloud-c3.googledomains.com 2001:4860:4802:36::6c
+[*]   NS ns-cloud-c4.googledomains.com 216.239.38.108
+[*]   NS ns-cloud-c4.googledomains.com 2001:4860:4802:38::6c
+[*]   MX aspmx.l.google.com 173.194.206.27
+[*]   MX alt1.aspmx.l.google.com 64.233.186.27
+[*]   MX alt2.aspmx.l.google.com 209.85.202.27
+[*]   MX alt3.aspmx.l.google.com 64.233.184.27
+[*]   MX alt4.aspmx.l.google.com 74.125.128.27
+[*]   MX aspmx.l.google.com 2607:f8b0:400d:c0f::1a
+[*]   MX alt1.aspmx.l.google.com 2800:3f0:4003:c00::1b
+[*]   MX alt2.aspmx.l.google.com 2a00:1450:400b:c00::1b
+[*]   MX alt3.aspmx.l.google.com 2a00:1450:400c:c0b::1b
+[*]   MX alt4.aspmx.l.google.com 2a00:1450:4013:c02::1b
+[*]   A h4cker.org 185.199.109.153
+[*]   SPF v=spf1 include:_spf.google.com ~all
+[*]   TXT h4cker.org v=spf1 include:_spf.google.com ~all
+[*] Enumerating SRV Records
+[+] 0 Records Found
+|--[omar@websploit]--[~]
+|--- $",
+                "takeaway": "Análise de output"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "A partir daí, um atacante pode começar a cavar mais fundo escaneando os hosts identificados. Uma vez que o agressor sabe quais hosts estão vivos no alvo, ele ou ela então precisa determinar que tipo de serviços os hosts estão executando. Para fazer isso, o atacante pode usar a ferramenta Nmap confiável. Antes de discutir esta ferramenta e outras em profundidade, precisamos observar os tipos de verificações e enumerações que você deve executar e o porquê. Nmap já foi considerado um scanner de portas simples; no entanto, ele evoluiu para uma ferramenta muito mais robusta que pode fornecer funcionalidade adicional, graças ao Nmap Scripting Engine (NSE)."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "DICA<br>O Módulo 10, \"Análise de Ferramentas e Códigos\", fornece detalhes sobre uma variedade de ferramentas que podem ser usadas para realizar reconhecimento e outros aspectos da metodologia de teste de penetração. Muitas dessas ferramentas já estão instaladas na VM que você fez download para este curso. No entanto, você também pode baixar sua própria distribuição de teste de penetração Linux, como Kali Linux (<br>kali.org<br>) ou Parrot OS (<br>parrotsec.org<br>) e configurar o ambiente de aprendizagem WebSploit Labs (<br>https://websploit.org<br>)."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Você pode usar outras ferramentas DNS básicas, como por exemplo,<br>nslookup<br>,<br>host<br>e<br>comandos Linux dig<br>, para executar a resolução do nome e obter informações adicionais sobre um domínio. O exemplo 3-2 mostra como a ferramenta Dig é usada para mostrar os detalhes de resolução de DNS do h4cker.org.<br>Exemplo 3-2<br>-<br>Usando o Dig para obter informações sobre um determinado domínio"
+            }
+            ,{
+                "type": "example",
+                "icon": "fa-terminal",
+                "title": "Exemplo Prático (Terminal)",
+                "scenario": "Comandos e outputs detalhados:",
+                "code": "|--[omar@websploit]--[~]
+|--- $
+dig h4cker.org
+; <<>> DiG 9.16.6-Debian <<>> h4cker.org
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 6517
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;h4cker.org.                IN     A
+;; ANSWER SECTION:
+h4cker.org.               172     IN       A       185.199.110.153
+h4cker.org.               172     IN       A       185.199.111.153
+h4cker.org.               172     IN       A       185.199.108.153
+h4cker.org.               172     IN       A       185.199.109.153
+;; Query time: 72 msec
+;; SERVER: 208.67.222.222#53(208.67.222.222)
+;; WHEN: Fri Apr 30 20:45:42 EDT 2021
+;; MSG SIZE  rcvd: 103
+|--[omar@websploit]--[~]
+|--- $",
+                "takeaway": "Análise de output"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "As linhas realçadas mostram os endereços IP associados à h4cker.org. Da mesma forma, você pode usar o<br>dig<br>comando de domínio mx<br>><br>para obter os servidores de e-mail usados por h4cker.org (registro de troca de correio [MX]), conforme demonstrado no Exemplo 3-3.<br>Exemplo 3-3<br>-<br>Obtendo o registro MX de h4cker.org"
+            }
+            ,{
+                "type": "example",
+                "icon": "fa-terminal",
+                "title": "Exemplo Prático (Terminal)",
+                "scenario": "Comandos e outputs detalhados:",
+                "code": "|--[omar@websploit]--[~]
+|--- $
+dig h4cker.org mx
+; <<>> DiG 9.16.6-Debian <<>> h4cker.org mx
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 62903
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;h4cker.org.                IN     MX
+;; ANSWER SECTION:
+h4cker.org.   77      IN      MX       1  aspmx.l.google.com.
+h4cker.org.   77      IN      MX       5  alt1.aspmx.l.google.com.
+h4cker.org.   77      IN      MX       5  alt2.aspmx.l.google.com.
+h4cker.org.   77      IN      MX       10 alt3.aspmx.l.google.com.
+h4cker.org.   77      IN      MX       10 alt4.aspmx.l.google.com.
+;; Query time: 48 msec
+;; SERVER: 208.67.222.222#53(208.67.222.222)
+;; WHEN: Fri Apr 30 20:47:01 EDT 2021
+;; MSG SIZE  rcvd: 157",
+                "takeaway": "Análise de output"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "{{_moduleNumber}}.1.6 Prática - Buscas DNS<br>Para enviar um e-mail de teste para o servidor h4kerone.org<br>Para obter os servidores de e-mail usados pelo h4kerone.org<br>Para testar a conectividade com o servidor h4kerone.org<br>Para encontrar o endereço IP associado ao nome de domínio h4kerone.org"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Um usuário digita o comando dig<br>h4kerone.org mx<br>em um host Linux. Qual é a finalidade de usar esse comando?"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Você pode identificar facilmente contatos técnicos e administrativos do domínio usando a ferramenta Whois. Muitas organizações mantêm seus detalhes de registro privados e, em vez disso, usam os contatos da organização de registro de domínio. Por exemplo, vamos observar os contatos técnicos e administrativos do h4cker.org (mostrado no Exemplo 3-4). Omar Santos é proprietário do domínio h4cker.org; no entanto, os detalhes técnicos e administrativos são privados. Somente o e-mail de contato de abuso e o número de telefone do Google (o registrador de domínio) são exibidos.<br>Exemplo 3-4<br>-<br>Informações sobre Whois para o domínio h4cker.org"
+            }
+            ,{
+                "type": "example",
+                "icon": "fa-terminal",
+                "title": "Exemplo Prático (Terminal)",
+                "scenario": "Comandos e outputs detalhados:",
+                "code": "|--[omar@websploit]--[~]
+|--- $
+whois h4cker.org
+Domain Name: H4CKER.ORG
+Registry Domain ID: D402200000006011258-LROR
+Registrar WHOIS Server: whois.google.com
+Registrar URL: https://domains.google.com
+Updated Date: 2018-07-03T03:48:35Z
+Creation Date: 2018-05-04T03:43:52Z
+Registry Expiry Date: 2028-05-04T03:43:52Z
+Registrar Registration Expiration Date:
+Registrar: Google LLC
+Registrar IANA ID: 895
+Registrar Abuse Contact Email: registrar-abuse@google.com
+Registrar Abuse Contact Phone: +1.8772376466
+Reseller:
+Domain Status: ok https://icann.org/epp#ok
+Registrant Organization: Contact Privacy Inc. Customer 1242605855
+Registrant State/Province: ON
+Registrant Country: CA
+Name Server: NS-CLOUD-C1.GOOGLEDOMAINS.COM
+Name Server: NS-CLOUD-C2.GOOGLEDOMAINS.COM
+Name Server: NS-CLOUD-C4.GOOGLEDOMAINS.COM
+Name Server: NS-CLOUD-C3.GOOGLEDOMAINS.COM
+DNSSEC: signedDelegation
+URL of the ICANN Whois Inaccuracy Complaint Form https://www.icann.org/wicf/)",
+                "takeaway": "Análise de output"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Agora, vamos olhar para os detalhes Whois de tesla.com, mostrado no Exemplo 3-5.<br>Exemplo 3-5 - Whois Informações para o domínio tesla.com"
+            }
+            ,{
+                "type": "example",
+                "icon": "fa-terminal",
+                "title": "Exemplo Prático (Terminal)",
+                "scenario": "Comandos e outputs detalhados:",
+                "code": "|--[omar@websploit]--[~]
+|--- $
+whois tesla.com
+Domain Name: TESLA.COM
+Registry Domain ID: 187902_DOMAIN_COM-VRSN
+Registrar WHOIS Server: whois.markmonitor.com
+Registrar URL: http://www.markmonitor.com
+Registrar: MarkMonitor Inc.
+Registrar IANA ID: 292
+Registrar Abuse Contact Email: abusecomplaints@markmonitor.com
+Registrar Abuse Contact Phone: +1.2083895740
+Domain Status: serverUpdateProhibited
+https://icann.org/epp#serverUpdateProhibited
+Name Server: A1-12.AKAM.NET
+Name Server: A10-67.AKAM.NET
+Name Server: A12-64.AKAM.NET
+Name Server: A28-65.AKAM.NET
+Name Server: A7-66.AKAM.NET
+Name Server: A9-67.AKAM.NET
+Name Server: EDNS69.ULTRADNS.BIZ
+Name Server: EDNS69.ULTRADNS.COM
+Name Server: EDNS69.ULTRADNS.NET
+Name Server: EDNS69.ULTRADNS.ORG
+DNSSEC: unsigned
+URL of the ICANN Whois Inaccuracy Complaint Form:
+https://www.icann.org/wicf/
+<output omitted for brevity>
+The Registry database contains ONLY .COM, .NET, .EDU domains and Registrars.
+Domain Name: tesla.com
+Registry Domain ID: 187902_DOMAIN_COM-VRSN
+Registrar WHOIS Server: whois.markmonitor.com
+Registrar URL: http://www.markmonitor.com
+Updated Date: 2020-10-02T02:07:57-0700
+Creation Date: 1992-11-03T21:00:00-0800
+Registrar Registration Expiration Date: 2022-11-02T00:00:00-0700
+Registrar: MarkMonitor, Inc.
+Registrar IANA ID: 292
+Registrar Abuse Contact Email: abusecomplaints@markmonitor.com
+Registrar Abuse Contact Phone: +1.2083895770
+Domain Status: clientUpdateProhibited (https://www.icann.org/epp#clientUpdateProhibited)
+Domain Status: clientTransferProhibited (https://www.icann.org/epp#clientTransferProhibited)
+Domain Status: clientDeleteProhibited (https://www.icann.org/epp#clientDeleteProhibited)
+Domain Status: serverUpdateProhibited (https://www.icann.org/epp#serverUpdateProhibited)
+Domain Status: serverTransferProhibited (https://www.icann.org/epp#serverTransferProhibited)
+Domain Status: serverDeleteProhibited (https://www.icann.org/epp#serverDeleteProhibited)
+Registry Registrant ID:
+Registrant Name: Domain Administrator
+Registrant Organization: DNStination Inc.
+Registrant Street: 3450 Sacramento Street, Suite 405
+Registrant City: San Francisco
+Registrant State/Province: CA
+Registrant Postal Code: 94118
+Registrant Country: US
+Registrant Phone: +1.4155319335
+Registrant Phone Ext:
+Registrant Fax: +1.4155319336
+Registrant Fax Ext:
+Registrant Email: admin@dnstinations.com
+Registry Admin ID:
+Admin Name: Domain Administrator
+Admin Organization: DNStination Inc.
+Admin Street: 3450 Sacramento Street, Suite 405
+Admin City: San Francisco
+Admin State/Province: CA
+Admin Postal Code: 94118
+Admin Country: US
+Admin Phone: +1.4155319335
+Admin Phone Ext:
+Admin Fax: +1.4155319336
+Admin Fax Ext:
+Admin Email: admin@dnstinations.com
+Registry Tech ID:
+Tech Name: Domain Administrator
+Tech Organization: DNStination Inc.
+Tech Street: 3450 Sacramento Street, Suite 405
+Tech City: San Francisco
+Tech State/Province: CA
+Tech Postal Code: 94118
+Tech Country: US
+Tech Phone: +1.4155319335
+Tech Phone Ext:
+Tech Fax: +1.4155319336
+Tech Fax Ext:
+Tech Email: admin@dnstinations.com
+Name Server: edns69.ultradns.org
+Name Server: edns69.ultradns.net
+Name Server: a10-67.akam.net
+Name Server: a12-64.akam.net
+Name Server: edns69.ultradns.biz
+Name Server: a1-12.akam.net
+Name Server: a9-67.akam.net
+Name Server: a28-65.akam.net
+Name Server: a7-66.akam.net
+Name Server: edns69.ultradns.com
+<output omitted for brevity>
+MarkMonitor reserves the right to modify these terms at any time.
+By submitting this query, you agree to abide by this policy.
+MarkMonitor Domain Management(TM)
+Protecting companies and consumers in a digital world.
+Visit MarkMonitor at https://www.markmonitor.com
+Contact us at +1.8007459229
+In Europe, at +44.02032062220",
+                "takeaway": "Análise de output"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "As linhas realçadas no Exemplo 3-5 mostram os contatos técnicos e administrativos do domínio (que também são os do registrador de domínio [MarkMonitor]). O exemplo 3-6 mostra outro exemplo; esse exemplo mostra os contatos de e-mail técnicos e administrativos para o domínio cisco.com.<br>Exemplo 3-6<br>Mostrando contatos técnicos e administrativos de<br>e-mail"
+            }
+            ,{
+                "type": "example",
+                "icon": "fa-terminal",
+                "title": "Exemplo Prático (Terminal)",
+                "scenario": "Comandos e outputs detalhados:",
+                "code": "|--[omar@websploit]--[~]
+|--- $
+whois cisco.com | grep '@cisco.com'
+Registrant Email: infosec@cisco.com
+Admin Email: infosec@cisco.com
+Tech Email: infosec@cisco.com",
+                "takeaway": "Análise de output"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "No exemplo 3-6, os contatos técnicos e administrativos estão apontando para a equipe do InfoSec da Cisco (infosec@cisco.com) em vez de para o registrante."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "DICA<br>Várias ferramentas, como Recon-ng, The Harvester e Maltego, ajudam a automatizar o processo de reconhecimento passivo e apoiar muitas consultas baseadas em DNS e Whois. Várias dessas ferramentas estão abrangidas pelo Módulo 10 e estão listadas no repositório GitHub de Omar Santos no #<br>https://github.com/The-Art-of-Hacking/h4cker/tree/master/osint<br>."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "{{_moduleNumber}}.1.8 Prática - Identificação de contratos técnicos e administrativos<br>ping h4cker.org<br>whois h4cker.org<br>dig h4cker.org<br>nslookup h4cker.org"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Qual comando pode identificar os contatos técnicos e administrativos para o domínio<br>h4cker.org<br>?"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Protego Security Solutions Tarefa<br>Precisamos saber mais sobre a superfície de ataque de Pixel Paradise. Uma maneira de fazer isso é encontrar todos os domínios e subdomínios que pertencem ao Pixel Paradise que estão registrados no DNS. Cada subdomínio pode então ser investigado mais a fundo sobre vulnerabilidades e exposições a ataques.<br>Pratique suas habilidades com ferramentas de investigação DNS, antes de começarmos nosso reconhecimento do Pixel Paradise."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Neste laboratório, você explorará as ferramentas comuns usadas para reunir informações sobre um destino por meio do DNS (Domain Name System).<br>Use<br>nslookup<br>para obter informações de domínio e endereço IP.<br>Use o<br>comando whois<br>para encontrar informações de registro adicionais.<br>Compare a saída das ferramentas nslookup e dig.<br>Execute buscas DNS reversas."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Uma empresa pode ser dona de um domínio e subdomínio relacionado, mas seus aplicativos podem estar hospedados na nuvem. Por exemplo, a Netflix (no momento de gravação) possui o domínio netflix.com, que resolve para endereços IPv4 3.230.129.93, 52.3.144.142, e 54.237.226.164 (conforme demonstrado no Exemplo 3-7 com o comando<br>host<br>do Linux).<br>Exemplo 3-7<br>-<br>Resolução de Nome DNS para netflix.com"
+            }
+            ,{
+                "type": "example",
+                "icon": "fa-terminal",
+                "title": "Exemplo Prático (Terminal)",
+                "scenario": "Comandos e outputs detalhados:",
+                "code": "|--[omar@websploit]--[~]
+|--- $
+host netflix.com
+netflix.com has address 3.230.129.93
+netflix.com has address 52.3.144.142
+netflix.com has address 54.237.226.164
+netflix.com has IPv6 address 2600:1f18:631e:2f80:77e5:13a7:6533:7584
+netflix.com has IPv6 address 2600:1f18:631e:2f82:c8cd:27b2:ac:8dbf
+netflix.com has IPv6 address 2600:1f18:631e:2f84:ceae:e049:1e:6a96
+netflix.com mail is handled by 1 aspmx.l.google.com.
+netflix.com mail is handled by 5 alt1.aspmx.l.google.com.
+netflix.com mail is handled by 5 alt2.aspmx.l.google.com.
+netflix.com mail is handled by 10 aspmx2.googlemail.com.
+netflix.com mail is handled by 10 aspmx3.googlemail.com.",
+                "takeaway": "Análise de output"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "No entanto, os endereços 3.230.129.93, 52.3.144.142, e 54.237.226.164 são de propriedade do Amazon Web Services (AWS), que hospeda o Netflix.com, conforme mostrado no Exemplo 3-8.<br>Exemplo 3-8<br>-<br>Exemplo da propriedade de endereços IP e aplicativos hospedados na nuvem"
+            }
+            ,{
+                "type": "example",
+                "icon": "fa-terminal",
+                "title": "Exemplo Prático (Terminal)",
+                "scenario": "Comandos e outputs detalhados:",
+                "code": "|--[omar@websploit]--[~]
+|--- $
+whois 3.230.129.93 | grep OrgName
+OrgName:        Amazon Technologies Inc.
+OrgName:        Amazon Data Services NoVa
+|--[omar@websploit]--[~]
+|--- $
+whois 52.3.144.142 | grep OrgName
+OrgName:        Amazon Technologies Inc.
+|--[omar@websploit]--[~]
+|--- $
+whois 54.237.226.164 | grep OrgName
+OrgName:        Amazon Technologies Inc.
+OrgName:        Amazon.com, Inc.",
+                "takeaway": "Análise de output"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "No exemplo 3-8, o<br>comando whois<br>é usado para recuperar o nome da organização (OrgName) do proprietário para cada um dos endereços IP 3.230.129.93, 52.3.144.142, e 54.237.226.164."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Os agressores podem facilmente reunir informações valiosas sobre as vítimas, raspando sites de mídia social como Twitter, LinkedIn, Facebook e Instagram. As pessoas postam muitas coisas online. Eles falam publicamente sobre seus hobbies, os restaurantes que visitam, o que fazem pelo trabalho, promoções de trabalho, onde viajam por negócios e prazer, e muito mais.<br>Muitas vezes, os agressores usam outras informações, como contatos-chave (partes interessadas na empresa) e suas responsabilidades de trabalho. Os atacantes podem usar todas essas informações para executar diferentes tipos de ataques de engenharia social (incluindo spear phishing e whaling). Você aprenderá detalhes sobre ataques de engenharia social no Módulo 4, \"Ataques de Engenharia Social\".<br>Os agressores geralmente aproveitam as listagens de empregos em sites como Indeed, LinkedIn, CareerBuilder e sites de empresas individuais para obter informações sobre as tecnologias que essas empresas usam (por exemplo, a pilha de tecnologia de uma organização). Digamos que uma empresa esteja procurando um administrador de firewall da Cisco, um especialista Ansible e um arquiteto de banco de dados MongoDB. O atacante não precisou iniciar nenhuma ferramenta para saber que a empresa está usando firewalls Cisco, MongoDB e Ansible para automação em seu escritório em Raleigh.<br>Da mesma forma, os atacantes também criaram anúncios de emprego para atrair pessoas para se candidatarem a essas vagas. Em seguida, eles entrevistam suas vítimas para tentar fazê-las falar sobre o que fazem no trabalho e as tecnologias usadas por seu empregador. Pense nisso: quando as pessoas estão tentando conseguir um emprego, querem \"se exibir\" e geralmente revelam muita informação sobre as tecnologias, arquiteturas e aplicativos que usam em suas funções atuais."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Soluções de Segurança Protego Tarefa<br>O pessoal da Protego Security Solutions é considerado o elo mais fraco na segurança de rede. Por exemplo, as pessoas estão dispostas a expor uma quantidade surpreendente de informações sobre si mesmas nas mídias sociais. Essas informações podem ser usadas pelos agressores de várias maneiras. Ele pode ajudá-los a encontrar informações sobre um usuário, incluindo nomes de usuário possíveis, senhas prováveis e informações que possam ser usadas para iniciar ataques de engenharia social bem-sucedidos. Informações reunidas das mídias sociais podem ser usadas em pretextos bem-sucedidos que podem levar as pessoas a fazer coisas perigosas.<br>Por esta razão é importante que saibamos o máximo que pudermos sobre o pessoal-chave em Pixel Paradise. Identificar os riscos potenciais de segurança causados por informações nos perfis e postagens nas redes sociais faz parte do nosso acordo com nosso cliente. Familiarize-se com algumas das maneiras como as postagens nas redes sociais podem ser usadas por atores de ameaça realizando este laboratório."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Laboratório - Coleta de Inteligência sobre Funcionários"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Nesse laboratório, você usará as mídias sociais para coletar informações de identificação pessoal (PII)."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Estou confiante sobre as habilidades que pratiquei com este laboratório.<br>Selecione uma opção"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Concluir este laboratório foi uma boa utilização do meu tempo.<br>Selecione uma opção"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Durante a fase de reconhecimento, os atacantes muitas vezes podem inspecionar certificados Secure Sockets Layer (SSL) para obter informações sobre a organização, possíveis falhas criptográficas e implementações fracas. Você pode encontrar muito dentro de certificados digitais: o número de série do certificado, o nome comum do sujeito, o identificador uniforme de recursos (URI) do servidor ao qual ele foi atribuído, o nome da organização, informações do OCSP (Online Certificate Status Protocol), a lista de revogação de certificados (URI) e assim por diante."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "DICA<br>A revogação do certificado<br>é o ato de invalidar um certificado digital. Por exemplo, se um aplicativo tiver sido desativado ou o certificado atribuído a tal aplicação estiver comprometido, você deverá revogar o certificado e adicionar o número de série a uma Lista de Revogação de Certificados. OCSP e CRLs são usados para verificar se um certificado foi revogado (isto é, invalidado) pela autoridade em emissão."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "A Figura 3-1 mostra o certificado digital atribuído a h4cker.org. O certificado mostra a organização que emitiu o certificado – nesse caso, Let's Encrypt (letsencrypt.org) – o número de série, o período de validade e as informações de chave pública, incluindo o algoritmo, tamanho da chave e assim por diante. Os atacantes podem usar essas informações para revelar uma configuração ou implementação criptográfica fraca.<br>Figura 3-1<br>- O certificado digital atribuído a h4cker.org"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Os agressores também podem aproveitar a transparência dos certificados para revelar informações adicionais e enumerar subdomínios. O que é transparência de certificados? Há mais de uma década, houve um grande ataque contra a DigiNotar (uma organização que cria, mantém e autoriza certificados digitais para muitas empresas e instituições governamentais). Esse ataque (juntamente com outros ataques semelhantes) levantou preocupações em torno de organizações que geram e gerenciam certificados digitais. Posteriormente, foi criada a transparência de certificados para melhor detectar a emissão de certificados maliciosos. O objetivo da transparência de certificados é que qualquer organização ou indivíduo possa \"transparentemente\" verificar a emissão de um certificado digital. A transparência do certificado permite que as autoridades de certificados (CAs) forneçam detalhes sobre todos os certificados que foram emitidos para um determinado domínio e organização. Os atacantes também podem usar essas informações para revelar quais outros subdomínios e sistemas uma organização pode possuir.<br>OBSERVAÇÃO<br>Você pode obter informações detalhadas sobre a transparência de certificados do<br>https://certificate.transparency.dev<br>.<br>Ferramentas como a crt.sh permitem obter informações detalhadas sobre a transparência de certificados de qualquer domínio específico. A Figura 3-2 mostra o resultado da consulta https://crt.sh/?q=h4cker.org no crt.sh do domínio h4cker.org. Você pode ver nos resultados da busca vários subdomínios que não eram conhecidos do atacante antes.<br>Figura 3-2<br>- Revelando subdomínios adicionais usando informações de certificado digital em crt.sh"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Protego Security Solutions Task<br>Os certificados SSL são uma parte essencial da segurança online. Eles são usados para criptografar dados à medida que são transmitidos e estabelecer que um site pode ser confiável como fonte ou destino de dados. É importante compreender as informações de identificação e criptografia disponíveis em certificados SSL.<br>Faça esse laboratório para familiarizar-se com os certificados SSL e as informações que eles contêm. Essa é uma parte importante da nossa colaboração com o Pixel Paradise."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Laboratório - Localizando informações a partir de certificados SSL"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Neste laboratório, você completará os seguintes objetivos:<br>Visualizar Informações do Certificado em Hosts<br>Acessar Informações Detalhadas do Certificado<br>Usar Ferramentas de Análise SSL no Kali<br>Usar Ferramentas do Kali para Reunir Informações do Certificado"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Brechas de segurança podem ter um impacto direto na reputação de uma empresa. Os agressores podem aproveitar informações de brechas de segurança passadas que uma organização pode ter experimentado. Eles podem, por exemplo, aproveitar os dados a seguir ao tentar reunir informações sobre suas vítimas:<br>vazamentos de senha<br>metadados de arquivo<br>análise/enumeração estratégica de motores de busca<br>arquivamento/cache de sites<br>repositórios de código-fonte público"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Os atacantes podem aproveitar dumps de senhas de violações anteriores.<br>Existem várias maneiras de que um agressor possa ter acesso a tais dumps de senhas, como usando Pastebin, sites da dark web e até o GitHub em alguns casos. Várias ferramentas e sites diferentes tornam essa tarefa muito fácil. Um exemplo de uma ferramenta que permite encontrar endereços de e-mail e senhas expostos em violações anteriores é<br>o h8mail<br>. Você pode instalar o h8mail usando o<br>comando pip3 install h8mail<br>, conforme mostrado no Exemplo 3-9. O exemplo 3-9 também mostra o uso da linha de comando do h8mail.<br>Exemplo 3-9<br>-<br>instalação e uso do h8mail"
+            }
+            ,{
+                "type": "example",
+                "icon": "fa-terminal",
+                "title": "Exemplo Prático (Terminal)",
+                "scenario": "Comandos e outputs detalhados:",
+                "code": "root@websploit#
+pip3 install h8mail
+Collecting h8mail
+Downloading h8mail-2.5.5-py3-none-any.whl (33 kB)
+Requirement already satisfied: requests in /usr/lib/python3/
+dist-packages (from h8mail) (2.23.0)
+Installing collected packages: h8mail
+Successfully installed h8mail-2.5.5
+root@websploit#
+h8mail -h
+usage: h8mail [-h] [-t USER_TARGETS [USER_TARGETS ...]] [-u USER_URLS [USER_URLS ...]] [-q USER_QUERY] [--loose] [-c CONFIG_FILE [CONFIG_FILE ...]] [-o OUTPUT_FILE] [-j OUTPUT_JSON] [-bc BC_PATH] [-sk] [-k CLI_APIKEYS [CLI_APIKEYS ...]]
+[-lb LOCAL_BREACH_SRC [LOCAL_BREACH_SRC ...]] [-gz LOCAL_GZIP_SRC [LOCAL_GZIP_SRC ...]] [-sf] [-ch [CHASE_LIMIT]] [--power-chase] [--hide] [--debug] [--gen-config]
+Email information and password lookup tool
+options:
+-h, --help        	   show this help message and exit
+-t USER_TARGETS [USER_TARGETS ...], --targets USER_TARGETS [USER_TARGETS ...]
+Either string inputs or files. Supports email pattern matching from input or file, filepath globing and multiple arguments
+-u USER_URLS [USER_URLS ...], --url USER_URLS [USER_URLS ...]
+Either string inputs or files. Supports URL pattern matching from input or file, filepath globing and multiple arguments. Parse URLs page for emails. Requires http:// or https:// in URL.
+-q USER_QUERY, --custom-query USER_QUERY
+Perform a custom query. Supports username, password, ip, hash, domain. Performs an implicit \"loose\" search when searching locally
+--loose           	   Allow loose search by disabling email pattern recognition. Use spaces as pattern seperators
+-c CONFIG_FILE [CONFIG_FILE ...], --config CONFIG_FILE [CONFIG_FILE ...]
+Configuration file for API keys. Accepts keys from Snusbase, WeLeakInfo, Leak-Lookup, HaveIBeenPwned, Emailrep, Dehashed and hunterio
+-o OUTPUT_FILE, --output OUTPUT_FILE
+File to write CSV output
+-j OUTPUT_JSON, --json OUTPUT_JSON
+File to write JSON output
+-bc BC_PATH, --breachcomp BC_PATH
+Path to the breachcompilation torrent folder. Uses the query.sh script included in the torrent
+-sk, --skip-defaults  Skips Scylla and HunterIO check. Ideal for local scans
+-k CLI_APIKEYS [CLI_APIKEYS ...], --apikey CLI_APIKEYS [CLI_APIKEYS ...]
+Pass config options. Supported format: \"K=V,K=V\"
+-lb LOCAL_BREACH_SRC [LOCAL_BREACH_SRC ...], --local-breach LOCAL_BREACH_SRC [LOCAL_BREACH_SRC ...]
+Local cleartext breaches to scan for targets. Uses multiprocesses, one separate process per file, on separate worker pool by arguments. Supports file or folder as input, and filepath globing
+-gz LOCAL_GZIP_SRC [LOCAL_GZIP_SRC ...], --gzip LOCAL_GZIP_SRC [LOCAL_GZIP_SRC ...]
+Local tar.gz (gzip) compressed breaches to scans for targets. Uses multiprocesses, one separate process per file. Supports file or folder as input, and filepath globing. Looks for 'gz' in filename
+-sf, --single-file         If breach contains big cleartext or tar.gz files, set this flag to view the progress bar. Disables concurrent file searching for stability
+-ch [CHASE_LIMIT], --chase [CHASE_LIMIT]
+Add related emails from hunter.io to ongoing target list. Define number of emails per target to chase. Requires hunter.io private API key if used without power-chase
+--power-chase     	   Add related emails from ALL API services to ongoing target list. Use with --chase
+--hide            	   Only shows the first 4 characters of found passwords to output. Ideal for demonstrations
+--debug           	   Print request debug information
+--gen-config, -g             Generates a configuration file template in the current working directory & exits. Will overwrite existing h8mail_config.ini file",
+                "takeaway": "Análise de output"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Veja a seguir as ferramentas adicionais que permitem procurar dumps de dados de violação:<br>WhatBreach:<br>https://github.com/Ekultek/WhatBreach<br>LeakLooker:<br>https://github.com/woj-ciech/LeakLooker<br>Buster:<br>https://github.com/sham00n/buster<br>Scavenger:<br>https://github.com/rndinfosecguy/Scavenger<br>PwnDB:<br>https://github.com/davidtavarez/pwndb<br>Ferramentas como h8mail e WhatBreach utilizam repositórios de dados violados de sites como haveibeenpwned.com e snusbase.com. Historicamente, sites como weleakinfo.com (apreendido pelo FBI) têm sido usados por criminosos para vazar informações de violações de segurança passadas."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "DETALHES<br>20 de jun<br>Hoje, 17h45<br>GMT-04:00<br>IMG_4730.HEIC<br>12.2MP<br>4032 x 3024<br>2,5 MB<br>Apple iPhone 12 Pro Max<br>f/1,6<br>1/887<br>5,1 mm<br>ISO32<br>Carregada a partir do dispositivo iOS<br>Carolina do Norte"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Figura 3-3<br>- Metadados Exif de uma imagem capturada por um iPhone"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Metadados de arquivo<br>Você pode obter muitas informações dos metadados em arquivos como imagens, documentos do Microsoft Word, arquivos do Excel, arquivos do PowerPoint e muito mais. Por exemplo, o Formato de Arquivo de Imagem Intercambiável (Exif) é uma especificação que define os formatos para imagens, som e tags suplementares usados por câmeras digitais, celulares, scanners e outros sistemas que processam arquivos de imagem e som. A Figura 3-3 mostra os dados Exif de uma imagem digital (foto) capturada por um iPhone.<br>Várias ferramentas podem mostrar detalhes do Exif. Um dos mais populares deles, ExifTool, é mostrado no Exemplo 3-10. Este exemplo mostra os detalhes dos metadados do Exif da mesma imagem cujos detalhes são mostrados na Figura 3-3."
+            }
+            ,{
+                "type": "example",
+                "icon": "fa-terminal",
+                "title": "Exemplo Prático (Terminal)",
+                "scenario": "Comandos e outputs detalhados:",
+                "code": "|--[omar@websploit]--[~]
+|--- $
+exiftool IMG_4730.jpg
+ExifTool Version Number                : 12.06
+File Name                              : IMG_4730.jpg
+Directory                              : .
+File Size                              : 2.4 MB
+File Modification Date/Time            : 2021:06:20 21:33:36-04:00
+File Access Date/Time                  : 2021:06:20 21:33:36-04:00
+File Inode Change Date/Time            : 2021:06:20 21:33:36-04:00
+File Permissions                       : rw-r--r--
+File Type                              : JPEG
+File Type Extension                    : jpg
+MIME Type                              : image/jpeg
+JFIF Version                           : 1.01
+Exif Byte Order                        : Big-endian (Motorola, MM)
+Make                                   : Apple
+Camera Model Name                      : iPhone 12 Pro Max
+Orientation                            : Horizontal (normal)
+X Resolution                           : 72
+Y Resolution                           : 72
+Resolution Unit                        : inches
+Software                               : 14.6
+Modify Date                            : 2021:06:20 17:45:44
+Host Computer                          : iPhone 12 Pro Max
+Tile Width                             : 512
+Tile Length                            : 512
+Exposure Time                          : 1/887
+F Number                               : 1.6
+Exposure Program                       : Program AE
+ISO                                    : 32
+Exif Version                           : 0232
+Date/Time Original                     : 2021:06:20 17:45:44
+Create Date                            : 2021:06:20 17:45:44
+Offset Time                            : -04:00
+Offset Time Original                   : -04:00
+Offset Time Digitized                  : -04:00
+Components Configuration               : Y, Cb, Cr, -
+Shutter Speed Value                    : 1/887
+Aperture Value                         : 1.6
+Brightness Value                       : 7.700648484
+Exposure Compensation                  : 0
+Metering Mode                          : Multi-segment
+Flash                                  : Auto, Did not fire
+Focal Length                           : 5.1 mm
+Subject Area                           : 2002 1503 2213 1327
+Run Time Flags                         : Valid
+Run Time Value                         : 892872412170041
+Run Time Scale                         : 1000000000
+Run Time Epoch                         : 0
+Acceleration Vector                    : -0.9863093504 0.003411300248
+0.1393117606
+Sub Sec Time Original                  : 458
+Sub Sec Time Digitized                 : 458
+Flashpix Version                       : 0100
+Color Space                            : Uncalibrated
+Exif Image Width                       : 4032
+Exif Image Height                      : 3024
+Sensing Method                         : One-chip color area
+Scene Type                             : Directly photographed
+Exposure Mode                          : Auto
+White Balance                          : Auto
+Focal Length In 35mm Format            : 26 mm
+Scene Capture Type                     : Standard
+Image Unique ID                        : ebf42e8d3764ccc90000000000000000
+Lens Info                              : 1.539999962-7.5mm f/1.6-2.4
+Lens Make                              : Apple
+Lens Model                             : iPhone 12 Pro Max back triple
+camera 5.1mm f/1.6
+Composite Image                        : General Composite Image
+GPS Version ID                         : 2.2.0.0
+GPS Latitude Ref                       : North
+GPS Longitude Ref                      : West
+GPS Altitude Ref                       : Above Sea Level
+GPS Speed Ref                          : km/h
+GPS Speed                              : 0.2300000042
+GPS Img Direction Ref                  : True North
+GPS Img Direction                      : 74.98474114
+GPS Dest Bearing Ref                   : True North
+GPS Dest Bearing                       : 74.98474114
+GPS Horizontal Positioning Error       : 15.67681275 m
+Compression                            : JPEG (old-style)
+Thumbnail Offset                       : 2650
+Thumbnail Length                       : 6523
+XMP Toolkit                            : XMP Core 5.5.0
+Creator Tool                           : 14.6
+Date Created                           : 2021:06:20 17:45:44
+Profile CMM Type                       : Apple Computer Inc.
+Profile Version                        : 4.0.0
+Profile Class                          : Display Device Profile
+Color Space Data                       : RGB
+Profile Connection Space               : XYZ
+Profile Date Time                      : 2017:07:07 13:22:32
+Profile File Signature                 : acsp
+Primary Platform                       : Apple Computer Inc.
+CMM Flags                              : Not Embedded, Independent
+Device Manufacturer                    : Apple Computer Inc.
+Device Model                           :
+Device Attributes                      : Reflective, Glossy, Positive, Color
+Rendering Intent                       : Perceptual
+Connection Space Illuminant            : 0.9642 1 0.82491
+Profile Creator                        : Apple Computer Inc.
+Profile ID                             : ca1a9582257f104d389913d5d1ea1582
+Profile Description                    : Display P3
+Profile Copyright                      : Copyright Apple Inc., 2017
+Media White Point                      : 0.95045 1 1.08905
+Red Matrix Column                      : 0.51512 0.2412 -0.00105
+Green Matrix Column                    : 0.29198 0.69225 0.04189
+Blue Matrix Column                     : 0.1571 0.06657 0.78407
+Red Tone Reproduction Curve            : (Binary data 32 bytes, use -b
+option to extract)
+Chromatic Adaptation                   : 1.04788 0.02292 -0.0502 0.02959
+0.99048 -0.01706 -0.00923 0.01508
+0.75168
+Blue Tone Reproduction Curve           : (Binary data 32 bytes, use -b
+option to extract)
+Green Tone Reproduction Curve          : (Binary data 32 bytes, use -b
+option to extract)
+Image Width                            : 4032
+Image Height                           : 3024
+Encoding Process                       : Baseline DCT, Huffman coding
+Bits Per Sample                        : 8
+Color Components                       : 3
+Y Cb Cr Sub Sampling                   : YCbCr4:2:0 (2 2)
+Run Time Since Power Up                : 10 days 8:01:12
+Aperture                               : 1.6
+Image Size                             : 4032x3024
+Lens ID                                : iPhone 12 Pro Max back triple
+camera 5.1mm f/1.6
+Megapixels                             : 12.2
+Scale Factor To 35 mm Equivalent       : 5.1
+Shutter Speed                          : 1/887
+Create Date                            : 2022:06:20 17:45:44.458-04:00
+Date/Time Original                     : 2022:06:20 17:45:44.458-04:00
+Modify Date                            : 2022:06:20 17:45:44-04:00
+Thumbnail Image                        : (Binary data 6523 bytes, use -b
+option to extract)
+GPS Altitude                           : 112.7 m Above Sea Level
+GPS Latitude                           : 35 deg 46' 78.6382\" N
+GPS Longitude                          : 78 deg 38' 30.4793\" W
+Circle Of Confusion                    : 0.006 mm
+Field Of View                          : 69.4 deg
+Focal Length                           : 5.1 mm (35 mm equivalent: 26.0 mm)
+GPS Position                           : 35 deg 46' 49.69\" N, 78 deg 38'
+30.4793\" W
+Hyperfocal Distance                    : 2.76 m
+Light Value                            : 12.8
+|--[omar@websploit]--[~]
+|--- $",
+                "takeaway": "Análise de output"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Análise/Enumeração Estratégica de Mecanismos de Busca<br>A maioria de nós usa mecanismos de busca como DuckDuckGo, Bing e Google para localizar informações. O que você talvez não saiba é que os mecanismos de pesquisa, como o Google, podem realizar pesquisas muito mais poderosas do que a maioria das pessoas já sonha. O Google pode traduzir documentos, executar pesquisas de notícias e fazer pesquisas de imagens. Além disso, hackers e atacantes podem usá-lo para fazer algo que tenha sido chamado<br>hacking<br>do Google.<br>Ao usar técnicas de pesquisa básicas combinadas com operadores avançados, você e os atacantes podem usar o Google como uma ferramenta de pesquisa de vulnerabilidade poderosa. Veja a seguir alguns operadores avançados:<br>Filetype:<br>Direciona o Google para pesquisar somente no texto de um determinado tipo de arquivo (por exemplo, filetype:xls)<br>Inurl:<br>Direciona o Google para pesquisar somente na URL de um documento especificado (por exemplo, inurl:search-text)<br>Link:<br>Direciona o Google para pesquisar dentro de hiperlinks para um termo específico (por exemplo, link: www.domain.com)<br>Intitle:<br>Direciona o Google para procurar um termo no título de um documento (por exemplo, intitle: \"Índice de /etc\")<br>Usando estes operadores avançados em combinação com termos-chave, você e os atacantes podem fazer com que o Google descubra muitas informações sensíveis que não deveriam ser reveladas. Essas sequências de pesquisa são frequentemente chamadas de<br>Google dorks<br>.<br>Para ver como o Google dorking funciona, insira a seguinte frase no Google:<br>intext:JSESSIONID OU intext:PHPSESSID inurl:access.log ext:log<br>Esta consulta pesquisa em uma URL os IDs de sessão que podem ser usados para potencialmente representar usuários. Não é incomum que esta pesquisa encontre mais de 100 sites que armazenam IDs de sessão confidenciais em logs que eram acessíveis publicamente. Se esses IDs não tiverem expirado, eles poderão ser usados para obter acesso a recursos restritos.<br>Você pode usar operadores avançados para pesquisar muitos tipos de dados. A seguir está outro exemplo de uma cadeia de caracteres de pesquisa do Google (ou do google dork) que pode revelar senhas de aplicativos da Web:<br>\"public $user =\" | \"public $password = \" | \"public $secret =\" | \"public $db =\" ext:txt | ext:log -git<br>Agora que discutimos algumas técnicas básicas de pesquisa do Google, vamos explorar o hacking avançado do Google. Recomendamos que você visite os repositórios do Google Hacking Database (GHDB) em<br>https://www.exploit-db.com/google-hacking-database/<br>. O GHDB tem as seguintes categorias de pesquisa:<br>Pontos de acesso<br>Arquivos contendo nomes de usuário<br>Diretórios sensíveis<br>Detecção de servidores web<br>Arquivos vulneráveis<br>Servidores vulneráveis<br>Mensagens de erro<br>Arquivos contendo informações valiosas<br>Arquivos contendo senhas<br>Informações confidenciais de compras online<br>Dados de rede ou vulnerabilidades<br>Páginas contendo portais de login<br>Vários dispositivos online<br>Avisos e vulnerabilidades<br>O GHDB é um esforço de comunidade. Qualquer pessoa pode carregar um novo Google dork para executar esses tipos de pesquisa. Assim que começar a jogar com os dorks em GHDB, você ficará surpreso com as coisas inacreditáveis encontradas através do hacking do Google. GHDB tornou o uso de dorks do Google muito fácil, e há outras opções também. Mais tarde neste módulo, você aprenderá sobre ferramentas adicionais que podem ser usadas para executar pesquisas semelhantes (como Recon-ng)."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Arquivamento/Cache de sites<br>várias organizações arquivam e fazem cache de dados de sites na Internet. Um dos repositórios mais populares é a \"Máquina Wayback\" do Internet Archive (<br>https://archive.org/web<br>).<br>A Máquina Wayback permite que você volte no tempo na Internet. Por exemplo, a Figura 3-4 mostra como era o site da Cisco em 3 de novembro de 1999. Você pode acessar o arquivo do site mostrado na Figura 3-4 copiando o seguinte link na barra de endereços do navegador: https://web.archive.org/web/19991103121048/http://www.cisco.com/.<br>Figura 3-4<br>- A Wayback Machine do Internet Archive"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Repositórios de código-fonte público<br>Um agressor pode obter informações extremamente valiosas de repositórios de código-fonte público, como GitHub e GitLab. A maioria dos aplicativos e produtos que consumimos hoje usam software de código aberto que estão livremente disponíveis nesses repositórios públicos. Os agressores podem encontrar vulnerabilidades nesses pacotes de software e usá-los a seu favor. Da mesma forma, como testador de penetração, você pode obter informações valiosas desses repositórios públicos. Mesmo que você não encontre imediatamente vulnerabilidades de segurança no código, esses repositórios podem fornecer-lhe insights sobre a arquitetura e o código subjacente usado nos aplicativos e infraestrutura da organização."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "{{_moduleNumber}}.1.16 Prática - Metadados de arquivo<br>Para converter o arquivo de imagem para formato PDF.<br>Para obter informações contidas nos metadados do arquivo.<br>Para inserir códigos maliciosos no arquivo.<br>Criptografar o arquivo para transmissão para a web obscura."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Um atacante baixou o arquivo ourmission.jpg de um site do escritório do governo. O agressor, então, emitiu um comando exiftool ourmission.jpg na estação de trabalho.<br>Qual é a finalidade desta operação?"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "{{_moduleNumber}}.1.17 Prática - Arquivamento da Web, cache e repositórios de códigos públicos<br>Google archiving<br>Google phishing<br>Google dork<br>Armazenamento em cache do Google"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Um profissional de cibersegurança está ajudando a corporação XYZ a realizar avaliações de vulnerabilidade dos serviços da Web. O profissional realizou uma pesquisa no Google com a seguinte string:<br>xyz.com intext:JSESSIONID OR intext:PHPSESSID inurl:access.log ext:log<br>Qual termo descreve a parte \"intext:JSESSIONID OR intext:PHPSESSID inurl:access.log ext:log\"?"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Protego Security Solutions Tarefa<br>Parte do nosso compromisso com o Pixel Paradise envolve descobrir se informações confidenciais vazaram e poderiam estar disponíveis de corretores de informações roubadas na dark web. Enormes violações de dados resultaram em milhões de registros contendo informações pessoalmente identificáveis sendo disponibilizadas a cibercriminosos. Os funcionários podem usar seus endereços de e-mail da empresa para se registrar em empresas que foram posteriormente violadas. Alguns funcionários podem até usar seu nome de usuário e senha de conta de trabalho para se registrar.<br>Precisamos ver se violações de dados resultaram em vulnerabilidades de cibersegurança em Pixel Paradise. Podemos usar essas vulnerabilidades mais tarde em nosso teste de penetração, e certamente informaremos nosso cliente sobre as vulnerabilidades e forneceremos estratégias para mitigá-las.<br>Use este laboratório para se familiarizar com as diferentes formas que aprendemos sobre as empresas e os riscos potenciais a elas causados por violações de dados."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Neste laboratório, você cumprirá os seguintes objetivos:<br>Encontrar informações sobre violações de e-mail.<br>Exibir metadados de arquivo."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Protego Security Solutions Task<br>Como sabe, a inteligência de código aberto pode produzir muitas informações sobre pessoas. Ela também pode revelar muitas informações sobre sistemas web, serviços e aplicativos. Ferramentas simples podem gerar resultados valiosos. Melhore suas habilidades com as pesquisas avançadas do Google e o arquivo da web Wayback Machine fazendo este laboratório.<br>Mais tarde, usaremos essas ferramentas com Pixel Paradise para descobrir informações úteis que podemos utilizar nas fases posteriores do nosso teste de intrusão."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Neste laboratório, você usará o Google Advanced Search para realizar reconhecimento passivo.<br>Parte 1: Google Advanced Search (Dorking)<br>Parte 2: O Google Hacking Database<br>Parte 3: The Wayback Machine"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Coleta de inteligência de código aberto (OSINT)<br>é um método de coleta de fontes de inteligência disponíveis publicamente para coletar e analisar informações sobre um alvo. O OSINT é de \"fonte aberta\" porque a coleta de informações não exige nenhum tipo de método secreto. Geralmente, as informações podem ser encontradas na Internet. Quanto maior a presença on-line do alvo, mais informações estarão disponíveis. Esse tipo de coleção pode frequentemente começar com uma simples pesquisa no Google, que pode revelar uma quantidade significativa de informações sobre um destino. Ele pelo menos fornecerá informações suficientes para saber para que direção seguir com seu processo de coleta de informações. Vamos cobrir duas ferramentas que podem ser usadas para a coleta OSINT: Recong-ng e Shodan."
+            }
+            ,{
+                "type": "example",
+                "icon": "fa-terminal",
+                "title": "Exemplo Prático (Terminal)",
+                "scenario": "Comandos e outputs detalhados:",
+                "code": "Etapa 1: Iniciar Recon-ng
+Etapa 1: Iniciar Recon-ng
+Para começar a usar o Recon-ng, você simplesmente executa
+o Recon-ng
+a partir de uma nova janela de terminal. O exemplo 3-11
+mostra o comando e o menu inicial com o qual o recon-ng inicia.
+Exemplo 3-11
+-Iniciando o recon-ng
+|--[omar@websploit]--[~]
+|--- $
+recon-ng
+[*] Version check disabled.
+_/_/_/    _/_/_/_/    _/_/_/    _/_/_/    _/      _/            _/      _/    _/_/_/
+_/    _/  _/        _/        _/      _/  _/_/    _/            _/_/    _/  _/
+_/_/_/    _/_/_/    _/        _/      _/  _/  _/  _/  _/_/_/_/  _/  _/  _/  _/  _/_/_/
+_/    _/  _/        _/        _/      _/  _/    _/_/            _/    _/_/  _/      _/
+_/    _/  _/_/_/_/    _/_/_/    _/_/_/    _/      _/            _/      _/    _/_/_/
+/\
+/ \\ /\
+Sponsored by...               /\  /\/  \\V  \/\
+/ \\/ // \\\\\ \\ \/\
+// // BLACK HILLS \/ \\
+www.blackhillsinfosec.com
+____   ____   ____   ____ _____ _  ____   ____  ____
+|____] | ___/ |____| |       |   | |____  |____ |
+|      |   \_ |    | |____   |   |  ____| |____ |____
+www.practisec.com
+[recon-ng v5.1.2, Tim Tomes (@lanmaster53)]
+[4] Recon modules
+[1] Discovery modules
+[recon-ng][default] >
+Etapa 2. Exibir comandos disponíveis
+Etapa 2. Visualizar os comandos disponíveis.
+Para ter uma ideia de quais comandos estão disponíveis na ferramenta linha de comandos Recon-ng, é possível simplesmente digitar
+help
+e pressionar Enter. O exemplo 3-12 mostra a saída do comando ajuda.
+Exemplo 3-12
+Comando
+ajuda
+de Recon-ng
+[recon-ng][default] >
+help
+Commands (type [help|?]
+):
+---------------------------------
+back           Exits the current context
+dashboard      Displays a summary of activity
+db             Interfaces with the workspace's database
+exit           Exits the framework
+help           Displays this menu
+index          Creates a module index (dev only)
+keys           Manages third party resource credentials
+marketplace    Interfaces with the module marketplace
+modules        Interfaces with installed modules
+options        Manages the current context options
+pdb            Starts a Python Debugger session (dev only)
+script         Records and executes command scripts
+shell          Executes shell commands
+show           Shows various framework items
+snapshots      Manages workspace snapshots
+spool          Spools output to a file
+workspaces     Manages workspaces
+[recon-ng][default] >
+Etapa 3. Procure módulos disponíveis.
+Etapa 3. Procure módulos disponíveis.
+Antes de começar a reunir as informações usando a ferramenta Recon-ng, você precisa entender quais módulos estão disponíveis. (Você pode ver na tela inicial, no Exemplo 3-11, o número atual de módulos instalados em Recon-ng.) O Recon-ng é fornecido com um \"marketplace\", onde é possível procurar módulos disponíveis para serem instalados. Você pode usar o
+comando de busca no marketplace
+para procurar todos os módulos disponíveis em Recon-ng, conforme mostrado no Exemplo 3-13.
+Desloque a saída no Exemplo 3-13 para a direita para ver as
+colunas D
+e
+K
+. A letra
+D
+indica que o módulo tem dependências. A letra
+K
+indica que é necessária uma chave API para usar os recursos usados em um módulo específico. Por exemplo, o módulo com o caminho recon/companies-contacts/censys_email_address tem dependências e precisa de uma chave API para fazer consultas ao banco de dados do Censys. (O Censys é um recurso muito popular para consulta de dados OSINT.)
+Exemplo 3-13
+- A Pesquisa Recon-ng Marketplace
+[recon-ng][default] >
+marketplace search
++---------------------------------------------------------------------------------------------------+
+|                        Path                        | Version |     Status    |  Updated   | D | K |
++---------------------------------------------------------------------------------------------------+
+| discovery/info_disclosure/cache_snoop              | 1.1     | not installed | 2020-10-13 |   |   |
+| discovery/info_disclosure/interesting_files        | 1.2     | not installed | 2021-10-04 |   |   |
+| exploitation/injection/command_injector            | 1.0     | not installed | 2019-06-24 |   |   |
+| exploitation/injection/xpath_bruter                | 1.2     | not installed | 2019-10-08 |   |   |
+| import/csv_file                                    | 1.1     | not installed | 2019-08-09 |   |   |
+| import/list                                        | 1.1     | not installed | 2019-06-24 |   |   |
+| import/masscan                                     | 1.0     | not installed | 2020-04-07 |   |   |
+| import/nmap                                        | 1.1     | not installed | 2020-10-06 |   |   |
+| recon/companies-contacts/bing_linkedin_cache       | 1.0     | not installed | 2019-06-24 |   | * |
+| recon/companies-contacts/censys_email_address      | 2.0     | not installed | 2021-05-11 | * | * |
+| recon/companies-contacts/pen                       | 1.1     | not installed | 2019-10-15 |   |   |
+| recon/companies-domains/censys_subdomains          | 2.0     | not installed | 2021-05-10 | * | * |
+| recon/companies-domains/pen                        | 1.1     | not installed | 2019-10-15 |   |   |
+| recon/companies-domains/viewdns_reverse_whois      | 1.1     | not installed | 2021-08-24 |   |   |
+| recon/companies-domains/whoxy_dns                  | 1.1     | not installed | 2020-06-17 |   | * |
+| recon/companies-hosts/censys_org                   | 2.0     | not installed | 2021-05-11 | * | * |
+<output omitted>
+| reporting/csv                                      | 1.0     | not installed | 2019-06-24 |   |   |
+| reporting/html                                     | 1.0     | not installed | 2019-06-24 |   |   |
+| reporting/json                                     | 1.0     | not installed | 2019-06-24 |   |   |
+| reporting/list                                     | 1.0     | not installed | 2019-06-24 |   |   |
+| reporting/proxifier                                | 1.0     | not installed | 2019-06-24 |   |   |
+| reporting/pushpin                                  | 1.0     | not installed | 2019-06-24 |   | * |
+| reporting/xlsx                                     | 1.0     | not installed | 2019-06-24 |   |   |
+| reporting/xml                                      | 1.1     | not installed | 2019-06-24 |   |   |
++---------------------------------------------------------------------------------------------------+
+D = Has dependencies. See info for details.
+K = Requires keys. See info for details.
+[recon-ng][default] >
+Etapa 4. Atualizar o Marketplace.
+Etapa 4. Atualize o marketplace.
+Você pode atualizar os dados sobre os módulos disponíveis usando o comando de atualização do
+marketplace, conforme mostrado no Exemplo 3-14.
+Exemplo 3-14
+-
+Atualizando os dados do Recon-ng Marketplace
+[recon-ng][default] >
+marketplace refresh
+[*] Marketplace index refreshed.
+[recon-ng][default] >
+Etapa 5. Pesquise no marketplace.
+Etapa 5. Pesquise no marketplace.
+Vamos fazer uma busca rápida para localizar diferentes subdomínios de um dos meus domínios (h4cker.org). Podemos usar o módulo
+bing_domain_web
+para tentar localizar qualquer subdomínio aproveitando o mecanismo de busca do Bing. Você pode efetuar uma pesquisa por módulos por palavra-chave usando o comando
+marketplace search <
+palavra-chave
+>
+, conforme demonstrado no Exemplo 3-15.
+Exemplo 3-15
+-
+Pesquisa de Palavra-chave no Marketplace
+[recon-ng][default] >
+marketplace search bing
+[*] Searching module index for 'bing'...
++-----------------------------------------------------------------------------------------------+
+|                      Path                      | Version |     Status    |  Updated   | D | K |
++-----------------------------------------------------------------------------------------------+
+| recon/companies-contacts/bing_linkedin_cache   | 1.0     | not installed | 2019-06-24 |   | * |
+| recon/domains-hosts/bing_domain_api            | 1.0     | not installed | 2019-06-24 |   | * |
+| recon/domains-hosts/bing_domain_web            | 1.1     | installed     | 2019-07-04 |   |   |
+| recon/hosts-hosts/bing_ip                      | 1.0     | not installed | 2019-06-24 |   | * |
+| recon/profiles-contacts/bing_linkedin_contacts | 1.2     | not installed | 2021-08-24 |   | * |
++-----------------------------------------------------------------------------------------------+
+D = Has dependencies. See info for details.
+K = Requires keys. See info for details.
+[recon-ng][default] >
+Etapa 6. Instalar um módulo.
+Etapa 6. Instalar um módulo.
+Diversos resultados corresponderam à palavra-chave Bing. Entretanto, a que nos interessa é recon/domínios-hosts/bing_domain_web. Você pode instalar o módulo usando o
+comando marketplace install
+, conforme mostrado no Exemplo 3-16.
+Exemplo 3-16
+-
+Instalação de um módulo Recon-ng
+[recon-ng][default] >
+marketplace install recon/domains-hosts/bing_domain_web
+[*] Module installed: recon/domains-hosts/bing_domain_web
+[*] Reloading modules...
+[recon-ng][default] >
+Etapa 7. Mostrar módulos instalados.
+Etapa 7. Mostrar módulos instalados.
+Você pode usar o
+comando de busca de módulos
+(conforme mostrado no Exemplo 3-17) para mostrar todos os módulos que foram instalados no Recon-ng.
+Exemplo 3-17 - Módulos Instalados do Recon-ng
+[recon-ng][default] >
+modules search
+Discovery
+---------
+discovery/info_disclosure/interesting_files
+Recon
+-----
+recon/domains-hosts/bing_domain_web
+recon/domains-hosts/brute_hosts
+recon/domains-hosts/certificate_transparency
+recon/domains-hosts/netcraft
+[recon-ng][default] >
+Etapa 8. Carregar um módulo.
+Etapa 8. Carregar um módulo.
+Para carregar o módulo que você gostaria de usar, use o comando
+modules load
+. No exemplo 3-18, o módulo bing_domain_web é carregado. Observe que o aviso foi alterado para incluir o nome do módulo carregado. Depois que o módulo é carregado, você pode exibir as opções do módulo usando o
+comando info
+.
+Exemplo 3-18
+-
+Carregando um módulo instalado em Recon-ng
+[recon-ng][default] >
+modules load recon/domains-hosts/bing_domain_web
+[recon-ng][default][bing_domain_web] >
+info
+Name: Bing Hostname Enumerator
+Author: Tim Tomes (@lanmaster53)
+Version: 1.1
+Description:
+Harvests hosts from Bing.com by using the 'site' search operator. Updates the 'hosts'
+table with the results.
+Options:
+Name    Current Value  Required  Description
+------  -------------  --------  -----------
+SOURCE  h4cker.org  yes      source of input (see 'info' for details)
+Source Options:
+default     SELECT DISTINCT domain FROM domains WHERE domain IS NOT NULL
+<string>    string representing a single input
+<path>      path to a file containing a list of inputs
+query <sql> database query returning one column of inputs
+[recon-ng][default][bing_domain_web] >
+Etapa 9. Altere a origem.
+Etapa 9. Altere a origem.
+Você pode alterar a origem (o domínio a ser usado para localizar seus subdomínios) usando o comando options set SOURCE
+, conforme mostrado no Exemplo 3-19.
+Depois que o domínio de origem estiver definido, você pode digitar
+executar
+para executar a consulta. As linhas destacadas mostram que quatro subdomínios foram encontrados usando o
+módulo bing_domain_web
+.
+Exemplo 3-19
+- Configurando o domínio de origem e executando a consulta
+[recon-ng][default][bing_domain_web] >
+options set SOURCE h4cker.org
+SOURCE => h4cker.org
+[recon-ng][default][bing_domain_web] >
+run
+----------
+H4CKER.ORG
+----------
+[*] URL: https://www.bing.com/search?first=0&q=domain%3Ah4cker.org
+[*] Country: None
+[*] Host: bootcamp.h4cker.org
+[*] Ip_Address: None
+[*] Latitude: None
+[*] Longitude: None
+[*] Notes: None
+[*] Region: None
+[*] --------------------------------------------------
+[*] Country: None
+[*] Host: webapps.h4cker.org
+[*] Ip_Address: None
+[*] Latitude: None
+[*] Longitude: None
+[*] Notes: None
+[*] Region: None
+[*] --------------------------------------------------
+[*] Country: None
+[*] Host: lpb.h4cker.org
+[*] Ip_Address: None
+[*] Latitude: None
+[*] Longitude: None
+[*] Notes: None
+[*] Region: None
+[*] --------------------------------------------------
+[*] Country: None
+[*] Host: malicious.h4cker.org
+[*] Ip_Address: None
+[*] Latitude: None
+[*] Longitude: None
+[*] Notes: None
+[*] Region: None
+[*] --------------------------------------------------
+[*] Sleeping to avoid lockout...
+[*] URL:
+https://www.bing.com/search?first=0&q=domain%3Ah4cker.org+-domain%3Abootcamp.h4cker.
+org+-domain%3Awebapps.h4cker.org+-domain%3Alpb.h4cker.org+-domain%3Amalicious.h4cker.org
+-------
+SUMMARY
+-------
+[*] 4 total (0 new) hosts found.
+[recon-ng][default][bing_domain_web] >",
+                "takeaway": "Análise de output"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Recon-ng<br>Este módulo abrange várias fontes e ferramentas individuais usadas para coleta de informações. Essas ferramentas são todas muito eficazes para suas utilizações específicas; no entanto, não seria ótimo se houvesse uma ferramenta que pudesse unir todas essas funções diferentes? É aqui que o Recon-ng entra. É uma estrutura desenvolvida por Tim Tomes da Information Security de Black Hills. Esta ferramenta foi desenvolvida em Python com Metasploit<br>msfconsole<br>em mente. Se você já usou o console Metasploit antes, o Recon-ng deve ser familiar e fácil de entender.<br>O Recon-ng é uma estrutura modular, que facilita o desenvolvimento e integração de novas funcionalidades. Ele é altamente eficaz na enumeração de sites de rede social devido ao seu uso de interfaces de programação de aplicativos (APIs) para reunir informações. Ele também inclui um recurso de relatório que permite exportar dados em diferentes formatos de relatório. Como você sempre precisará fornecer algum tipo de relatório em qualquer teste que fizer, o Recon-ng é especialmente valioso.<br>Selecione cada uma das seguintes etapas para um exemplo de execução do Recon-ng em Kali Linux."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "O Recon-ng é incrivelmente poderoso porque usa as APIs de vários recursos OSINT para reunir informações. Seus módulos podem consultar sites como Facebook, Indeed, Flickr, Instagram, Shodan, LinkedIn e YouTube."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "DICA<br>Você também pode combinar outros módulos para encontrar informações adicionais sobre um destino específico. Por exemplo, você pode usar o módulo de recon/domínios-hosts/brute_hosts para usar listas de palavras e executar consultas DNS para localizar subdomínios adicionais. Hacking é tudo sobre o processo de pensar como um atacante e desenvolver uma boa metodologia. Recomendo fortemente que você \"vá além da ferramenta\" e seu comportamento padrão e desenvolva sua própria metodologia, combinando ferramentas e outros recursos para encontrar informações e vulnerabilidades potenciais a serem exploradas."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Shodan<br>Shodan<br>é uma organização que verifica a Internet 24 horas por dia, 365 dias por ano. Os resultados desses exames são armazenados em um banco de dados que pode ser consultado em shodan.io ou usando uma API. Você pode usar Shodan para consultar hosts vulneráveis, dispositivos de Internet das Coisas (IoT) e muitos outros sistemas que não devem ser expostos ou conectados à Internet pública. A Figura 3-5 mostra diferentes categorias de sistemas encontrados por verificações de Shodan, incluindo sistemas de controle industrial (ICS), bancos de dados, dispositivos de infraestrutura de rede e videogames.<br>Figura 3-5<br>- Explorando o banco de dados de Shodan"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "A Figura 3-6 mostra uma consulta realizada para localizar dispositivos de infra-estrutura de rede que estejam executando um protocolo quebrado chamado Cisco Smart Install. Os atacantes aproveitaram este protocolo por anos para comprometer diferentes infraestruturas. A Cisco removeu este protocolo de seus sistemas há muitos anos. No entanto, muitas pessoas ainda o estão usando em dispositivos conectados à Internet pública.<br>OBSERVAÇÃO<br>Cisco tem alertado os clientes há muitos anos sobre o mau uso desse recurso em um aviso de segurança informativo que pode ser acessado em<br>https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20170214-smi<br>.<br>Figura 3-6<br>- Revelando sistemas vulneráveis usando Shodan"
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "DICA:<br>Tenha em mente que, embora sejam informações públicas, você não deve interagir com nenhum sistema mostrado nos resultados de Shodan sem permissão do proprietário. Se o proprietário tiver um programa de recompensa por bugs, você pode receber reconhecimento e uma recompensa por encontrar o sistema afetado. Uma recompensa por bugs é um programa projetado para recompensar pesquisadores de segurança e hackers éticos por encontrar vulnerabilidades em um produto, aplicativo ou sistema. Na maioria dos casos, a compensação é monetária. Omar Santos incluiu diversos recursos em seu repositório GitHub sobre como começar a usar recompensas por bugs; consulte<br>https://github.com/The-Art-of-Hacking/h4cker/tree/master/bug-bounties<br>."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Protego Security Solutions Task<br>Shodan é uma ferramenta incrível se usada corretamente. Ela pode descobrir vulnerabilidades graves em serviços executados em servidores conectados à Internet de todo o mundo. Entretanto, para que ele produza resultados úteis, você precisa entender como isso funciona e os filtros de pesquisa a serem usados para obter as informações desejadas.<br>Aqui em Protego, usamos ele para escanear os domínios e subdomínios que descobrimos com outras ferramentas. Também verificamos blocos de endereços que achamos que estão sob o controle do nosso alvo. Shodan é baseado em um mecanismo bastante simples que pode revelar muitas informações valiosas sobre aplicativos e serviços que estão em execução em máquinas de destino.<br>Você deve se familiarizar com as pesquisas e filtros do Shodan fazendo este laboratório. Em seguida, tome algum tempo para investigar pesquisas de exemplo de Shodan para saber mais sobre que termos você pode pesquisar para identificar diferentes tipos de serviços potencialmente vulneráveis."
+            }
+            ,{
+                "type": "teach",
+                "icon": "fa-book-open",
+                "title": "Aprofundamento Teórico",
+                "content": "Neste laboratório, você terá os seguintes objetivos:<br>Criar uma conta de usuário Shodan e registrar-se para uma chave de API<br>Usar o site de Shodan para procurar dispositivos IoT vulneráveis<br>Usar Shodan da CLI para fazer uma pesquisa"
+            }
+];
+
+        let currentStep = 0;
+        let selectedIdx = null; // For quiz and fill
+        let hearts = 5;
+        let shuffledOptions = [];
+        
+        // Match state
+        let matchLeft = [];
+        let matchRight = [];
+        let selectedLeft = null;
+        let selectedRight = null;
+        let matchesFound = 0;
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function updateProgress() {
+            const progress = (currentStep / steps.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+        }
+
+        function render() {
+            if (currentStep >= steps.length) { showVictory(); return; }
+            const step = steps[currentStep];
+            const area = document.getElementById('gameArea');
+            const checkBtn = document.getElementById('checkBtn');
+            
+            updateProgress();
+            
+            // Reset states
+            selectedIdx = null;
+            checkBtn.disabled = true;
+            checkBtn.classList.remove('active');
+            checkBtn.innerText = (step.type === 'teach' || step.type === 'example') ? 'Continuar' : 'Verificar';
+            
+            if (step.type === 'teach' || step.type === 'example') {
+                checkBtn.disabled = false;
+                checkBtn.classList.add('active');
+            }
+
+            area.innerHTML = '';
+
+            if (step.type === 'teach') {
+                area.innerHTML = `
+                    <div class="game-card teach-card">
+                        <div class="module-subtitle"><i class="fas ${step.icon}"></i> NOVO CONCEITO</div>
+                        <h2 class="title-main">${step.title}</h2>
+                        <div class="text-body">${step.content}</div>
+                        ${step.highlight ? `<div class="teach-highlight"><i class="fas fa-lightbulb mr-2"></i>${step.highlight}</div>` : ''}
+                    </div>
+                `;
+            } 
+            else if (step.type === 'example') {
+                area.innerHTML = `
+                    <div class="game-card example-card">
+                        <div class="module-subtitle"><i class="fas ${step.icon}"></i> NA PRÁTICA</div>
+                        <h2 class="title-main">${step.title}</h2>
+                        <div class="example-scenario text-body">${step.scenario}</div>
+                        ${step.code ? `<div class="example-code">${step.code}</div>` : ''}
+                        <div class="example-takeaway"><i class="fas fa-arrow-right mt-1" style="color: var(--cyber-blue)"></i> ${step.takeaway}</div>
+                    </div>
+                `;
+            }
+            else if (step.type === 'quiz') {
+                shuffledOptions = shuffle([...step.options]);
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="quiz-title">${step.task}</div>
+                        <div class="options-grid">
+                            ${shuffledOptions.map((opt, i) => `
+                                <div class="option-card" onclick="selectQuiz(${i})" id="opt-${i}">
+                                    <div class="option-number">${i+1}</div>
+                                    <span>${opt}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            else if (step.type === 'fill') {
+                shuffledOptions = shuffle([...step.options]);
+                const sentenceParts = step.sentence.split('___');
+                
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="module-subtitle"><i class="fas fa-pen-to-square"></i> COMPLETE A FRASE</div>
+                        <div class="fill-sentence">
+                            ${sentenceParts[0]}<span class="fill-slot" id="fillSlot"></span>${sentenceParts[1]}
+                        </div>
+                        <div class="options-grid">
+                            ${shuffledOptions.map((opt, i) => `
+                                <div class="option-card" style="justify-content: center;" onclick="selectFill(${i})" id="opt-${i}">
+                                    <span>${opt}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            else if (step.type === 'match') {
+                matchesFound = 0;
+                matchLeft = shuffle(step.pairs.map((p, i) => ({text: p.term, id: i})));
+                
+                let isDeranged = false;
+                while (!isDeranged) {
+                    matchRight = shuffle(step.pairs.map((p, i) => ({text: p.definition, id: i})));
+                    isDeranged = true;
+                    for (let j = 0; j < matchLeft.length; j++) {
+                        if (matchLeft[j].id === matchRight[j].id) {
+                            if (matchLeft.length > 1) {
+                                isDeranged = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                selectedLeft = null;
+                selectedRight = null;
+                
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="module-subtitle"><i class="fas fa-link"></i> ASSOCIE OS PARES</div>
+                        <div class="quiz-title">${step.title}</div>
+                        <div class="match-container">
+                                ${matchLeft.map((item, i) => `
+                                    <div class="match-item" id="left-${i}" onclick="selectMatch('left', ${i}, ${item.id})">${item.text}</div>
+                                    <div class="match-item" id="right-${i}" onclick="selectMatch('right', ${i}, ${matchRight[i].id})">${matchRight[i].text}</div>
+                                `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            area.scrollTop = 0;
+        }
+
+        // Interactivity Handlers
+        function selectQuiz(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function selectFill(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+            const slot = document.getElementById('fillSlot');
+            slot.innerText = shuffledOptions[idx];
+            slot.classList.add('filled');
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('checkBtn').classList.add('active');
+        }
+
+        function selectMatch(side, idx, pairId) {
+            const item = document.getElementById(`${side}-${idx}`);
+            if (item.classList.contains('matched')) return;
+
+            // Clear previous selection on same side
+            document.querySelectorAll(`.match-item[id^='${side}-']`).forEach(el => {
+                if(!el.classList.contains('matched')) el.classList.remove('selected');
+            });
+            
+            item.classList.add('selected');
+
+            if (side === 'left') selectedLeft = {el: item, id: pairId};
+            else selectedRight = {el: item, id: pairId};
+
+            if (selectedLeft && selectedRight) {
+                // Check match
+                if (selectedLeft.id === selectedRight.id) {
+                    selectedLeft.el.classList.remove('selected');
+                    selectedLeft.el.classList.add('matched');
+                    selectedRight.el.classList.remove('selected');
+                    selectedRight.el.classList.add('matched');
+                    matchesFound++;
+                    
+                    if (matchesFound === steps[currentStep].pairs.length) {
+                        document.getElementById('checkBtn').disabled = false;
+                        document.getElementById('checkBtn').classList.add('active');
+                    }
+                } else {
+                    let errLeft = selectedLeft;
+                    let errRight = selectedRight;
+                    selectedLeft = null;
+                    selectedRight = null;
+
+                    errLeft.el.classList.remove('selected');
+                    errLeft.el.classList.add('error');
+                    errRight.el.classList.remove('selected');
+                    errRight.el.classList.add('error');
+                    
+                    // Lose heart for wrong match
+                    hearts--;
+                    updateProgress();
+                    if(hearts <= 0) triggerGameOver();
+
+                    setTimeout(() => {
+                        errLeft.el.classList.remove('error');
+                        errRight.el.classList.remove('error');
+                    }, 500);
+                    return;
+                }
+                selectedLeft = null;
+                selectedRight = null;
+            }
+        }
+
+        // Logic Check
+        function checkResponse() {
+            const step = steps[currentStep];
+            const checkBtn = document.getElementById('checkBtn');
+            const popup = document.getElementById('feedbackPopup');
+            
+            // Non-interactive steps just advance
+            if (step.type === 'teach' || step.type === 'example') {
+                currentStep++;
+                render();
+                return;
+            }
+
+            let isCorrect = false;
+
+            if (step.type === 'quiz' || step.type === 'fill') {
+                isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+                
+                document.querySelectorAll('.option-card').forEach((c, i) => {
+                    if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                    else if (i === selectedIdx) c.classList.add('wrong');
+                    c.classList.add('disabled');
+                });
+            } else if (step.type === 'match') {
+                isCorrect = true; // Button only enables when all matches found
+            }
+
+            if (isCorrect) {
+                document.getElementById('fbTitle').innerHTML = '<i class="fas fa-check-circle"></i> Excelente!';
+                document.getElementById('fbTitle').className = "feedback-title text-green-500";
+                document.getElementById('fbMsg').innerText = step.explanation || "Você dominou esse conceito.";
+                popup.className = "feedback-overlay show correct";
+            } else {
+                hearts--;
+                updateProgress();
+                document.getElementById('fbTitle').innerHTML = '<i class="fas fa-times-circle"></i> Incorreto!';
+                document.getElementById('fbTitle').className = "feedback-title text-red-500";
+                document.getElementById('fbMsg').innerText = step.explanation || "O correto era: " + step.correctText;
+                popup.className = "feedback-overlay show wrong";
+                
+                if (hearts <= 0) {
+                    setTimeout(triggerGameOver, 600);
+                }
+            }
+        }
+
+        function triggerGameOver() {
+            alert("VOCÊ FICOU SEM VIDAS. O treinamento será reiniciado."); 
+            location.reload();
+        }
+
+        function handleContinue() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+            currentStep++;
+            render();
+        }
+
+        function showVictory() {
+            document.getElementById('progressFill').style.width = `100%`;
+            document.getElementById('footerArea').classList.add('hidden');
+            
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/3.2-reconhecimento.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #009e80; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            }
+
+            document.getElementById('gameArea').innerHTML = `
+                <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
+                    <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
+                    <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
+                    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
+                        ${nextBtnHtml}
+                        <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">
+                            <button class="check-btn" onclick="location.reload()" style="flex: 1; background: #161b22; border: 2px solid #30363d; color: #c9d1d9; box-shadow: 0 4px 0 #0d1117; padding: 0.8rem 0.5rem;">
+                                <i class="fas fa-rotate-right mb-1 block text-lg"></i>
+                                <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
+                            </button>
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-03.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                                <i class="fas fa-layer-group mb-1 block text-lg"></i>
+                                <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        render();
+    </script>
+</body>
+</html>

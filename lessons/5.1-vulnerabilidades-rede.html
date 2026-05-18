@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - OWASP Top 10 (Parte 1) 6.1a</title>
+    <title>CyberDuo - Exploração de Protocolos e Ataques de Senha</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #00f2ff;
+            --cyber-blue: #ff8c00;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00a8b3; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #00a8b3; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b36200; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b36200; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-06.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-05.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,61 +131,170 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-list",
-                        "title": "O que é a OWASP?",
-                        "content": "A <b>OWASP</b> (Open Web Application Security Project) é uma fundação sem fins lucrativos. O <b>OWASP Top 10</b> é um documento de conscientização que lista os 10 riscos de segurança mais críticos para aplicações web.",
-                        "highlight": "OWASP Top 10 = guia de sobrevivência em AppSec"
+                        "icon": "fa-users",
+                        "title": "Man-in-the-Middle (MITM)",
+                        "content": "No ataque <b>MITM</b>, o hacker se posiciona invisivelmente entre a vítima e o roteador (ou servidor). Todo o tráfego de rede passa pelo computador do hacker antes de chegar ao destino."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-eye",
+                        "title": "Interceptação de Tráfego",
+                        "scenario": "A vítima entra em um site HTTP para comprar um produto. Como o tráfego passa pelo computador do atacante, ele lê o número do cartão de crédito em texto puro usando o Wireshark.",
+                        "takeaway": "Sem criptografia ponta-a-ponta, a rede local não é confiável."
+            },
+            {
+                        "type": "quiz",
+                        "task": "No ataque MITM, qual é o principal objetivo do atacante?",
+                        "options": [
+                                    "Interceptar e manipular a comunicação entre duas partes sem que elas saibam.",
+                                    "Derrubar o servidor com múltiplas requisições simultâneas.",
+                                    "Adivinhar a senha do Wi-Fi."
+                        ],
+                        "correctText": "Interceptar e manipular a comunicação entre duas partes sem que elas saibam.",
+                        "explanation": "Ele vira um intermediário silencioso e malicioso."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-network-wired",
+                        "title": "ARP Spoofing",
+                        "content": "A técnica mais comum de MITM em redes locais é o <b>ARP Spoofing</b>. O hacker envia pacotes ARP falsos dizendo para a máquina da vítima: 'Eu sou o roteador'. E diz para o roteador: 'Eu sou a vítima'."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Enganando o Switch",
+                        "scenario": "O PC do João quer ir para a internet. Mas o atacante 'envenenou' a tabela ARP do João. Agora, o PC do João manda os dados para o hacker achando que é o roteador.",
+                        "takeaway": "O protocolo ARP não possui autenticação nativa."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "Para se defender de ataques de ___ Spoofing, empresas configuram 'Dynamic ARP Inspection' (DAI) em seus switches Cisco.",
+                        "options": [
+                                    "ARP",
+                                    "DNS",
+                                    "IP"
+                        ],
+                        "correctText": "ARP",
+                        "explanation": "O DAI impede que máquinas enviem respostas ARP fraudulentas na rede."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-volume-high",
+                        "title": "O que é LLMNR?",
+                        "content": "Quando um PC Windows não consegue resolver um nome via DNS, ele 'grita' na rede local usando <b>LLMNR</b> ou <b>NBT-NS</b> perguntando se alguém conhece aquele nome.",
+                        "highlight": "Protocolo de broadcast local, altamente inseguro."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-skull",
+                        "title": "Poisoning (Envenenamento)",
+                        "content": "O atacante ouve o grito e responde: 'Eu sou esse servidor! Me mande suas credenciais para autenticar'. A vítima envia seu hash NTLMv2.",
+                        "highlight": "O atacante mente para capturar o hash da vítima."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Responder",
+                        "scenario": "Usando a ferramenta `Responder`, o atacante fica passivamente na rede. Quando alguém digita errado o nome de uma pasta da rede (`\\\\servidro` em vez de `\\\\servidor`), o Responder captura a credencial.",
+                        "takeaway": "Desabilite LLMNR e NBT-NS no Active Directory via GPO."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "Ao capturar as credenciais através do Responder, o atacante obtém um ___, que precisa ser quebrado usando ferramentas como Hashcat.",
+                        "options": [
+                                    "Hash NTLMv2",
+                                    "Cookie",
+                                    "Token JWT"
+                        ],
+                        "correctText": "Hash NTLMv2",
+                        "explanation": "O Windows usa o protocolo NTLMv2 em redes locais, que não envia senhas em texto puro."
             },
             {
                         "type": "teach",
                         "icon": "fa-key",
-                        "title": "A01: Quebra de Controle de Acesso",
-                        "content": "Ocorre quando usuários conseguem acessar dados ou executar ações que não deveriam. Exemplos: acessar URL admin sem estar logado, alterar ID na URL para ver conta de outra pessoa (<b>IDOR</b>).",
-                        "highlight": "Autorização falha = caos"
+                        "title": "Brute Force e Dictionary",
+                        "content": "<b>Brute Force</b>: testa TODAS as combinações. <b>Dictionary</b>: testa palavras de uma lista. <b>Hybrid</b>: combina dicionário + regras (ex: Password1!, Password2!).",
+                        "highlight": "Dicionário é mais rápido, brute force é mais completo"
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-unlock",
+                        "title": "Pass-the-Hash",
+                        "content": "No <b>Pass-the-Hash</b>, o atacante usa o hash NTLM capturado para autenticar em serviços Windows <b>sem precisar da senha em texto claro</b>. Funciona com <b>psexec</b> e <b>wmiexec</b>.",
+                        "highlight": "Hash NTLM = equivalente à senha no Windows"
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-ticket",
+                        "title": "Kerberoasting",
+                        "content": "<b>Kerberoasting</b>: solicita tickets Kerberos TGS para contas de serviço e tenta crackar offline. Contas de serviço frequentemente têm senhas fracas e privilégios altos.",
+                        "highlight": "Service accounts = alvo fácil com alto impacto"
             },
             {
                         "type": "example",
-                        "icon": "fa-user-secret",
-                        "title": "IDOR na Prática",
-                        "scenario": "O usuário está logado como ID 10. Ele altera a URL para acessar os dados do ID 11.",
-                        "code": "URL original: http://alvo.com/perfil?id=10\nAtacante muda para: http://alvo.com/perfil?id=11\n(Se a aplicação não verificar permissão, ele verá dados de outros)",
-                        "takeaway": "IDOR (Insecure Direct Object Reference) é uma falha clássica de A01."
+                        "icon": "fa-terminal",
+                        "title": "Kerberoasting com Impacket",
+                        "scenario": "O pentester solicita tickets TGS para todas as contas de serviço do AD e tenta crackar com Hashcat.",
+                        "code": "GetUserSPNs.py domain/user:pass -dc-ip 10.0.0.1 -outputfile tgs.txt\nhashcat -m 13100 tgs.txt rockyou.txt",
+                        "takeaway": "Kerberoasting não requer privilégios elevados no AD."
             },
             {
                         "type": "teach",
-                        "icon": "fa-lock",
-                        "title": "A02: Falhas Criptográficas",
-                        "content": "Falta de criptografia ou uso de algoritmos fracos/antigos (MD5, SHA1). Leva à exposição de dados sensíveis (senhas, cartões). Exemplos: tráfego HTTP em vez de HTTPS, senhas não hasheadas no banco.",
-                        "highlight": "MD5 e SHA1 estão obsoletos"
+                        "icon": "fa-id-card",
+                        "title": "AS-REP Roasting",
+                        "content": "<b>AS-REP Roasting</b>: explora contas com <b>Kerberos pre-auth desabilitado</b>. O atacante solicita o AS-REP e cracka offline sem precisar de credenciais válidas.",
+                        "highlight": "Pre-auth desabilitado = senha crackável sem login"
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-database",
+                        "title": "Credential Stuffing",
+                        "content": "<b>Credential Stuffing</b>: usa pares <b>email:senha</b> de vazamentos (breaches) para tentar login em outros serviços. 65% das pessoas reutilizam senhas.",
+                        "highlight": "Reutilização de senhas = porta aberta"
             },
             {
                         "type": "quiz",
-                        "task": "Qual categoria do OWASP Top 10 inclui a vulnerabilidade IDOR (Insecure Direct Object Reference)?",
+                        "task": "Qual ataque solicita tickets Kerberos TGS para crackar senhas de service accounts offline?",
                         "options": [
-                                    "A01: Quebra de Controle de Acesso",
-                                    "A02: Falhas Criptográficas",
-                                    "A03: Injeção"
+                                    "Kerberoasting",
+                                    "Phishing",
+                                    "ARP Spoofing"
                         ],
-                        "correctText": "A01: Quebra de Controle de Acesso",
-                        "explanation": "IDOR ocorre quando o sistema não verifica adequadamente se o usuário tem autorização para acessar o recurso solicitado pelo ID."
+                        "correctText": "Kerberoasting",
+                        "explanation": "Kerberoasting explora contas de serviço com SPNs registrados no Active Directory."
             },
             {
-                        "type": "teach",
-                        "icon": "fa-syringe",
-                        "title": "A03: Injeção",
-                        "content": "Dados não confiáveis do usuário são enviados a um interpretador como parte de um comando. O interpretador é 'enganado' e executa comandos não intencionais. Exemplos: <b>SQL Injection</b>, <b>OS Command Injection</b>.",
-                        "highlight": "Valide e sanitize todas as entradas"
+                        "type": "match",
+                        "title": "Ataque → Requisito",
+                        "pairs": [
+                                    {
+                                                "term": "Pass-the-Hash",
+                                                "definition": "Hash NTLM capturado"
+                                    },
+                                    {
+                                                "term": "Kerberoasting",
+                                                "definition": "Acesso ao AD (qualquer user)"
+                                    },
+                                    {
+                                                "term": "AS-REP Roasting",
+                                                "definition": "Pre-auth desabilitado"
+                                    },
+                                    {
+                                                "term": "Credential Stuffing",
+                                                "definition": "Lista de credenciais vazadas"
+                                    }
+                        ]
             },
             {
                         "type": "fill",
-                        "sentence": "A categoria OWASP que lida com dados sendo enviados como comandos para interpretadores, como em SQLi, é a A03: ___.",
+                        "sentence": "O ataque que explora contas com Kerberos pre-authentication desabilitado é o ___.",
                         "options": [
-                                    "Injeção",
-                                    "Design Inseguro",
-                                    "Desconfiguração"
+                                    "AS-REP Roasting",
+                                    "Kerberoasting",
+                                    "Pass-the-Hash"
                         ],
-                        "correctText": "Injeção",
-                        "explanation": "Injeções ocorrem quando a entrada do usuário altera a sintaxe e a lógica do comando subjacente."
+                        "correctText": "AS-REP Roasting",
+                        "explanation": "AS-REP Roasting funciona sem credenciais se a pre-auth estiver desabilitada."
             }
 ];
 
@@ -467,15 +576,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/6.1b-owasp-top10-2.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/5.2-wireless.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00a8b3; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b36200; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">OWASP PARTE 1 DOMINADO!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -484,7 +593,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-06.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-05.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

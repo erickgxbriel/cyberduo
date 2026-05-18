@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Falhas de Memória e C (6.12a)</title>
+    <title>CyberDuo - Mobile, IoT e Sistemas Embarcados (ICS/SCADA)</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #00f2ff;
+            --cyber-blue: #e6edf3;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00a8b3; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #00a8b3; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #a0a8b0; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #a0a8b0; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-06.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-07.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,46 +131,123 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-microchip",
-                        "title": "Corrupção de Memória",
-                        "content": "Linguagens como C/C++ não gerenciam memória automaticamente. Se o programa gravar dados além do limite de um buffer, ocorre um <b>Buffer Overflow</b>. Isso permite a um atacante injetar e executar código malicioso (shellcode) ou derrubar a aplicação (DoS).",
-                        "highlight": "Buffer Overflow = sobrescrever memória para ganhar execução de código"
+                        "icon": "fa-mobile-screen",
+                        "title": "Análise Estática (Mobile)",
+                        "content": "Em aplicativos Mobile, a análise estática envolve descompilar o APK (Android) ou IPA (iOS) para ler o código-fonte em busca de senhas ou chaves de API fixas (hardcoded). A principal ferramenta automatizada para isso é o <b>MobSF</b> (Mobile Security Framework)."
             },
             {
-                        "type": "teach",
-                        "icon": "fa-memory",
-                        "title": "Memory Leaks",
-                        "content": "Se um programa aloca memória e esquece de liberá-la, ocorre um <b>Memory Leak</b> (Vazamento de Memória). Com o tempo, o programa consome toda a memória do sistema, resultando em <b>Denial of Service (DoS)</b>.",
-                        "highlight": "Memory leak = esgotamento de recursos = DoS"
+                        "type": "example",
+                        "icon": "fa-search",
+                        "title": "Achando o Ouro",
+                        "scenario": "O atacante joga o APK do banco no MobSF. Em dois minutos, o relatório mostra que o desenvolvedor deixou a chave 'AWS_SECRET_KEY' escrita em texto puro no código.",
+                        "takeaway": "Análise estática lê o código sem executar o app."
             },
             {
                         "type": "quiz",
-                        "task": "Uma falha clássica em C/C++ que permite sobrescrever a memória adjacente e possivelmente executar código arbitrário é chamada de:",
+                        "task": "Qual ferramenta é o padrão na indústria para realizar análise estática e dinâmica automatizada em binários de Android e iOS?",
                         "options": [
-                                    "Buffer Overflow",
-                                    "SQL Injection",
-                                    "Cross-Site Scripting"
+                                    "MobSF (Mobile Security Framework)",
+                                    "Wireshark",
+                                    "Hashcat"
                         ],
-                        "correctText": "Buffer Overflow",
-                        "explanation": "Buffer overflows exploram a falta de checagem de limites ao escrever dados em variáveis na memória."
+                        "correctText": "MobSF (Mobile Security Framework)",
+                        "explanation": "O MobSF atua como um scanner completo focado exclusivamente em Mobile."
             },
             {
                         "type": "teach",
-                        "icon": "fa-stopwatch",
-                        "title": "Race Conditions (TOCTOU)",
-                        "content": "Uma <b>Race Condition</b> ocorre quando o resultado do sistema depende da sequência em que processos são executados. <b>TOCTOU</b> (Time of Check to Time of Use) é quando o estado muda entre a verificação de segurança e o uso real.",
-                        "highlight": "Condição de corrida = atacar o tempo entre a checagem e a ação"
+                        "icon": "fa-syringe",
+                        "title": "Análise Dinâmica e Hooking",
+                        "content": "Muitas vezes o app tem proteções e a análise estática falha. O atacante precisa analisar o app *enquanto ele roda* na memória. Usando o <b>Frida</b> e o <b>Objection</b>, o hacker injeta scripts (hooking) para modificar o comportamento do app ao vivo, como burlar o login ou o detector de Root/Jailbreak."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-bug",
+                        "title": "Bypassing SSL Pinning",
+                        "scenario": "O app do banco não deixa o hacker interceptar a rede. O hacker usa o Frida para injetar um script que 'desliga' a checagem de certificado de segurança (SSL Pinning Bypass), permitindo ver todo o tráfego.",
+                        "takeaway": "O Frida manipula as funções do aplicativo na memória RAM."
             },
             {
                         "type": "fill",
-                        "sentence": "A falha de concorrência onde a segurança é comprometida entre o momento de verificação (Check) e o momento de uso (Use) é chamada de ___.",
+                        "sentence": "A ferramenta de injeção dinâmica de código (hooking) mais utilizada para burlar proteções em tempo de execução em aplicativos móveis é o ___.",
                         "options": [
-                                    "TOCTOU",
-                                    "XSS",
-                                    "CSRF"
+                                    "Frida",
+                                    "Nmap",
+                                    "John the Ripper"
                         ],
-                        "correctText": "TOCTOU",
-                        "explanation": "TOCTOU (Time of Check to Time of Use) é um tipo clássico de Race Condition."
+                        "correctText": "Frida",
+                        "explanation": "Frida permite injetar trechos de JavaScript em aplicativos nativos rodando no celular."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-network-wired",
+                        "title": "Insegurança em IoT",
+                        "content": "Dispositivos <b>IoT</b> (Internet das Coisas), como câmeras e fechaduras inteligentes, frequentemente sofrem de falhas severas: senhas padrão inalteráveis (ex: admin/admin), comunicação sem criptografia e firmware desatualizado."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-video",
+                        "title": "A Invasão Silenciosa",
+                        "scenario": "O hacker descobre que a câmera IP usa Telnet (sem criptografia) e a senha de fábrica. Ele loga na câmera e a usa como ponto de partida (pivot) para invadir a rede corporativa.",
+                        "takeaway": "Dispositivos IoT são os elos mais fracos da rede."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual é a falha de segurança mais comum e explorada em dispositivos IoT?",
+                        "options": [
+                                    "Uso de senhas padrão de fábrica (hardcoded) e falta de criptografia em protocolos de comunicação.",
+                                    "Ataques avançados de injeção SQL no hardware.",
+                                    "Falta de antivírus de terceiros."
+                        ],
+                        "correctText": "Uso de senhas padrão de fábrica (hardcoded) e falta de criptografia em protocolos de comunicação.",
+                        "explanation": "Fabricantes de IoT priorizam facilidade de uso em vez de segurança."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-industry",
+                        "title": "Sistemas ICS e SCADA",
+                        "content": "<b>ICS/SCADA</b> são os sistemas de controle industrial que operam usinas elétricas, fábricas e estações de água. Uma invasão aqui não rouba dados, mas causa danos físicos reais (desligar energia, alterar temperatura)."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-radiation",
+                        "title": "Stuxnet",
+                        "scenario": "O vírus Stuxnet alterou os comandos de centrífugas nucleares iranianas. O painel SCADA mostrava que estava tudo bem, enquanto as máquinas fisicamente giravam até quebrar.",
+                        "takeaway": "Em SCADA, disponibilidade e integridade física são prioridades máximas."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "Sistemas focados em controle de infraestruturas críticas, onde o impacto da invasão é cinético/físico, são conhecidos como ___.",
+                        "options": [
+                                    "SCADA",
+                                    "Web",
+                                    "Mobile"
+                        ],
+                        "correctText": "SCADA",
+                        "explanation": "Supervisory Control and Data Acquisition."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-microchip",
+                        "title": "Engenharia Reversa de Hardware",
+                        "content": "Sistemas embarcados exigem interação física. Atacantes abrem os dispositivos, localizam portas de depuração diretamente na placa-mãe (como <b>UART</b> ou <b>JTAG</b>) e conectam cabos para extrair o Firmware do chip de memória."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-screwdriver",
+                        "title": "Extração via UART",
+                        "scenario": "O hacker compra um roteador. Ele abre a carcaça, solda fios na porta UART da placa e conecta ao seu PC. Ele ganha um terminal de root instantâneo no sistema operacional do roteador.",
+                        "takeaway": "O hardware confia cegamente em quem tem acesso físico a ele."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual é o objetivo principal ao utilizar portas de depuração de hardware, como UART ou JTAG, em sistemas embarcados?",
+                        "options": [
+                                    "Obter acesso direto à interface do sistema e extrair o Firmware do dispositivo.",
+                                    "Aumentar a velocidade da internet do equipamento.",
+                                    "Criar um servidor na nuvem."
+                        ],
+                        "correctText": "Obter acesso direto à interface do sistema e extrair o Firmware do dispositivo.",
+                        "explanation": "Essas portas são usadas por engenheiros na fábrica, mas exploradas por hackers."
             }
 ];
 
@@ -452,15 +529,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/6.12b-codigo-inseguro-web.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/8.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00a8b3; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #a0a8b0; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">CÓDIGO INSEGURO DOMINADO!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -469,7 +546,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-06.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-07.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

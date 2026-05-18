@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Injeção Web 6.4</title>
+    <title>CyberDuo - SQL Injection e Command Injection</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -132,53 +132,74 @@
             {
                         "type": "teach",
                         "icon": "fa-syringe",
-                        "title": "SQL Injection",
-                        "content": "<b>SQL Injection</b> ocorre quando entrada do usuário é inserida diretamente em uma query SQL sem sanitização. O atacante pode <b>ler</b>, <b>modificar</b> ou <b>deletar</b> dados do banco.",
-                        "highlight": "A vulnerabilidade web mais perigosa"
+                        "title": "A Família Injection",
+                        "content": "<b>Injeção</b> acontece quando dados não-confiáveis são enviados a um interpretador como parte de um comando. O interpretador é enganado e executa comandos indevidos em vez de apenas ler os dados."
             },
             {
                         "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "Login Bypass",
-                        "scenario": "No campo de login, o atacante digita: <b>' OR 1=1 --</b>. A query se torna: SELECT * FROM users WHERE user='' OR 1=1 --' AND pass=''. Como 1=1 é sempre verdadeiro, o login é bypassed.",
-                        "code": "' OR 1=1 --",
-                        "takeaway": "Nunca concatene entrada do usuário em queries SQL."
+                        "icon": "fa-bug",
+                        "title": "Misturando Código e Dados",
+                        "scenario": "O servidor espera um NOME. O hacker envia 'NOME; APAGAR_TUDO'. Como o servidor não limpa o texto, ele executa o comando de apagar.",
+                        "takeaway": "O sistema não sabe onde termina o dado e começa o comando."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual é a causa raiz fundamental de qualquer vulnerabilidade de Injeção?",
+                        "options": [
+                                    "A mistura insegura entre dados fornecidos pelo usuário e o código executável do sistema.",
+                                    "O uso de criptografia fraca no banco de dados.",
+                                    "A falta de firewalls na rede da empresa."
+                        ],
+                        "correctText": "A mistura insegura entre dados fornecidos pelo usuário e o código executável do sistema.",
+                        "explanation": "A injeção ocorre porque o sistema interpreta o dado como uma instrução a ser executada."
             },
             {
                         "type": "teach",
                         "icon": "fa-database",
-                        "title": "Tipos de SQLi",
-                        "content": "<b>In-band</b>: resultado aparece na página. <b>Blind</b>: sem output visível, infere dados por comportamento (True/False). <b>Out-of-band</b>: exfiltra dados via DNS ou HTTP.",
-                        "highlight": "Mesmo sem output visível, SQLi ainda funciona (Blind)"
+                        "title": "SQL Injection (SQLi)",
+                        "content": "O <b>SQLi</b> ataca o banco de dados. O atacante manipula consultas SQL para extrair tabelas, bypassar logins ou deletar dados inteiros."
             },
             {
-                        "type": "quiz",
-                        "task": "Qual payload básico testa SQL Injection em um campo de login?",
-                        "options": [
-                                    "' OR 1=1 --",
-                                    "<script>alert(1)</script>",
-                                    "../../../etc/passwd"
-                        ],
-                        "correctText": "' OR 1=1 --",
-                        "explanation": "' OR 1=1 -- fecha a string, injeta condição sempre verdadeira e comenta o resto."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-shield-halved",
-                        "title": "Prevenção de SQLi",
-                        "content": "<b>Prepared Statements</b> (parameterized queries) são a defesa principal. Nunca concatene entrada do usuário. Use <b>ORM</b> quando possível e aplique <b>input validation</b>.",
-                        "highlight": "Prepared Statements = imunidade contra SQLi"
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "O Bypass Clássico",
+                        "scenario": "Na tela de login, o usuário digita: `' OR 1=1 --`. O banco de dados avalia `1=1` como VERDADEIRO e faz o login sem precisar de senha.",
+                        "takeaway": "Um caractere aspas simples (') não tratado pode derrubar a empresa."
             },
             {
                         "type": "fill",
-                        "sentence": "A defesa principal contra SQL Injection é usar ___ em vez de concatenar entradas.",
+                        "sentence": "A vulnerabilidade que permite a um invasor interagir e extrair informações diretamente do banco de dados relacional é chamada de ___ Injection.",
                         "options": [
-                                    "Prepared Statements",
-                                    "firewall",
-                                    "antivírus"
+                                    "SQL",
+                                    "HTML",
+                                    "Bash"
                         ],
-                        "correctText": "Prepared Statements",
-                        "explanation": "Prepared Statements separam dados de código SQL, eliminando a possibilidade de injeção."
+                        "correctText": "SQL",
+                        "explanation": "SQL (Structured Query Language) é a linguagem dos bancos de dados relacionais."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-terminal",
+                        "title": "Command Injection (OS)",
+                        "content": "Diferente do SQLi que ataca o banco, a Injeção de Comandos executa comandos direto no Sistema Operacional (Bash/CMD) do servidor. Controle total do servidor."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-skull",
+                        "title": "Controle do Servidor",
+                        "scenario": "O site pede um IP para pingar. O hacker digita: `8.8.8.8 && whoami`. O servidor pinga o IP e em seguida revela quem é o usuário do sistema operacional.",
+                        "takeaway": "Command Injection = Controle do Sistema (RCE)."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Se um atacante injeta `127.0.0.1; cat /etc/passwd` num campo de formulário e a tela retorna a lista de usuários do Linux, qual foi o ataque?",
+                        "options": [
+                                    "Command Injection",
+                                    "SQL Injection",
+                                    "XSS"
+                        ],
+                        "correctText": "Command Injection",
+                        "explanation": "O atacante está enviando comandos diretamente para o shell (terminal) do servidor Linux."
             }
 ];
 

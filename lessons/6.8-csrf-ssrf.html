@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - CSRF e SSRF 6.8</title>
+    <title>CyberDuo - Falsificação de Requisições (CSRF/SSRF)</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -131,60 +131,42 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-arrows-rotate",
-                        "title": "CSRF",
-                        "content": "<b>CSRF</b> (Cross-Site Request Forgery) faz o browser da vítima enviar uma requisição autenticada a um site onde ela está logada. A vítima executa ações <b>sem perceber</b>.",
-                        "highlight": "O browser da vítima ataca por ela"
+                        "icon": "fa-ticket",
+                        "title": "CSRF - Cross-Site Request Forgery",
+                        "content": "No <b>CSRF</b>, o atacante engana o navegador da vítima para executar uma ação não desejada num site em que a vítima já está logada (ex: fazer uma transferência bancária).",
+                        "highlight": "Ataque 'força' a vítima a agir sem saber."
             },
             {
                         "type": "example",
-                        "icon": "fa-envelope",
-                        "title": "Transferência Forçada",
-                        "scenario": "O atacante envia um e-mail com uma imagem invisível: <b>&lt;img src='https://banco.com/transferir?para=atacante&valor=1000'&gt;</b>. Se a vítima estiver logada no banco, a transferência é feita.",
-                        "takeaway": "CSRF explora a confiança do servidor no browser autenticado."
+                        "icon": "fa-money-bill-transfer",
+                        "title": "Transferência Invisível",
+                        "scenario": "O atacante envia um link com a tag `<img src='http://banco.com/transfer?to=hacker&amount=1000'>`. Quando a vítima (logada no banco) abre o link, seu navegador tenta carregar a imagem e realiza a transferência.",
+                        "takeaway": "Use Anti-CSRF Tokens em todos os formulários e requisições de estado."
             },
             {
                         "type": "teach",
                         "icon": "fa-server",
-                        "title": "SSRF",
-                        "content": "<b>SSRF</b> (Server-Side Request Forgery) faz o <b>servidor</b> fazer requisições para recursos internos. O atacante acessa serviços que não estão expostos à internet.",
-                        "highlight": "SSRF = o servidor faz a requisição por você"
+                        "title": "Server-Side Request Forgery",
+                        "content": "No <b>SSRF</b>, o atacante não ataca o servidor diretamente; ele <i>usa</i> o servidor vulnerável para fazer requisições contra sistemas internos (que estão protegidos de acesso externo).",
+                        "highlight": "O servidor vira o atirador de elite do hacker."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-cloud-bolt",
+                        "title": "SSRF na Nuvem",
+                        "scenario": "Na AWS, o atacante força a aplicação a acessar `http://169.254.169.254/latest/meta-data/`. A aplicação obedece e devolve as chaves secretas do servidor para o atacante.",
+                        "takeaway": "APIs de metadados em nuvem são alvos clássicos de SSRF."
             },
             {
                         "type": "quiz",
-                        "task": "Qual ataque faz o browser da vítima enviar requisições autenticadas sem ela saber?",
+                        "task": "Em um ataque SSRF, quem realmente executa a requisição maliciosa?",
                         "options": [
-                                    "CSRF",
-                                    "SSRF",
-                                    "XSS"
+                                    "O servidor web vulnerável.",
+                                    "O navegador da vítima.",
+                                    "O banco de dados."
                         ],
-                        "correctText": "CSRF",
-                        "explanation": "CSRF explora o cookie de sessão já presente no browser da vítima."
-            },
-            {
-                        "type": "match",
-                        "title": "CSRF vs SSRF",
-                        "pairs": [
-                                    {
-                                                "term": "CSRF",
-                                                "definition": "Browser da vítima faz a requisição"
-                                    },
-                                    {
-                                                "term": "SSRF",
-                                                "definition": "Servidor do alvo faz a requisição"
-                                    }
-                        ]
-            },
-            {
-                        "type": "fill",
-                        "sentence": "A defesa contra CSRF é usar ___ em formulários para validar a origem da requisição.",
-                        "options": [
-                                    "tokens anti-CSRF",
-                                    "firewall",
-                                    "criptografia"
-                        ],
-                        "correctText": "tokens anti-CSRF",
-                        "explanation": "Tokens anti-CSRF são valores únicos que o atacante não consegue prever."
+                        "correctText": "O servidor web vulnerável.",
+                        "explanation": "O servidor age como um proxy a mando do atacante."
             }
 ];
 
@@ -474,7 +456,7 @@
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">CSRF E SSRF DOMINADOS!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}

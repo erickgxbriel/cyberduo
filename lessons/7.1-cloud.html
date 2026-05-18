@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Inclusão de Arquivos 6.11</title>
+    <title>CyberDuo - Segurança e Exploração em Nuvem (Cloud)</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #00f2ff;
+            --cyber-blue: #e6edf3;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00a8b3; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #00a8b3; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #a0a8b0; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #a0a8b0; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-06.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-07.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,40 +131,101 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-file-import",
-                        "title": "LFI e RFI",
-                        "content": "<b>LFI</b> (Local File Inclusion): o atacante inclui arquivos locais do servidor (ex: /etc/passwd). <b>RFI</b> (Remote File Inclusion): inclui arquivos de um servidor externo.",
-                        "highlight": "Incluir arquivos não previstos = acesso total"
+                        "icon": "fa-box-open",
+                        "title": "Armazenamento Exposto",
+                        "content": "O erro número 1 em Cloud: desenvolvedores configuram AWS S3 Buckets ou Azure Blobs como 'Públicos' por engano ou para 'facilitar testes'."
             },
             {
                         "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "LFI para Ler /etc/passwd",
-                        "scenario": "A URL <b>page.php?file=about.html</b> é vulnerável. O atacante muda para <b>page.php?file=../../../etc/passwd</b> e lê a lista de usuários do sistema.",
-                        "code": "page.php?file=../../../etc/passwd",
-                        "takeaway": "Path traversal (../) permite navegar pelo sistema de arquivos do servidor."
+                        "icon": "fa-globe",
+                        "title": "Scanners de Buckets",
+                        "scenario": "Grupos criminosos usam bots que rastreiam milhares de buckets S3 na internet. Quando acham um público, baixam tudo: backups de banco de dados, senhas e CPFs.",
+                        "takeaway": "Um checkbox errado e a empresa sofre um vazamento gigante."
             },
             {
                         "type": "quiz",
-                        "task": "Qual ataque permite ler arquivos locais do servidor através de path traversal?",
+                        "task": "Qual é a principal causa de vazamentos em massa envolvendo infraestrutura em nuvem (como AWS S3)?",
                         "options": [
-                                    "LFI (Local File Inclusion)",
-                                    "XSS",
-                                    "CSRF"
+                                    "Configuração incorreta, deixando buckets e blobs com acesso público de leitura.",
+                                    "Falha criptográfica no algoritmo AES-256 da Amazon.",
+                                    "Ataques de Buffer Overflow no hardware da AWS."
                         ],
-                        "correctText": "LFI (Local File Inclusion)",
-                        "explanation": "LFI usa ../ para navegar pelo filesystem e ler arquivos sensíveis."
+                        "correctText": "Configuração incorreta, deixando buckets e blobs com acesso público de leitura.",
+                        "explanation": "Quase 100% dos grandes vazamentos S3 acontecem por erro de configuração (humano)."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-id-card",
+                        "title": "Vazamento de Chaves IAM",
+                        "content": "Outro vetor comum: desenvolvedores deixam suas chaves de API Cloud (credenciais do IAM) dentro de códigos-fonte que são enviados (commitados) no GitHub Público."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-robot",
+                        "title": "O Ataque do Git",
+                        "scenario": "Um dev salva o código no GitHub com a chave `AKIA123...`. Em 3 segundos, um bot hacker acha a chave e a usa para criar 500 servidores na AWS do dev para minerar Bitcoin.",
+                        "takeaway": "Nunca coloque chaves AWS em repositórios de código."
             },
             {
                         "type": "fill",
-                        "sentence": "A técnica de usar ../ para navegar pelo sistema de arquivos é chamada de ___.",
+                        "sentence": "Para gerenciar o acesso na nuvem e aplicar a regra do Menor Privilégio, as plataformas usam políticas baseadas em ___ (Identity and Access Management).",
                         "options": [
-                                    "Path Traversal",
-                                    "SQL Injection",
-                                    "Buffer Overflow"
+                                    "IAM",
+                                    "DNS",
+                                    "WAF"
                         ],
-                        "correctText": "Path Traversal",
-                        "explanation": "Path Traversal (Directory Traversal) usa ../ para sair do diretório permitido."
+                        "correctText": "IAM",
+                        "explanation": "O IAM é o 'segurança da balada' das nuvens."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-cloud-meatball",
+                        "title": "Enumeração na Nuvem",
+                        "content": "Ao ganhar acesso a uma conta AWS ou Azure, o primeiro passo não é atacar, mas mapear o ambiente usando APIs. Ferramentas como <b>Pacu</b> ou <b>ScoutSuite</b> automatizam isso.",
+                        "highlight": "Cloud enumeration = usar as APIs legítimas para descobrir os recursos."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-magnifying-glass",
+                        "title": "Buscando Segredos",
+                        "scenario": "Um atacante lista as instâncias EC2, depois verifica os parâmetros passados na criação dessas instâncias (User Data) buscando senhas hardcoded.",
+                        "takeaway": "APIs Cloud revelam muitos dados ocultos."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Ferramentas como Pacu e ScoutSuite são usadas principalmente para:",
+                        "options": [
+                                    "Identificar permissões IAM fracas e inventariar recursos na nuvem.",
+                                    "Fazer brute force em painéis do WordPress.",
+                                    "Quebrar senhas WPA2."
+                        ],
+                        "correctText": "Identificar permissões IAM fracas e inventariar recursos na nuvem.",
+                        "explanation": "Elas interagem com APIs Cloud para mapear a infraestrutura."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-bolt",
+                        "title": "Cloud Exploitation",
+                        "content": "Atacar a nuvem foca no Control Plane (IAM, Metadata) em vez do SO. A exploração de metadados via SSRF (Server-Side Request Forgery) é a porta de entrada mais comum.",
+                        "highlight": "IMDSv1 = SSRF crítico na AWS."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-skull-crossbones",
+                        "title": "O Ataque Capital One",
+                        "scenario": "Um atacante explorou um SSRF num WAF para consultar a API interna de metadados (`169.254.169.254`), extraindo credenciais IAM temporárias que tinham acesso aos buckets S3.",
+                        "takeaway": "Credenciais IAM roubadas permitem controle total sobre a infraestrutura remota."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "O endereço IP mágico `169.254.169.254` é usado em ambientes de nuvem para acessar o serviço de ___, que frequentemente vaza credenciais se exposto a um ataque SSRF.",
+                        "options": [
+                                    "metadados",
+                                    "banco de dados",
+                                    "DNS"
+                        ],
+                        "correctText": "metadados",
+                        "explanation": "O Instance Metadata Service (IMDS) fornece credenciais de roles atreladas à máquina."
             }
 ];
 
@@ -446,15 +507,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/7.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/7.2-sistemas-especiais.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00a8b3; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #a0a8b0; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">FILE INCLUSION DOMINADO!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -463,7 +524,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-06.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-07.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

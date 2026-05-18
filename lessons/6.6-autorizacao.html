@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Autorização 6.6</title>
+    <title>CyberDuo - Falhas de Autorização e IDOR</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -133,44 +133,50 @@
                         "type": "teach",
                         "icon": "fa-user-lock",
                         "title": "Broken Access Control",
-                        "content": "<b>Broken Access Control</b> ocorre quando usuários acessam recursos ou funções que <b>não deveriam</b>. Ex: usuário comum acessando painel admin, ou vendo dados de outros usuários.",
-                        "highlight": "#1 do OWASP Top 10 em 2021"
+                        "content": "<b>Broken Access Control (BAC)</b>, a vulnerabilidade #1 do OWASP Top 10, ocorre quando o servidor não valida corretamente se o usuário atual tem permissão para acessar ou modificar um recurso.",
+                        "highlight": "Autorização falha = escalação de privilégio."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-mask",
+                        "title": "Acesso Administrativo Não Autorizado",
+                        "scenario": "Um usuário comum está logado e acessa `/user/dashboard`. Por curiosidade, ele digita `/admin/dashboard` na URL. O servidor não verifica se ele é administrador e exibe o painel.",
+                        "takeaway": "O controle de acesso deve ser aplicado rigidamente no backend, nunca confiando apenas em ocultar botões no frontend."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Ocultar o botão 'Deletar' na tela de um usuário comum resolve o problema de Controle de Acesso?",
+                        "options": [
+                                    "Não, um atacante ainda pode forçar a requisição diretamente para a API de deleção.",
+                                    "Sim, se o botão não existe, não há como clicar nele."
+                        ],
+                        "correctText": "Não, um atacante ainda pode forçar a requisição diretamente para a API de deleção.",
+                        "explanation": "Atacantes usam ferramentas como Burp Suite para enviar requisições invisíveis para a interface."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "Para evitar BAC, a validação de permissões deve ocorrer sempre no ___, não apenas no cliente.",
+                        "options": [
+                                    "servidor",
+                                    "navegador",
+                                    "banco de dados"
+                        ],
+                        "correctText": "servidor",
+                        "explanation": "Apenas o backend é 100% controlado por você; o cliente (frontend) pode ser manipulado pelo atacante."
             },
             {
                         "type": "teach",
                         "icon": "fa-arrows-up-down",
-                        "title": "IDOR",
-                        "content": "<b>IDOR</b> (Insecure Direct Object Reference): o atacante modifica um ID na URL (ex: /user/123 → /user/124) para acessar dados de outro usuário.",
-                        "highlight": "Trocar um número na URL pode vazar dados"
+                        "title": "O que é IDOR?",
+                        "content": "<b>IDOR</b> (Insecure Direct Object Reference) ocorre quando a aplicação expõe referências internas (como números de ID ou nomes de arquivos) e permite acessá-los sem verificar autorização.",
+                        "highlight": "Mudou o número na URL, vazou os dados."
             },
             {
                         "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "IDOR em Ação",
-                        "scenario": "A URL <b>/api/invoice/1001</b> mostra sua fatura. O atacante muda para <b>/api/invoice/1002</b> e vê a fatura de outro cliente com dados pessoais e financeiros.",
-                        "takeaway": "Sempre verifique autorização no servidor, não apenas no cliente."
-            },
-            {
-                        "type": "quiz",
-                        "task": "O que é IDOR?",
-                        "options": [
-                                    "Acessar dados de outros usuários alterando IDs na requisição",
-                                    "Um tipo de malware que rouba dados",
-                                    "Um protocolo de criptografia web"
-                        ],
-                        "correctText": "Acessar dados de outros usuários alterando IDs na requisição",
-                        "explanation": "IDOR = referência direta a objeto sem verificação de autorização."
-            },
-            {
-                        "type": "fill",
-                        "sentence": "Alterar /user/123 para /user/124 na URL para ver dados de outro usuário é um ataque de ___.",
-                        "options": [
-                                    "IDOR",
-                                    "XSS",
-                                    "CSRF"
-                        ],
-                        "correctText": "IDOR",
-                        "explanation": "IDOR = Insecure Direct Object Reference, exploração de falta de controle de acesso."
+                        "icon": "fa-link",
+                        "title": "O Clássico IDOR de Fatura",
+                        "scenario": "A aplicação envia o link `/fatura?id=1050`. O atacante altera o número para `1051` e baixa a fatura de outro cliente que contém nome, endereço e CPF.",
+                        "takeaway": "Sempre faça queries verificando se o ID pertence ao `user_id` logado."
             }
 ];
 
@@ -460,7 +466,7 @@
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">AUTORIZAÇÃO ANALISADA!</h2>
+                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
