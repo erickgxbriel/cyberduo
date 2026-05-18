@@ -144,6 +144,17 @@
                         "takeaway": "Use Anti-CSRF Tokens em todos os formulários e requisições de estado."
             },
             {
+                        "type": "quiz",
+                        "task": "Qual é a principal defesa contra ataques do tipo CSRF (Cross-Site Request Forgery)?",
+                        "options": [
+                                    "Implementar Tokens Anti-CSRF únicos e imprevisíveis associados à sessão.",
+                                    "Bloquear o protocolo HTTPS em toda a aplicação.",
+                                    "Instalar um antivírus potente diretamente no servidor de banco de dados."
+                        ],
+                        "correctText": "Implementar Tokens Anti-CSRF únicos e imprevisíveis associados à sessão.",
+                        "explanation": "Tokens Anti-CSRF impedem que requisições forjadas por terceiros sejam aceitas como válidas."
+            },
+            {
                         "type": "teach",
                         "icon": "fa-server",
                         "title": "Server-Side Request Forgery",
@@ -167,12 +178,45 @@
                         ],
                         "correctText": "O servidor web vulnerável.",
                         "explanation": "O servidor age como um proxy a mando do atacante."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "Para mitigar ataques SSRF na nuvem, deve-se desativar o acesso direto das aplicações ao serviço de ___ local ou usar sua versão mais segura IMDSv2.",
+                        "options": [
+                                    "Metadados",
+                                    "DNS",
+                                    "Banco de Dados"
+                        ],
+                        "correctText": "Metadados",
+                        "explanation": "O IP local 169.254.169.254 gerencia metadados críticos na nuvem (AWS/Azure)."
+            },
+            {
+                        "type": "match",
+                        "title": "Consolide os Conceitos de CSRF e SSRF",
+                        "pairs": [
+                                    {
+                                                "term": "CSRF",
+                                                "definition": "Navegador da vítima age sob força em site logado"
+                                    },
+                                    {
+                                                "term": "SSRF",
+                                                "definition": "Servidor faz requisição a mando do atacante"
+                                    },
+                                    {
+                                                "term": "Token Anti-CSRF",
+                                                "definition": "Valor secreto e dinâmico que valida requisições"
+                                    },
+                                    {
+                                                "term": "IP 169.254.169.254",
+                                                "definition": "Endpoint de metadados local exposto em SSRF"
+                                    }
+                        ]
             }
 ];
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
-        let hearts = 5;
+        let hearts = 7;
         let shuffledOptions = [];
         
         // Match state
@@ -197,7 +241,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(7).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {

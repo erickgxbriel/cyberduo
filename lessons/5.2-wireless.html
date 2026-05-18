@@ -169,6 +169,45 @@
             },
             {
                         "type": "teach",
+                        "icon": "fa-screwdriver-wrench",
+                        "title": "A Suíte Aircrack-ng",
+                        "content": "Para realizar auditorias wireless na prática, a suíte padrão de mercado é o <b>Aircrack-ng</b>. Ela é composta por várias ferramentas focadas em tarefas específicas:<br><br>• <b>airmon-ng</b>: Coloca a interface de rede wireless em <b>modo monitor</b> (capturando frames brutos no ar).<br>• <b>airodump-ng</b>: Visualiza as redes próximas e salva frames brutos (incluindo o handshake) em arquivos .pcap.<br>• <b>aireplay-ng</b>: Injeta pacotes artificiais, usada principalmente para enviar o sinal de desconexão (deauth).<br>• <b>aircrack-ng</b>: Faz a quebra offline da senha com base no dicionário e handshake coletados."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual utilitário da suíte aircrack-ng é responsável por colocar a placa de rede em Modo Monitor?",
+                        "options": [
+                                    "airmon-ng",
+                                    "airodump-ng",
+                                    "aireplay-ng"
+                        ],
+                        "correctText": "airmon-ng",
+                        "explanation": "O comando `airmon-ng start wlan0` cria uma interface virtual monitora (como wlan0mon) para farejar o ar."
+            },
+            {
+                        "type": "match",
+                        "title": "Associe os Utilitários Wireless",
+                        "pairs": [
+                                    {
+                                                "term": "airmon-ng",
+                                                "definition": "Habilitar o modo monitor"
+                                    },
+                                    {
+                                                "term": "airodump-ng",
+                                                "definition": "Visualizar e capturar handshakes"
+                                    },
+                                    {
+                                                "term": "aireplay-ng",
+                                                "definition": "Injetar pacotes (deauth)"
+                                    },
+                                    {
+                                                "term": "aircrack-ng",
+                                                "definition": "Crackar senhas offline via dicionário"
+                                    }
+                        ]
+            },
+            {
+                        "type": "teach",
                         "icon": "fa-mask",
                         "title": "Evil Twin / Rogue AP",
                         "content": "No ataque <b>Evil Twin</b>, o hacker cria uma rede Wi-Fi falsa com o mesmo nome (SSID) da rede verdadeira (ex: 'Starbucks Wi-Fi'), mas com um sinal mais forte."
@@ -195,7 +234,7 @@
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
-        let hearts = 5;
+        let hearts = 6;
         let shuffledOptions = [];
         
         // Match state
@@ -220,7 +259,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(6).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {

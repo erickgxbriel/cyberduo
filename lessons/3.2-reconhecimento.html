@@ -176,12 +176,40 @@
                         ],
                         "correctText": "SMB",
                         "explanation": "Server Message Block."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-magnifying-glass-location",
+                        "title": "dnsrecon e enum4linux",
+                        "content": "Para mapear alvos mais complexos, usamos ferramentas especializadas. O <b>dnsrecon</b> automatiza a varredura de DNS para encontrar subdomínios, registros MX e tentar transferências de zona. Para alvos Windows e Samba (SMB), o <b>enum4linux</b> é a principal ferramenta para extrair políticas de senha, grupos, compartilhamentos e nomes de usuário."
+            },
+            {
+                        "type": "match",
+                        "title": "Associe as Ferramentas de Reconhecimento",
+                        "pairs": [
+                                    {
+                                                "term": "dnsrecon",
+                                                "definition": "Enumeração de DNS e subdomínios"
+                                    },
+                                    {
+                                                "term": "enum4linux",
+                                                "definition": "Enumeração de portas e usuários SMB"
+                                    },
+                                    {
+                                                "term": "nmap",
+                                                "definition": "Escaneamento ativo de portas"
+                                            },
+                                    {
+                                                "term": "whois",
+                                                "definition": "Consulta passiva a registros de domínio"
+                                    }
+                        ]
             }
 ];
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
-        let hearts = 5;
+        let hearts = 6;
         let shuffledOptions = [];
         
         // Match state
@@ -206,7 +234,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(6).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {

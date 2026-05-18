@@ -171,12 +171,45 @@
                         ],
                         "correctText": "DVWA",
                         "explanation": "DVWA = Damn Vulnerable Web Application, feita para praticar ataques web em segurança."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Além da DVWA, qual é outra aplicação web moderna baseada em Node.js e Javascript usada para treinar segurança web?",
+                        "options": [
+                                    "OWASP Juice Shop",
+                                    "Metasploitable",
+                                    "Kali Linux Web"
+                        ],
+                        "correctText": "OWASP Juice Shop",
+                        "explanation": "OWASP Juice Shop é um e-commerce fictício moderno e altamente vulnerável desenvolvido em Javascript."
+            },
+            {
+                        "type": "match",
+                        "title": "Associe os Elementos Iniciais",
+                        "pairs": [
+                                    {
+                                                "term": "OWASP",
+                                                "definition": "Organização do Top 10 de vulnerabilidades web"
+                                    },
+                                    {
+                                                "term": "DVWA",
+                                                "definition": "Damn Vulnerable Web Application escrita em PHP"
+                                    },
+                                    {
+                                                "term": "Juice Shop",
+                                                "definition": "E-commerce vulnerável moderno em Node.js"
+                                    },
+                                    {
+                                                "term": "OWASP Top 10",
+                                                "definition": "Lista dos dez riscos de segurança web mais críticos"
+                                    }
+                        ]
             }
 ];
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
-        let hearts = 5;
+        let hearts = 7;
         let shuffledOptions = [];
         
         // Match state
@@ -201,7 +234,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(7).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {

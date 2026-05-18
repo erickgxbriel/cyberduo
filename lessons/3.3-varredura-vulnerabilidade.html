@@ -176,12 +176,51 @@
                         ],
                         "correctText": "Falsos",
                         "explanation": "A validação manual humana é necessária para eliminar falsos positivos."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-network-wired",
+                        "title": "Scanners de Rede Corporativos (Nessus e OpenVAS)",
+                        "content": "Para varreduras corporativas robustas, as duas principais opções são o <b>Nessus</b> (padrão de mercado proprietário) e o <b>OpenVAS</b> (alternativa Open Source). O Nessus possui dois modos cruciais de varredura:<br><br>1. <b>Varredura Credenciada (Authenticated Scan)</b>: Usa login/senha ou chave SSH para logar no alvo e inspecionar pacotes e patches internos com máxima precisão e mínimo impacto.<br>2. <b>Varredura Não-Credenciada (Unauthenticated Scan)</b>: Analisa apenas do lado de fora pela rede, gerando mais falsos positivos e menor precisão."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual é a principal vantagem de realizar uma Varredura Credenciada (com login) em relação a uma Não-Credenciada?",
+                        "options": [
+                                    "Ela oferece relatórios altamente precisos, lendo patches e configurações diretamente no sistema operacional.",
+                                    "Ela é mais rápida porque não exige nenhuma senha.",
+                                    "Ela funciona sem precisar estar conectada à rede local."
+                        ],
+                        "correctText": "Ela oferece relatórios altamente precisos, lendo patches e configurações diretamente no sistema operacional.",
+                        "explanation": "Com acesso privilegiado interno, o scanner lê as bibliotecas e atualizações instaladas, gerando pouquíssimos falsos positivos."
+            },
+            {
+                        "type": "match",
+                        "title": "Associe as Ferramentas de Varredura",
+                        "pairs": [
+                                    {
+                                                "term": "Nikto",
+                                                "definition": "Focado em servidores web"
+                                    },
+                                    {
+                                                "term": "Nessus",
+                                                "definition": "Padrão de mercado (Scans Credenciados)"
+                                    },
+                                    {
+                                                "term": "OpenVAS",
+                                                "definition": "Scanner corporativo open-source"
+                                    },
+                                    {
+                                                "term": "Falsos Positivos",
+                                                "definition": "Erros em que o scanner erra para mais"
+                                    }
+                        ]
             }
 ];
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
-        let hearts = 5;
+        let hearts = 6;
         let shuffledOptions = [];
         
         // Match state
@@ -206,7 +245,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(6).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {

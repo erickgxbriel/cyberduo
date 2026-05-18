@@ -131,6 +131,57 @@
         const steps = [
             {
                         "type": "teach",
+                        "icon": "fa-network-wired",
+                        "title": "Fundamentos de Redes: MAC vs IP",
+                        "content": "Antes de explorar as falhas, precisamos entender como as redes se comunicam. Cada dispositivo possui duas identificações principais:<br><br>1. <b>Endereço MAC (Camada 2 - Link de Dados)</b>: Identificador físico permanente e exclusivo de 48 bits gravado na placa de rede de fábrica. Usado para a comunicação direta na rede local.<br>2. <b>Endereço IP (Camada 3 - Rede)</b>: Identificador lógico associado ao dispositivo para permitir o roteamento e a comunicação através de diferentes redes (ex: internet)."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-route",
+                        "title": "Transporte de Dados: TCP vs UDP",
+                        "content": "Os dados trafegam pela rede utilizando protocolos de transporte:<br><br>1. <b>TCP (Transmission Control Protocol)</b>: Focado em confiabilidade. Realiza uma conexão (handshake de 3 vias) antes de enviar dados, garante que todos os pacotes cheguem e corrige erros. Ex: HTTP, SSH, FTP.<br>2. <b>UDP (User Datagram Protocol)</b>: Focado em velocidade. Envia pacotes sem estabelecer conexão prévia e sem garantir que chegarão ao destino. Ex: DNS, DHCP, VoIP."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-server",
+                        "title": "DHCP e Roteamento",
+                        "content": "Como os IPs se organizam?<br><br>• <b>DHCP (Dynamic Host Configuration Protocol)</b>: O protocolo da Camada de Aplicação que distribui configurações de rede (IP, máscara de sub-rede, gateway) automaticamente para os dispositivos que entram na rede local.<br>• <b>Roteamento</b>: Processo realizado por roteadores que encaminham os pacotes entre redes distintas com base na tabela de roteamento e no IP de destino."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual das alternativas descreve corretamente uma característica do protocolo UDP?",
+                        "options": [
+                                    "Ele não é orientado a conexão e prioriza a velocidade do envio, sem garantir que os pacotes cheguem ao destino.",
+                                    "Ele realiza o handshake de 3 vias antes de iniciar a transmissão.",
+                                    "Ele só funciona na camada física de links de dados (Camada 1)."
+                        ],
+                        "correctText": "Ele não é orientado a conexão e prioriza a velocidade do envio, sem garantir que os pacotes cheguem ao destino.",
+                        "explanation": "O UDP prioriza o tempo real e a velocidade de entrega sobre a integridade/garantia da conexão, ideal para DNS, DHCP e streams."
+            },
+            {
+                        "type": "match",
+                        "title": "Associe os Conceitos de Redes",
+                        "pairs": [
+                                    {
+                                                "term": "MAC Address",
+                                                "definition": "Identificador físico permanente (Camada 2)"
+                                    },
+                                    {
+                                                "term": "IP Address",
+                                                "definition": "Endereço lógico de rede (Camada 3)"
+                                    },
+                                    {
+                                                "term": "TCP",
+                                                "definition": "Conexão confiável via Handshake"
+                                    },
+                                    {
+                                                "term": "DHCP",
+                                                "definition": "Distribuição dinâmica de IPs locais"
+                                    }
+                        ]
+            },
+            {
+                        "type": "teach",
                         "icon": "fa-users",
                         "title": "Man-in-the-Middle (MITM)",
                         "content": "No ataque <b>MITM</b>, o hacker se posiciona invisivelmente entre a vítima e o roteador (ou servidor). Todo o tráfego de rede passa pelo computador do hacker antes de chegar ao destino."
@@ -294,13 +345,13 @@
                                     "Pass-the-Hash"
                         ],
                         "correctText": "AS-REP Roasting",
-                        "explanation": "AS-REP Roasting funciona sem credenciais se a pre-auth estiver desabilitada."
+                        "explanation": "AS-REP Roasting funciona sem credenciais si a pre-auth estiver desabilitada."
             }
 ];
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
-        let hearts = 5;
+        let hearts = 7;
         let shuffledOptions = [];
         
         // Match state
@@ -325,7 +376,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(7).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {
