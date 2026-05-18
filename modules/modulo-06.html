@@ -121,6 +121,7 @@
             color: #484f58;
             font-size: 1.2rem;
             transition: all 0.2s ease;
+            flex-shrink: 0;
         }
 
         .submodule-item:hover .submodule-icon-box {
@@ -156,6 +157,7 @@
         .submodule-arrow {
             font-size: 0.8rem;
             color: rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
         }
 
         .submodule-item:hover .submodule-arrow {
@@ -205,7 +207,7 @@
         <a href="../index.html" class="back-link">
             <i class="fas fa-arrow-left"></i> Voltar ao Terminal
         </a>
-        <div class="font-black text-xl tracking-tighter">CYBER<span class="text-cyan-400">DUO</span></div>
+        <div class="font-black text-lg tracking-tighter flex items-center gap-2"><i class="fas fa-shield-halved" style="color: var(--cyber-blue); text-shadow: 0 0 10px rgba(0, 242, 255, 0.4);"></i> CYBER<span style="color: var(--cyber-blue)">DUO</span></div>
     </header>
 
     <main class="main-container">
@@ -223,117 +225,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">6.0</span>
                     <span class="submodule-title">Segurança Web</span>
-                    <span class="submodule-desc">Este módulo cobre as vulnerabilidades mais comuns em aplicações web, incluind...</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/6.2-lab-setup.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-flask"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">6.2</span>
-                    <span class="submodule-title">Lab Setup Web</span>
-                    <span class="submodule-desc">Para praticar ataques web, instale: DVWA ou Juice Shop em uma VM, Burp Suite ...</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/6.3-logica-negocio.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-diagram-project"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">6.3</span>
-                    <span class="submodule-title">Lógica de Negócio</span>
-                    <span class="submodule-desc">Falhas de lógica de negócio são bugs que não violam regras técnicas, mas perm...</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/6.4-injecao-web.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-syringe"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">6.4</span>
-                    <span class="submodule-title">Injeção Web</span>
-                    <span class="submodule-desc">SQL Injection ocorre quando entrada do usuário é inserida diretamente em uma ...</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/6.5-autenticacao.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-right-to-bracket"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">6.5</span>
-                    <span class="submodule-title">Autenticação</span>
-                    <span class="submodule-desc">Broken Authentication permite que atacantes comprometam senhas, tokens ou ses...</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/6.6-autorizacao.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-user-lock"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">6.6</span>
-                    <span class="submodule-title">Autorização</span>
-                    <span class="submodule-desc">Broken Access Control ocorre quando usuários acessam recursos ou funções que ...</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/6.7-xss.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-code"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">6.7</span>
-                    <span class="submodule-title">Cross-Site Scripting</span>
-                    <span class="submodule-desc">Cross-Site Scripting (XSS) injeta código JavaScript malicioso em páginas web.</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/6.8-csrf-ssrf.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-arrows-rotate"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">6.8</span>
-                    <span class="submodule-title">CSRF e SSRF</span>
-                    <span class="submodule-desc">CSRF (Cross-Site Request Forgery) faz o browser da vítima enviar uma requisiç...</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/6.9-clickjacking.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-computer-mouse"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">6.9</span>
-                    <span class="submodule-title">Clickjacking</span>
-                    <span class="submodule-desc">Clickjacking esconde uma página dentro de um iframe transparente.</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/6.10-configuracao.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-gear"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">6.10</span>
-                    <span class="submodule-title">Configuração de Segurança</span>
-                    <span class="submodule-desc">Configurações padrão inseguras: senhas default (admin/admin), listagem de dir...</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/6.11-inclusao-arquivos.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-file-import"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">6.11</span>
-                    <span class="submodule-title">Inclusão de Arquivos</span>
-                    <span class="submodule-desc">LFI (Local File Inclusion): o atacante inclui arquivos locais do servidor (ex...</span>
+                    <span class="submodule-desc">Fundamentos do protocolo HTTP, arquitetura web e a superfície de ataque.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -344,7 +236,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">6.1a</span>
                     <span class="submodule-title">OWASP Top 10 (Parte 1)</span>
-                    <span class="submodule-desc">A OWASP (Open Web Application Security Project) é uma fundação sem fins lucra...</span>
+                    <span class="submodule-desc">Estudo detalhado das primeiras falhas críticas listadas no OWASP Top 10.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -355,7 +247,117 @@
                 <div class="submodule-info">
                     <span class="submodule-number">6.1b</span>
                     <span class="submodule-title">OWASP Top 10 (Parte 2)</span>
-                    <span class="submodule-desc">Vulnerabilidades decorrentes de falhas na arquitetura e no modelo de ameaça.</span>
+                    <span class="submodule-desc">Análise das falhas restantes e vetores de risco emergentes da OWASP.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/6.2-lab-setup.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">6.2</span>
+                    <span class="submodule-title">Lab Setup Web</span>
+                    <span class="submodule-desc">Configuração do proxy Burp Suite e ambiente de testes para aplicações web.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/6.3-logica-negocio.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-diagram-project"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">6.3</span>
+                    <span class="submodule-title">Lógica de Negócio</span>
+                    <span class="submodule-desc">Identificação de falhas de lógica, manipulação de fluxos e parâmetros.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/6.4-injecao-web.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-syringe"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">6.4</span>
+                    <span class="submodule-title">Injeção Web</span>
+                    <span class="submodule-desc">Vetores de injeção como SQL Injection (SQLi) e Command Injection.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/6.5-autenticacao.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-right-to-bracket"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">6.5</span>
+                    <span class="submodule-title">Autenticação</span>
+                    <span class="submodule-desc">Bypass de login, força bruta, session fixation e falhas de JWT.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/6.6-autorizacao.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-user-lock"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">6.6</span>
+                    <span class="submodule-title">Autorização</span>
+                    <span class="submodule-desc">Falhas de IDOR (Broken Object Level Authorization) e controle de acesso.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/6.7-xss.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">6.7</span>
+                    <span class="submodule-title">Cross-Site Scripting</span>
+                    <span class="submodule-desc">Cross-Site Scripting Refletido, Armazenado e baseado em DOM.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/6.8-csrf-ssrf.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-arrows-rotate"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">6.8</span>
+                    <span class="submodule-title">CSRF e SSRF</span>
+                    <span class="submodule-desc">Ataques de falsificação de requisições do lado do cliente (CSRF) e servidor (SSRF).</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/6.9-clickjacking.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-computer-mouse"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">6.9</span>
+                    <span class="submodule-title">Clickjacking</span>
+                    <span class="submodule-desc">Manipulação de iframes, sobreposição visual e desativação de proteções.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/6.10-configuracao.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-gear"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">6.10</span>
+                    <span class="submodule-title">Configuração de Segurança</span>
+                    <span class="submodule-desc">Diretórios expostos, cabeçalhos inseguros e configurações padrão de fábrica.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/6.11-inclusao-arquivos.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-file-import"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">6.11</span>
+                    <span class="submodule-title">Inclusão de Arquivos</span>
+                    <span class="submodule-desc">Exploração de vulnerabilidades de Local/Remote File Inclusion (LFI/RFI).</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -366,7 +368,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">6.12a</span>
                     <span class="submodule-title">Falhas de Memória e C</span>
-                    <span class="submodule-desc">Linguagens como C/C++ não gerenciam memória automaticamente.</span>
+                    <span class="submodule-desc">Falhas clássicas de corrupção de memória e buffer overflows em C/C++.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -377,7 +379,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">6.12b</span>
                     <span class="submodule-title">Lógica e Deserialização</span>
-                    <span class="submodule-desc">Serialização converte objetos em formato salvável/transmissível (JSON, XML, b...</span>
+                    <span class="submodule-desc">Desserialização insegura, race conditions e erros de lógica em código web.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -386,7 +388,7 @@
     </main>
 
     <footer>
-        A cibersegurança eficaz não é um produto, mas sim um processo.
+        
     </footer>
 
 </body>

@@ -122,6 +122,7 @@
             color: #484f58;
             font-size: 1.2rem;
             transition: all 0.2s ease;
+            flex-shrink: 0;
         }
 
         .submodule-item:hover .submodule-icon-box {
@@ -157,6 +158,7 @@
         .submodule-arrow {
             font-size: 0.8rem;
             color: rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
         }
 
         .submodule-item:hover .submodule-arrow {
@@ -206,7 +208,7 @@
         <a href="../index.html" class="back-link">
             <i class="fas fa-arrow-left"></i> Voltar ao Terminal
         </a>
-        <div class="font-black text-xl tracking-tighter">CYBER<span style="color: var(--cyber-violet)">DUO</span></div>
+        <div class="font-black text-lg tracking-tighter flex items-center gap-2"><i class="fas fa-shield-halved" style="color: var(--cyber-violet); text-shadow: 0 0 10px rgba(138, 43, 226, 0.4);"></i> CYBER<span style="color: var(--cyber-violet)">DUO</span></div>
     </header>
 
     <main class="main-container">
@@ -224,51 +226,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">10.0</span>
                     <span class="submodule-title">Ferramentas</span>
-                    <span class="submodule-desc">Este módulo final cobre scripting (Bash, Python, PowerShell), automação de te...</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/10.2a-recon-enum-tools.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-binoculars"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">10.2a</span>
-                    <span class="submodule-title">Ferramentas de Recon e Enumeração</span>
-                    <span class="submodule-desc">As ferramentas de pentest são organizadas por fase do ataque: reconhecimento,...</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/10.2b-vuln-cred-tools.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-bug"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">10.2b</span>
-                    <span class="submodule-title">Ferramentas de Vuln e Credencial</span>
-                    <span class="submodule-desc">Nessus: scanner comercial líder.</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/10.2c-persist-evasion-tools.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-anchor"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">10.2c</span>
-                    <span class="submodule-title">Ferramentas de Persistência e Evasão</span>
-                    <span class="submodule-desc">Netcat: 'canivete suíço' de rede (bind/reverse shells).</span>
-                </div>
-                <i class="fas fa-chevron-right submodule-arrow"></i>
-            </a>
-            <a href="../lessons/10.2d-forense-special-tools.html" class="submodule-item">
-                <div class="submodule-icon-box">
-                    <i class="fas fa-microscope"></i>
-                </div>
-                <div class="submodule-info">
-                    <span class="submodule-number">10.2d</span>
-                    <span class="submodule-title">Ferramentas Forenses e Especiais</span>
-                    <span class="submodule-desc">Ghidra: descompilador da NSA (gratuito).</span>
+                    <span class="submodule-desc">Fundamentos de automação de testes e customização de ferramentas.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -279,7 +237,7 @@
                 <div class="submodule-info">
                     <span class="submodule-number">10.1a</span>
                     <span class="submodule-title">Fundamentos de Script</span>
-                    <span class="submodule-desc">Construções essenciais para scripts: if/else (condicionais), for/while (loops...</span>
+                    <span class="submodule-desc">Lógica de programação com scripts rápidos e tratamento de dados brutos.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -290,7 +248,51 @@
                 <div class="submodule-info">
                     <span class="submodule-number">10.1b</span>
                     <span class="submodule-title">Linguagens e Prática</span>
-                    <span class="submodule-desc">Bash é a cola entre ferramentas Linux.</span>
+                    <span class="submodule-desc">Uso de Python e Bash para automação de tarefas repetitivas em testes.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/10.2a-recon-enum-tools.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-binoculars"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">10.2a</span>
+                    <span class="submodule-title">Ferramentas de Recon e Enumeração</span>
+                    <span class="submodule-desc">Exploração aprofundada de Nmap, GoBuster, Sublist3r e Amass.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/10.2b-vuln-cred-tools.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-bug"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">10.2b</span>
+                    <span class="submodule-title">Ferramentas de Vuln e Credencial</span>
+                    <span class="submodule-desc">Domínio de Hydra, John the Ripper, Hashcat, Nessus e Sqlmap.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/10.2c-persist-evasion-tools.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-anchor"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">10.2c</span>
+                    <span class="submodule-title">Ferramentas de Persistência e Evasão</span>
+                    <span class="submodule-desc">Uso de Metasploit, Netcat, Empire e técnicas para evadir antivírus.</span>
+                </div>
+                <i class="fas fa-chevron-right submodule-arrow"></i>
+            </a>
+            <a href="../lessons/10.2d-forense-special-tools.html" class="submodule-item">
+                <div class="submodule-icon-box">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <div class="submodule-info">
+                    <span class="submodule-number">10.2d</span>
+                    <span class="submodule-title">Ferramentas Forenses e Especiais</span>
+                    <span class="submodule-desc">Ferramentas como Wireshark, Autopsy, Volatility e análise de memória.</span>
                 </div>
                 <i class="fas fa-chevron-right submodule-arrow"></i>
             </a>
@@ -299,7 +301,7 @@
     </main>
 
     <footer>
-        A cibersegurança eficaz não é um produto, mas sim um processo.
+        
     </footer>
 
 </body>
