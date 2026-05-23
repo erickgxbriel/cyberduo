@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Segurança e Exploração em Nuvem (Cloud)</title>
+    <title>CyberDuo - IoT, Virtualização e Containers</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -44,7 +44,6 @@
         .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
         .text-body b { color: white; }
         
-        
         /* Utility Classes */
         .mr-1 { margin-right: 0.25rem; }
         .mr-2 { margin-right: 0.5rem; }
@@ -61,7 +60,7 @@
         /* TYPE: EXAMPLE */
         .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .example-scenario { background: #161b22; border: 1px solid #21262d; border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; }
-        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.9rem; color: #00ff41; border: 1px solid #30363d; }
+        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.85rem; color: #00ff41; border: 1px solid #30363d; overflow-x: auto; white-space: pre; }
         .example-takeaway { display: flex; gap: 0.8rem; align-items: flex-start; margin-top: 1rem; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
 
         /* TYPE: QUIZ */
@@ -83,7 +82,6 @@
 
         /* TYPE: MATCH */
         .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
-        /* .match-column removed */
         .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
         .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
         .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
@@ -130,111 +128,99 @@
     <script>
         const steps = [
             {
-                        "type": "teach",
-                        "icon": "fa-box-open",
-                        "title": "Armazenamento Exposto",
-                        "content": "O erro número 1 em Cloud: desenvolvedores configuram AWS S3 Buckets ou Azure Blobs como 'Públicos' por engano ou para 'facilitar testes'."
+                "type": "teach",
+                "icon": "fa-microchip",
+                "title": "Ameaças IoT & Shodan",
+                "content": "Sistemas de Internet das Coisas (IoT) possuem arquitetura extremamente heterogênea e recursos limitados, impedindo criptografias pesadas. Comandos sem sanitização causam DoS em ICS, e erros revelam dados internos. Pior: muitos vêm com <b>senhas padrão de fábrica</b> expostas na internet, passivamente indexadas pelo buscador <b>Shodan.io</b>, que coleta os banners e portas expostas (Telnet, SSH).",
+                "highlight": "Câmeras IP e controladores industriais SCADA estão frequentemente vulneráveis por padrão."
             },
             {
-                        "type": "example",
-                        "icon": "fa-globe",
-                        "title": "Scanners de Buckets",
-                        "scenario": "Grupos criminosos usam bots que rastreiam milhares de buckets S3 na internet. Quando acham um público, baixam tudo: backups de banco de dados, senhas e CPFs.",
-                        "takeaway": "Um checkbox errado e a empresa sofre um vazamento gigante."
+                "type": "quiz",
+                "task": "Qual motor de busca é especializado em mapear portas expostas e catalogar dispositivos IoT, servidores e webcams globalmente?",
+                "options": [
+                    "Shodan",
+                    "Censys",
+                    "Google Dorking"
+                ],
+                "correctText": "Shodan",
+                "explanation": "Conhecido como 'o mecanismo de busca para a Internet das Coisas', o Shodan rastreia banners e IPs que respondem a protocolos industriais e web."
             },
             {
-                        "type": "quiz",
-                        "task": "Qual é a principal causa de vazamentos em massa envolvendo infraestrutura em nuvem (como AWS S3)?",
-                        "options": [
-                                    "Configuração incorreta, deixando buckets e blobs com acesso público de leitura.",
-                                    "Falha criptográfica no algoritmo AES-256 da Amazon.",
-                                    "Ataques de Buffer Overflow no hardware da AWS."
-                        ],
-                        "correctText": "Configuração incorreta, deixando buckets e blobs com acesso público de leitura.",
-                        "explanation": "Quase 100% dos grandes vazamentos S3 acontecem por erro de configuração (humano)."
+                "type": "teach",
+                "icon": "fa-bluetooth",
+                "title": "Interceptação de Rádio (BLE)",
+                "content": "O <b>Bluetooth Low Energy (BLE)</b> é a base de fechaduras smart e wearables. Como muitos desenvolvedores não ativam a criptografia nativa no payload, os dados trafegam em texto puro. Usando antenas como <b>Ubertooth One</b>, atacantes farejam os dados. Com ferramentas como <b>GATTacker</b> ou <b>BtleJuice</b>, criam clones que atuam como Man-in-the-Middle, lendo chaves de emparelhamento do ar.",
+                "highlight": "Ferramentas cloram o serviço GATT do BLE para interceptar o tráfego e reenviá-lo à vítima."
             },
             {
-                        "type": "teach",
-                        "icon": "fa-id-card",
-                        "title": "Vazamento de Chaves IAM",
-                        "content": "Outro vetor comum: desenvolvedores deixam suas chaves de API Cloud (credenciais do IAM) dentro de códigos-fonte que são enviados (commitados) no GitHub Público."
+                "type": "example",
+                "icon": "fa-walkie-talkie",
+                "title": "MITM com BtleJuice",
+                "scenario": "Com dois adaptadores Bluetooth, o atacante roda o BtleJuice para clonar uma fechadura inteligente. O celular da vítima se conecta ao PC do atacante em vez da fechadura original.",
+                "code": "$ btlejuice-proxy\n[+] Proxy started!\n[+] Target BLE Device found: SMART_LOCK_88\n\n// Payload secreto lido em hexadecimal no painel:\n[BLE RX] 0x4f 0x50 0x45 0x4e (OPEN)",
+                "takeaway": "O atacante agora possui a sequência binária que abre a porta."
             },
             {
-                        "type": "example",
-                        "icon": "fa-robot",
-                        "title": "O Ataque do Git",
-                        "scenario": "Um dev salva o código no GitHub com a chave `AKIA123...`. Em 3 segundos, um bot hacker acha a chave e a usa para criar 500 servidores na AWS do dev para minerar Bitcoin.",
-                        "takeaway": "Nunca coloque chaves AWS em repositórios de código."
+                "type": "teach",
+                "icon": "fa-server",
+                "title": "Gestão Out-of-Band (IPMI & BMC)",
+                "content": "Servidores bare-metal modernos contam com um <b>BMC (Baseboard Management Controller)</b>, acessado via <b>IPMI</b>. Trata-se de um 'mini-computador' na placa-mãe. Se o atacante assumir o controle do BMC (via senhas padrão ou falhas de rede), ele obtém poder absoluto: pode desligar a máquina, alterar boot e formatar o disco, pois está operando fora do sistema operacional hospedeiro.",
+                "highlight": "Comprometer o BMC é o equivalente cibernético de estar com acesso físico ao servidor."
             },
             {
-                        "type": "fill",
-                        "sentence": "Para gerenciar o acesso na nuvem e aplicar a regra do Menor Privilégio, as plataformas usam políticas baseadas em ___ (Identity and Access Management).",
-                        "options": [
-                                    "IAM",
-                                    "DNS",
-                                    "WAF"
-                        ],
-                        "correctText": "IAM",
-                        "explanation": "O IAM é o 'segurança da balada' das nuvens."
+                "type": "teach",
+                "icon": "fa-window-restore",
+                "title": "Virtualização: Escapes e Hipervisores",
+                "content": "Ameaças ao isolamento de VMs (VMware, Hyper-V) são fatais. A <b>Fuga de VM (VM Escape)</b> explora o hipervisor para sair da máquina virtual convidada e rodar código direto no sistema físico (host). Já o <b>Hyperjacking</b> envolve a instalação invisível de um hipervisor malicioso por baixo do sistema hospedeiro. E imagens pre-empacotadas podem conter <b>Backdoors no Repositório de VM</b>.",
+                "highlight": "O VM Escape destrói a fronteira lógica entre máquinas que habitam o mesmo hardware."
             },
             {
-                        "type": "teach",
-                        "icon": "fa-cloud-meatball",
-                        "title": "Enumeração na Nuvem",
-                        "content": "Ao ganhar acesso a uma conta AWS ou Azure, o primeiro passo não é atacar, mas mapear o ambiente usando APIs. Ferramentas como <b>Pacu</b> ou <b>ScoutSuite</b> automatizam isso.",
-                        "highlight": "Cloud enumeration = usar as APIs legítimas para descobrir os recursos."
+                "type": "teach",
+                "icon": "fa-cubes",
+                "title": "Ameaças a Contêineres e Supply Chain",
+                "content": "Ambientes Docker/Kubernetes sofrem com <b>Privileged Containers</b> (rodar app web com acesso root do host) e exposição do <b>Docker Socket (/var/run/docker.sock)</b>, permitindo o <b>Container Breakout</b>. Atacantes também abusam da Cadeia de Suprimentos (Supply Chain), subindo contêineres falsificados ('Typosquatting') em repositórios públicos com cryptominers integrados na imagem base.",
+                "highlight": "Ataques de Supply Chain infectam sistemas na raiz, antes mesmo do desenvolvedor escrever código."
             },
             {
-                        "type": "example",
-                        "icon": "fa-magnifying-glass",
-                        "title": "Buscando Segredos",
-                        "scenario": "Um atacante lista as instâncias EC2, depois verifica os parâmetros passados na criação dessas instâncias (User Data) buscando senhas hardcoded.",
-                        "takeaway": "APIs Cloud revelam muitos dados ocultos."
+                "type": "quiz",
+                "task": "No ecosistema de contêineres, por que a técnica de Typosquatting em registros como o Docker Hub é considerada um ataque de Supply Chain (Cadeia de Suprimentos)?",
+                "options": [
+                    "Porque o atacante publica imagens de base maliciosas com nomes muito similares a imagens oficiais, visando que desenvolvedores as importem acidentalmente em seus builds.",
+                    "Porque a imagem de contêiner é preenchida com um grande volume de dados lixo, gerando custo adicional.",
+                    "Porque burla o isolamento do namespace do kernel Linux via chamadas de sistema falsas."
+                ],
+                "correctText": "Porque o atacante publica imagens de base maliciosas com nomes muito similares a imagens oficiais, visando que desenvolvedores as importem acidentalmente em seus builds.",
+                "explanation": "A imagem corrompida passa a fazer parte das fundações de um projeto corporativo, executando backdoors assim que for levantada."
             },
             {
-                        "type": "quiz",
-                        "task": "Ferramentas como Pacu e ScoutSuite são usadas principalmente para:",
-                        "options": [
-                                    "Identificar permissões IAM fracas e inventariar recursos na nuvem.",
-                                    "Fazer brute force em painéis do WordPress.",
-                                    "Quebrar senhas WPA2."
-                        ],
-                        "correctText": "Identificar permissões IAM fracas e inventariar recursos na nuvem.",
-                        "explanation": "Elas interagem com APIs Cloud para mapear a infraestrutura."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-bolt",
-                        "title": "Cloud Exploitation",
-                        "content": "Atacar a nuvem foca no Control Plane (IAM, Metadata) em vez do SO. A exploração de metadados via SSRF (Server-Side Request Forgery) é a porta de entrada mais comum.",
-                        "highlight": "IMDSv1 = SSRF crítico na AWS."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-skull-crossbones",
-                        "title": "O Ataque Capital One",
-                        "scenario": "Um atacante explorou um SSRF num WAF para consultar a API interna de metadados (`169.254.169.254`), extraindo credenciais IAM temporárias que tinham acesso aos buckets S3.",
-                        "takeaway": "Credenciais IAM roubadas permitem controle total sobre a infraestrutura remota."
-            },
-            {
-                        "type": "fill",
-                        "sentence": "O endereço IP mágico `169.254.169.254` é usado em ambientes de nuvem para acessar o serviço de ___, que frequentemente vaza credenciais se exposto a um ataque SSRF.",
-                        "options": [
-                                    "metadados",
-                                    "banco de dados",
-                                    "DNS"
-                        ],
-                        "correctText": "metadados",
-                        "explanation": "O Instance Metadata Service (IMDS) fornece credenciais de roles atreladas à máquina."
+                "type": "match",
+                "title": "Associe o Arsenal Cloud Native",
+                "pairs": [
+                    {
+                        "term": "Grype",
+                        "definition": "Scanner estático para vulnerabilidades em imagens Docker"
+                    },
+                    {
+                        "term": "Falco",
+                        "definition": "Monitoramento e detecção de anomalias em runtime (tempo real)"
+                    },
+                    {
+                        "term": "kube-bench",
+                        "definition": "Auditoria de conformidade CIS para a segurança do cluster"
+                    },
+                    {
+                        "term": "kube-hunter",
+                        "definition": "Scanner ativo de penetração em arquiteturas Kubernetes"
+                    }
+                ]
             }
-];
+        ];
 
         let currentStep = 0;
-        let selectedIdx = null; // For quiz and fill
+        let selectedIdx = null;
         let hearts = 5;
         let shuffledOptions = [];
         
-        // Match state
         let matchLeft = [];
         let matchRight = [];
         let selectedLeft = null;
@@ -267,7 +253,6 @@
             
             updateProgress();
             
-            // Reset states
             selectedIdx = null;
             checkBtn.disabled = true;
             checkBtn.classList.remove('active');
@@ -374,7 +359,6 @@
             area.scrollTop = 0;
         }
 
-        // Interactivity Handlers
         function selectQuiz(idx) {
             selectedIdx = idx;
             document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
@@ -396,7 +380,6 @@
             const item = document.getElementById(`${side}-${idx}`);
             if (item.classList.contains('matched')) return;
 
-            // Clear previous selection on same side
             document.querySelectorAll(`.match-item[id^='${side}-']`).forEach(el => {
                 if(!el.classList.contains('matched')) el.classList.remove('selected');
             });
@@ -407,7 +390,6 @@
             else selectedRight = {el: item, id: pairId};
 
             if (selectedLeft && selectedRight) {
-                // Check match
                 if (selectedLeft.id === selectedRight.id) {
                     selectedLeft.el.classList.remove('selected');
                     selectedLeft.el.classList.add('matched');
@@ -430,7 +412,6 @@
                     errRight.el.classList.remove('selected');
                     errRight.el.classList.add('error');
                     
-                    // Lose heart for wrong match
                     hearts--;
                     updateProgress();
                     if(hearts <= 0) triggerGameOver();
@@ -446,13 +427,11 @@
             }
         }
 
-        // Logic Check
         function checkResponse() {
             const step = steps[currentStep];
             const checkBtn = document.getElementById('checkBtn');
             const popup = document.getElementById('feedbackPopup');
             
-            // Non-interactive steps just advance
             if (step.type === 'teach' || step.type === 'example') {
                 currentStep++;
                 render();
@@ -470,7 +449,7 @@
                     c.classList.add('disabled');
                 });
             } else if (step.type === 'match') {
-                isCorrect = true; // Button only enables when all matches found
+                isCorrect = true;
             }
 
             if (isCorrect) {
@@ -507,16 +486,13 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/7.2-sistemas-especiais.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
-            if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #a0a8b0; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
-            }
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/8.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
-                    <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
-                    <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
+                    <i class="fas fa-trophy text-6xl text-yellow-400 mb-4 mt-4"></i>
+                    <h2 class="title-main mb-2">MÓDULO 7 COMPLETO!</h2>
+                    <p class="text-body mb-6">Parabéns! Você concluiu com sucesso todo o treinamento avançado sobre Segurança e Exploração em Nuvem, Mobile, IoT e Cargas de Trabalho de Virtualização/Containers!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
                         <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">

@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Mobile, IoT e Sistemas Embarcados (ICS/SCADA)</title>
+    <title>CyberDuo - Exploração de Dispositivos e Apps Mobile</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -44,7 +44,6 @@
         .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
         .text-body b { color: white; }
         
-        
         /* Utility Classes */
         .mr-1 { margin-right: 0.25rem; }
         .mr-2 { margin-right: 0.5rem; }
@@ -61,7 +60,7 @@
         /* TYPE: EXAMPLE */
         .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .example-scenario { background: #161b22; border: 1px solid #21262d; border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; }
-        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.9rem; color: #00ff41; border: 1px solid #30363d; }
+        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.85rem; color: #00ff41; border: 1px solid #30363d; overflow-x: auto; white-space: pre; }
         .example-takeaway { display: flex; gap: 0.8rem; align-items: flex-start; margin-top: 1rem; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
 
         /* TYPE: QUIZ */
@@ -83,7 +82,6 @@
 
         /* TYPE: MATCH */
         .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
-        /* .match-column removed */
         .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
         .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
         .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
@@ -130,206 +128,100 @@
     <script>
         const steps = [
             {
-                        "type": "teach",
-                        "icon": "fa-mobile-screen",
-                        "title": "Análise Estática (Mobile)",
-                        "content": "Em aplicativos Mobile, a análise estática envolve descompilar o APK (Android) ou IPA (iOS) para ler o código-fonte em busca de senhas ou chaves de API fixas (hardcoded). A principal ferramenta automatizada para isso é o <b>MobSF</b> (Mobile Security Framework)."
+                "type": "teach",
+                "icon": "fa-mobile-screen",
+                "title": "Engenharia Reversa Mobile",
+                "content": "No ambiente móvel (Android e iOS), o atacante possui os arquivos compilados (APK ou IPA). A <b>Engenharia Reversa</b> usa ferramentas como <b>JADX, apktool, ApkX e APK Studio</b> para descompilar o app e obter o código-fonte (Java/Kotlin ou Smali). O objetivo é encontrar falhas na lógica de negócios e segredos estáticos (chaves/senhas hardcoded).",
+                "highlight": "O projeto OWASP MSTG oferece apps 'crack-me' para treinar a reversão de softwares."
             },
             {
-                        "type": "example",
-                        "icon": "fa-search",
-                        "title": "Achando o Ouro",
-                        "scenario": "O atacante joga o APK do banco no MobSF. Em dois minutos, o relatório mostra que o desenvolvedor deixou a chave 'AWS_SECRET_KEY' escrita em texto puro no código.",
-                        "takeaway": "Análise estática lê o código sem executar o app."
+                "type": "example",
+                "icon": "fa-code",
+                "title": "Lendo Segredos no JADX",
+                "scenario": "Um analista joga o arquivo .apk de um banco digital no descompilador JADX-GUI. Explorando os arquivos res/values/strings.xml, ele encontra chaves de API expostas.",
+                "code": "$ jadx-gui banco-digital.apk\n\n// Em strings.xml:\n<string name=\"aws_secret_key\">AKIAIOSFODNN7EXAMPLE</string>",
+                "takeaway": "Nunca insira segredos da nuvem diretamente no código-fonte do aplicativo distribuído nas lojas."
             },
             {
-                        "type": "quiz",
-                        "task": "Qual ferramenta é o padrão na indústria para realizar análise estática e dinâmica automatizada em binários de Android e iOS?",
-                        "options": [
-                                    "MobSF (Mobile Security Framework)",
-                                    "Wireshark",
-                                    "Hashcat"
-                        ],
-                        "correctText": "MobSF (Mobile Security Framework)",
-                        "explanation": "O MobSF atua como um scanner completo focado exclusivamente em Mobile."
+                "type": "teach",
+                "icon": "fa-database",
+                "title": "Armazenamento & Biometria",
+                "content": "Desenvolvedores costumam armazenar dados localmente. O uso de <b>bancos SQLite sem criptografia, SharedPreferences (Android) ou plist (iOS)</b> permite que dispositivos rooteados acessem tokens em texto puro. O certo é usar as APIs <b>Android Keystore</b> e <b>iOS Keychain</b>. Além disso, métodos locais de biometria podem ser burlados via <b>Bypass Biométrico do Objection</b>, atestando falsamente a leitura facial.",
+                "highlight": "A checagem de biometria mal implementada retorna apenas 'verdadeiro/falso' para a tela de login."
             },
             {
-                        "type": "teach",
-                        "icon": "fa-syringe",
-                        "title": "Análise Dinâmica e Hooking",
-                        "content": "Muitas vezes o app tem proteções e a análise estática falha. O atacante precisa analisar o app <i>enquanto ele roda</i> na memória. Usando o <b>Frida</b> e o <b>Objection</b>, o hacker injeta scripts (hooking) para modificar o comportamento do app ao vivo, como burlar o login ou o detector de Root/Jailbreak."
+                "type": "quiz",
+                "task": "Onde segredos, senhas e chaves criptográficas devem ser armazenados de forma segura dentro de sistemas operacionais iOS e Android para que o hardware as proteja?",
+                "options": [
+                    "iOS Keychain e Android Keystore.",
+                    "Bancos de dados SQLite não encriptados.",
+                    "Arquivos XML em SharedPreferences."
+                ],
+                "correctText": "iOS Keychain e Android Keystore.",
+                "explanation": "Esses recursos utilizam módulos de hardware do dispositivo para isolar criptograficamente as chaves, protegendo-as até em dispositivos root."
             },
             {
-                        "type": "example",
-                        "icon": "fa-bug",
-                        "title": "Bypassing SSL Pinning",
-                        "scenario": "O app do banco não deixa o hacker interceptar a rede. O hacker usa o Frida para injetar um script que 'desliga' a checagem de certificado de segurança (SSL Pinning Bypass), permitindo ver todo o tráfego.",
-                        "takeaway": "O Frida manipula as funções do aplicativo na memória RAM."
+                "type": "teach",
+                "icon": "fa-lock",
+                "title": "Bypass de Certificate Pinning",
+                "content": "Para impedir ataques MITM (Burp Suite, Ettercap), os apps usam <b>Certificate Pinning</b>: eles validam a impressão digital exata do certificado SSL do servidor original. No entanto, dispositivos desbloqueados usam ferramentas de instrumentação dinâmica (<b>Frida e Objection</b>) ou binárias (SSL Kill Switch 2) para injetar código em tempo real e sobrescrever a rotina de validação, permitindo interceptar o tráfego HTTPS.",
+                "highlight": "A instrumentação altera o fluxo do programa enquanto ele roda na memória viva."
             },
             {
-                        "type": "fill",
-                        "sentence": "A ferramenta de injeção dinâmica de código (hooking) mais utilizada para burlar proteções em tempo de execução em aplicativos móveis é o ___.",
-                        "options": [
-                                    "Frida",
-                                    "Nmap",
-                                    "John the Ripper"
-                        ],
-                        "correctText": "Frida",
-                        "explanation": "Frida permite injetar trechos de JavaScript em aplicativos nativos rodando no celular."
+                "type": "example",
+                "icon": "fa-spider",
+                "title": "Hooking Dinâmico com Objection",
+                "scenario": "O analista instala o Frida no aparelho e, usando o computador, aciona o Objection para burlar o SSL Pinning de forma automatizada sem escrever nenhum código.",
+                "code": "$ objection --gadget \"com.empresa.app\" explore\n\n[com.empresa.app] # android sslpinning disable\n[+] Intercepting TrustManager calls... Pinning bypassed successfully!",
+                "takeaway": "O app agora confia cegamente no certificado do Burp Suite do analista, vazando todo o tráfego HTTP."
             },
             {
-                        "type": "match",
-                        "title": "Associe as Ferramentas Mobile",
-                        "pairs": [
-                                    {
-                                                "term": "Drozer",
-                                                "definition": "Framework de Teste e Exploits"
-                                    },
-                                    {
-                                                "term": "ApkX",
-                                                "definition": "Descompilador de APK"
-                                    },
-                                    {
-                                                "term": "MobSF",
-                                                "definition": "Análise Estática Automatizada"
-                                    },
-                                    {
-                                                "term": "Frida",
-                                                "definition": "Injeção Dinâmica (Hooking)"
-                                    }
-                        ]
+                "type": "quiz",
+                "task": "Qual é o framework de instrumentação dinâmica poderoso que permite injetar scripts em processos na memória e que serve de motor base para a ferramenta Objection?",
+                "options": [
+                    "Frida.",
+                    "GATTacker.",
+                    "Drozer."
+                ],
+                "correctText": "Frida.",
+                "explanation": "O Frida permite escrever scripts em Javascript que interceptam e modificam qualquer função de aplicativos iOS e Android em execução."
             },
             {
-                        "type": "teach",
-                        "icon": "fa-server",
-                        "title": "Testes em APIs e Interceptação",
-                        "content": "Para sistemas que se comunicam via API, a ferramenta padrão da indústria para envio e análise de requisições é o <b>Postman</b>. Já em redes onde é possível realizar um ataque On-Path (Man-in-the-Middle), ferramentas como <b>Ettercap</b> e <b>Bettercap</b> interceptam e modificam o tráfego em tempo real."
+                "type": "teach",
+                "icon": "fa-toolbox",
+                "title": "O Arsenal Mobile",
+                "content": "Auditoria móvel engloba dezenas de utilitários cruciais:\n- <b>MobSF (Mobile Security Framework)</b>: Scanner automatizado estático e dinâmico.\n- <b>Drozer</b>: Framework Android para explorar comunicação entre processos (IPC).\n- <b>Needle</b>: Framework de código aberto especializado na segurança de iOS.\n- <b>Burp Suite & Ettercap</b>: Interceptação de APIs e ataques Man-in-the-Middle.\n- A fragmentação extrema (apps suportando Androids obsoletos) também amplia a vulnerabilidade a exploits.",
+                "highlight": "O uso de dependências desatualizadas no Android é agravado pela fragmentação de SOs dos fabricantes."
             },
             {
-                        "type": "quiz",
-                        "task": "Qual dessas ferramentas é amplamente utilizada para testar e desenvolver requisições em APIs?",
-                        "options": [
-                                    "Postman",
-                                    "ApkX",
-                                    "Kube-hunter"
-                        ],
-                        "correctText": "Postman",
-                        "explanation": "O Postman permite criar, testar e documentar requisições para APIs web de forma estruturada."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-network-wired",
-                        "title": "Insegurança em IoT",
-                        "content": "Dispositivos <b>IoT</b> (Internet das Coisas), como câmeras e fechaduras inteligentes, frequentemente sofrem de falhas severas: senhas padrão inalteráveis (ex: admin/admin), comunicação sem criptografia e firmware desatualizado."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-video",
-                        "title": "A Invasão Silenciosa",
-                        "scenario": "O hacker descobre que a câmera IP usa Telnet (sem criptografia) e a senha de fábrica. Ele loga na câmera e a usa como ponto de partida (pivot) para invadir a rede corporativa.",
-                        "takeaway": "Dispositivos IoT são os elos mais fracos da rede."
-            },
-            {
-                        "type": "quiz",
-                        "task": "Qual é a falha de segurança mais comum e explorada em dispositivos IoT?",
-                        "options": [
-                                    "Uso de senhas padrão de fábrica (hardcoded) e falta de criptografia em protocolos de comunicação.",
-                                    "Ataques avançados de injeção SQL no hardware.",
-                                    "Falta de antivírus de terceiros."
-                        ],
-                        "correctText": "Uso de senhas padrão de fábrica (hardcoded) e falta de criptografia em protocolos de comunicação.",
-                        "explanation": "Fabricantes de IoT priorizam facilidade de uso em vez de segurança."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-industry",
-                        "title": "Sistemas ICS e SCADA",
-                        "content": "<b>ICS/SCADA</b> são os sistemas de controle industrial que operam usinas elétricas, fábricas e estações de água. Uma invasão aqui não rouba dados, mas causa danos físicos reais (desligar energia, alterar temperatura)."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-radiation",
-                        "title": "Stuxnet",
-                        "scenario": "O vírus Stuxnet alterou os comandos de centrífugas nucleares iranianas. O painel SCADA mostrava que estava tudo bem, enquanto as máquinas fisicamente giravam até quebrar.",
-                        "takeaway": "Em SCADA, disponibilidade e integridade física são prioridades máximas."
-            },
-            {
-                        "type": "fill",
-                        "sentence": "Sistemas focados em controle de infraestruturas críticas, onde o impacto da invasão é cinético/físico, são conhecidos como ___.",
-                        "options": [
-                                    "SCADA",
-                                    "Web",
-                                    "Mobile"
-                        ],
-                        "correctText": "SCADA",
-                        "explanation": "Supervisory Control and Data Acquisition."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-microchip",
-                        "title": "Engenharia Reversa de Hardware",
-                        "content": "Sistemas embarcados exigem interação física. Atacantes abrem os dispositivos, localizam portas de depuração diretamente na placa-mãe (como <b>UART</b> ou <b>JTAG</b>) e conectam cabos para extrair o Firmware do chip de memória."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-screwdriver",
-                        "title": "Extração via UART",
-                        "scenario": "O hacker compra um roteador. Ele abre a carcaça, solda fios na porta UART da placa e conecta ao seu PC. Ele ganha um terminal de root instantâneo no sistema operacional do roteador.",
-                        "takeaway": "O hardware confia cegamente em quem tem acesso físico a ele."
-            },
-            {
-                        "type": "quiz",
-                        "task": "Qual é o objetivo principal ao utilizar portas de depuração de hardware, como UART ou JTAG, em sistemas embarcados?",
-                        "options": [
-                                    "Obter acesso direto à interface do sistema e extrair o Firmware do dispositivo.",
-                                    "Aumentar a velocidade da internet do equipamento.",
-                                    "Criar um servidor na nuvem."
-                        ],
-                        "correctText": "Obter acesso direto à interface do sistema e extrair o Firmware do dispositivo.",
-                        "explanation": "Essas portas são usadas por engenheiros na fábrica, mas exploradas por hackers."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-boxes-stacked",
-                        "title": "Segurança de Contêineres",
-                        "content": "Contêineres (como Docker) podem conter vulnerabilidades nas bibliotecas instaladas. Ferramentas como o <b>Anchore's Grype</b> e o <b>Dagda</b> escaneiam as imagens de contêineres <i>antes</i> de rodarem, detectando pacotes desatualizados ou senhas vazadas."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-dharmachakra",
-                        "title": "Avaliando Kubernetes",
-                        "content": "Para clusters <b>Kubernetes</b>, o atacante e o defensor usam ferramentas focadas. O <b>Kube-hunter</b> procura ativamente por fraquezas no cluster. O <b>Kube-bench</b> verifica se o cluster segue as boas práticas (CIS). Já o <b>Falco</b> funciona em tempo de execução para alertar se um contêiner for invadido."
-            },
-            {
-                        "type": "match",
-                        "title": "Associe a Ferramenta Cloud/Container",
-                        "pairs": [
-                                    {
-                                                "term": "Grype / Dagda",
-                                                "definition": "Varredura de Imagens de Contêineres"
-                                    },
-                                    {
-                                                "term": "Kube-bench",
-                                                "definition": "Verificação de Conformidade (CIS)"
-                                    },
-                                    {
-                                                "term": "Kube-hunter",
-                                                "definition": "Caça ativa a vulnerabilidades no K8s"
-                                    },
-                                    {
-                                                "term": "Falco",
-                                                "definition": "Monitoramento de ameaças em tempo de execução"
-                                    }
-                        ]
+                "type": "match",
+                "title": "Associe o Arsenal Mobile",
+                "pairs": [
+                    {
+                        "term": "JADX",
+                        "definition": "Descompila o APK de volta para o código-fonte legível"
+                    },
+                    {
+                        "term": "MobSF",
+                        "definition": "Scanner automatizado de ponta a ponta (estático e dinâmico)"
+                    },
+                    {
+                        "term": "Drozer",
+                        "definition": "Exploração do ambiente IPC local e vulnerabilidades do Android"
+                    },
+                    {
+                        "term": "Needle",
+                        "definition": "Framework de testes focado especificamente em apps iOS"
+                    }
+                ]
             }
-];
+        ];
 
         let currentStep = 0;
-        let selectedIdx = null; // For quiz and fill
-        let hearts = 7;
+        let selectedIdx = null;
+        let hearts = 5;
         let shuffledOptions = [];
         
-        // Match state
         let matchLeft = [];
         let matchRight = [];
         let selectedLeft = null;
@@ -351,7 +243,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(7).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {
@@ -362,7 +254,6 @@
             
             updateProgress();
             
-            // Reset states
             selectedIdx = null;
             checkBtn.disabled = true;
             checkBtn.classList.remove('active');
@@ -469,7 +360,6 @@
             area.scrollTop = 0;
         }
 
-        // Interactivity Handlers
         function selectQuiz(idx) {
             selectedIdx = idx;
             document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
@@ -491,7 +381,6 @@
             const item = document.getElementById(`${side}-${idx}`);
             if (item.classList.contains('matched')) return;
 
-            // Clear previous selection on same side
             document.querySelectorAll(`.match-item[id^='${side}-']`).forEach(el => {
                 if(!el.classList.contains('matched')) el.classList.remove('selected');
             });
@@ -502,7 +391,6 @@
             else selectedRight = {el: item, id: pairId};
 
             if (selectedLeft && selectedRight) {
-                // Check match
                 if (selectedLeft.id === selectedRight.id) {
                     selectedLeft.el.classList.remove('selected');
                     selectedLeft.el.classList.add('matched');
@@ -525,7 +413,6 @@
                     errRight.el.classList.remove('selected');
                     errRight.el.classList.add('error');
                     
-                    // Lose heart for wrong match
                     hearts--;
                     updateProgress();
                     if(hearts <= 0) triggerGameOver();
@@ -541,13 +428,11 @@
             }
         }
 
-        // Logic Check
         function checkResponse() {
             const step = steps[currentStep];
             const checkBtn = document.getElementById('checkBtn');
             const popup = document.getElementById('feedbackPopup');
             
-            // Non-interactive steps just advance
             if (step.type === 'teach' || step.type === 'example') {
                 currentStep++;
                 render();
@@ -565,7 +450,7 @@
                     c.classList.add('disabled');
                 });
             } else if (step.type === 'match') {
-                isCorrect = true; // Button only enables when all matches found
+                isCorrect = true;
             }
 
             if (isCorrect) {
@@ -602,16 +487,13 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/8.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
-            if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #a0a8b0; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
-            }
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/7.2b-iot-virtualizacao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
-                    <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
+                    <h2 class="title-main mb-2">APLICATIVOS AUDITADOS!</h2>
+                    <p class="text-body mb-6">Você dominou a descompilação de APKs/IPAs, o hooking dinâmico com Frida/Objection e a neutralização de SSL Pinning.</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
                         <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">
