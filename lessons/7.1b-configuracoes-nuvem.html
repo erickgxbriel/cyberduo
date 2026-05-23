@@ -38,13 +38,13 @@
         .game-card { width: 100%; animation: slideUp 0.3s ease-out; display: flex; flex-direction: column; gap: 0.8rem; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* General Typography */
+        /<i> General Typography </i>/
         .module-subtitle { font-size: 0.7rem; font-weight: 900; color: var(--cyber-blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
         .title-main { font-size: clamp(1.4rem, 5vw, 1.8rem); font-weight: 800; color: white; line-height: 1.2; margin-bottom: 0.5rem; }
         .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
         .text-body b { color: white; }
         
-        /* Utility Classes */
+        /<i> Utility Classes </i>/
         .mr-1 { margin-right: 0.25rem; }
         .mr-2 { margin-right: 0.5rem; }
         .mb-1 { margin-bottom: 0.25rem; }
@@ -52,18 +52,18 @@
         .highlight-cyan { color: #00f2ff; font-weight: 700; }
         .highlight-green { color: var(--cyber-green); font-weight: 700; }
 
-        /* TYPE: TEACH */
+        /<i> TYPE: TEACH </i>/
         .teach-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .teach-icon { font-size: 2.5rem; color: var(--cyber-blue); margin-bottom: 1rem; }
         .teach-highlight { display: flex; align-items: center; gap: 0.6rem; background: rgba(0, 255, 65, 0.1); border-left: 3px solid var(--cyber-green); padding: 0.8rem; margin-top: 1rem; font-weight: 600; color: var(--cyber-green); border-radius: 0 0.5rem 0.5rem 0; }
 
-        /* TYPE: EXAMPLE */
+        /<i> TYPE: EXAMPLE </i>/
         .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .example-scenario { background: #161b22; border: 1px solid #21262d; border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; }
         .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.85rem; color: #00ff41; border: 1px solid #30363d; overflow-x: auto; white-space: pre; }
         .example-takeaway { display: flex; gap: 0.8rem; align-items: flex-start; margin-top: 1rem; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
 
-        /* TYPE: QUIZ */
+        /<i> TYPE: QUIZ </i>/
         .quiz-title { font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 800; color: white; margin-bottom: 1.5rem; line-height: 1.3; }
         .options-grid { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
         .option-card { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.8rem, 3vw, 1rem); border-radius: 1rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: clamp(0.95rem, 4vw, 1.05rem); -webkit-tap-highlight-color: transparent; }
@@ -75,19 +75,28 @@
         .option-number { width: 28px; height: 28px; flex-shrink: 0; border: 2px solid #484f58; border-radius: 0.4rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; color: #8b949e; }
         .option-card.selected .option-number { border-color: var(--cyber-blue); color: var(--cyber-blue); }
 
-        /* TYPE: FILL */
+        /<i> TYPE: FILL </i>/
         .fill-sentence { font-size: clamp(1.1rem, 5vw, 1.3rem); font-weight: 600; line-height: 1.6; color: white; margin-bottom: 2rem; background: #0d1117; padding: clamp(1rem, 4vw, 1.5rem); border-radius: 1.2rem; border: 1px solid #30363d; }
         .fill-slot { display: inline-block; min-width: 120px; height: 34px; border-bottom: 3px solid #484f58; margin: 0 0.5rem; vertical-align: middle; text-align: center; color: var(--cyber-blue); font-weight: 800; transition: all 0.2s; }
         .fill-slot.filled { border-bottom-color: var(--cyber-blue); }
 
-        /* FOOTER & BUTTONS */
+        /<i> TYPE: MATCH </i>/
+        .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
+        .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
+        .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
+        .match-item.matched { border-color: var(--cyber-green); background: rgba(0, 255, 65, 0.05); color: var(--cyber-green); opacity: 0.5; pointer-events: none; }
+        .match-item.error { border-color: var(--cyber-red); animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        /<i> FOOTER & BUTTONS </i>/
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
         .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #a0a8b0; }
         .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #a0a8b0; }
 
-        /* FEEDBACK OVERLAY */
+        /<i> FEEDBACK OVERLAY </i>/
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
         .feedback-overlay.show { bottom: 0; }
         .feedback-overlay.correct { background: #0d1a10; border-top: 4px solid var(--cyber-green); }
@@ -120,103 +129,151 @@
         const steps = [
             {
                 "type": "teach",
-                "icon": "fa-user-lock",
-                "title": "IAM e Federação",
-                "content": "A má configuração do IAM (Gerenciamento de Identidade e Acesso) é a maior causa de invasões em nuvem. A federação com <b>SAML</b> ou <b>OAuth</b> centraliza o login. Declarações SAML (XMLs confidenciais) possuem IDs exclusivas; se mal configuradas, atacantes realizam <b>Ataques de Replay</b> para criar múltiplas sessões, alterar datas de expiração e sequestrar contas.",
-                "highlight": "A autenticação mal configurada converte a nuvem em um portal de livre acesso."
-            },
-            {
-                "type": "teach",
-                "icon": "fa-id-badge",
-                "title": "Bypass de Tokens JWT",
-                "content": "JSON Web Tokens (JWT) atestam quem é o usuário. Eles contêm um cabeçalho, payload e <b>assinatura criptográfica</b>. Se a API de nuvem aceitar um token com o algoritmo de assinatura definido como <b>'none'</b> (ou não checar expiração e reuso), o atacante pode alterar seu próprio payload (ex: role='admin') e ganhar acesso total sem precisar quebrar a criptografia.",
-                "highlight": "Validar rigorosamente a assinatura e a data de expiração no backend é obrigatório."
+                "icon": "fa-cube",
+                "title": "O que é o IMDS? (Cisco 7.1.7)",
+                "content": "Para evitar colocar chaves de acesso diretamente no código de seus aplicativos (prática insegura), os provedores de nuvem oferecem o <b>IMDS (Instance Metadata Service)</b>. Ele é um serviço interno exposto de forma nativa em toda máquina virtual através de um endereço de IP de link-local mágico: <b>169.254.169.254</b>. O servidor usa esse IP para consultar suas próprias configurações internas.",
+                "highlight": "Qualquer requisição originada de dentro do servidor pode ler o IMDS sem precisar de senha."
             },
             {
                 "type": "example",
-                "icon": "fa-code",
-                "title": "Forjando um JWT",
-                "scenario": "O atacante intercepta seu JWT via Burp Suite. Ele altera a flag 'alg' para 'none' e seu privilégio de 'user' para 'admin'. O backend ingênuo aceita o token forjado.",
-                "code": "{\n  \"alg\": \"none\"\n}\n.\n{\n  \"user\": \"joao\",\n  \"role\": \"admin\"\n}\n.",
-                "takeaway": "Sem a validação de assinatura, a identidade na nuvem é completamente volátil."
+                "icon": "fa-bug",
+                "title": "Prática - Roubando Metadados via SSRF (Cisco 7.1.7)",
+                "scenario": "Um atacante encontra um parâmetro vulnerável a SSRF (Server-Side Request Forgery) em um site e força o próprio servidor a consultar as chaves temporárias de administrador do seu IMDS:",
+                "code": "http://site-vulneravel.com/view?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/admin-role\n\n{\n  \"AccessKeyId\": \"ASIA...\",\n  \"SecretAccessKey\": \"wJalrXUtn...\",\n  \"Token\": \"IQoJb3Jp...\"\n}",
+                "takeaway": "O atacante extrai as chaves de acesso temporárias do provedor e agora pode controlar a nuvem."
+            },
+            {
+                "type": "teach",
+                "icon": "fa-shield-halved",
+                "title": "Defesa de Metadados: IMDSv2 (Cisco 7.1.7)",
+                "content": "Para mitigar ataques SSRF comuns, a AWS desenvolveu a versão <b>IMDSv2</b>. Nela, requisições diretas de leitura (GET) não funcionam. É exigido um modelo de sessão: primeiro o servidor deve fazer uma requisição do tipo <b>PUT</b> enviando um cabeçalho customizado para gerar um token temporário, e então anexar esse token nas requisições GET seguintes.",
+                "highlight": "O IMDSv2 impede SSRF simples, pois atacantes raramente conseguem forjar requisições PUT customizadas."
             },
             {
                 "type": "quiz",
-                "task": "Qual é a falha grave na manipulação de tokens JWT que permite a um atacante forjar ser administrador alterando o payload sem possuir a chave privada do servidor?",
+                "task": "Qual é a principal diferença de comportamento na requisição que torna o IMDSv2 muito mais seguro contra SSRF do que o IMDSv1?",
                 "options": [
-                    "Aceitar o algoritmo 'none', desativando a verificação de assinatura.",
-                    "Codificar o payload usando Base64Url.",
-                    "Renovar a data de expiração (exp) a cada login."
+                    "A exigência de criar uma sessão enviando um cabeçalho HTTP customizado via método PUT.",
+                    "O uso de criptografia SSL/TLS em todas as conexões internas do host.",
+                    "A alteração do endereço de IP do link-local de 169.254.169.254 para localhost."
                 ],
-                "correctText": "Aceitar o algoritmo 'none', desativando a verificação de assinatura.",
-                "explanation": "A falha de aceitar 'alg: none' destrói o propósito do JWT, pois a aplicação passa a confiar cegamente no conteúdo enviado pelo cliente."
+                "correctText": "A exigência de criar uma sessão enviando um cabeçalho HTTP customizado via método PUT.",
+                "explanation": "No IMDSv2, a necessidade de gerar um token através de uma requisição PUT bloqueia ataques de SSRF tradicionais, que costumam aceitar apenas o método GET."
             },
             {
                 "type": "teach",
                 "icon": "fa-box-open",
-                "title": "Exposição de Object Storage",
-                "content": "Buckets como <b>AWS S3, Azure Blob ou GCP Storage</b> são frequentemente configurados com permissões de leitura pública (ACL AllUsers ou política *). Ferramentas como o repositório h4cker de Omar Santos (ou o s3recon) permitem que atacantes varram a internet e descubram backups e PDFs corporativos inteiros expostos publicamente.",
-                "highlight": "Habilitar o 'Block Public Access' impede a exposição acidental de buckets."
+                "title": "Exposição de Armazenamento - Buckets (Cisco 7.1.8)",
+                "content": "A nuvem armazena arquivos (documentos, imagens, backups) em estruturas chamadas <b>Object Storage</b> (como buckets AWS S3 ou Azure Blobs). Um dos maiores erros de configuração cometidos por administradores é deixar as políticas de acesso do bucket configuradas como <b>públicas</b>, permitindo que qualquer pessoa varra a internet e leia segredos da empresa.",
+                "highlight": "Deixar buckets expostos é a causa número um de vazamentos massivos de dados no mercado corporativo."
             },
             {
                 "type": "example",
-                "icon": "fa-search",
-                "title": "Baixando o S3 Exposto",
-                "scenario": "Um atacante usa a CLI da AWS com a flag --no-sign-request e baixa o backup do banco de dados exposto em um bucket corporativo.",
-                "code": "$ aws s3 ls s3://empresa-backups-producao/ --no-sign-request\n2026-05-19  2.4GB  backup_prod.sql\n\n$ aws s3 cp s3://empresa-backups-producao/backup_prod.sql . --no-sign-request",
-                "takeaway": "Permissões frouxas resultaram em um vazamento massivo de dados (Data Breach)."
+                "icon": "fa-terminal",
+                "title": "Prática - Baixando Buckets Públicos (Cisco 7.1.8)",
+                "scenario": "Um auditor de segurança utiliza a linha de comando oficial da AWS com privilégios anônimos para verificar se os backups estão desprotegidos e baixá-los para auditoria:",
+                "code": "$ aws s3 ls s3://empresa-backups-financeiros/ --no-sign-request\n2026-05-19 14:00:00  3.4GB  backup_db_prod.sql\n\n$ aws s3 cp s3://empresa-backups-financeiros/backup_db_prod.sql . --no-sign-request",
+                "takeaway": "A flag '--no-sign-request' permite acessar o bucket sem assinar a requisição com chaves."
             },
             {
                 "type": "teach",
-                "icon": "fa-network-wired",
-                "title": "DoS, Esgotamento & D2O",
-                "content": "Na nuvem, os <b>Ataques de Negação de Serviço (DoS/DDoS)</b> visam links de rede (bps), pacotes (pps) e conexões da aplicação (rps). Atacantes usam o <b>Searchsploit</b> para encontrar explorações DoS. Para contornar proteções robustas como as de CDNs/WAFs, usam ataques <b>Direct-to-Origin (D2O)</b>: descobrem o IP real do servidor hospedeiro oculto (via Censys/Shodan) e disparam tráfego destrutivo diretamente nele.",
-                "highlight": "O ataque D2O torna proteções perimetrais (WAF/CDN) completamente irrelevantes."
+                "icon": "fa-id-card",
+                "title": "Federação e Replay de SAML (Cisco 7.1.8)",
+                "content": "Para integrar logins corporativos, as empresas utilizam a <b>Federação de Identidades</b> (com tokens SAML ou JWT). Um token SAML é um XML assinado pelo provedor de identidade. Se a configuração de federação na nuvem aceitar tokens obsoletos ou não possuir checagem rigorosa de identificadores únicos, um hacker pode realizar um <b>Ataque de Replay SAML</b>, reutilizando um token interceptado no passado para criar uma nova sessão administrativa.",
+                "highlight": "Garantir IDs de expiração de sessão curtos anula a eficácia do Replay."
             },
             {
                 "type": "quiz",
-                "task": "Qual é a técnica de rede onde o atacante ignora o proxy reverso da CDN (como a Cloudflare) e ataca diretamente o endereço de IP do servidor backend que a hospeda?",
+                "task": "Como se chama a falha de configuração que permite a um atacante capturar um XML de autenticação federada antigo e retransmiti-lo à nuvem para obter acesso ilegal?",
                 "options": [
-                    "Direct-to-Origin (D2O).",
-                    "Ataque de Canal Lateral (Side-Channel).",
-                    "Ataque de Replay SAML."
+                    "Ataque de Replay SAML.",
+                    "Ataque de Forjamento de JWT (alg: none).",
+                    "Ataque de Injeção de Imagem de VM."
                 ],
-                "correctText": "Direct-to-Origin (D2O).",
-                "explanation": "Descobrindo o IP original, o atacante bate diretamente no firewall nativo do servidor, contornando qualquer filtro de CDN."
+                "correctText": "Ataque de Replay SAML.",
+                "explanation": "No Replay Attack, o atacante 'toca de novo' a credencial interceptada. Sem checagem de reuso, o servidor aceita e autentica a sessão."
+            },
+            {
+                "type": "teach",
+                "icon": "fa-bolt",
+                "title": "Esgotamento de Recursos e DoS (Cisco 7.1.9)",
+                "content": "Na nuvem, os recursos de computação são elásticos, mas não infinitos. Ataques de <b>Negação de Serviço (DoS/DDoS)</b> visam esgotar o tráfego de rede (bps), taxas de pacotes (pps) ou conexões HTTP concorrentes (rps). Além de derrubar sistemas, na nuvem isso pode causar o <b>DoS Financeiro (EDoS)</b>: o faturamento da nuvem escala ao infinito devido ao consumo forçado de banda.",
+                "highlight": "Sistemas de Auto-scaling sem limites máximos configurados ampliam o impacto financeiro do DoS."
+            },
+            {
+                "type": "teach",
+                "icon": "fa-road-barrier",
+                "title": "A técnica de Direct-to-Origin - D2O (Cisco 7.1.9)",
+                "content": "Para se proteger de DoS, as empresas usam Proxies Reversos de CDN e WAF (como a Cloudflare). O tráfego legítimo passa por eles primeiro. No entanto, se o atacante descobrir o IP real do servidor hospedeiro oculto (usando Shodan/Censys), ele realiza o ataque de <b>Direct-to-Origin (D2O)</b>: ataca o IP de origem diretamente, contornando a Cloudflare por completo.",
+                "highlight": "Descobrir o IP original torna defesas de WAF em nível de DNS inúteis."
+            },
+            {
+                "type": "example",
+                "icon": "fa-magnifying-glass",
+                "title": "Prática - Localizando o Servidor Original (Cisco 7.1.9)",
+                "scenario": "O atacante inspeciona certificados SSL históricos em buscadores de ativos expostos para encontrar qual IP real do servidor responde pelo domínio protegido pela CDN:",
+                "code": "$ censys search \"empresa-protegida.com\"\n\nIP encontrado: 54.210.15.8 (Hospedado na AWS)\n[+] Bypass de CDN ativo! O servidor aceita requisições diretas nesse IP.",
+                "takeaway": "Configurar firewalls na nuvem para aceitar conexões apenas dos blocos de IP da CDN evita o D2O."
+            },
+            {
+                "type": "quiz",
+                "task": "Por que a técnica Direct-to-Origin (D2O) representa uma ameaça tão grave para sistemas de defesa corporativos baseados em nuvem?",
+                "options": [
+                    "Porque contorna os filtros de tráfego malicioso de CDNs e WAFs disparando o ataque DoS direto no IP do servidor de origem.",
+                    "Porque infecta o hypervisor das máquinas virtuais hospedeiras com spywares de controle físico.",
+                    "Porque intercepta chaves criptográficas de APIs nas requisições HTTP locais."
+                ],
+                "correctText": "Porque contorna os filtros de tráfego malicioso de CDNs e WAFs disparando o ataque DoS direto no IP do servidor de origem.",
+                "explanation": "Ignorando os proxies da CDN/WAF, o tráfego não passa por nenhuma inspeção de segurança periférica corporativa."
             },
             {
                 "type": "teach",
                 "icon": "fa-viruses",
-                "title": "Injeção de Malware & Canais Laterais",
-                "content": "Invasores avançados realizam <b>Injeção de Malware em Nuvem</b>, criando falsas instâncias de serviço para capturar dados. Além disso, a nuvem sofre de falhas físicas de hardware pelo multitenancy. Ataques de <b>Canal Lateral (Side-Channel)</b>, como <b>Spectre e Meltdown</b>, quebram o isolamento lógico das VMs, permitindo que uma VM leia dados diretamente da memória física do processador (RAM) de uma VM vizinha.",
-                "highlight": "Spectre e Meltdown exploram falhas na execução especulativa de CPUs modernas."
+                "title": "Injeção de Malware na Nuvem (Cisco 7.1.10)",
+                "content": "A <b>Injeção de Malware na Nuvem</b> envolve infectar a raiz da infraestrutura. Isso é feito de três maneiras principais:<br><br>1. 💿 <b>Imagens de VM Modificadas</b>: Subir templates de sistemas (AMIs/VHDs) adulterados contendo backdoors.<br>2. 🤖 <b>Cryptojacking</b>: Injetar scripts de mineração de criptomoedas silenciosos em servidores ativos.<br>3. 🔌 <b>Serverless Injection</b>: Corromper funções curtas sem servidor (Lambdas) para enviar segredos a servidores externos.",
+                "highlight": "Injetar malware nativo na nuvem garante persistência mesmo se as VMs principais forem reiniciadas."
+            },
+            {
+                "type": "teach",
+                "icon": "fa-microchip",
+                "title": "Ataques de Canal Lateral - Side-Channel (Cisco 7.1.11)",
+                "content": "A nuvem baseia-se na divisão de um servidor físico entre vários clientes (multitenancy). Ataques de <b>Canal Lateral (Side-Channel)</b> de CPU, como <b>Meltdown e Spectre</b>, aproveitam vulnerabilidades de otimização de processadores físicos (execução especulativa) para permitir que uma máquina virtual de um hacker leia dados diretamente da memória física (RAM) de uma VM vizinha.",
+                "highlight": "Esses ataques quebram as barreiras lógicas do hipervisor em nível de silício do hardware."
             },
             {
                 "type": "teach",
                 "icon": "fa-code",
-                "title": "Auditoria de APIs na Nuvem",
-                "content": "Grande parte da comunicação na nuvem ocorre via APIs. Como auditores, procuramos analisar documentos estruturados como <b>Swagger e especificações OpenAPI (OAS)</b>, que mapem todos os endpoints expostos. Kits de Nuvem (como <b>AWS CDK</b>) demonstram como as empresas implantam essas infraestruturas (IaC).",
-                "highlight": "Especificações OpenAPI são o mapa do tesouro para testes em APIs."
+                "title": "Auditoria de APIs com OpenAPI (Cisco 7.1.13)",
+                "content": "A comunicação na nuvem é inteiramente orquestrada por <b>APIs</b>. Para auditar a superfície de ataque exposta, hackers éticos inspecionam especificações <b>OpenAPI (Swagger)</b>. Elas são arquivos JSON/YAML públicos ou esquecidos que documentam todos os endpoints, parâmetros e métodos de autenticação de uma organização, servindo como o mapa de exploração ideal.",
+                "highlight": "Swagger exposto sem autenticação revela caminhos críticos para falhas de lógica."
+            },
+            {
+                "type": "example",
+                "icon": "fa-toolbox",
+                "title": "Kits de Desenvolvimento (SDKs) e CLI (Cisco 7.1.13)",
+                "content": "Auditores de segurança usam automações locais para escanear a nuvem inteira em segundos. Em vez de usar telas gráficas, manipulamos a nuvem via linha de comando (<b>AWS CLI</b>) ou escrevemos scripts em Python usando o SDK oficial da AWS, chamado <b>Boto3</b>, para encontrar segredos:",
+                "code": "# Script de auditoria Boto3 em Python para checar buckets abertos\nimport boto3\ns3 = boto3.client('s3')\nfor bucket in s3.list_buckets()['Buckets']:\n    acl = s3.get_bucket_acl(Bucket=bucket['Name'])\n    print(f\"Bucket: {bucket['Name']} | Grantees: {acl['Grants']}\")",
+                "takeaway": "Dominar ferramentas de IaC e APIs é essencial para o Pentest moderno."
             },
             {
                 "type": "match",
-                "title": "Associe os Vetores e Ferramentas",
+                "title": "Consolidação - Vetores de Nuvem (Cisco 7.1.12)",
                 "pairs": [
                     {
-                        "term": "Ataque D2O",
-                        "definition": "Contornar a CDN e atingir o servidor de origem"
+                        "term": "IMDS (IP 169.254.169.254)",
+                        "definition": "Serviço de metadados vulnerável a SSRF (defesa com IMDSv2)."
                     },
                     {
-                        "term": "Searchsploit",
-                        "definition": "Busca offline por exploits locais e DoS"
-                    },
-                    {
-                        "term": "Replay SAML",
-                        "definition": "Reaproveitar um token de federação para criar sessões"
+                        "term": "Direct-to-Origin (D2O)",
+                        "definition": "Burlar proteções perimetrais batendo direto no IP do host."
                     },
                     {
                         "term": "Spectre/Meltdown",
-                        "definition": "Explorar CPUs físicas para ler a memória de VMs vizinhas"
+                        "definition": "Ataques de canal lateral que lêem memória RAM via CPU física."
+                    },
+                    {
+                        "term": "Boto3 / AWS CLI",
+                        "definition": "Ferramentas e SDKs de script para auditoria IAM."
                     }
                 ]
             }
@@ -226,6 +283,13 @@
         let selectedIdx = null;
         let hearts = 5;
         let shuffledOptions = [];
+
+        // Match state
+        let matchLeft = [];
+        let matchRight = [];
+        let selectedLeft = null;
+        let selectedRight = null;
+        let matchesFound = 0;
 
         function shuffle(array) {
             let currentIndex = array.length, randomIndex;
@@ -322,6 +386,39 @@
                     </div>
                 `;
             }
+            else if (step.type === 'match') {
+                matchesFound = 0;
+                matchLeft = shuffle(step.pairs.map((p, i) => ({text: p.term, id: i})));
+                
+                let isDeranged = false;
+                while (!isDeranged) {
+                    matchRight = shuffle(step.pairs.map((p, i) => ({text: p.definition, id: i})));
+                    isDeranged = true;
+                    for (let j = 0; j < matchLeft.length; j++) {
+                        if (matchLeft[j].id === matchRight[j].id) {
+                            if (matchLeft.length > 1) {
+                                isDeranged = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                selectedLeft = null;
+                selectedRight = null;
+                
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="module-subtitle"><i class="fas fa-link"></i> ASSOCIE OS PARES</div>
+                        <div class="quiz-title">${step.title}</div>
+                        <div class="match-container">
+                                ${matchLeft.map((item, i) => `
+                                    <div class="match-item" id="left-${i}" onclick="selectMatch('left', ${i}, ${item.id})">${item.text}</div>
+                                    <div class="match-item" id="right-${i}" onclick="selectMatch('right', ${i}, ${matchRight[i].id})">${matchRight[i].text}</div>
+                                `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
             
             area.scrollTop = 0;
         }
@@ -343,6 +440,57 @@
             document.getElementById('checkBtn').classList.add('active');
         }
 
+        function selectMatch(side, idx, pairId) {
+            const item = document.getElementById(`${side}-${idx}`);
+            if (item.classList.contains('matched')) return;
+
+            document.querySelectorAll(`.match-item[id^='${side}-']`).forEach(el => {
+                if(!el.classList.contains('matched')) el.classList.remove('selected');
+            });
+            
+            item.classList.add('selected');
+
+            if (side === 'left') selectedLeft = {el: item, id: pairId};
+            else selectedRight = {el: item, id: pairId};
+
+            if (selectedLeft && selectedRight) {
+                if (selectedLeft.id === selectedRight.id) {
+                    selectedLeft.el.classList.remove('selected');
+                    selectedLeft.el.classList.add('matched');
+                    selectedRight.el.classList.remove('selected');
+                    selectedRight.el.classList.add('matched');
+                    matchesFound++;
+                    
+                    if (matchesFound === steps[currentStep].pairs.length) {
+                        document.getElementById('checkBtn').disabled = false;
+                        document.getElementById('checkBtn').classList.add('active');
+                    }
+                } else {
+                    let errLeft = selectedLeft;
+                    let errRight = selectedRight;
+                    selectedLeft = null;
+                    selectedRight = null;
+
+                    errLeft.el.classList.remove('selected');
+                    errLeft.el.classList.add('error');
+                    errRight.el.classList.remove('selected');
+                    errRight.el.classList.add('error');
+                    
+                    hearts--;
+                    updateProgress();
+                    if(hearts <= 0) triggerGameOver();
+
+                    setTimeout(() => {
+                        errLeft.el.classList.remove('error');
+                        errRight.el.classList.remove('error');
+                    }, 500);
+                    return;
+                }
+                selectedLeft = null;
+                selectedRight = null;
+            }
+        }
+
         function checkResponse() {
             const step = steps[currentStep];
             const checkBtn = document.getElementById('checkBtn');
@@ -354,13 +502,19 @@
                 return;
             }
 
-            let isCorrect = shuffledOptions[selectedIdx] === step.correctText;
-            
-            document.querySelectorAll('.option-card').forEach((c, i) => {
-                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
-                else if (i === selectedIdx) c.classList.add('wrong');
-                c.classList.add('disabled');
-            });
+            let isCorrect = false;
+
+            if (step.type === 'quiz' || step.type === 'fill') {
+                isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+                
+                document.querySelectorAll('.option-card').forEach((c, i) => {
+                    if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                    else if (i === selectedIdx) c.classList.add('wrong');
+                    c.classList.add('disabled');
+                });
+            } else if (step.type === 'match') {
+                isCorrect = true;
+            }
 
             if (isCorrect) {
                 document.getElementById('fbTitle').innerHTML = '<i class="fas fa-check-circle"></i> Excelente!';
@@ -401,8 +555,8 @@
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">PERMISSÕES DOMINADAS!</h2>
-                    <p class="text-body mb-6">Você compreendeu os perigos de JWTs mal validados, S3 expostos, direct-to-origin bypass e side-channels em nuvem compartilhada.</p>
+                    <h2 class="title-main mb-2">INFRAESTRUTURA DESVENDADA!</h2>
+                    <p class="text-body mb-6">Você dominou a extração de metadados via SSRF, o bypass de WAF com Direct-to-Origin (D2O), os ataques de CPU Side-Channel e a automação de auditoria usando SDKs oficiais.</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
                         <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">

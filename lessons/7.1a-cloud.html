@@ -38,13 +38,13 @@
         .game-card { width: 100%; animation: slideUp 0.3s ease-out; display: flex; flex-direction: column; gap: 0.8rem; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* General Typography */
+        /<i> General Typography </i>/
         .module-subtitle { font-size: 0.7rem; font-weight: 900; color: var(--cyber-blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
         .title-main { font-size: clamp(1.4rem, 5vw, 1.8rem); font-weight: 800; color: white; line-height: 1.2; margin-bottom: 0.5rem; }
         .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
         .text-body b { color: white; }
         
-        /* Utility Classes */
+        /<i> Utility Classes </i>/
         .mr-1 { margin-right: 0.25rem; }
         .mr-2 { margin-right: 0.5rem; }
         .mb-1 { margin-bottom: 0.25rem; }
@@ -52,18 +52,18 @@
         .highlight-cyan { color: #00f2ff; font-weight: 700; }
         .highlight-green { color: var(--cyber-green); font-weight: 700; }
 
-        /* TYPE: TEACH */
+        /<i> TYPE: TEACH </i>/
         .teach-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .teach-icon { font-size: 2.5rem; color: var(--cyber-blue); margin-bottom: 1rem; }
         .teach-highlight { display: flex; align-items: center; gap: 0.6rem; background: rgba(0, 255, 65, 0.1); border-left: 3px solid var(--cyber-green); padding: 0.8rem; margin-top: 1rem; font-weight: 600; color: var(--cyber-green); border-radius: 0 0.5rem 0.5rem 0; }
 
-        /* TYPE: EXAMPLE */
+        /<i> TYPE: EXAMPLE </i>/
         .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .example-scenario { background: #161b22; border: 1px solid #21262d; border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; }
         .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.85rem; color: #00ff41; border: 1px solid #30363d; overflow-x: auto; white-space: pre; }
         .example-takeaway { display: flex; gap: 0.8rem; align-items: flex-start; margin-top: 1rem; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
 
-        /* TYPE: QUIZ */
+        /<i> TYPE: QUIZ </i>/
         .quiz-title { font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 800; color: white; margin-bottom: 1.5rem; line-height: 1.3; }
         .options-grid { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
         .option-card { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.8rem, 3vw, 1rem); border-radius: 1rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: clamp(0.95rem, 4vw, 1.05rem); -webkit-tap-highlight-color: transparent; }
@@ -75,19 +75,28 @@
         .option-number { width: 28px; height: 28px; flex-shrink: 0; border: 2px solid #484f58; border-radius: 0.4rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; color: #8b949e; }
         .option-card.selected .option-number { border-color: var(--cyber-blue); color: var(--cyber-blue); }
 
-        /* TYPE: FILL */
+        /<i> TYPE: FILL </i>/
         .fill-sentence { font-size: clamp(1.1rem, 5vw, 1.3rem); font-weight: 600; line-height: 1.6; color: white; margin-bottom: 2rem; background: #0d1117; padding: clamp(1rem, 4vw, 1.5rem); border-radius: 1.2rem; border: 1px solid #30363d; }
         .fill-slot { display: inline-block; min-width: 120px; height: 34px; border-bottom: 3px solid #484f58; margin: 0 0.5rem; vertical-align: middle; text-align: center; color: var(--cyber-blue); font-weight: 800; transition: all 0.2s; }
         .fill-slot.filled { border-bottom-color: var(--cyber-blue); }
 
-        /* FOOTER & BUTTONS */
+        /<i> TYPE: MATCH </i>/
+        .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
+        .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
+        .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
+        .match-item.matched { border-color: var(--cyber-green); background: rgba(0, 255, 65, 0.05); color: var(--cyber-green); opacity: 0.5; pointer-events: none; }
+        .match-item.error { border-color: var(--cyber-red); animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        /<i> FOOTER & BUTTONS </i>/
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
         .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #a0a8b0; }
         .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #a0a8b0; }
 
-        /* FEEDBACK OVERLAY */
+        /<i> FEEDBACK OVERLAY </i>/
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
         .feedback-overlay.show { bottom: 0; }
         .feedback-overlay.correct { background: #0d1a10; border-top: 4px solid var(--cyber-green); }
@@ -117,119 +126,146 @@
     </footer>
 
     <script>
-        const steps = [
-            {
+        const steps = [            {
                 "type": "teach",
                 "icon": "fa-cloud",
-                "title": "Modelos de Nuvem & Shadow IT",
-                "content": "As organizações utilizam a nuvem para converter despesas de capital em operacionais. Segundo o NIST, a nuvem possui modelos de serviço: <b>IaaS</b> (Infraestrutura gerida pelo cliente), <b>PaaS</b> (Plataforma gerida pelo provedor) e <b>SaaS</b> (Software pronto). No entanto, a facilidade de provisionar recursos frequentemente gera o <b>Shadow IT</b>, onde administradores perdem o controle de ativos não homologados e softwares desatualizados ficam acessíveis na internet.",
-                "highlight": "A má configuração por desenvolvedores sem conhecimento especializado é a principal brecha na nuvem."
+                "title": "O Modelo de Responsabilidade Compartilhada (Cisco 7.1.1)",
+                "content": "A segurança na nuvem baseia-se em um acordo básico: o <b>Modelo de Responsabilidade Compartilhada</b>. Ele divide as obrigações entre o <b>Provedor</b> (como AWS, Azure, Google Cloud) e o <b>Cliente</b> (a sua empresa).<br><br>🛡️ O provedor cuida da segurança <b>da</b> nuvem: protege a infraestrutura física (data centers, servidores reais, cabos, geradores) e a camada de virtualização (hypervisores).<br><br>👤 O cliente cuida da segurança <b>na</b> nuvem: protege seus próprios dados, sistemas operacionais das VMs, políticas de acesso (IAM), firewall interno e as senhas.",
+                "highlight": "O provedor protege o hardware do data center, mas você protege o seu conteúdo interno!"
+            },
+            {
+                "type": "quiz",
+                "task": "Se a sua máquina virtual na nuvem for invadida porque você utilizou uma senha fraca de administrador (como 'admin123'), de quem é a responsabilidade pela falha de segurança segundo o Modelo de Responsabilidade Compartilhada?",
+                "options": [
+                    "Do cliente (você), pois a segurança do controle de acessos e configurações ocorre 'NA' nuvem.",
+                    "Do provedor de nuvem, pois eles deveriam barrar senhas fracas no hardware físico.",
+                    "De ambos de forma idêntica, já que a infraestrutura física foi afetada indiretamente."
+                ],
+                "correctText": "Do cliente (você), pois a segurança do controle de acessos e configurações ocorre 'NA' nuvem.",
+                "explanation": "O provedor fornece a infraestrutura física segura, mas a configuração das contas, controle de acesso e firewalls internos é de inteira responsabilidade do cliente (segurança NA nuvem)."
+            },
+            {
+                "type": "teach",
+                "icon": "fa-triangle-exclamation",
+                "title": "O Perigo do Shadow IT (Cisco 7.1.1)",
+                "content": "Na nuvem, criar um novo servidor de banco de dados ou um bucket de arquivos é extremamente fácil e rápido. Isso gera o fenômeno do <b>Shadow IT</b> (TI Invisível): quando funcionários ou setores inteiros criam ativos em nuvem sem a homologação, conhecimento ou autorização da equipe de segurança corporativa.<br><br>Esses ativos criados de forma paralela costumam ficar esquecidos, desatualizados e com configurações inseguras, servindo como portas de entrada fáceis para invasores.",
+                "highlight": "O Shadow IT burla as políticas de segurança corporativa e expõe dados confidenciais de forma silenciosa."
+            },
+            {
+                "type": "quiz",
+                "task": "Um desenvolvedor cria uma nova base de dados temporária em nuvem para realizar um teste rápido de fim de semana, sem avisar a equipe de segurança, e a deixa ativa e sem senha. Esse cenário descreve:",
+                "options": [
+                    "Uma prática de Shadow IT, que gera brechas críticas e descontroladas.",
+                    "Uma conformidade padrão com o modelo SaaS.",
+                    "Um ataque de canal lateral do hipervisor."
+                ],
+                "correctText": "Uma prática de Shadow IT, que gera brechas críticas e descontroladas.",
+                "explanation": "O provisionamento não autorizado de recursos de TI por parte de colaboradores é chamado de Shadow IT e é uma das maiores causas de vazamentos na nuvem corporativa."
+            },
+            {
+                "type": "teach",
+                "icon": "fa-server",
+                "title": "Modelos de Serviços - O que é IaaS? (Cisco 7.1.2)",
+                "content": "Para organizar a divisão de responsabilidades, os serviços de nuvem são classificados em três modelos. O primeiro é a <b>IaaS (Infraestrutura como Serviço)</b>.<br><br>Aqui, o provedor te entrega apenas o 'ferro virtualizado': máquinas virtuais cruas, redes e armazenamento vazios. O provedor cuida da segurança física e do hipervisor.<br><br><b>Toda a responsabilidade interna é sua</b>: instalar e atualizar o Sistema Operacional (Windows/Linux), configurar os bancos de dados, instalar runtimes e rodar seu próprio software de forma segura.",
+                "highlight": "Exemplo clássico: Uma instância de máquina virtual AWS EC2 ou Google Compute Engine."
+            },
+            {
+                "type": "teach",
+                "icon": "fa-layer-group",
+                "title": "Modelos de Serviços - O que é PaaS? (Cisco 7.1.2)",
+                "content": "No modelo <b>PaaS (Plataforma como Serviço)</b>, a sua responsabilidade diminui significativamente.<br><br>O provedor de nuvem gerencia e protege quase tudo: o hardware físico, o hipervisor, o Sistema Operacional da máquina e os servidores de banco de dados. A única obrigação do cliente é <b>escrever o código da aplicação e enviá-lo</b> para a plataforma rodar.<br><br>Você não precisa se preocupar em atualizar o kernel do Linux ou configurar a rede interna do servidor.",
+                "highlight": "Exemplo clássico: Heroku ou AWS Elastic Beanstalk, onde você apenas faz o upload do seu código."
+            },
+            {
+                "type": "teach",
+                "icon": "fa-laptop",
+                "title": "Modelos de Serviços - O que é SaaS? (Cisco 7.1.2)",
+                "content": "No modelo <b>SaaS (Software como Serviço)</b>, o provedor gerencia e protege <b>toda a cadeia tecnológica</b>.<br><br>Eles cuidam da infraestrutura física, do hardware, do Sistema Operacional, do código do software e do armazenamento de dados. Você apenas utiliza o aplicativo pronto diretamente pelo navegador web ou aplicativo cliente.<br><br>Sua única responsabilidade de segurança é proteger sua própria credencial de acesso (senha e perfil de usuário).",
+                "highlight": "Exemplos clássicos: Microsoft Office 365, Google Drive, Slack ou Dropbox."
+            },
+            {
+                "type": "match",
+                "title": "Prática - Modelos de Serviços em Nuvem (Cisco 7.1.2)",
+                "pairs": [
+                    {
+                        "term": "IaaS",
+                        "definition": "O provedor fornece apenas o hardware virtualizado/VMs. O S.O. é seu."
+                    },
+                    {
+                        "term": "PaaS",
+                        "definition": "O provedor gerencia o S.O. e banco de dados. Você gerencia o código."
+                    },
+                    {
+                        "term": "SaaS",
+                        "definition": "Aplicação inteiramente pronta e hospedada pelo provedor."
+                    },
+                    {
+                        "term": "Shadow IT",
+                        "definition": "Recursos criados na nuvem sem homologação ou aviso da equipe de segurança."
+                    }
+                ]
             },
             {
                 "type": "teach",
                 "icon": "fa-mask",
-                "title": "Credential Harvesting",
-                "content": "O primeiro grande objetivo de um atacante na nuvem é <b>obter credenciais administrativas</b>. A Colheita de Credenciais usa engenharia social (phishing hiper-direcionado) para enganar usuários. O <b>Social-Engineer Toolkit (SET)</b> é a ferramenta lendária para isso, clonando portais reais de login para capturar cada caractere digitado em requisições POST.",
-                "highlight": "Atacantes também roubam cookies de sessão (via XSS) para burlar o MFA (Múltiplos Fatores de Autenticação)."
+                "title": "Colheita de Credenciais (Cisco 7.1.3)",
+                "content": "Como a nuvem é exposta diretamente na internet, a forma mais rápida de um atacante invadir é através da <b>Colheita de Credenciais (Credential Harvesting)</b>. Hackers utilizam Phishing altamente direcionado (Spear Phishing), clonagem de portais reais de login (como AWS Console ou Microsoft 365) e roubo de tokens de sessão ativos (via XSS) para contornar o MFA.",
+                "highlight": "Roubar o token de sessão ativa permite assumir o acesso mesmo com MFA habilitado."
             },
             {
                 "type": "example",
                 "icon": "fa-terminal",
-                "title": "Clonagem com o SET",
-                "scenario": "O atacante inicia o SET no Kali Linux, escolhe as opções de 'Website Attack Vectors' e 'Credential Harvester Method'. O SET então clona o portal do Office 365 e levanta um servidor.",
-                "code": "$ sudo setoolkit\n1) Social-Engineering Attacks\n2) Website Attack Vectors\n3) Credential Harvester Attack Method\n2) Site Cloner\n\n[*] SET Credential Harvester is running on port 80!",
-                "takeaway": "Qualquer tentativa de login na página falsa enviará as credenciais em texto puro para o atacante."
+                "title": "Prática - Clonagem de Portais com o SET (Cisco 7.1.4)",
+                "scenario": "O atacante inicia o Social-Engineer Toolkit (SET) no Kali Linux para clonar o portal administrativo e interceptar requisições de credenciais:",
+                "code": "$ sudo setoolkit\n1) Social-Engineering Attacks\n2) Website Attack Vectors\n3) Credential Harvester Attack Method\n2) Site Cloner\n\n[<i>] SET Web Server running. Cloning Microsoft 365 login...\n[</i>] Credential Harvester is active on port 80!",
+                "takeaway": "Qualquer tentativa de login na página clonada enviará a senha em texto claro ao atacante."
             },
             {
                 "type": "quiz",
-                "task": "No Social-Engineer Toolkit (SET), qual método é utilizado para clonar um site legítimo e redirecionar as submissões de formulário (POST) para o servidor do atacante?",
+                "task": "No Social-Engineer Toolkit (SET), qual o método específico usado para criar cópias de páginas de login e roubar credenciais interceptando requisições POST?",
                 "options": [
                     "Credential Harvester Attack Method.",
                     "Infectious Media Generator.",
                     "Mass Mailer Attack Vector."
                 ],
                 "correctText": "Credential Harvester Attack Method.",
-                "explanation": "O Credential Harvester é especificamente desenhado para clonar interfaces e capturar credenciais interceptando as requisições POST."
+                "explanation": "O Credential Harvester clona o HTML da página original e altera o formulário de login para enviar os dados digitados para o IP do atacante."
             },
             {
                 "type": "teach",
                 "icon": "fa-stairs",
-                "title": "Escalada de Privilégios & Takeover",
-                "content": "Uma vez com credenciais iniciais, ocorrem as <b>Escaladas de Privilégios</b>. A escalada <b>Vertical</b> ocorre quando um usuário comum acessa funções de admin. A escalada <b>Horizontal</b> ocorre ao acessar dados de outro usuário de mesmo nível. Já no <b>Account Takeover (Aquisição de Conta)</b>, o atacante usa a conta para comprometer a nuvem. Por conta da infraestrutura distribuída, é difícil detectar a invasão, exceto por anomalias como acessos OAuth maliciosos ou logins geográficos suspeitos.",
-                "highlight": "Conexões OAuth de 'apps de terceiros' falsos lendo seus e-mails são táticas clássicas de takeover silencioso."
+                "title": "Escalada de Privilégios em Nuvem (Cisco 7.1.5)",
+                "content": "Uma vez dentro da nuvem com uma conta inicial, o hacker busca elevar seus direitos (<b>Escalada de Privilégios</b>). Isso pode ser:<br><br>1. ↕️ <b>Vertical</b>: Subir de nível, como ir de um visualizador de logs para administrador geral aproveitando falhas em políticas IAM mal configuradas.<br>2. ↔️ <b>Horizontal</b>: Acessar dados de outros usuários do mesmo nível hierárquico.",
+                "highlight": "Políticas de IAM permissivas demais (ex: 'iam:PutUserPolicy') são as maiores causas de escalada vertical."
             },
             {
-                "type": "match",
-                "title": "Associe as Ameaças",
-                "pairs": [
-                    {
-                        "term": "Shadow IT",
-                        "definition": "Ativos na nuvem esquecidos e não homologados pela segurança"
-                    },
-                    {
-                        "term": "Escalada Horizontal",
-                        "definition": "Acessar dados de outro usuário com o mesmo nível de permissão"
-                    },
-                    {
-                        "term": "Escalada Vertical",
-                        "definition": "Elevar privilégios de um usuário comum para administrador"
-                    },
-                    {
-                        "term": "Account Takeover",
-                        "definition": "Sequestrar uma conta e usá-la para movimentação lateral silenciosa"
-                    }
-                ]
-            },
-            {
-                "type": "teach",
-                "icon": "fa-cube",
-                "title": "Serviço de Metadados (IMDS)",
-                "content": "Para não usar chaves hardcoded no código, instâncias de nuvem possuem um serviço de metadados interno (<b>IMDS</b>) acessível pelo IP mágico <b>169.254.169.254</b>. Se um site rodando na instância tiver uma falha de <b>SSRF (Server-Side Request Forgery)</b>, o atacante externo pode forçar o servidor a acessar esse IP e roubar tokens de segurança temporários com alto privilégio.",
-                "highlight": "O IMDS responde sem autenticação para solicitações originadas de dentro da instância."
-            },
-            {
-                "type": "example",
-                "icon": "fa-bug",
-                "title": "Roubando Chaves via SSRF",
-                "scenario": "Um atacante identifica um parâmetro vulnerável a SSRF ('?url=') em um app EC2 e aponta para o IMDSv1 para obter credenciais.",
-                "code": "http://vulnerable.com/view?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/admin-role\n\n{\n  \"AccessKeyId\": \"ASIA...\",\n  \"SecretAccessKey\": \"wJalrXUtn...\",\n  \"Token\": \"IQoJb3Jp...\"\n}",
-                "takeaway": "O atacante agora possui as credenciais administrativas e pode assumir a identidade da instância (nimbostratus)."
-            },
-            {
-                "type": "quiz",
-                "task": "Qual é a vulnerabilidade de aplicação web (sigla) que permite a um atacante forçar um servidor em nuvem a extrair seus próprios metadados e vazar chaves do IP 169.254.169.254?",
+                "type": "fill",
+                "sentence": "Se eu consigo acessar e gerenciar arquivos de outro usuário de mesmo nível acessando uma pasta de bucket vizinho, estou realizando uma escalada de privilégios ___.",
                 "options": [
-                    "SSRF",
-                    "XSS",
-                    "CSRF"
+                    "horizontal",
+                    "vertical",
+                    "root"
                 ],
-                "correctText": "SSRF",
-                "explanation": "No Server-Side Request Forgery (SSRF), o servidor é induzido a fazer requisições não autorizadas para redes internas, como o endereço de link-local do IMDS."
-            },
-            {
-                "type": "teach",
-                "icon": "fa-shield",
-                "title": "Defesa com IMDSv2",
-                "content": "Para mitigar ataques SSRF comuns, a AWS lançou o <b>IMDSv2</b>. Nele, requisições GET diretas não funcionam. É exigida uma arquitetura baseada em sessão: o solicitante deve primeiro fazer uma requisição <b>PUT</b> com um cabeçalho específico ('X-aws-ec2-metadata-token') para obter um token de uso, que deve ser anexado nas consultas subsequentes.",
-                "highlight": "Isso bloqueia explorações SSRF triviais, pois o atacante não consegue forçar o envio de cabeçalhos PUT personalizados na maioria dos cenários web."
+                "correctText": "horizontal",
+                "explanation": "Como seu nível de privilégio hierárquico não aumentou, mas você acessou dados laterais de terceiros, a escalada é horizontal."
             },
             {
                 "type": "teach",
                 "icon": "fa-key",
-                "title": "O Perigo do User Data",
-                "content": "Na inicialização de VMs, o recurso <b>User Data</b> (AWS) ou Custom Data executa scripts de bootstrap. Frequentemente, desenvolvedores cometem o erro crítico de colocar senhas de banco de dados ou chaves de API em <b>texto puro</b> nesses scripts. Eles ficam armazenados e legíveis no IMDS (/latest/user-data).",
-                "highlight": "Se o IMDS for lido, qualquer segredo no User Data compromete toda a infraestrutura."
+                "title": "Aquisição de Conta - Account Takeover (Cisco 7.1.6)",
+                "content": "A <b>Aquisição de Conta (Account Takeover - ATO)</b> ocorre quando o atacante sequestra totalmente as credenciais e assume a conta. Na nuvem, atacantes executam o takeover criando novas chaves de API secretas (para persistência), alterando políticas de segurança ou criando permissões OAuth maliciosas em aplicações parceiras para acessar dados silenciosamente.",
+                "highlight": "Detecta-se o takeover por anomalias como logins em locais geograficamente impossíveis."
             },
             {
-                "type": "fill",
-                "sentence": "Para evitar que vulnerabilidades de web pudessem roubar credenciais facilmente do IP de link-local, foi introduzido o ___, que exige o uso de tokens gerados via requisições PUT.",
+                "type": "quiz",
+                "task": "Qual das seguintes opções é um forte indicador de que uma conta administrativa em nuvem sofreu uma Aquisição de Conta (Takeover)?",
                 "options": [
-                    "IMDSv2",
-                    "IMDSv1",
-                    "SSRF blocker"
+                    "Acessos OAuth suspeitos e logins simultâneos em países distantes (geografia impossível).",
+                    "O aumento do tráfego de rede HTTP da aplicação.",
+                    "A expiração natural da sessão de login do usuário."
                 ],
-                "correctText": "IMDSv2",
-                "explanation": "O IMDSv2 adicionou uma camada crítica de defesa em profundidade, exigindo negociação de token com cabeçalhos HTTP que são difíceis de forjar via SSRF."
+                "correctText": "Acessos OAuth suspeitos e logins simultâneos em países distantes (geografia impossível).",
+                "explanation": "Acessos simultâneos de localizações distantes e novas conexões de apps de terceiros (OAuth) sem o consentimento indicam sequestro de conta."
             }
         ];
 
@@ -237,6 +273,13 @@
         let selectedIdx = null;
         let hearts = 5;
         let shuffledOptions = [];
+        
+        // Match state
+        let matchLeft = [];
+        let matchRight = [];
+        let selectedLeft = null;
+        let selectedRight = null;
+        let matchesFound = 0;
 
         function shuffle(array) {
             let currentIndex = array.length, randomIndex;
@@ -333,6 +376,39 @@
                     </div>
                 `;
             }
+            else if (step.type === 'match') {
+                matchesFound = 0;
+                matchLeft = shuffle(step.pairs.map((p, i) => ({text: p.term, id: i})));
+                
+                let isDeranged = false;
+                while (!isDeranged) {
+                    matchRight = shuffle(step.pairs.map((p, i) => ({text: p.definition, id: i})));
+                    isDeranged = true;
+                    for (let j = 0; j < matchLeft.length; j++) {
+                        if (matchLeft[j].id === matchRight[j].id) {
+                            if (matchLeft.length > 1) {
+                                isDeranged = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                selectedLeft = null;
+                selectedRight = null;
+                
+                area.innerHTML = `
+                    <div class="game-card">
+                        <div class="module-subtitle"><i class="fas fa-link"></i> ASSOCIE OS PARES</div>
+                        <div class="quiz-title">${step.title}</div>
+                        <div class="match-container">
+                                ${matchLeft.map((item, i) => `
+                                    <div class="match-item" id="left-${i}" onclick="selectMatch('left', ${i}, ${item.id})">${item.text}</div>
+                                    <div class="match-item" id="right-${i}" onclick="selectMatch('right', ${i}, ${matchRight[i].id})">${matchRight[i].text}</div>
+                                `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
             
             area.scrollTop = 0;
         }
@@ -354,6 +430,57 @@
             document.getElementById('checkBtn').classList.add('active');
         }
 
+        function selectMatch(side, idx, pairId) {
+            const item = document.getElementById(`${side}-${idx}`);
+            if (item.classList.contains('matched')) return;
+
+            document.querySelectorAll(`.match-item[id^='${side}-']`).forEach(el => {
+                if(!el.classList.contains('matched')) el.classList.remove('selected');
+            });
+            
+            item.classList.add('selected');
+
+            if (side === 'left') selectedLeft = {el: item, id: pairId};
+            else selectedRight = {el: item, id: pairId};
+
+            if (selectedLeft && selectedRight) {
+                if (selectedLeft.id === selectedRight.id) {
+                    selectedLeft.el.classList.remove('selected');
+                    selectedLeft.el.classList.add('matched');
+                    selectedRight.el.classList.remove('selected');
+                    selectedRight.el.classList.add('matched');
+                    matchesFound++;
+                    
+                    if (matchesFound === steps[currentStep].pairs.length) {
+                        document.getElementById('checkBtn').disabled = false;
+                        document.getElementById('checkBtn').classList.add('active');
+                    }
+                } else {
+                    let errLeft = selectedLeft;
+                    let errRight = selectedRight;
+                    selectedLeft = null;
+                    selectedRight = null;
+
+                    errLeft.el.classList.remove('selected');
+                    errLeft.el.classList.add('error');
+                    errRight.el.classList.remove('selected');
+                    errRight.el.classList.add('error');
+                    
+                    hearts--;
+                    updateProgress();
+                    if(hearts <= 0) triggerGameOver();
+
+                    setTimeout(() => {
+                        errLeft.el.classList.remove('error');
+                        errRight.el.classList.remove('error');
+                    }, 500);
+                    return;
+                }
+                selectedLeft = null;
+                selectedRight = null;
+            }
+        }
+
         function checkResponse() {
             const step = steps[currentStep];
             const checkBtn = document.getElementById('checkBtn');
@@ -365,13 +492,19 @@
                 return;
             }
 
-            let isCorrect = shuffledOptions[selectedIdx] === step.correctText;
-            
-            document.querySelectorAll('.option-card').forEach((c, i) => {
-                if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
-                else if (i === selectedIdx) c.classList.add('wrong');
-                c.classList.add('disabled');
-            });
+            let isCorrect = false;
+
+            if (step.type === 'quiz' || step.type === 'fill') {
+                isCorrect = shuffledOptions[selectedIdx] === step.correctText;
+                
+                document.querySelectorAll('.option-card').forEach((c, i) => {
+                    if (shuffledOptions[i] === step.correctText) c.classList.add('correct');
+                    else if (i === selectedIdx) c.classList.add('wrong');
+                    c.classList.add('disabled');
+                });
+            } else if (step.type === 'match') {
+                isCorrect = true;
+            }
 
             if (isCorrect) {
                 document.getElementById('fbTitle').innerHTML = '<i class="fas fa-check-circle"></i> Excelente!';
@@ -412,8 +545,8 @@
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">SEGREDOS EXTRAÍDOS!</h2>
-                    <p class="text-body mb-6">Você desvendou as táticas de phishing com SET e a exploração de metadados críticos na nuvem.</p>
+                    <h2 class="title-main mb-2">ACESSO CONSOLIDADO!</h2>
+                    <p class="text-body mb-6">Você desvendou as táticas de phishing com SET, mapeou os modelos de nuvem e compreendeu a escalada de privilégios e a aquisição de contas corporativas.</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
                         <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">
