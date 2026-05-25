@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - A Fase Final do Pentest</title>
+    <title>CyberDuo - Por Que o Relatório Decide o Valor do Pentest</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -131,39 +131,47 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-file-alt",
-                        "title": "A Importância do Relatório",
-                        "content": "O relatório é o <b>produto final</b> do pentest. Um relatório mal escrito invalida todo o trabalho técnico. Deve ser claro para <b>executivos</b> e detalhado para <b>técnicos</b>.",
-                        "highlight": "Relatório ruim = pentest inútil"
+                        "icon": "fa-file-signature",
+                        "title": "O Entregável Que Fecha o Engajamento (Cisco 9.0.1)",
+                        "content": "Depois de executar reconhecimento, exploração e validação, ainda falta a fase mais importante: o <b>relatório final</b>. Esse report é um dos principais <b>entregáveis</b> do engajamento e permite ao cliente entender as descobertas, priorizar correções e perceber o valor do projeto.",
+                        "highlight": "Sem relatório de qualidade, o pentest perde grande parte do seu valor de negócio."
             },
             {
                         "type": "teach",
-                        "icon": "fa-users",
-                        "title": "Dois Públicos",
-                        "content": "O relatório tem duas seções: <b>Executive Summary</b> (para gestão, sem jargão técnico) e <b>Technical Details</b> (para equipe técnica, com evidências e reprodução).",
-                        "highlight": "Fale a língua do seu público"
+                        "icon": "fa-notes-medical",
+                        "title": "Documentação Contínua Evita Lacunas Críticas (Cisco 9.0.1)",
+                        "content": "Durante o teste, cada evidência precisa ser registrada: comandos executados, horários, vulnerabilidades, credenciais de teste, logs e caminhos de exploração. Essa <b>documentação</b> sustenta o relatório. Se você confiar apenas na memória, será difícil reconstruir tudo com precisão na hora de redigir o documento.",
+                        "highlight": "Anote enquanto testa, não depois."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Exemplo - Evidência Registrada no Momento Certo",
+                        "scenario": "Um pentester encontra um painel administrativo exposto e registra imediatamente o caminho, a prova de acesso e o impacto técnico para usar depois no relatório:",
+                        "code": "[i] Host: portal.pixelparadise.local\n[i] URL: https://portal.pixelparadise.local/admin\n[+] Credencial válida de teste: auditor:Winter2026!\n[+] Impacto: acesso a exportação de dados de clientes\n[$] screenshot salvo em evidencias/admin-panel.png",
+                        "takeaway": "Registrar evidências no momento da descoberta evita omissões e fortalece a credibilidade do relatório."
             },
             {
                         "type": "quiz",
-                        "task": "Qual é o produto final mais importante de um pentest?",
+                        "task": "Qual é o principal motivo para tratar o relatório final como a etapa mais importante do engajamento?",
                         "options": [
-                                    "O relatório escrito",
-                                    "As ferramentas usadas",
-                                    "O número de vulnerabilidades"
+                                    "Porque é o documento que transforma achados técnicos em ações que o cliente pode executar",
+                                    "Porque ele substitui completamente a necessidade de validar vulnerabilidades",
+                                    "Porque ele elimina a necessidade de reuniões e comunicação com o cliente"
                         ],
-                        "correctText": "O relatório escrito",
-                        "explanation": "Sem relatório claro, o cliente não consegue corrigir as vulnerabilidades."
+                        "correctText": "Porque é o documento que transforma achados técnicos em ações que o cliente pode executar",
+                        "explanation": "O relatório é o elo entre a execução técnica do pentest e a remediação real no ambiente do cliente."
             },
             {
                         "type": "fill",
-                        "sentence": "O relatório deve ter um ___ para executivos e detalhes técnicos para a equipe de TI.",
+                        "sentence": "Esquecer comandos, evidências e caminhos de exploração é um risco comum quando o pentester não mantém a ___ durante todo o teste.",
                         "options": [
-                                    "Executive Summary",
-                                    "código-fonte",
-                                    "payload"
+                                    "documentação",
+                                    "ofuscação",
+                                    "segmentação"
                         ],
-                        "correctText": "Executive Summary",
-                        "explanation": "Executive Summary traduz achados técnicos em riscos de negócio."
+                        "correctText": "documentação",
+                        "explanation": "Documentação contínua garante rastreabilidade, qualidade de relatório e respaldo técnico."
             }
 ];
 
@@ -445,7 +453,7 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/9.1-componentes-relatorio.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/9.1a-componentes-distribuicao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
                 nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00b372; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
@@ -453,7 +461,7 @@
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">RELATÓRIOS INICIADOS!</h2>
+                    <h2 class="title-main mb-2">RELATÓRIO INICIADO!</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}

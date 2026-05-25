@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Estrutura do Relatório de Pentest</title>
+    <title>CyberDuo - Elevação de Acesso, Higienização e Evasão Esteganográfica</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #00ffa3;
+            --cyber-blue: #ff003c;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00b372; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #00b372; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b3002a; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b3002a; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-09.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-08.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,68 +131,87 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-list",
-                        "title": "Estrutura do Relatório",
-                        "content": "Componentes essenciais: <b>Escopo</b>, <b>Metodologia</b>, <b>Executive Summary</b>, <b>Achados</b> (com CVSS), <b>Evidências</b> (screenshots), <b>Recomendações</b> e <b>Anexos</b>.",
-                        "highlight": "Estrutura padronizada garante completude"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-camera",
-                        "title": "Evidências",
-                        "content": "Cada vulnerabilidade deve ter <b>evidência reproduzível</b>: screenshots, logs, requests/responses do Burp, e passos exatos para reproduzir. Sem evidência = achado descartável.",
-                        "highlight": "Evidência concreta é incontestável"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-chart-pie",
-                        "title": "Classificação de Risco",
-                        "content": "Cada achado recebe uma classificação: <b>Crítico</b>, <b>Alto</b>, <b>Médio</b>, <b>Baixo</b>, <b>Informativo</b>. Baseada no <b>CVSS</b> e no <b>contexto de negócio</b> do cliente.",
-                        "highlight": "Contexto de negócio afeta a classificação"
-            },
-            {
-                        "type": "match",
-                        "title": "Seção → Conteúdo",
-                        "pairs": [
-                                    {
-                                                "term": "Executive Summary",
-                                                "definition": "Visão geral para gestão"
-                                    },
-                                    {
-                                                "term": "Achados",
-                                                "definition": "Vulnerabilidades com CVSS e evidências"
-                                    },
-                                    {
-                                                "term": "Recomendações",
-                                                "definition": "Como corrigir cada vulnerabilidade"
-                                    },
-                                    {
-                                                "term": "Metodologia",
-                                                "definition": "Frameworks e ferramentas usadas"
-                                    }
-                        ]
+                        "icon": "fa-angles-up",
+                        "title": "Escalada de Privilégios (Cisco 8.2.5)",
+                        "content": "Ao obter o acesso inicial a uma máquina, o pentester geralmente ganha uma conta comum de baixas permissões. A <b>Escalada de Privilégios</b> é o abuso de falhas para acessar recursos restritos.<br><br>↕️ <b>Escalada Vertical</b>: Ocorre quando um usuário comum obtém privilégios de alto nível hierárquico (ex: o usuário `derek` vira `root` ou `SYSTEM`).<br><br>↔️ <b>Escalada Horizontal</b>: Acessar dados de contas de mesmo nível de privilégio (ex: mudar IDs de faturas ou ler posts privados de terceiros em fóruns).",
+                        "highlight": "A escalada de privilégios demonstra as falhas internas de autorização e controle de acessos da máquina."
             },
             {
                         "type": "quiz",
-                        "task": "O que torna uma evidência de vulnerabilidade válida no relatório?",
+                        "task": "Você acessa a sua conta de usuário no Pixel Paradise e percebe que as faturas são acessadas por um ID numérico na URL: 'raccount?id=1050'. Ao alterar manualmente para '1051', você tem acesso completo à fatura privada de outro usuário comum. Que tipo de falha pedagógica isso representa?",
                         "options": [
-                                    "Screenshots e passos reproduzíveis",
-                                    "Apenas a opinião do pentester",
-                                    "O nome da ferramenta que detectou"
+                                    "Escalada de privilégios horizontal (abuso de autorização lateral).",
+                                    "Escalada de privilégios vertical (escalada direta para root).",
+                                    "Ataque cinético industrial SCADA/Modbus."
                         ],
-                        "correctText": "Screenshots e passos reproduzíveis",
-                        "explanation": "Evidência deve permitir que outro profissional reproduza o achado."
+                        "correctText": "Escalada de privilégios horizontal (abuso de autorização lateral).",
+                        "explanation": "Você não virou administrador geral, mas acessou dados sensíveis de outro usuário com o mesmo nível de privilégios (Broken Object Level Authorization - BOLA / IDOR)."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-broom",
+                        "title": "Como Cobrir Rastros e Limpar Sistemas (Cisco 8.2.7)",
+                        "content": "Ao término do pentest, é vital limpar o ambiente para retornar todos os sistemas do cliente ao estado original de integridade:<br><br>🧼 <b>Processo de Limpeza</b>:<br>• Excluir todas as contas de usuário criadas para o teste.<br>• Excluir todos os scripts, backdoors, daemons, binários e arquivos temporários.<br>• Restaurar cabeçalhos, logs de auditoria e configurações originais.<br>• Seguir as diretrizes da publicação do <b>NIST SP 800-88 Rev 1 (Media Sanitization)</b> para higienizar mídias com segurança.",
+                        "highlight": "Todo processo e limite de limpeza deve ser detalhado previamente no documento de Regras de Engajamento (ROE)."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Em qual etapa do engajamento de teste de penetração o auditor deve discutir e documentar junto ao cliente os processos de limpeza e remoção de dados das máquinas de ataque?",
+                        "options": [
+                                    "Na fase de pré-engajamento, documentando tudo no documento de Regras de Engajamento (Rules of Engagement - ROE).",
+                                    "Apenas no último dia dos testes, decidindo os métodos por conta própria.",
+                                    "O pentester não deve realizar a limpeza das ferramentas, deixando isso a cargo do time de TI do cliente."
+                        ],
+                        "correctText": "Na fase de pré-engajamento, documentando tudo no documento de Regras de Engajamento (Rules of Engagement - ROE).",
+                        "explanation": "Para evitar a perda não intencional de dados produtivos do cliente e garantir transparência legal, os limites e autorizações de limpeza devem constar nas regras de engajamento (ROE)."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-file-image",
+                        "title": "Esteganografia com a ferramenta Steghide (Cisco 8.2.7)",
+                        "content": "Os atacantes (e pentesters para demonstrar a exfiltração silenciosa) utilizam <b>Esteganografia</b> para ocultar dados secretos dentro de mídias inocentes (como arquivos JPG, BMP ou WAV). Isso evita que os sensores corporativos de DLP (Data Loss Prevention) detectem o vazamento.<br><br>A ferramenta clássica para isso no Kali Linux é o <b>steghide</b>, que permite embutir e extrair payloads criptografando a carga com uma frase secreta.",
+                        "highlight": "Esteganografia esconde a própria existência da informação secreta dentro de outra mídia."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Prática - Ocultando e Extraindo com Steghide (Cisco 8.2.8)",
+                        "scenario": "Para demonstrar a exfiltração de um documento secreto ('segredo.txt') oculto dentro de uma foto inocente ('foto.jpg') e extraí-lo do outro lado, o pentester roda os seguintes comandos no terminal:",
+                        "code": "# 1. Embutindo o arquivo secreto na foto de cobertura:\n$ steghide embed -cf foto.jpg -ef segredo.txt -p 'cyberduo123'\n\n# 2. Extraindo o arquivo secreto da foto contaminada:\n$ steghide extract -sf foto.jpg -p 'cyberduo123'",
+                        "takeaway": "-cf define o arquivo de cobertura (cover), -ef define o arquivo embutido e -sf define o stego-file."
             },
             {
                         "type": "fill",
-                        "sentence": "Cada vulnerabilidade deve incluir uma pontuação ___ para indicar sua gravidade.",
+                        "sentence": "No steghide, para embutir dados, o parâmetro que aponta para o arquivo que carrega a mensagem oculta (ex: segredo.txt) é o -ef, e o parâmetro que aponta para a imagem ou vídeo original de cobertura é o ___.",
                         "options": [
-                                    "CVSS",
-                                    "DNS",
-                                    "TCP"
+                                    "-cf",
+                                    "-sf",
+                                    "-p"
                         ],
-                        "correctText": "CVSS",
-                        "explanation": "CVSS padroniza a gravidade das vulnerabilidades de 0 a 10."
+                        "correctText": "-cf",
+                        "explanation": "-cf representa o 'cover file' (a mídia legítima de disfarce) e -ef representa o 'embed file' (a carga de dados confidenciais)."
+            },
+            {
+                        "type": "match",
+                        "title": "Mapeando Boas Práticas de Limpeza (Cisco 8.2.7)",
+                        "pairs": [
+                                    {
+                                                "term": "Excluir contas de teste",
+                                                "definition": "Remover credenciais extras criadas durante o engajamento"
+                                    },
+                                    {
+                                                "term": "NIST SP 800-88",
+                                                "definition": "Diretrizes e boas práticas para Sanitização de Mídia"
+                                    },
+                                    {
+                                                "term": "Remover dados do cliente",
+                                                "definition": "Apagar dados sensíveis das máquinas do atacante pós-relatório"
+                                    },
+                                    {
+                                                "term": "Remover daemons/backdoors",
+                                                "definition": "Garantir que nenhum serviço ou porta dos fundos continue ativa"
+                                    }
+                        ]
             }
 ];
 
@@ -474,15 +493,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/9.2-analise-recomendacoes.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/9.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00b372; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b3002a; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">ESTRUTURA DO RELATÓRIO DOMINADA!</h2>
+                    <h2 class="title-main mb-2">Você completou o Módulo 8 com louvor! Você domina técnicas de persistência, movimentação lateral furtiva, escalada de privilégios e higienização pós-teste no padrão de excelência da Cisco.</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -491,7 +510,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-09.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-08.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

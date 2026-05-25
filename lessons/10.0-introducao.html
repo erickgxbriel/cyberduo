@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Arsenal do Hacker Ético</title>
+    <title>CyberDuo - Por Que Ferramentas e Código Fecham o Ciclo do Pentest</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -132,38 +132,46 @@
             {
                         "type": "teach",
                         "icon": "fa-toolbox",
-                        "title": "Ferramentas e Scripts",
-                        "content": "Este módulo final cobre <b>scripting</b> (Bash, Python, PowerShell), <b>automação de testes</b> e <b>análise de código de exploits</b>. Saber programar diferencia um pentester profissional.",
-                        "highlight": "Script = automação = eficiência"
+                        "title": "Ferramentas Aceleram, Mas Não Pensam Por Você (Cisco 10.0.1)",
+                        "content": "Pentest não é só apertar botões em ferramentas. O profissional precisa combinar <b>metodologia</b>, leitura crítica de resultados, noções de <b>scripting</b> e entendimento do que o código realmente faz. Ferramentas escalam o trabalho, mas não substituem julgamento técnico.",
+                        "highlight": "Ferramenta sem interpretação gera falso positivo, ruído e decisões ruins."
             },
             {
                         "type": "teach",
                         "icon": "fa-code",
-                        "title": "Linguagens Essenciais",
-                        "content": "<b>Python</b>: a linguagem nº1 para pentest (scripts, exploits, automação). <b>Bash</b>: automação em Linux. <b>PowerShell</b>: automação em Windows/AD. <b>SQL</b>: exploração de bancos.",
-                        "highlight": "Python + Bash + PowerShell = arsenal completo"
+                        "title": "Saber Programar Amplia o Alcance do Pentester (Cisco 10.0.1)",
+                        "content": "Ao longo do trabalho, você precisará adaptar scripts, automatizar tarefas repetitivas, ler exploits públicos e analisar amostras suspeitas. Por isso, o módulo aborda <b>Bash, Python, PowerShell</b> e a classificação de <b>ferramentas</b> por caso de uso.",
+                        "highlight": "Programação transforma um operador de ferramenta em um profissional adaptável."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Exemplo - Quando Não Existe Ferramenta Pronta",
+                        "scenario": "Durante um teste interno, o scanner não exporta os hosts exatamente no formato exigido pelo cliente. O pentester cria um script curto para reorganizar a saída e seguir o trabalho sem perder horas em tarefas manuais.",
+                        "code": "$ cat hosts.txt | sort | uniq > ativos-final.txt\n[i] 312 hosts normalizados para o formato do relatório\n[+] Tarefa repetitiva automatizada sem depender de nova ferramenta",
+                        "takeaway": "Scripting reduz atrito operacional e mantém o ritmo do engajamento."
             },
             {
                         "type": "quiz",
-                        "task": "Qual linguagem é mais usada para automação de tarefas de pentest?",
+                        "task": "Qual é a principal razão para estudar ferramentas e scripting no contexto de pentest?",
                         "options": [
-                                    "Python",
-                                    "Java",
-                                    "C#"
+                                    "Porque isso permite automatizar tarefas, adaptar fluxos e interpretar melhor código ofensivo",
+                                    "Porque ferramentas eliminam a necessidade de metodologia e validação manual",
+                                    "Porque certificações exigem decorar nomes de programas sem contexto"
                         ],
-                        "correctText": "Python",
-                        "explanation": "Python é a linguagem preferida por sua simplicidade e rica biblioteca de segurança."
+                        "correctText": "Porque isso permite automatizar tarefas, adaptar fluxos e interpretar melhor código ofensivo",
+                        "explanation": "O valor real vem da combinação entre automação, análise crítica e adaptação ao cenário do cliente."
             },
             {
                         "type": "fill",
-                        "sentence": "Para automação em ambientes Windows e Active Directory, a linguagem mais usada é ___.",
+                        "sentence": "Neste módulo, o aluno aprende a classificar ___ de pentesting por caso de uso e a analisar código antes de executá-lo.",
                         "options": [
-                                    "PowerShell",
-                                    "Bash",
-                                    "Ruby"
+                                    "ferramentas",
+                                    "imagens",
+                                    "planilhas"
                         ],
-                        "correctText": "PowerShell",
-                        "explanation": "PowerShell é nativo do Windows e tem acesso direto ao Active Directory."
+                        "correctText": "ferramentas",
+                        "explanation": "A proposta do módulo é conectar ferramental, análise de código e automação prática."
             }
 ];
 
@@ -445,7 +453,7 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/10.1-scripts.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/10.1a-logica-estruturas.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
                 nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #5e1d80; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
@@ -453,7 +461,7 @@
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">FERRAMENTAS INICIADAS!</h2>
+                    <h2 class="title-main mb-2">ARSENAL INICIADO!</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}

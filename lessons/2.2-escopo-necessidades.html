@@ -151,6 +151,14 @@
                         "highlight": "Comunicação com stakeholders é essencial"
             },
             {
+                        "type": "example",
+                        "icon": "fa-file-signature",
+                        "title": "Exemplo - Escopo Mal Definido Vira Risco Legal",
+                        "scenario": "O cliente autoriza apenas o domínio principal, mas esquece de mencionar um ambiente legado em outro IP. Se o pentester atacar esse sistema sem constar no SOW e nas regras de engajamento, pode gerar incidente técnico e problema jurídico.",
+                        "code": "[i] Em escopo: portal.pixelparadise.com\n[i] Fora do escopo: legado.pixelparadise.net\n[!] Falta de definição explícita cria risco operacional e legal",
+                        "takeaway": "Escopo não definido com precisão transforma atividade autorizada em possível teste indevido."
+            },
+            {
                         "type": "quiz",
                         "task": "O que acontece se o pentester testar um sistema FORA do escopo autorizado?",
                         "options": [

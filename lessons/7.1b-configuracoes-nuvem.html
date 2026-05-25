@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Configurações Inseguras e Canais Laterais</title>
+    <title>CyberDuo - Cloud Security: Ataques e Defesas Avançadas</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #00a8ff;
+            --cyber-blue: #e6edf3;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -44,6 +44,7 @@
         .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
         .text-body b { color: white; }
         
+        
         /* Utility Classes */
         .mr-1 { margin-right: 0.25rem; }
         .mr-2 { margin-right: 0.5rem; }
@@ -60,7 +61,7 @@
         /* TYPE: EXAMPLE */
         .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .example-scenario { background: #161b22; border: 1px solid #21262d; border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; }
-        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.85rem; color: #00ff41; border: 1px solid #30363d; overflow-x: auto; white-space: pre; }
+        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.9rem; color: #00ff41; border: 1px solid #30363d; }
         .example-takeaway { display: flex; gap: 0.8rem; align-items: flex-start; margin-top: 1rem; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
 
         /* TYPE: QUIZ */
@@ -82,6 +83,7 @@
 
         /* TYPE: MATCH */
         .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
+        /* .match-column removed */
         .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
         .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
         .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
@@ -93,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #007bb5; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #007bb5; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #a0a8b0; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #a0a8b0; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -128,176 +130,176 @@
     <script>
         const steps = [
             {
-                "type": "teach",
-                "icon": "fa-cube",
-                "title": "O que é o IMDS? (Cisco 7.1.7)",
-                "content": "Para evitar colocar chaves de acesso diretamente no código de seus aplicativos (prática insegura), os provedores de nuvem oferecem o <b>IMDS (Instance Metadata Service)</b>. Ele é um serviço interno exposto de forma nativa em toda máquina virtual através de um endereço de IP de link-local mágico: <b>169.254.169.254</b>. O servidor usa esse IP para consultar suas próprias configurações internas.",
-                "highlight": "Qualquer requisição originada de dentro do servidor pode ler o IMDS sem precisar de senha."
+                        "type": "teach",
+                        "icon": "fa-cube",
+                        "title": "O que é o IMDS? (Cisco 7.1.7)",
+                        "content": "Para evitar colocar chaves de acesso diretamente no código de seus aplicativos (prática insegura), os provedores de nuvem oferecem o <b>IMDS (Instance Metadata Service)</b>. Ele é um serviço interno exposto de forma nativa em toda máquina virtual através de um endereço de IP de link-local mágico: <b>169.254.169.254</b>. O servidor usa esse IP para consultar suas próprias configurações internas.",
+                        "highlight": "Qualquer requisição originada de dentro do servidor pode ler o IMDS sem precisar de senha."
             },
             {
-                "type": "example",
-                "icon": "fa-bug",
-                "title": "Prática - Roubando Metadados via SSRF (Cisco 7.1.7)",
-                "scenario": "Um atacante encontra um parâmetro vulnerável a SSRF (Server-Side Request Forgery) em um site e força o próprio servidor a consultar as chaves temporárias de administrador do seu IMDS:",
-                "code": "http://site-vulneravel.com/view?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/admin-role\n\n{\n  \"AccessKeyId\": \"ASIA...\",\n  \"SecretAccessKey\": \"wJalrXUtn...\",\n  \"Token\": \"IQoJb3Jp...\"\n}",
-                "takeaway": "O atacante extrai as chaves de acesso temporárias do provedor e agora pode controlar a nuvem."
+                        "type": "example",
+                        "icon": "fa-bug",
+                        "title": "Prática - Roubando Metadados via SSRF (Cisco 7.1.7)",
+                        "scenario": "Um atacante encontra um parâmetro vulnerável a SSRF (Server-Side Request Forgery) em um site e força o próprio servidor a consultar as chaves temporárias de administrador do seu IMDS:",
+                        "code": "http://site-vulneravel.com/view?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/admin-role\n\n{\n  \"AccessKeyId\": \"ASIA...\",\n  \"SecretAccessKey\": \"wJalrXUtn...\",\n  \"Token\": \"IQoJb3Jp...\"\n}",
+                        "takeaway": "O atacante extrai as chaves de acesso temporárias do provedor e agora pode controlar a nuvem."
             },
             {
-                "type": "teach",
-                "icon": "fa-shield-halved",
-                "title": "Defesa de Metadados: IMDSv2 (Cisco 7.1.7)",
-                "content": "Para mitigar ataques SSRF comuns, a AWS desenvolveu a versão <b>IMDSv2</b>. Nela, requisições diretas de leitura (GET) não funcionam. É exigido um modelo de sessão: primeiro o servidor deve fazer uma requisição do tipo <b>PUT</b> enviando um cabeçalho customizado para gerar um token temporário, e então anexar esse token nas requisições GET seguintes.",
-                "highlight": "O IMDSv2 impede SSRF simples, pois atacantes raramente conseguem forjar requisições PUT customizadas."
+                        "type": "teach",
+                        "icon": "fa-shield-halved",
+                        "title": "Defesa de Metadados: IMDSv2 (Cisco 7.1.7)",
+                        "content": "Para mitigar ataques SSRF comuns, a AWS desenvolveu a versão <b>IMDSv2</b>. Nela, requisições diretas de leitura (GET) não funcionam. É exigido um modelo de sessão: primeiro o servidor deve fazer uma requisição do tipo <b>PUT</b> enviando um cabeçalho customizado para gerar um token temporário, e então anexar esse token nas requisições GET seguintes.",
+                        "highlight": "O IMDSv2 impede SSRF simples, pois atacantes raramente conseguem forjar requisições PUT customizadas."
             },
             {
-                "type": "quiz",
-                "task": "Qual é a principal diferença de comportamento na requisição que torna o IMDSv2 muito mais seguro contra SSRF do que o IMDSv1?",
-                "options": [
-                    "A exigência de criar uma sessão enviando um cabeçalho HTTP customizado via método PUT.",
-                    "O uso de criptografia SSL/TLS em todas as conexões internas do host.",
-                    "A alteração do endereço de IP do link-local de 169.254.169.254 para localhost."
-                ],
-                "correctText": "A exigência de criar uma sessão enviando um cabeçalho HTTP customizado via método PUT.",
-                "explanation": "No IMDSv2, a necessidade de gerar um token através de uma requisição PUT bloqueia ataques de SSRF tradicionais, que costumam aceitar apenas o método GET."
+                        "type": "quiz",
+                        "task": "Qual é a principal diferença de comportamento na requisição que torna o IMDSv2 muito mais seguro contra SSRF do que o IMDSv1?",
+                        "options": [
+                                    "A exigência de criar uma sessão enviando um cabeçalho HTTP customizado via método PUT.",
+                                    "O uso de criptografia SSL/TLS em todas as conexões internas do host.",
+                                    "A alteração do endereço de IP do link-local de 169.254.169.254 para localhost."
+                        ],
+                        "correctText": "A exigência de criar uma sessão enviando um cabeçalho HTTP customizado via método PUT.",
+                        "explanation": "No IMDSv2, a necessidade de gerar um token através de uma requisição PUT bloqueia ataques de SSRF tradicionais, que costumam aceitar apenas o método GET."
             },
             {
-                "type": "teach",
-                "icon": "fa-box-open",
-                "title": "Exposição de Armazenamento - Buckets (Cisco 7.1.8)",
-                "content": "A nuvem armazena arquivos (documentos, imagens, backups) em estruturas chamadas <b>Object Storage</b> (como buckets AWS S3 ou Azure Blobs). Um dos maiores erros de configuração cometidos por administradores é deixar as políticas de acesso do bucket configuradas como <b>públicas</b>, permitindo que qualquer pessoa varra a internet e leia segredos da empresa.",
-                "highlight": "Deixar buckets expostos é a causa número um de vazamentos massivos de dados no mercado corporativo."
+                        "type": "teach",
+                        "icon": "fa-box-open",
+                        "title": "Exposição de Armazenamento - Buckets (Cisco 7.1.8)",
+                        "content": "A nuvem armazena arquivos (documentos, imagens, backups) em estruturas chamadas <b>Object Storage</b> (como buckets AWS S3 ou Azure Blobs). Um dos maiores erros de configuração cometidos por administradores é deixar as políticas de acesso do bucket configuradas como <b>públicas</b>, permitindo que qualquer pessoa varra a internet e leia segredos da empresa.",
+                        "highlight": "Deixar buckets expostos é a causa número um de vazamentos massivos de dados no mercado corporativo."
             },
             {
-                "type": "example",
-                "icon": "fa-terminal",
-                "title": "Prática - Baixando Buckets Públicos (Cisco 7.1.8)",
-                "scenario": "Um auditor de segurança utiliza a linha de comando oficial da AWS com privilégios anônimos para verificar se os backups estão desprotegidos e baixá-los para auditoria:",
-                "code": "$ aws s3 ls s3://empresa-backups-financeiros/ --no-sign-request\n2026-05-19 14:00:00  3.4GB  backup_db_prod.sql\n\n$ aws s3 cp s3://empresa-backups-financeiros/backup_db_prod.sql . --no-sign-request",
-                "takeaway": "A flag '--no-sign-request' permite acessar o bucket sem assinar a requisição com chaves."
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Prática - Baixando Buckets Públicos (Cisco 7.1.8)",
+                        "scenario": "Um auditor de segurança utiliza a linha de comando oficial da AWS com privilégios anônimos para verificar se os backups estão desprotegidos e baixá-los para auditoria:",
+                        "code": "$ aws s3 ls s3://empresa-backups-financeiros/ --no-sign-request\n2026-05-19 14:00:00  3.4GB  backup_db_prod.sql\n\n$ aws s3 cp s3://empresa-backups-financeiros/backup_db_prod.sql . --no-sign-request",
+                        "takeaway": "A flag '--no-sign-request' permite acessar o bucket sem assinar a requisição com chaves."
             },
             {
-                "type": "teach",
-                "icon": "fa-id-card",
-                "title": "Federação e Replay de SAML (Cisco 7.1.8)",
-                "content": "Para integrar logins corporativos, as empresas utilizam a <b>Federação de Identidades</b> (com tokens SAML ou JWT). Um token SAML é um XML assinado pelo provedor de identidade. Se a configuração de federação na nuvem aceitar tokens obsoletos ou não possuir checagem rigorosa de identificadores únicos, um hacker pode realizar um <b>Ataque de Replay SAML</b>, reutilizando um token interceptado no passado para criar uma nova sessão administrativa.",
-                "highlight": "Garantir IDs de expiração de sessão curtos anula a eficácia do Replay."
+                        "type": "teach",
+                        "icon": "fa-id-card",
+                        "title": "Federação e Replay de SAML (Cisco 7.1.8)",
+                        "content": "Para integrar logins corporativos, as empresas utilizam a <b>Federação de Identidades</b> (com tokens SAML ou JWT). Um token SAML é um XML assinado pelo provedor de identidade. Se a configuração de federação na nuvem aceitar tokens obsoletos ou não possuir checagem rigorosa de identificadores únicos, um hacker pode realizar um <b>Ataque de Replay SAML</b>, reutilizando um token interceptado no passado para criar uma nova sessão administrativa.",
+                        "highlight": "Garantir IDs de expiração de sessão curtos anula a eficácia do Replay."
             },
             {
-                "type": "quiz",
-                "task": "Como se chama a falha de configuração que permite a um atacante capturar um XML de autenticação federada antigo e retransmiti-lo à nuvem para obter acesso ilegal?",
-                "options": [
-                    "Ataque de Replay SAML.",
-                    "Ataque de Forjamento de JWT (alg: none).",
-                    "Ataque de Injeção de Imagem de VM."
-                ],
-                "correctText": "Ataque de Replay SAML.",
-                "explanation": "No Replay Attack, o atacante 'toca de novo' a credencial interceptada. Sem checagem de reuso, o servidor aceita e autentica a sessão."
+                        "type": "quiz",
+                        "task": "Como se chama a falha de configuração que permite a um atacante capturar um XML de autenticação federada antigo e retransmiti-lo à nuvem para obter acesso ilegal?",
+                        "options": [
+                                    "Ataque de Replay SAML.",
+                                    "Ataque de Forjamento de JWT (alg: none).",
+                                    "Ataque de Injeção de Imagem de VM."
+                        ],
+                        "correctText": "Ataque de Replay SAML.",
+                        "explanation": "No Replay Attack, o atacante 'toca de novo' a credencial interceptada. Sem checagem de reuso, o servidor aceita e autentica a sessão."
             },
             {
-                "type": "teach",
-                "icon": "fa-bolt",
-                "title": "Esgotamento de Recursos e DoS (Cisco 7.1.9)",
-                "content": "Na nuvem, os recursos de computação são elásticos, mas não infinitos. Ataques de <b>Negação de Serviço (DoS/DDoS)</b> visam esgotar o tráfego de rede (bps), taxas de pacotes (pps) ou conexões HTTP concorrentes (rps). Além de derrubar sistemas, na nuvem isso pode causar o <b>DoS Financeiro (EDoS)</b>: o faturamento da nuvem escala ao infinito devido ao consumo forçado de banda.",
-                "highlight": "Sistemas de Auto-scaling sem limites máximos configurados ampliam o impacto financeiro do DoS."
+                        "type": "teach",
+                        "icon": "fa-bolt",
+                        "title": "Esgotamento de Recursos e DoS (Cisco 7.1.9)",
+                        "content": "Na nuvem, os recursos de computação são elásticos, mas não infinitos. Ataques de <b>Negação de Serviço (DoS/DDoS)</b> visam esgotar o tráfego de rede (bps), taxas de pacotes (pps) ou conexões HTTP concorrentes (rps). Além de derrubar sistemas, na nuvem isso pode causar o <b>DoS Financeiro (EDoS)</b>: o faturamento da nuvem escala ao infinito devido ao consumo forçado de banda.",
+                        "highlight": "Sistemas de Auto-scaling sem limites máximos configurados ampliam o impacto financeiro do DoS."
             },
             {
-                "type": "teach",
-                "icon": "fa-road-barrier",
-                "title": "A técnica de Direct-to-Origin - D2O (Cisco 7.1.9)",
-                "content": "Para se proteger de DoS, as empresas usam Proxies Reversos de CDN e WAF (como a Cloudflare). O tráfego legítimo passa por eles primeiro. No entanto, se o atacante descobrir o IP real do servidor hospedeiro oculto (usando Shodan/Censys), ele realiza o ataque de <b>Direct-to-Origin (D2O)</b>: ataca o IP de origem diretamente, contornando a Cloudflare por completo.",
-                "highlight": "Descobrir o IP original torna defesas de WAF em nível de DNS inúteis."
+                        "type": "teach",
+                        "icon": "fa-road-barrier",
+                        "title": "A técnica de Direct-to-Origin - D2O (Cisco 7.1.9)",
+                        "content": "Para se proteger de DoS, as empresas usam Proxies Reversos de CDN e WAF (como a Cloudflare). O tráfego legítimo passa por eles primeiro. No entanto, se o atacante descobrir o IP real do servidor hospedeiro oculto (usando Shodan/Censys), ele realiza o ataque de <b>Direct-to-Origin (D2O)</b>: ataca o IP de origem diretamente, contornando a Cloudflare por completo.",
+                        "highlight": "Descobrir o IP original torna defesas de WAF em nível de DNS inúteis."
             },
             {
-                "type": "example",
-                "icon": "fa-magnifying-glass",
-                "title": "Prática - Localizando o Servidor Original (Cisco 7.1.9)",
-                "scenario": "O atacante inspeciona certificados SSL históricos em buscadores de ativos expostos para encontrar qual IP real do servidor responde pelo domínio protegido pela CDN:",
-                "code": "$ censys search \"empresa-protegida.com\"\n\nIP encontrado: 54.210.15.8 (Hospedado na AWS)\n[+] Bypass de CDN ativo! O servidor aceita requisições diretas nesse IP.",
-                "takeaway": "Configurar firewalls na nuvem para aceitar conexões apenas dos blocos de IP da CDN evita o D2O."
+                        "type": "example",
+                        "icon": "fa-magnifying-glass",
+                        "title": "Prática - Localizando o Servidor Original (Cisco 7.1.9)",
+                        "scenario": "O atacante inspeciona certificados SSL históricos em buscadores de ativos expostos para encontrar qual IP real do servidor responde pelo domínio protegido pela CDN:",
+                        "code": "$ censys search \"empresa-protegida.com\"\n\nIP encontrado: 54.210.15.8 (Hospedado na AWS)\n[+] Bypass de CDN ativo! O servidor aceita requisições diretas nesse IP.",
+                        "takeaway": "Configurar firewalls na nuvem para aceitar conexões apenas dos blocos de IP da CDN evita o D2O."
             },
             {
-                "type": "quiz",
-                "task": "Por que a técnica Direct-to-Origin (D2O) representa uma ameaça tão grave para sistemas de defesa corporativos baseados em nuvem?",
-                "options": [
-                    "Porque contorna os filtros de tráfego malicioso de CDNs e WAFs disparando o ataque DoS direto no IP do servidor de origem.",
-                    "Porque infecta o hypervisor das máquinas virtuais hospedeiras com spywares de controle físico.",
-                    "Porque intercepta chaves criptográficas de APIs nas requisições HTTP locais."
-                ],
-                "correctText": "Porque contorna os filtros de tráfego malicioso de CDNs e WAFs disparando o ataque DoS direto no IP do servidor de origem.",
-                "explanation": "Ignorando os proxies da CDN/WAF, o tráfego não passa por nenhuma inspeção de segurança periférica corporativa."
+                        "type": "quiz",
+                        "task": "Por que a técnica Direct-to-Origin (D2O) representa uma ameaça tão grave para sistemas de defesa corporativos baseados em nuvem?",
+                        "options": [
+                                    "Porque contorna os filtros de tráfego malicioso de CDNs e WAFs disparando o ataque DoS direto no IP do servidor de origem.",
+                                    "Porque infecta o hypervisor das máquinas virtuais hospedeiras com spywares de controle físico.",
+                                    "Porque intercepta chaves criptográficas de APIs nas requisições HTTP locais."
+                        ],
+                        "correctText": "Porque contorna os filtros de tráfego malicioso de CDNs e WAFs disparando o ataque DoS direto no IP do servidor de origem.",
+                        "explanation": "Ignorando os proxies da CDN/WAF, o tráfego não passa por nenhuma inspeção de segurança periférica corporativa."
             },
             {
-                "type": "teach",
-                "icon": "fa-viruses",
-                "title": "Malware em Nuvem e Cryptojacking (Cisco 7.1.10)",
-                "content": "A <b>Injeção de Malware na Nuvem</b> envolve comprometer a raiz da infraestrutura de duas maneiras principais:<br><br>1. 💿 <b>Imagens de VM Modificadas</b>: Atacantes criam e publicam templates de sistemas (AMIs/VHDs) adulterados contendo backdoors pré-instaladas.<br>2. 🤖 <b>Cryptojacking</b>: Injeta-se scripts e mineradores de criptomoedas silenciosos em servidores corporativos para consumir CPU e inflar custos alheios.",
-                "highlight": "Minerar criptomoedas de forma oculta é o ataque de malware mais comum na nuvem."
+                        "type": "teach",
+                        "icon": "fa-viruses",
+                        "title": "Malware em Nuvem e Cryptojacking (Cisco 7.1.10)",
+                        "content": "A <b>Injeção de Malware na Nuvem</b> envolve comprometer a raiz da infraestrutura de duas maneiras principais:<br><br>1. 💿 <b>Imagens de VM Modificadas</b>: Atacantes criam e publicam templates de sistemas (AMIs/VHDs) adulterados contendo backdoors pré-instaladas.<br>2. 🤖 <b>Cryptojacking</b>: Injeta-se scripts e mineradores de criptomoedas silenciosos em servidores corporativos para consumir CPU e inflar custos alheios.",
+                        "highlight": "Minerar criptomoedas de forma oculta é o ataque de malware mais comum na nuvem."
             },
             {
-                "type": "teach",
-                "icon": "fa-plug",
-                "title": "Injeção Serverless (Cisco 7.1.10)",
-                "content": "A terceira e mais moderna forma de infecção na nuvem é a <b>Serverless Injection</b>:<br><br>3. 🔌 <b>Injeção Serverless</b>: Ocorre quando o atacante corrompe o código de funções curtas sob demanda e sem servidor fixo (como AWS Lambda ou Azure Functions) para capturar chaves de API e segredos em tempo real, enviando-os para servidores externos.",
-                "highlight": "Injetar malware nativo na nuvem garante que o ataque sobreviva ao reinício das VMs principais."
+                        "type": "teach",
+                        "icon": "fa-plug",
+                        "title": "Injeção Serverless (Cisco 7.1.10)",
+                        "content": "A terceira e mais moderna forma de infecção na nuvem é a <b>Serverless Injection</b>:<br><br>3. 🔌 <b>Injeção Serverless</b>: Ocorre quando o atacante corrompe o código de funções curtas sob demanda e sem servidor fixo (como AWS Lambda ou Azure Functions) para capturar chaves de API e segredos em tempo real, enviando-os para servidores externos.",
+                        "highlight": "Injetar malware nativo na nuvem garante que o ataque sobreviva ao reinício das VMs principais."
             },
             {
-                "type": "teach",
-                "icon": "fa-users-gear",
-                "title": "O perigo do Compartilhamento (Multitenancy)",
-                "content": "A arquitetura de nuvem baseia-se em <b>Multitenancy</b> (múltiplos inquilinos): dividir a capacidade de um mesmo servidor físico (CPU e memória RAM) entre máquinas virtuais de empresas e clientes distintos.<br><br>Esse compartilhamento exige que o <b>hipervisor</b> estabeleça um isolamento lógico perfeito entre os sistemas virtuais.",
-                "highlight": "Na nuvem pública, o servidor que roda a sua aplicação é compartilhado com desconhecidos."
+                        "type": "teach",
+                        "icon": "fa-users-gear",
+                        "title": "O perigo do Compartilhamento (Multitenancy)",
+                        "content": "A arquitetura de nuvem baseia-se em <b>Multitenancy</b> (múltiplos inquilinos): dividir a capacidade de um mesmo servidor físico (CPU e memória RAM) entre máquinas virtuais de empresas e clientes distintos.<br><br>Esse compartilhamento exige que o <b>hipervisor</b> estabeleça um isolamento lógico perfeito entre os sistemas virtuais.",
+                        "highlight": "Na nuvem pública, o servidor que roda a sua aplicação é compartilhado com desconhecidos."
             },
             {
-                "type": "teach",
-                "icon": "fa-microchip",
-                "title": "Ataques de Canal Lateral - Side-Channel (Cisco 7.1.11)",
-                "content": "Ataques de <b>Canal Lateral (Side-Channel)</b> de CPU, como <b>Meltdown e Spectre</b>, exploram otimizações de hardware (execução especulativa).<br><br>Eles permitem que um hacker rodando código em uma VM leia dados diretamente da memória física (RAM) de uma VM vizinha que roda na mesma CPU física, quebrando a segurança de silício.",
-                "highlight": "Esses ataques burlam totalmente as defesas de software e isolamento lógico do hipervisor."
+                        "type": "teach",
+                        "icon": "fa-microchip",
+                        "title": "Ataques de Canal Lateral - Side-Channel (Cisco 7.1.11)",
+                        "content": "Ataques de <b>Canal Lateral (Side-Channel)</b> de CPU, como <b>Meltdown e Spectre</b>, exploram otimizações de hardware (execução especulativa).<br><br>Eles permitem que um hacker rodando código em uma VM leia dados diretamente da memória física (RAM) de uma VM vizinha que roda na mesma CPU física, quebrando a segurança de silício.",
+                        "highlight": "Esses ataques burlam totalmente as defesas de software e isolamento lógico do hipervisor."
             },
             {
-                "type": "teach",
-                "icon": "fa-code",
-                "title": "Auditoria de APIs com OpenAPI (Cisco 7.1.13)",
-                "content": "A comunicação na nuvem é inteiramente orquestrada por <b>APIs</b>. Para auditar a superfície de ataque exposta, hackers éticos inspecionam especificações <b>OpenAPI (Swagger)</b>. Elas são arquivos JSON/YAML públicos ou esquecidos que documentam todos os endpoints, parâmetros e métodos de autenticação de uma organização, servindo como o mapa de exploração ideal.",
-                "highlight": "Swagger exposto sem autenticação revela caminhos críticos para falhas de lógica."
+                        "type": "teach",
+                        "icon": "fa-code",
+                        "title": "Auditoria de APIs com OpenAPI (Cisco 7.1.13)",
+                        "content": "A comunicação na nuvem é inteiramente orquestrada por <b>APIs</b>. Para auditar a superfície de ataque exposta, hackers éticos inspecionam especificações <b>OpenAPI (Swagger)</b>. Elas são arquivos JSON/YAML públicos ou esquecidos que documentam todos os endpoints, parâmetros e métodos de autenticação de uma organização, servindo como o mapa de exploração ideal.",
+                        "highlight": "Swagger exposto sem autenticação revela caminhos críticos para falhas de lógica."
             },
             {
-                "type": "example",
-                "icon": "fa-toolbox",
-                "title": "Kits de Desenvolvimento (SDKs) e CLI (Cisco 7.1.13)",
-                "content": "Auditores de segurança usam automações locais para escanear a nuvem inteira em segundos. Em vez de usar telas gráficas, manipulamos a nuvem via linha de comando (<b>AWS CLI</b>) ou escrevemos scripts em Python usando o SDK oficial da AWS, chamado <b>Boto3</b>, para encontrar segredos:",
-                "code": "# Script de auditoria Boto3 em Python para checar buckets abertos\nimport boto3\ns3 = boto3.client('s3')\nfor bucket in s3.list_buckets()['Buckets']:\n    acl = s3.get_bucket_acl(Bucket=bucket['Name'])\n    print(f\"Bucket: {bucket['Name']} | Grantees: {acl['Grants']}\")",
-                "takeaway": "Dominar ferramentas de IaC e APIs é essencial para o Pentest moderno."
+                        "type": "example",
+                        "icon": "fa-toolbox",
+                        "title": "Kits de Desenvolvimento (SDKs) e CLI (Cisco 7.1.13)",
+                        "content": "Auditores de segurança usam automações locais para escanear a nuvem inteira em segundos. Em vez de usar telas gráficas, manipulamos a nuvem via linha de comando (<b>AWS CLI</b>) ou escrevemos scripts em Python usando o SDK oficial da AWS, chamado <b>Boto3</b>, para encontrar segredos:",
+                        "code": "# Script de auditoria Boto3 em Python para checar buckets abertos\nimport boto3\ns3 = boto3.client('s3')\nfor bucket in s3.list_buckets()['Buckets']:\n    acl = s3.get_bucket_acl(Bucket=bucket['Name'])\n    print(f\"Bucket: {bucket['Name']} | Grantees: {acl['Grants']}\")",
+                        "takeaway": "Dominar ferramentas de IaC e APIs é essencial para o Pentest moderno."
             },
             {
-                "type": "match",
-                "title": "Consolidação - Vetores de Nuvem (Cisco 7.1.12)",
-                "pairs": [
-                    {
-                        "term": "IMDS (IP 169.254.169.254)",
-                        "definition": "Serviço de metadados vulnerável a SSRF (defesa com IMDSv2)."
-                    },
-                    {
-                        "term": "Direct-to-Origin (D2O)",
-                        "definition": "Burlar proteções perimetrais batendo direto no IP do host."
-                    },
-                    {
-                        "term": "Spectre/Meltdown",
-                        "definition": "Ataques de canal lateral que lêem memória RAM via CPU física."
-                    },
-                    {
-                        "term": "Boto3 / AWS CLI",
-                        "definition": "Ferramentas e SDKs de script para auditoria IAM."
-                    }
-                ]
+                        "type": "match",
+                        "title": "Consolidação - Vetores de Nuvem (Cisco 7.1.12)",
+                        "pairs": [
+                                    {
+                                                "term": "IMDS (IP 169.254.169.254)",
+                                                "definition": "Serviço de metadados vulnerável a SSRF (defesa com IMDSv2)."
+                                    },
+                                    {
+                                                "term": "Direct-to-Origin (D2O)",
+                                                "definition": "Burlar proteções perimetrais batendo direto no IP do host."
+                                    },
+                                    {
+                                                "term": "Spectre/Meltdown",
+                                                "definition": "Ataques de canal lateral que lêem memória RAM via CPU física."
+                                    },
+                                    {
+                                                "term": "Boto3 / AWS CLI",
+                                                "definition": "Ferramentas e SDKs de script para auditoria IAM."
+                                    }
+                        ]
             }
-        ];
+];
 
         let currentStep = 0;
-        let selectedIdx = null;
+        let selectedIdx = null; // For quiz and fill
         let hearts = 5;
         let shuffledOptions = [];
-
+        
         // Match state
         let matchLeft = [];
         let matchRight = [];
@@ -331,6 +333,7 @@
             
             updateProgress();
             
+            // Reset states
             selectedIdx = null;
             checkBtn.disabled = true;
             checkBtn.classList.remove('active');
@@ -437,6 +440,7 @@
             area.scrollTop = 0;
         }
 
+        // Interactivity Handlers
         function selectQuiz(idx) {
             selectedIdx = idx;
             document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
@@ -458,6 +462,7 @@
             const item = document.getElementById(`${side}-${idx}`);
             if (item.classList.contains('matched')) return;
 
+            // Clear previous selection on same side
             document.querySelectorAll(`.match-item[id^='${side}-']`).forEach(el => {
                 if(!el.classList.contains('matched')) el.classList.remove('selected');
             });
@@ -468,6 +473,7 @@
             else selectedRight = {el: item, id: pairId};
 
             if (selectedLeft && selectedRight) {
+                // Check match
                 if (selectedLeft.id === selectedRight.id) {
                     selectedLeft.el.classList.remove('selected');
                     selectedLeft.el.classList.add('matched');
@@ -490,6 +496,7 @@
                     errRight.el.classList.remove('selected');
                     errRight.el.classList.add('error');
                     
+                    // Lose heart for wrong match
                     hearts--;
                     updateProgress();
                     if(hearts <= 0) triggerGameOver();
@@ -505,11 +512,13 @@
             }
         }
 
+        // Logic Check
         function checkResponse() {
             const step = steps[currentStep];
             const checkBtn = document.getElementById('checkBtn');
             const popup = document.getElementById('feedbackPopup');
             
+            // Non-interactive steps just advance
             if (step.type === 'teach' || step.type === 'example') {
                 currentStep++;
                 render();
@@ -527,7 +536,7 @@
                     c.classList.add('disabled');
                 });
             } else if (step.type === 'match') {
-                isCorrect = true;
+                isCorrect = true; // Button only enables when all matches found
             }
 
             if (isCorrect) {
@@ -565,12 +574,15 @@
             document.getElementById('footerArea').classList.add('hidden');
             
             let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/7.2a-mobile.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #a0a8b0; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">INFRAESTRUTURA DESVENDADA!</h2>
-                    <p class="text-body mb-6">Você dominou a extração de metadados via SSRF, o bypass de WAF com Direct-to-Origin (D2O), os ataques de CPU Side-Channel e a automação de auditoria usando SDKs oficiais.</p>
+                    <h2 class="title-main mb-2">LIÇÃO COMPLETA!</h2>
+                    <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
                         <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">

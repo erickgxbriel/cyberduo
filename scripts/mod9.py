@@ -1,41 +1,402 @@
 import json
-with open('/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json','r') as f: lessons=json.load(f)
-lessons.extend([
-{"filename":"9.0-introducao.html","module":"9","title":"Relatórios 9.0","victory_msg":"RELATÓRIOS INICIADOS!","steps":[
-{"type":"teach","icon":"fa-file-alt","title":"A Importância do Relatório","content":"O relatório é o <b>produto final</b> do pentest. Um relatório mal escrito invalida todo o trabalho técnico. Deve ser claro para <b>executivos</b> e detalhado para <b>técnicos</b>.","highlight":"Relatório ruim = pentest inútil"},
-{"type":"teach","icon":"fa-users","title":"Dois Públicos","content":"O relatório tem duas seções: <b>Executive Summary</b> (para gestão, sem jargão técnico) e <b>Technical Details</b> (para equipe técnica, com evidências e reprodução).","highlight":"Fale a língua do seu público"},
-{"type":"quiz","task":"Qual é o produto final mais importante de um pentest?","options":["O relatório escrito","As ferramentas usadas","O número de vulnerabilidades"],"correctText":"O relatório escrito","explanation":"Sem relatório claro, o cliente não consegue corrigir as vulnerabilidades."},
-{"type":"fill","sentence":"O relatório deve ter um ___ para executivos e detalhes técnicos para a equipe de TI.","options":["Executive Summary","código-fonte","payload"],"correctText":"Executive Summary","explanation":"Executive Summary traduz achados técnicos em riscos de negócio."}
-]},
-{"filename":"9.1-componentes-relatorio.html","module":"9","title":"Componentes do Relatório 9.1","victory_msg":"ESTRUTURA DO RELATÓRIO DOMINADA!","steps":[
-{"type":"teach","icon":"fa-list","title":"Estrutura do Relatório","content":"Componentes essenciais: <b>Escopo</b>, <b>Metodologia</b>, <b>Executive Summary</b>, <b>Achados</b> (com CVSS), <b>Evidências</b> (screenshots), <b>Recomendações</b> e <b>Anexos</b>.","highlight":"Estrutura padronizada garante completude"},
-{"type":"teach","icon":"fa-camera","title":"Evidências","content":"Cada vulnerabilidade deve ter <b>evidência reproduzível</b>: screenshots, logs, requests/responses do Burp, e passos exatos para reproduzir. Sem evidência = achado descartável.","highlight":"Evidência concreta é incontestável"},
-{"type":"teach","icon":"fa-chart-pie","title":"Classificação de Risco","content":"Cada achado recebe uma classificação: <b>Crítico</b>, <b>Alto</b>, <b>Médio</b>, <b>Baixo</b>, <b>Informativo</b>. Baseada no <b>CVSS</b> e no <b>contexto de negócio</b> do cliente.","highlight":"Contexto de negócio afeta a classificação"},
-{"type":"match","title":"Seção → Conteúdo","pairs":[{"term":"Executive Summary","definition":"Visão geral para gestão"},{"term":"Achados","definition":"Vulnerabilidades com CVSS e evidências"},{"term":"Recomendações","definition":"Como corrigir cada vulnerabilidade"},{"term":"Metodologia","definition":"Frameworks e ferramentas usadas"}]},
-{"type":"quiz","task":"O que torna uma evidência de vulnerabilidade válida no relatório?","options":["Screenshots e passos reproduzíveis","Apenas a opinião do pentester","O nome da ferramenta que detectou"],"correctText":"Screenshots e passos reproduzíveis","explanation":"Evidência deve permitir que outro profissional reproduza o achado."},
-{"type":"fill","sentence":"Cada vulnerabilidade deve incluir uma pontuação ___ para indicar sua gravidade.","options":["CVSS","DNS","TCP"],"correctText":"CVSS","explanation":"CVSS padroniza a gravidade das vulnerabilidades de 0 a 10."}
-]},
-{"filename":"9.2-analise-recomendacoes.html","module":"9","title":"Análise e Recomendações 9.2","victory_msg":"RECOMENDAÇÕES FORMULADAS!","steps":[
-{"type":"teach","icon":"fa-wrench","title":"Recomendações de Correção","content":"Cada achado deve ter uma <b>recomendação específica</b>: não apenas 'corrigir SQLi', mas sim 'implementar Prepared Statements na query X do arquivo Y, linha Z'.","highlight":"Recomendações vagas são inúteis"},
-{"type":"teach","icon":"fa-sort-amount-up","title":"Priorização","content":"Priorize correções por: <b>CVSS</b> (gravidade), <b>exposição</b> (internet vs interna), <b>facilidade de exploração</b> e <b>impacto no negócio</b>.","highlight":"Corrija o mais perigoso primeiro"},
-{"type":"example","icon":"fa-list-ol","title":"Priorizando Achados","scenario":"SQLi no login público (CVSS 9.8, internet) > XSS no painel admin interno (CVSS 6.1, intranet) > Versão de jQuery desatualizada (CVSS 3.1, informativo).","takeaway":"Exposição e impacto pesam tanto quanto o CVSS."},
-{"type":"quiz","task":"Como deve ser uma boa recomendação de correção?","options":["Específica: arquivo, linha e correção exata","Genérica: 'melhore a segurança'","Apenas o link do CVE"],"correctText":"Específica: arquivo, linha e correção exata","explanation":"Recomendações específicas permitem que a equipe técnica corrija rapidamente."},
-{"type":"fill","sentence":"A priorização deve considerar CVSS, exposição e ___ no negócio.","options":["impacto","cor","tamanho"],"correctText":"impacto","explanation":"Impacto no negócio determina a urgência real da correção."}
-]},
-{"filename":"9.3-comunicacao-escalonamento.html","module":"9","title":"Comunicação 9.3","victory_msg":"COMUNICAÇÃO PROFISSIONAL DOMINADA!","steps":[
-{"type":"teach","icon":"fa-bullhorn","title":"Comunicação Durante o Teste","content":"O pentester deve manter <b>comunicação constante</b> com o ponto de contato. Achados <b>críticos</b> devem ser reportados <b>imediatamente</b>, não esperar o relatório final.","highlight":"Achado crítico = reporte imediato"},
-{"type":"teach","icon":"fa-triangle-exclamation","title":"Escalonamento","content":"Se durante o teste o pentester encontrar <b>evidência de invasão real</b> (não simulada), deve <b>parar</b> e <b>escalar</b> imediatamente para a equipe de resposta a incidentes.","highlight":"Invasão real ≠ teste. Pare e escale."},
-{"type":"quiz","task":"O que fazer ao encontrar evidência de invasão real durante um pentest?","options":["Parar e escalar para resposta a incidentes","Continuar o teste normalmente","Tentar remover o invasor por conta própria"],"correctText":"Parar e escalar para resposta a incidentes","explanation":"Evidência de comprometimento real exige resposta a incidentes, não continuação do teste."},
-{"type":"fill","sentence":"Achados de severidade ___ devem ser reportados imediatamente, sem esperar o relatório final.","options":["crítica","baixa","informativa"],"correctText":"crítica","explanation":"Vulnerabilidades críticas representam risco iminente e exigem ação imediata."}
-]},
-{"filename":"9.4-atividades-pos-entrega.html","module":"9","title":"Pós-Entrega 9.4","victory_msg":"PÓS-ENTREGA CONCLUÍDA!","steps":[
-{"type":"teach","icon":"fa-broom","title":"Limpeza Pós-Teste","content":"Após o teste, o pentester deve <b>remover</b> todos os artefatos: <b>web shells</b>, <b>contas criadas</b>, <b>backdoors</b>, <b>arquivos temporários</b>. Deixar restos é irresponsável.","highlight":"Limpe tudo que você criou durante o teste"},
-{"type":"teach","icon":"fa-handshake","title":"Debriefing","content":"O <b>debriefing</b> é a reunião pós-entrega onde o pentester apresenta os achados, responde dúvidas e ajuda a equipe técnica a entender as recomendações.","highlight":"Debriefing garante que as correções serão feitas"},
-{"type":"teach","icon":"fa-rotate-right","title":"Retest","content":"Após o cliente corrigir as vulnerabilidades, o pentester realiza um <b>retest</b> para verificar se as correções foram eficazes e não introduziram novos problemas.","highlight":"Retest confirma que as correções funcionaram"},
-{"type":"quiz","task":"O que o pentester deve fazer com web shells e backdoors após o teste?","options":["Remover todos completamente","Deixar para futuras referências","Compartilhar com colegas"],"correctText":"Remover todos completamente","explanation":"Artefatos deixados no sistema são uma vulnerabilidade real que poderia ser explorada."},
-{"type":"match","title":"Atividade → Momento","pairs":[{"term":"Limpeza de artefatos","definition":"Imediatamente após o teste"},{"term":"Debriefing","definition":"Após entrega do relatório"},{"term":"Retest","definition":"Após o cliente corrigir os achados"}]},
-{"type":"fill","sentence":"A reunião onde o pentester apresenta os achados ao cliente é chamada de ___.","options":["debriefing","kickoff","standup"],"correctText":"debriefing","explanation":"Debriefing é a sessão final de apresentação e discussão dos resultados."}
-]}
-])
-with open('/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json','w') as f: json.dump(lessons,f,ensure_ascii=False,indent=2)
-print(f"✅ {len(lessons)} lessons (added Module 9)")
+import os
+
+JSON_PATH = "/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json"
+
+
+def load_json(path):
+    if not os.path.exists(path):
+        return []
+    with open(path, "r", encoding="utf-8") as file:
+        return json.load(file)
+
+
+def save_json(path, data):
+    with open(path, "w", encoding="utf-8") as file:
+        json.dump(data, file, ensure_ascii=False, indent=2)
+
+
+def main():
+    lessons = load_json(JSON_PATH)
+    lessons = [lesson for lesson in lessons if lesson.get("module") != "9"]
+
+    module_9_lessons = [
+        {
+            "filename": "9.0-introducao.html",
+            "module": "9",
+            "title": "Por Que o Relatório Decide o Valor do Pentest",
+            "victory_title": "Excelente!",
+            "victory_msg": "RELATÓRIO INICIADO!",
+            "steps": [
+                {
+                    "type": "teach",
+                    "icon": "fa-file-signature",
+                    "title": "O Entregável Que Fecha o Engajamento (Cisco 9.0.1)",
+                    "content": "Depois de executar reconhecimento, exploração e validação, ainda falta a fase mais importante: o <b>relatório final</b>. Esse report é um dos principais <b>entregáveis</b> do engajamento e permite ao cliente entender as descobertas, priorizar correções e perceber o valor do projeto.",
+                    "highlight": "Sem relatório de qualidade, o pentest perde grande parte do seu valor de negócio."
+                },
+                {
+                    "type": "teach",
+                    "icon": "fa-notes-medical",
+                    "title": "Documentação Contínua Evita Lacunas Críticas (Cisco 9.0.1)",
+                    "content": "Durante o teste, cada evidência precisa ser registrada: comandos executados, horários, vulnerabilidades, credenciais de teste, logs e caminhos de exploração. Essa <b>documentação</b> sustenta o relatório. Se você confiar apenas na memória, será difícil reconstruir tudo com precisão na hora de redigir o documento.",
+                    "highlight": "Anote enquanto testa, não depois."
+                },
+                {
+                    "type": "example",
+                    "icon": "fa-terminal",
+                    "title": "Exemplo - Evidência Registrada no Momento Certo",
+                    "scenario": "Um pentester encontra um painel administrativo exposto e registra imediatamente o caminho, a prova de acesso e o impacto técnico para usar depois no relatório:",
+                    "code": "[i] Host: portal.pixelparadise.local\n[i] URL: https://portal.pixelparadise.local/admin\n[+] Credencial válida de teste: auditor:Winter2026!\n[+] Impacto: acesso a exportação de dados de clientes\n[$] screenshot salvo em evidencias/admin-panel.png",
+                    "takeaway": "Registrar evidências no momento da descoberta evita omissões e fortalece a credibilidade do relatório."
+                },
+                {
+                    "type": "quiz",
+                    "task": "Qual é o principal motivo para tratar o relatório final como a etapa mais importante do engajamento?",
+                    "options": [
+                        "Porque é o documento que transforma achados técnicos em ações que o cliente pode executar",
+                        "Porque ele substitui completamente a necessidade de validar vulnerabilidades",
+                        "Porque ele elimina a necessidade de reuniões e comunicação com o cliente"
+                    ],
+                    "correctText": "Porque é o documento que transforma achados técnicos em ações que o cliente pode executar",
+                    "explanation": "O relatório é o elo entre a execução técnica do pentest e a remediação real no ambiente do cliente."
+                },
+                {
+                    "type": "fill",
+                    "sentence": "Esquecer comandos, evidências e caminhos de exploração é um risco comum quando o pentester não mantém a ___ durante todo o teste.",
+                    "options": [
+                        "documentação",
+                        "ofuscação",
+                        "segmentação"
+                    ],
+                    "correctText": "documentação",
+                    "explanation": "Documentação contínua garante rastreabilidade, qualidade de relatório e respaldo técnico."
+                }
+            ]
+        },
+        {
+            "filename": "9.1a-componentes-distribuicao.html",
+            "module": "9",
+            "title": "Público, Estrutura, CVSS e Distribuição Segura",
+            "victory_title": "Excelente!",
+            "victory_msg": "ESTRUTURA DOMINADA!",
+            "steps": [
+                {
+                    "type": "teach",
+                    "icon": "fa-users",
+                    "title": "Dois Públicos, Duas Linguagens (Cisco 9.1.1)",
+                    "content": "Um bom relatório precisa falar com o <b>público executivo</b> e com o <b>público técnico</b>. O resumo executivo traduz risco em impacto para o negócio. Já as seções técnicas precisam trazer detalhes suficientes para que TI, segurança, desenvolvimento ou terceiros consigam reproduzir e corrigir a falha.",
+                    "highlight": "Executivos precisam de contexto; equipes técnicas precisam de evidência e passos claros."
+                },
+                {
+                    "type": "teach",
+                    "icon": "fa-list-check",
+                    "title": "Componentes Clássicos do Relatório (Cisco 9.1.2)",
+                    "content": "Entre os componentes mais comuns estão: <b>carta de apresentação</b>, <b>sumário executivo</b>, escopo, metodologia, resumo de risco, descobertas detalhadas, recomendações, conclusão e apêndices. A estrutura pode variar, mas a lógica permanece a mesma: orientar decisão e remediação.",
+                    "highlight": "Estrutura consistente reduz ruído e acelera a resposta do cliente."
+                },
+                {
+                    "type": "teach",
+                    "icon": "fa-gauge-high",
+                    "title": "CVE, CVSS e Priorização (Cisco 9.1.3)",
+                    "content": "Ao relatar uma vulnerabilidade, o pentester pode referenciar <b>CVE</b> para identificação pública e usar <b>CVSS</b> para classificar gravidade. O CVSS combina métricas <b>Base</b>, <b>Temporais</b> e <b>Ambientais</b>, permitindo ajustar a nota ao cenário real do cliente.",
+                    "highlight": "A pontuação só é útil quando reflete o ambiente real, não apenas a teoria."
+                },
+                {
+                    "type": "example",
+                    "icon": "fa-file-shield",
+                    "title": "Exemplo - Mesma Falha, Públicos Diferentes",
+                    "scenario": "Uma injeção SQL encontrada em um portal financeiro precisa ser descrita de forma diferente no resumo executivo e na seção técnica:",
+                    "code": "[Executivo] A aplicação permite acesso não autorizado a dados financeiros, com risco de fraude e vazamento regulatório.\n\n[Técnico] O parâmetro 'invoice_id' aceita payloads UNION sem parametrização. Prova: 'invoice_id=14 UNION SELECT user(),database(),version()-- -'.",
+                    "takeaway": "A mesma descoberta deve ser comunicada em níveis diferentes de profundidade, sem perder precisão."
+                },
+                {
+                    "type": "match",
+                    "title": "Associe o Conceito ao Objetivo",
+                    "pairs": [
+                        {
+                            "term": "Resumo Executivo",
+                            "definition": "Explicar impacto de negócio sem excesso de jargão técnico"
+                        },
+                        {
+                            "term": "Seção Técnica",
+                            "definition": "Trazer evidências, reprodução e recomendações detalhadas"
+                        },
+                        {
+                            "term": "CVE",
+                            "definition": "Identificador público de uma vulnerabilidade conhecida"
+                        },
+                        {
+                            "term": "CVSS Ambiental",
+                            "definition": "Ajustar a gravidade com base no contexto do cliente"
+                        }
+                    ]
+                },
+                {
+                    "type": "quiz",
+                    "task": "Qual prática atende melhor à distribuição segura de um relatório de pentest?",
+                    "options": [
+                        "Criptografar arquivos e controlar quem recebeu cada cópia física ou digital",
+                        "Enviar o PDF em texto simples por e-mail para agilizar a leitura",
+                        "Publicar o relatório em um compartilhamento aberto para todas as áreas"
+                    ],
+                    "correctText": "Criptografar arquivos e controlar quem recebeu cada cópia física ou digital",
+                    "explanation": "O relatório contém instruções detalhadas de exploração e precisa de proteção tanto no armazenamento quanto na distribuição."
+                },
+                {
+                    "type": "fill",
+                    "sentence": "No CVSS, as métricas ___ permitem adaptar a pontuação ao risco real e à superfície de ameaça específica do cliente.",
+                    "options": [
+                        "ambientais",
+                        "binárias",
+                        "aleatórias"
+                    ],
+                    "correctText": "ambientais",
+                    "explanation": "As métricas ambientais contextualizam a gravidade no ambiente avaliado."
+                }
+            ]
+        },
+        {
+            "filename": "9.1b-notas-causa-raiz.html",
+            "module": "9",
+            "title": "Notas de Campo, Dradis e Causa Raiz",
+            "victory_title": "Excelente!",
+            "victory_msg": "CAUSA RAIZ IDENTIFICADA!",
+            "steps": [
+                {
+                    "type": "teach",
+                    "icon": "fa-book-open",
+                    "title": "Gerenciar Notas Também Faz Parte do Pentest (Cisco 9.1.4)",
+                    "content": "Um engajamento gera muitas evidências: saídas de scanners, comandos, screenshots, credenciais temporárias, hashes, requests, respostas e observações contextuais. Sem organização, a qualidade do relatório cai e o trabalho em equipe fica frágil.",
+                    "highlight": "Notas desorganizadas geram relatórios incompletos."
+                },
+                {
+                    "type": "teach",
+                    "icon": "fa-diagram-project",
+                    "title": "Dradis e Espaço Colaborativo (Cisco 9.1.6)",
+                    "content": "O <b>Dradis Framework</b> foi criado para centralizar notas, importar resultados de ferramentas e facilitar colaboração. A <b>Community Edition</b> é aberta e extensível; a <b>Professional Edition</b> adiciona recursos mais fortes de projeto e geração de relatórios.",
+                    "highlight": "Ferramenta de notas boa reduz retrabalho e melhora consistência."
+                },
+                {
+                    "type": "teach",
+                    "icon": "fa-magnifying-glass-chart",
+                    "title": "Analisar Causa Raiz Vai Além do Scanner (Cisco 9.1.7)",
+                    "content": "Um scanner pode mostrar uma porta 21 aberta, mas isso não explica o risco real. A <b>causa raiz</b> aparece quando o pentester correlaciona descoberta técnica, contexto operacional e entrevistas com o dono do ativo. É isso que transforma sintoma em correção útil.",
+                    "highlight": "Relatório forte explica por que o problema existe, não apenas onde ele aparece."
+                },
+                {
+                    "type": "example",
+                    "icon": "fa-folder-tree",
+                    "title": "Exemplo - FTP Legado e Exposição Indevida",
+                    "scenario": "Durante o teste, o scanner não marcou criticidade alta no FTP, mas a investigação manual mostrou um problema maior:",
+                    "code": "[i] Nessus: porta 21 aberta sem CVE crítico associado\n[i] Entrevista com o responsável: serviço deveria ter sido desativado há anos\n[+] Evidência adicional: servidor exposto à internet\n[+] Logs indicam uso contínuo para transferir dados sensíveis",
+                    "takeaway": "A causa raiz não era apenas o FTP ativo, mas falha de governança, descomissionamento e uso inseguro do serviço."
+                },
+                {
+                    "type": "quiz",
+                    "task": "Qual ação ajuda mais a determinar a causa raiz de um servidor não documentado exposto à internet?",
+                    "options": [
+                        "Entrevistar os responsáveis pelo ativo e correlacionar o uso real com as evidências técnicas",
+                        "Confiar apenas na severidade automática do scanner de vulnerabilidade",
+                        "Ignorar o contexto operacional para evitar aumentar o escopo"
+                    ],
+                    "correctText": "Entrevistar os responsáveis pelo ativo e correlacionar o uso real com as evidências técnicas",
+                    "explanation": "Causa raiz exige contexto de negócio e operação, não só telemetria técnica."
+                },
+                {
+                    "type": "quiz",
+                    "task": "Por que a validação manual das saídas de ferramentas é obrigatória antes de publicar achados?",
+                    "options": [
+                        "Porque falsos positivos custam tempo, dinheiro e credibilidade",
+                        "Porque scanners nunca encontram nenhuma vulnerabilidade útil",
+                        "Porque relatórios só podem conter evidências coletadas manualmente"
+                    ],
+                    "correctText": "Porque falsos positivos custam tempo, dinheiro e credibilidade",
+                    "explanation": "Achados não validados podem induzir o cliente a corrigir um problema inexistente."
+                },
+                {
+                    "type": "fill",
+                    "sentence": "Quando o pentester investiga o motivo estrutural de uma falha, ele está realizando uma análise de ___.",
+                    "options": [
+                        "causa raiz",
+                        "superfície externa",
+                        "porta padrão"
+                    ],
+                    "correctText": "causa raiz",
+                    "explanation": "A análise de causa raiz conecta vulnerabilidade, processo e contexto operacional."
+                }
+            ]
+        },
+        {
+            "filename": "9.2a-controles-remediacao.html",
+            "module": "9",
+            "title": "Achados, Recomendações e Controles de Remediação",
+            "victory_title": "Excelente!",
+            "victory_msg": "REMEDIAÇÃO MAPEADA!",
+            "steps": [
+                {
+                    "type": "teach",
+                    "icon": "fa-screwdriver-wrench",
+                    "title": "Boa Recomendação Precisa Ser Executável (Cisco 9.2.1)",
+                    "content": "Descobertas devem terminar com <b>ações de remediação claras</b>. Não basta escrever 'corrigir'. O relatório precisa indicar o que mudar, em qual camada, qual risco reduz e, quando possível, qual prioridade aplicar.",
+                    "highlight": "Achado útil sempre aponta um caminho de correção."
+                },
+                {
+                    "type": "teach",
+                    "icon": "fa-shield-halved",
+                    "title": "Controles Técnicos, Administrativos, Operacionais e Físicos (Cisco 9.2.2)",
+                    "content": "As recomendações podem envolver <b>controles técnicos</b> como MFA, hardening e parametrização de consultas; <b>controles administrativos</b> como RBAC e políticas; <b>controles operacionais</b> como treinamento e segregação de funções; e <b>controles físicos</b> como mantraps, câmeras e biometria.",
+                    "highlight": "Nem toda correção é tecnológica; muitas dependem de processo e governança."
+                },
+                {
+                    "type": "teach",
+                    "icon": "fa-network-wired",
+                    "title": "Zero Trust e Redução de Movimento Lateral (Cisco 9.2.2)",
+                    "content": "A Cisco destaca o uso de <b>microsegmentação Zero Trust</b> para controlar tráfego leste-oeste próximo à carga de trabalho. Isso limita o movimento lateral e melhora a contenção quando uma máquina ou aplicação é comprometida.",
+                    "highlight": "Segmentar perto da aplicação reduz blast radius."
+                },
+                {
+                    "type": "example",
+                    "icon": "fa-code",
+                    "title": "Exemplo - Recomendação para SQL Injection",
+                    "scenario": "Após validar uma falha de SQL Injection em um formulário de cobrança, o relatório técnico pode orientar a correção de forma objetiva:",
+                    "code": "Achado: entrada 'invoice_id' aceita payload SQL arbitrário.\nRecomendação técnica: implementar consultas parametrizadas e validação server-side.\nRecomendação administrativa: incluir revisão de segurança no SDLC.\nPrioridade: alta, por risco de vazamento financeiro.",
+                    "takeaway": "Uma remediação forte combina correção técnica imediata com prevenção de recorrência."
+                },
+                {
+                    "type": "match",
+                    "title": "Associe o Controle ao Exemplo",
+                    "pairs": [
+                        {
+                            "term": "Técnico",
+                            "definition": "MFA, hardening e consultas parametrizadas"
+                        },
+                        {
+                            "term": "Administrativo",
+                            "definition": "RBAC, política de senha e Secure SDLC"
+                        },
+                        {
+                            "term": "Operacional",
+                            "definition": "Treinamento, férias obrigatórias e job rotation"
+                        },
+                        {
+                            "term": "Físico",
+                            "definition": "Biometria, câmeras e mantraps"
+                        }
+                    ]
+                },
+                {
+                    "type": "quiz",
+                    "task": "Qual recomendação reduz melhor o risco de movimento lateral após o comprometimento de uma carga de trabalho?",
+                    "options": [
+                        "Aplicar microsegmentação alinhada a uma arquitetura Zero Trust",
+                        "Aumentar apenas o tamanho do storage do servidor",
+                        "Remover os logs para melhorar a performance da aplicação"
+                    ],
+                    "correctText": "Aplicar microsegmentação alinhada a uma arquitetura Zero Trust",
+                    "explanation": "A microsegmentação restringe o tráfego entre cargas de trabalho e reduz o impacto de uma intrusão."
+                },
+                {
+                    "type": "fill",
+                    "sentence": "Para impedir que dados de entrada sejam executados como comandos SQL, o relatório deve recomendar a ___ das consultas.",
+                    "options": [
+                        "parametrização",
+                        "compressão",
+                        "replicação"
+                    ],
+                    "correctText": "parametrização",
+                    "explanation": "Consultas parametrizadas separam dados de instruções SQL e reduzem o risco de injeção."
+                }
+            ]
+        },
+        {
+            "filename": "9.2b-comunicacao-pos-entrega.html",
+            "module": "9",
+            "title": "Comunicação Durante o Teste e Encerramento Seguro",
+            "victory_title": "Excelente!",
+            "victory_msg": "ENGAJAMENTO FINALIZADO!",
+            "steps": [
+                {
+                    "type": "teach",
+                    "icon": "fa-comments",
+                    "title": "Quando Comunicar Antes do Relatório Final (Cisco 9.2.3)",
+                    "content": "Nem toda descoberta deve esperar o relatório. Se você encontrar uma <b>falha crítica</b> com impacto imediato, comunique rapidamente ao cliente. Se houver indício de comprometimento real pré-existente, a simulação deve parar e o caso precisa ser escalado para resposta a incidentes. Essas <b>atividades pós</b> e de escalonamento precisam estar previstas no processo.",
+                    "highlight": "Achado crítico e incidente real exigem comunicação imediata."
+                },
+                {
+                    "type": "teach",
+                    "icon": "fa-handshake-angle",
+                    "title": "Comunicação Sem Arrogância (Cisco 9.1.1 e 9.2.3)",
+                    "content": "O relatório e o debriefing devem preservar um tom <b>profissional e respeitoso</b>. O objetivo não é constranger a equipe do cliente, mas ajudá-la a entender o risco, priorizar ações e melhorar a postura de segurança.",
+                    "highlight": "Relatório bom corrige problemas sem criar atrito desnecessário."
+                },
+                {
+                    "type": "teach",
+                    "icon": "fa-broom-ball",
+                    "title": "Pós-Entrega e Limpeza do Ambiente (Cisco 9.2.4)",
+                    "content": "No encerramento do engajamento, o pentester deve remover shells reversos, contas criadas, scripts, serviços persistentes e qualquer alteração temporária. Depois disso, realiza-se a sanitização segura dos dados do cliente armazenados nas estações do time, seguindo boas práticas como <b>NIST SP 800-88</b>.",
+                    "highlight": "Sair do ambiente com segurança é parte do trabalho."
+                },
+                {
+                    "type": "example",
+                    "icon": "fa-terminal",
+                    "title": "Exemplo - Encerramento Pós-Engajamento",
+                    "scenario": "Antes do sign-off, a equipe registra a remoção dos artefatos deixados durante o teste e a exclusão do material coletado:",
+                    "code": "[+] Conta temporária removida: audit_tmp\n[+] Serviço persistente removido: updaterd.service\n[+] Web shell apagada: /var/www/html/tmp/shell.php\n[+] Dados do cliente sanitizados do notebook de teste\n[i] Referência adotada: NIST SP 800-88",
+                    "takeaway": "A limpeza final protege o cliente e reduz o risco de deixar novas portas abertas no ambiente."
+                },
+                {
+                    "type": "match",
+                    "title": "Associe a Atividade ao Objetivo",
+                    "pairs": [
+                        {
+                            "term": "Debriefing",
+                            "definition": "Apresentar verbalmente achados, impacto e próximos passos"
+                        },
+                        {
+                            "term": "Retest",
+                            "definition": "Validar se a remediação corrigiu a vulnerabilidade"
+                        },
+                        {
+                            "term": "Limpeza pós-engajamento",
+                            "definition": "Remover contas, shells, serviços e artefatos deixados"
+                        },
+                        {
+                            "term": "Sanitização de mídia",
+                            "definition": "Excluir com segurança os dados sensíveis coletados"
+                        }
+                    ]
+                },
+                {
+                    "type": "quiz",
+                    "task": "Qual deve ser a reação do pentester ao encontrar um backdoor ativo deixado por um invasor real durante o teste?",
+                    "options": [
+                        "Parar o engajamento simulado e escalar imediatamente para a equipe de resposta a incidentes",
+                        "Explorar o backdoor em silêncio e só mencionar o caso no apêndice",
+                        "Manter o teste normalmente para não atrasar a entrega"
+                    ],
+                    "correctText": "Parar o engajamento simulado e escalar imediatamente para a equipe de resposta a incidentes",
+                    "explanation": "Quando há evidência de incidente real, a prioridade muda de simulação para contenção e resposta."
+                },
+                {
+                    "type": "fill",
+                    "sentence": "A remoção de shells, usuários temporários e serviços criados durante o teste faz parte da etapa de ___ pós-engajamento.",
+                    "options": [
+                        "limpeza",
+                        "enumeração",
+                        "persistência"
+                    ],
+                    "correctText": "limpeza",
+                    "explanation": "A limpeza pós-engajamento restaura o ambiente e evita riscos residuais deixados pelo próprio teste."
+                }
+            ]
+        }
+    ]
+
+    lessons.extend(module_9_lessons)
+    save_json(JSON_PATH, lessons)
+    print(f"Modulo 9 reestruturado com {len(module_9_lessons)} licoes.")
+
+
+if __name__ == "__main__":
+    main()

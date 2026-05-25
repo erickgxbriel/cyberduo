@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Executando Técnicas de Pós-Exploração</title>
+    <title>CyberDuo - Resolução de Nome, LLMNR e Exploração SMB</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #ff003c;
+            --cyber-blue: #ff8c00;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b3002a; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b3002a; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b36200; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b36200; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-08.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-05.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,39 +131,77 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-flag",
-                        "title": "Objetivos da Pós-Exploração (Cisco 8.0.1)",
-                        "content": "Em um teste de penetração, o objetivo final vai muito além de apenas encontrar vulnerabilidades. Após comprometer uma máquina alvo, a fase de <b>Pós-Exploração</b> serve para avaliar o risco de perdas potenciais que o cliente sofreria se um atacante real invadisse o sistema.<br><br>🛡️ Esta fase demonstra na prática até onde o invasor pode penetrar na rede interna e a quais dados confidenciais ele teria acesso total.",
-                        "highlight": "Na pós-exploração, você prova o impacto financeiro e operacional de uma invasão real!"
+                        "icon": "fa-signature",
+                        "title": "NetBIOS, LLMNR e NBT-NS",
+                        "content": "Em ambientes Windows, protocolos de resolução como <b>NetBIOS</b>, <b>LLMNR</b> e NBT-NS podem expor credenciais quando um host responde de forma maliciosa a pedidos de nome na rede local. Isso é especialmente perigoso em domínios com configuração fraca.",
+                        "highlight": "Resolver um nome errado pode ser suficiente para vazar um hash NTLMv2 ao atacante."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Exemplo - Capturando Hash com Responder",
+                        "scenario": "Ao envenenar LLMNR/NBT-NS, o analista usa o Responder para induzir o host da vítima a autenticar contra sua máquina e registrar o material capturado:",
+                        "code": "$ responder -I eth0 -wrf\n[+] Listening for LLMNR, NBT-NS and MDNS requests\n[+] NTLMv2 hash captured from PIXEL\\usuario.ti",
+                        "takeaway": "O hash pode ser quebrado offline ou usado em ataques posteriores, dependendo do cenário."
             },
             {
                         "type": "teach",
-                        "icon": "fa-clock",
-                        "title": "Medindo o Tempo de Detecção (Cisco 8.0.1)",
-                        "content": "Outro objetivo crucial da pós-exploração é <b>avaliar a eficácia dos defensores</b> da organização (a equipe azul ou o SOC).<br><br>⏱️ Durante os testes, avalia-se quanto tempo a equipe de segurança leva para detectar as atividades suspeitas, identificar arquivos maliciosos e responder ao exploit. Isso ajuda a calibrar os sensores e alertas de intrusão do cliente.",
-                        "highlight": "Entrar sem ser detectado avalia a furtividade e a competência de monitoramento do SOC!"
+                        "icon": "fa-folder-tree",
+                        "title": "SMB e Enumeração de Shares",
+                        "content": "O <b>SMB</b> historicamente sofreu com falhas graves e má configuração. Enumeração com Nmap, enum4linux e exploração de vulnerabilidades conhecidas ajudam a descobrir shares, usuários, grupos e superfícies como MS17-010 / <b>EternalBlue</b>.",
+                        "highlight": "SMB fraco pode levar de simples enumeração a execução remota de código."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Exemplo - Enumeração SMB + EternalBlue",
+                        "scenario": "Após identificar a porta 445/TCP aberta, o analista correlaciona versão, share e potencial de exploração remota no host Windows:",
+                        "code": "$ nmap -p 139,445 --script smb-os-discovery,smb-enum-shares 10.10.60.14\n$ searchsploit smb eternalblue\n$ msfconsole -q -x 'use exploit/windows/smb/ms17_010_eternalblue'",
+                        "takeaway": "A enumeração antecede a exploração e reduz o risco de disparar módulos errados em sistemas não vulneráveis."
             },
             {
                         "type": "quiz",
-                        "task": "De acordo com as boas práticas da Cisco, qual é um objetivo essencial ao executar atividades de pós-exploração em um pentest?",
+                        "task": "Qual combinação descreve melhor um ataque típico de LLMNR poisoning em rede Windows?",
                         "options": [
-                                    "Avaliar o tempo que leva o pessoal de segurança (SOC) para descobrir e responder ao exploit.",
-                                    "Causar danos físicos irreparáveis para forçar a empresa a comprar novos hardwares.",
-                                    "Instalar softwares de mineração de bitcoin ocultos para financiar o projeto."
+                                    "O atacante responde ao pedido de nome e induz a vítima a enviar um hash de autenticação",
+                                    "O atacante altera fisicamente o switch para assumir o domínio",
+                                    "O atacante precisa primeiro quebrar o WPA3 da rede sem fio"
                         ],
-                        "correctText": "Avaliar o tempo que leva o pessoal de segurança (SOC) para descobrir e responder ao exploit.",
-                        "explanation": "Testar a capacidade de resposta e detecção do SOC ajuda a calibrar sistemas de alarmes e otimizar processos de incidentes da empresa."
+                        "correctText": "O atacante responde ao pedido de nome e induz a vítima a enviar um hash de autenticação",
+                        "explanation": "A falsificação do resolvedor de nomes faz a vítima autenticar contra o host malicioso."
+            },
+            {
+                        "type": "match",
+                        "title": "Associe a Ferramenta ao Uso",
+                        "pairs": [
+                                    {
+                                                "term": "Responder",
+                                                "definition": "Capturar hashes via envenenamento de resolução de nomes"
+                                    },
+                                    {
+                                                "term": "enum4linux",
+                                                "definition": "Enumerar informações de hosts e shares SMB"
+                                    },
+                                    {
+                                                "term": "searchsploit",
+                                                "definition": "Pesquisar exploits públicos por software ou protocolo"
+                                    },
+                                    {
+                                                "term": "Metasploit",
+                                                "definition": "Executar módulos de exploração como EternalBlue"
+                                    }
+                        ]
             },
             {
                         "type": "fill",
-                        "sentence": "Após a invasão inicial, o testador executa atividades de pós-exploração para mover-se lateralmente e manter a ___ permanente no sistema comprometido.",
+                        "sentence": "Ao responder falsamente a pedidos de resolução de nome em redes Windows para capturar autenticação, o atacante está abusando de protocolos como NetBIOS e ___.",
                         "options": [
-                                    "persistência",
-                                    "criptografia",
-                                    "desconexão"
+                                    "LLMNR",
+                                    "BGP",
+                                    "MPLS"
                         ],
-                        "correctText": "persistência",
-                        "explanation": "A persistência garante que o acesso seja mantido mesmo após reboots do servidor, permitindo demonstrar o impacto de longo prazo."
+                        "correctText": "LLMNR",
+                        "explanation": "LLMNR é um dos alvos clássicos de poisoning em redes Microsoft."
             }
 ];
 
@@ -445,15 +483,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/8.1a-shells-c2.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/5.1c-credenciais-controles.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b3002a; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b36200; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">Você compreendeu a base pedagógica e os objetivos reais de pós-exploração no pentest!</h2>
+                    <h2 class="title-main mb-2">NOMES E SHARES COMPROMETIDOS!</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -462,7 +500,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-08.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-05.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

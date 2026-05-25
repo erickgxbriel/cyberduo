@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Ferramentas Ofensivas, Defensivas e Forenses</title>
+    <title>CyberDuo - Pass-the-Hash, Kerberos e Controles de Acesso</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #8a2be2;
+            --cyber-blue: #ff8c00;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #5e1d80; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #5e1d80; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b36200; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b36200; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-10.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-05.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,293 +131,76 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-search",
-                        "title": "Ferramentas de Reconhecimento",
-                        "content": "Ferramentas como <b>Nmap</b> e <b>Amass</b> são a espinha dorsal de qualquer ataque. Elas automatizam a descoberta de infraestrutura oculta, como subdomínios esquecidos e portas abertas invisíveis."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-map",
-                        "title": "Descobrindo o Terreno",
-                        "scenario": "A empresa acha que só tem 1 site público. O hacker usa o `Amass` e descobre `dev.site.com` contendo o código-fonte inteiro exposto.",
-                        "takeaway": "Você não pode atacar o que não consegue ver."
-            },
-            {
-                        "type": "quiz",
-                        "task": "Em qual fase do pentest o Nmap e o Amass são primariamente utilizados?",
-                        "options": [
-                                    "Enumeração e Reconhecimento.",
-                                    "Exploração de Vulnerabilidades (Exploitation).",
-                                    "Pós-Exploração e Movimentação Lateral."
-                        ],
-                        "correctText": "Enumeração e Reconhecimento.",
-                        "explanation": "Eles mapeiam o alvo antes de qualquer tiro ser disparado."
+                        "icon": "fa-key",
+                        "title": "Pass-the-Hash, Brute Force e Credential Stuffing",
+                        "content": "Nem sempre o atacante precisa da senha em texto claro. Em muitos cenários, basta reutilizar o <b>hash</b> com <b>pass-the-hash</b> ou testar credenciais vazadas via brute force e credential stuffing. Isso desafia diretamente os controles de IAM e monitoramento interno.",
+                        "highlight": "A credencial roubada continua valiosa mesmo quando não foi descriptografada."
             },
             {
                         "type": "teach",
-                        "icon": "fa-hammer",
-                        "title": "Ferramentas de Força Bruta",
-                        "content": "O <b>Hydra</b> e o <b>Medusa</b> são ferramentas rápidas e agressivas. Elas tentam entrar em serviços online (SSH, FTP, Formulários Web) bombardeando-os com milhares de combinações de usuários e senhas de uma lista."
+                        "icon": "fa-ticket-alt",
+                        "title": "Kerberoasting e AS-REP Roasting",
+                        "content": "Em Active Directory, ataques como <b>Kerberoasting</b> e <b>AS-REP Roasting</b> permitem obter material criptografado para crack offline. O primeiro mira contas de serviço com SPN; o segundo mira contas com pre-authentication desabilitado.",
+                        "highlight": "Kerberos mal configurado transforma o AD em fonte de cracking offline."
             },
             {
                         "type": "example",
                         "icon": "fa-terminal",
-                        "title": "O Canhão Hydra",
-                        "scenario": "Comando: `hydra -l admin -P passwords.txt ftp://192.168.0.10`. O Hydra lança 16 conexões simultâneas tentando senhas. Em 2 minutos, encontra a correta: 'admin123'.",
-                        "takeaway": "Sistemas sem limite de tentativas de falha (Rate Limiting) caem fácil."
-            },
-            {
-                        "type": "fill",
-                        "sentence": "Ferramentas que tentam adivinhar logins enviando grandes quantidades de senhas diretas para a porta do servidor realizam um ataque de Força ___.",
-                        "options": [
-                                    "Bruta",
-                                    "Ativa",
-                                    "Morta"
-                        ],
-                        "correctText": "Bruta",
-                        "explanation": "É um ataque não-sofisticado que tenta ganhar pela quantidade."
+                        "title": "Exemplo - Extraindo Ticket para Crack Offline",
+                        "scenario": "Após autenticar em um domínio, o pentester solicita um TGS de uma conta de serviço e exporta o material para quebrar a senha fora do ambiente alvo:",
+                        "code": "$ GetUserSPNs.py pixel.local/analista:'Temp2026!' -dc-ip 10.10.70.10 -request\n[+] ServicePrincipalName found\n[+] Hash TGS salvo para cracking offline",
+                        "takeaway": "O valor do ataque está em transformar um ticket Kerberos em material viável para wordlists e regras."
             },
             {
                         "type": "teach",
-                        "icon": "fa-unlock",
-                        "title": "Quebra de Hashes (Cracking)",
-                        "content": "Se o hacker roubou o banco de dados cheio de senhas cifradas (hashes), ele usa o <b>Hashcat</b> ou o <b>John the Ripper</b>. Como é um ataque offline no PC do hacker, as tentativas de senha nunca são bloqueadas."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-microchip",
-                        "title": "A Fúria da GPU",
-                        "scenario": "O Hashcat usa as Placas de Vídeo (RTX/GPU) do hacker para testar bilhões de senhas por segundo contra os hashes NTLM roubados, quebrando a criptografia offline em minutos.",
-                        "takeaway": "Use senhas complexas e longas para defender-se de ataques de força bruta offline."
+                        "icon": "fa-road-barrier",
+                        "title": "DoS, NAC e VLAN Hopping",
+                        "content": "O módulo também cobre abuso de disponibilidade e segmentação, como <b>DoS/DDoS</b>, <b>bypass de NAC</b> e <b>VLAN hopping</b>. Esses ataques testam se a rede realmente impõe barreiras ou apenas supõe confiança entre segmentos.",
+                        "highlight": "Segmentação fraca transforma um acesso local em travessia lateral ampla."
             },
             {
                         "type": "quiz",
-                        "task": "Por que quebrar hashes com Hashcat é frequentemente muito mais rápido que usar Hydra para adivinhar senhas via SSH?",
+                        "task": "Qual ataque solicita tickets Kerberos de contas de serviço para quebrar a senha offline?",
                         "options": [
-                                    "Porque o Hashcat roda offline na GPU do atacante, sem latência de rede ou bloqueios de firewall do servidor alvo.",
-                                    "Porque o Hydra é um software desatualizado.",
-                                    "Porque o Hashcat adivinha magicamente as senhas."
+                                    "Kerberoasting",
+                                    "ARP Spoofing",
+                                    "DNS Tunneling"
                         ],
-                        "correctText": "Porque o Hashcat roda offline na GPU do atacante, sem latência de rede ou bloqueios de firewall do servidor alvo.",
-                        "explanation": "Num ataque offline, a única limitação é a potência do computador do hacker."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-database",
-                        "title": "Sqlmap",
-                        "content": "O <b>Sqlmap</b> automatiza todo o tedioso processo de explorar vulnerabilidades SQL. Você entrega a ele um site vulnerável, e ele mapeia todo o banco sozinho."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-download",
-                        "title": "O Aspirador de Tabelas",
-                        "scenario": "Com o comando `sqlmap -u site.com?id=1 --dump`, o Sqlmap detecta que a página é vulnerável e faz o download automático de toda a tabela de usuários e cartões de crédito.",
-                        "takeaway": "O Sqlmap transforma uma falha técnica numa catástrofe de dados."
-            },
-            {
-                        "type": "quiz",
-                        "task": "Se você encontrou uma URL que parece vulnerável a injeção SQL, qual ferramenta usaria para tentar extrair os dados de forma massiva e automatizada?",
-                        "options": [
-                                    "Sqlmap",
-                                    "Wireshark",
-                                    "Hashcat"
-                        ],
-                        "correctText": "Sqlmap",
-                        "explanation": "O Sqlmap é a maior referência do mundo de segurança para SQL Injection."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-network-wired",
-                        "title": "O que são C2 Frameworks?",
-                        "content": "<b>Command and Control (C2)</b> são infraestruturas usadas para manter comunicação com máquinas comprometidas (beacons), permitindo enviar comandos e extrair dados furtivamente.",
-                        "highlight": "C2 = O 'QG' da operação hacker."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-spider",
-                        "title": "Cobalt Strike e Empire",
-                        "content": "<b>Cobalt Strike</b> é o padrão ouro (pago) para emulação de ameaças. O <b>Empire</b> é uma alternativa open-source pesadamente focada em exploração pós-comprometimento via PowerShell sem tocar no disco.",
-                        "highlight": "Operam em memória (fileless) para evitar detecção."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "Metasploit vs C2",
-                        "scenario": "Enquanto o Metasploit é focado em explorar vulnerabilidades e ganhar acesso inicial (exploit -> shell), os C2s são projetados para longas campanhas de persistência de meses de duração.",
-                        "takeaway": "C2 usa beacons assíncronos que checam comandos de hora em hora."
-            },
-            {
-                        "type": "quiz",
-                        "task": "Por que C2 frameworks utilizam 'Beacons' em vez de conexões diretas constantes?",
-                        "options": [
-                                    "Para se misturar ao tráfego de rede normal (ex: web HTTP) e evitar detecção.",
-                                    "Para gastar menos banda da rede corporativa.",
-                                    "Porque conexões diretas são impossíveis em Linux."
-                        ],
-                        "correctText": "Para se misturar ao tráfego de rede normal (ex: web HTTP) e evitar detecção.",
-                        "explanation": "Beacons 'dormem' e fazem requisições esporádicas, dificultando a identificação pelo SOC."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-ghost",
-                        "title": "Evasão de Defesas",
-                        "content": "Técnicas utilizadas para bypassar softwares antivírus (AV) e Endpoint Detection and Response (EDR). O foco é executar malwares em ambientes altamente monitorados.",
-                        "highlight": "AV detecta assinaturas. EDR detecta comportamento."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-file-code",
-                        "title": "Obfuscação e Packing",
-                        "content": "<b>Obfuscação</b> embaralha o código para dificultar análise estática. <b>Packers</b> comprimem e criptografam o executável, descriptografando-o apenas na memória RAM durante a execução.",
-                        "highlight": "O payload malicioso nunca toca o disco rígido."
-            },
-            {
-                        "type": "quiz",
-                        "task": "Qual o objetivo de usar ferramentas de 'Packing' (empacotamento) num malware?",
-                        "options": [
-                                    "Alterar a assinatura do arquivo (hash) e criptografar o payload real.",
-                                    "Fazer o malware executar 10 vezes mais rápido.",
-                                    "Corrigir bugs no código do vírus."
-                        ],
-                        "correctText": "Alterar a assinatura do arquivo (hash) e criptografar o payload real.",
-                        "explanation": "Ao mudar a assinatura, os antivírus antigos baseados em Hash falham na detecção."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-microscope",
-                        "title": "10.2.15 Descompilação e Debugging",
-                        "content": "<b>Ghidra</b>: descompilador da NSA (gratuito). <b>IDA Pro</b>: disassembler comercial líder. <b>OllyDbg</b>: debugger Windows. <b>GDB</b>: debugger Linux. <b>Radare2</b>: framework de engenharia reversa.",
-                        "highlight": "Engenharia reversa revela o que o código realmente faz"
+                        "correctText": "Kerberoasting",
+                        "explanation": "Kerberoasting obtém tickets TGS de contas com SPN para cracking fora do ambiente alvo."
             },
             {
                         "type": "match",
-                        "title": "Ferramenta → Uso",
+                        "title": "Associe o Ataque ao Requisito",
                         "pairs": [
                                     {
-                                                "term": "Ghidra",
-                                                "definition": "Descompilador gratuito (NSA)"
+                                                "term": "Pass-the-Hash",
+                                                "definition": "Reutilizar hash de autenticação sem conhecer a senha clara"
                                     },
                                     {
-                                                "term": "IDA Pro",
-                                                "definition": "Disassembler comercial líder"
+                                                "term": "Kerberoasting",
+                                                "definition": "Conta de serviço com SPN acessível no domínio"
                                     },
                                     {
-                                                "term": "GDB",
-                                                "definition": "Debugger Linux"
+                                                "term": "AS-REP Roasting",
+                                                "definition": "Conta com Kerberos pre-authentication desabilitado"
                                     },
                                     {
-                                                "term": "Radare2",
-                                                "definition": "Framework de eng. reversa"
-                                    }
-                        ]
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-network-wired",
-                        "title": "Análise de Tráfego com Wireshark",
-                        "content": "O <b>Wireshark</b> é o analisador de protocolos de rede mais famoso do mundo. Ele permite capturar e interagir com o tráfego que passa pela rede em tempo real, auxiliando em auditorias, debugging e forense de ataques.",
-                        "highlight": "Wireshark intercepta pacotes de rede e traduz em formato legível."
-            },
-            {
-                        "type": "quiz",
-                        "task": "Qual ferramenta captura e analisa pacotes de rede em tempo real para debugging e segurança?",
-                        "options": [
-                                    "Wireshark",
-                                    "Ghidra",
-                                    "Autopsy"
-                        ],
-                        "correctText": "Wireshark",
-                        "explanation": "O Wireshark captura frames da placa de rede (em modo promíscuo) e decodifica centenas de protocolos diferentes."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-hard-drive",
-                        "title": "10.2.17 Ferramentas Forenses",
-                        "content": "<b>Autopsy</b>: análise forense de discos. <b>Volatility</b>: análise de memória RAM. <b>FTK Imager</b>: criação de imagens forenses. <b>Sleuth Kit</b>: análise de sistemas de arquivo.",
-                        "highlight": "Forense digital = reconstruir o que aconteceu"
-            },
-            {
-                        "type": "quiz",
-                        "task": "Qual ferramenta analisa dumps de memória RAM para encontrar processos maliciosos?",
-                        "options": [
-                                    "Volatility",
-                                    "Autopsy",
-                                    "Nmap"
-                        ],
-                        "correctText": "Volatility",
-                        "explanation": "Volatility extrai processos, conexões, chaves de registro e malware da memória."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-check-double",
-                        "title": "10.2.19 Garantia de Software",
-                        "content": "<b>SonarQube</b>: análise estática de código. <b>Fortify</b>: SAST comercial. <b>OWASP ZAP</b>: DAST gratuito. <b>Bandit</b>: análise de segurança Python. <b>Semgrep</b>: análise estática moderna.",
-                        "highlight": "SAST = código. DAST = app rodando."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-wifi",
-                        "title": "10.2.21 Ferramentas Wireless",
-                        "content": "<b>Aircrack-ng</b>: suite completa WiFi. <b>Kismet</b>: detector de redes wireless. <b>Wifite</b>: automação de ataques WiFi. <b>Fern WiFi Cracker</b>: GUI para ataques wireless.",
-                        "highlight": "Aircrack-ng = suite padrão para hacking WiFi"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-image",
-                        "title": "10.2.23 Esteganografia",
-                        "content": "<b>Steghide</b>: esconde dados em imagens JPEG. <b>OpenStego</b>: esteganografia multiplataforma. <b>Stegsolve</b>: análise visual de esteganografia. <b>Binwalk</b>: extrai dados embutidos em arquivos.",
-                        "highlight": "Esteganografia = esconder dados em arquivos inocentes"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-cloud",
-                        "title": "10.2.25 Ferramentas de Nuvem",
-                        "content": "<b>ScoutSuite</b>: auditoria multi-cloud (AWS/Azure/GCP). <b>Prowler</b>: segurança AWS. <b>CloudSploit</b>: scanner de misconfiguration. <b>Pacu</b>: framework de exploração AWS.",
-                        "highlight": "Cada provedor cloud tem ferramentas específicas"
-            },
-            {
-                        "type": "match",
-                        "title": "Ferramenta Cloud → Uso",
-                        "pairs": [
-                                    {
-                                                "term": "ScoutSuite",
-                                                "definition": "Auditoria multi-cloud"
-                                    },
-                                    {
-                                                "term": "Prowler",
-                                                "definition": "Segurança AWS"
-                                    },
-                                    {
-                                                "term": "Pacu",
-                                                "definition": "Exploração AWS"
-                                    },
-                                    {
-                                                "term": "CloudSploit",
-                                                "definition": "Scanner de misconfiguration"
+                                                "term": "VLAN Hopping",
+                                                "definition": "Abusar segmentação fraca para acessar outra rede lógica"
                                     }
                         ]
             },
             {
                         "type": "fill",
-                        "sentence": "A ferramenta gratuita de descompilação criada pela NSA é o ___.",
+                        "sentence": "Quando o atacante autentica usando diretamente o hash capturado, sem conhecer a senha em texto claro, ele executa um ataque de pass-the-___.",
                         "options": [
-                                    "Ghidra",
-                                    "IDA Pro",
-                                    "OllyDbg"
+                                    "hash",
+                                    "route",
+                                    "token"
                         ],
-                        "correctText": "Ghidra",
-                        "explanation": "Ghidra foi liberado pela NSA como open source em 2019 e rivaliza com o IDA Pro."
-            },
-            {
-                        "type": "quiz",
-                        "task": "Qual ferramenta esconde dados dentro de imagens JPEG?",
-                        "options": [
-                                    "Steghide",
-                                    "Wireshark",
-                                    "Nmap"
-                        ],
-                        "correctText": "Steghide",
-                        "explanation": "Steghide embute dados em imagens JPEG e áudio AU sem alteração visual perceptível."
+                        "correctText": "hash",
+                        "explanation": "O pass-the-hash reaproveita o material de autenticação já obtido do ambiente."
             }
 ];
 
@@ -699,15 +482,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = ``;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/5.2-wireless.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #5e1d80; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b36200; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
+                    <h2 class="title-main mb-2">CREDENCIAIS ABUSADAS COM SUCESSO!</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -716,7 +499,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-10.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-05.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>
