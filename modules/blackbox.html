@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <title>CyberDuo - THE BLACK BOX</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap"></noscript>
     <style>
         :root {
             --cyber-silver: #8b949e;
@@ -22,7 +24,7 @@
         body {
             background-color: var(--bg-dark);
             color: #e6edf3;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
@@ -66,7 +68,7 @@
         }
 
         .cyber-title {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             font-size: clamp(2rem, 7vw, 3rem);
             font-weight: 800;
             letter-spacing: -2px;
@@ -175,10 +177,17 @@
             100% { left: 200%; }
         }
 
-        .resource-grid {
+                .resource-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: 1fr;
             gap: 1.2rem;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 1200px;
+        }
+        @media (min-width: 576px) {
+            .resource-grid {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            }
         }
 
         .resource-category {
@@ -191,11 +200,7 @@
             flex-direction: column;
         }
 
-        .resource-category:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+        
 
         .category-header {
             display: flex;
@@ -241,12 +246,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        .resource-link:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: scale(1.02);
-        }
+        
 
         .resource-link i {
             font-size: 0.75rem;
@@ -312,12 +312,29 @@
         .submodule-item:nth-child(11) { animation-delay: 0.55s; }
         .submodule-item:nth-child(12) { animation-delay: 0.60s; }
     
-        .resource-link:active {
-            transform: scale(0.98);
+                .resource-link:active {
+            transform: scale(0.97);
             background: rgba(255, 255, 255, 0.08);
         }
         
-    </style>
+        @media (hover: hover) and (pointer: fine) {
+    .resource-category:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+    .resource-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+        }
+
+        .resource-category:active {
+            transform: scale(0.97);
+        }
+            </style>
 </head>
 <body>
 

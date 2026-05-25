@@ -60,11 +60,12 @@ CUSTOM_DESCRIPTIONS = {
     "7.2a-mobile.html": "Engenharia reversa, análise local SQLite/Keychain, bypass biométrico e Certificate Pinning com Frida e Objection.",
     "7.2b-iot-virtualizacao.html": "Protocolos IoT, Shodan, BLE MITM, BMC/IPMI, VM Escape e auditorias cloud-native (kube-hunter, Grype, Falco).",
     # Módulo 8
-    "8.0-introducao.html": "Visão geral do Módulo 8, avaliação de risco cibernético real e tempo de detecção do SOC.",
+    "8.0-introducao.html": "Visão geral do módulo e objetivos principais sobre segurança ofensiva.",
     "8.1a-shells-c2.html": "Diferenças entre Shell Reverso e Bind, e uso avançado de utilitários C2 e Netcat.",
     "8.1b-persistencia-avancada.html": "Persistência em Windows e Linux via tarefas agendadas, cron jobs e novos usuários.",
-    "8.2a-movimento-lateral.html": "Técnicas de pivotagem, exfiltração, utilitários Sysinternals (PsExec), PowerShell e BloodHound.",
-    "8.2b-escalada-limpeza.html": "Escalação vertical/horizontal, sanitização NIST 800-88, limpeza de logs e esteganografia (steghide).",
+    "8.2a-movimento-lateral.html": "Técnicas de pivotagem, exfiltração de dados e o conceito de Living off the Land (LOLBins).",
+    "8.2b-powershell-sysinternals.html": "Uso avançado de cmdlets PowerShell e ferramentas Sysinternals no Windows.",
+    "8.2c-escalada-limpeza.html": "BloodHound para Active Directory, escalada de privilégios, esteganografia e sanitização NIST 800-88.",
     # Módulo 9
     "9.0-introducao.html": "A importância da documentação e da tradução técnica para executivos.",
     "9.1a-componentes-distribuicao.html": "Público executivo e técnico, estrutura do relatório, CVE/CVSS e distribuição segura.",

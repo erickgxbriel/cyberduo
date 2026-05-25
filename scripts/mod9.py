@@ -245,7 +245,7 @@ def main():
                     "type": "teach",
                     "icon": "fa-shield-halved",
                     "title": "Controles Técnicos, Administrativos, Operacionais e Físicos (Cisco 9.2.2)",
-                    "content": "As recomendações podem envolver <b>controles técnicos</b> como MFA, hardening e parametrização de consultas; <b>controles administrativos</b> como RBAC e políticas; <b>controles operacionais</b> como treinamento e segregação de funções; e <b>controles físicos</b> como mantraps, câmeras e biometria.",
+                    "content": "As recomendações podem envolver <b>controles técnicos</b> (ou cada controle <b>técnico</b> individual) como MFA, hardening e parametrização de consultas; <b>controles administrativos</b> (ou controle <b>administrativo</b>) como RBAC e políticas; <b>controles operacionais</b> (ou controle <b>operacional</b>) como treinamento e segregação de funções; e <b>controles físicos</b> (ou controle <b>físico</b>) como mantraps, câmeras e biometria.",
                     "highlight": "Nem toda correção é tecnológica; muitas dependem de processo e governança."
                 },
                 {
@@ -334,7 +334,7 @@ def main():
                     "type": "teach",
                     "icon": "fa-broom-ball",
                     "title": "Pós-Entrega e Limpeza do Ambiente (Cisco 9.2.4)",
-                    "content": "No encerramento do engajamento, o pentester deve remover shells reversos, contas criadas, scripts, serviços persistentes e qualquer alteração temporária. Depois disso, realiza-se a sanitização segura dos dados do cliente armazenados nas estações do time, seguindo boas práticas como <b>NIST SP 800-88</b>.",
+                    "content": "No encerramento do engajamento, o pentester deve remover shells reversos, contas criadas, scripts, serviços persistentes e qualquer alteração temporária. Depois disso, realiza-se a sanitização segura dos dados do cliente armazenados nas estações do time, seguindo boas práticas como <b>NIST SP 800-88</b>. Além disso, após o cliente aplicar as correções, a equipe realiza um <b>Retest</b> para validar se a remediação de fato mitigou as vulnerabilidades encontradas.",
                     "highlight": "Sair do ambiente com segurança é parte do trabalho."
                 },
                 {

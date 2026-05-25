@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <title>CyberDuo - Módulo 2</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap"></noscript>
     <style>
         :root {
             --cyber-blue: #00f2ff;
@@ -24,7 +26,7 @@
         body {
             background-color: var(--bg-dark);
             color: #e6edf3;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
@@ -104,11 +106,7 @@
             gap: 1.2rem;
         }
 
-        .submodule-item:hover {
-            border-color: var(--cyber-yellow);
-            background: rgba(255, 184, 0, 0.02);
-            transform: translateX(8px);
-        }
+        
 
         .submodule-icon-box {
             width: 45px;
@@ -124,10 +122,7 @@
             flex-shrink: 0;
         }
 
-        .submodule-item:hover .submodule-icon-box {
-            color: var(--cyber-yellow);
-            background: rgba(255, 184, 0, 0.08);
-        }
+        
 
         .submodule-info {
             flex-grow: 1;
@@ -160,9 +155,7 @@
             flex-shrink: 0;
         }
 
-        .submodule-item:hover .submodule-arrow {
-            color: var(--cyber-yellow);
-        }
+        
 
         footer {
             margin-top: auto;
@@ -194,11 +187,25 @@
         .submodule-item:nth-child(11) { animation-delay: 0.55s; }
         .submodule-item:nth-child(12) { animation-delay: 0.60s; }
     
-        .submodule-item:active {
-            transform: scale(0.98);
-            background: rgba(0, 255, 65, 0.05);
+                .submodule-item:active {
+            transform: scale(0.97);
+            background: rgba(0, 255, 65, 0.08);
         }
     
+        @media (hover: hover) and (pointer: fine) {
+    .submodule-item:hover {
+            border-color: var(--cyber-yellow);
+            background: rgba(255, 184, 0, 0.02);
+            transform: translateX(8px);
+        }
+    .submodule-item:hover .submodule-icon-box {
+            color: var(--cyber-yellow);
+            background: rgba(255, 184, 0, 0.08);
+        }
+    .submodule-item:hover .submodule-arrow {
+            color: var(--cyber-yellow);
+        }
+        }
     </style>
 </head>
 <body>
@@ -270,5 +277,41 @@
         
     </footer>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Read progress from localStorage
+            try {
+                const progress = JSON.parse(localStorage.getItem('cyberduo_progress') || '{"completed_lessons":[]}');
+                const completed = progress.completed_lessons || [];
+
+                // Check each submodule item
+                document.querySelectorAll('.submodule-item').forEach(item => {
+                    const href = item.getAttribute('href');
+                    if (href) {
+                        const filename = href.split('/').pop();
+                        if (completed.includes(filename)) {
+                            // Update checkmark icon
+                            const arrow = item.querySelector('.submodule-arrow');
+                            if (arrow) {
+                                arrow.className = 'fas fa-circle-check submodule-arrow';
+                                arrow.style.color = '#00ff41';
+                                arrow.style.textShadow = 'none';
+                            }
+                            // Optional completed visual styling
+                            item.style.borderColor = 'rgba(0, 255, 65, 0.12)';
+                            item.style.boxShadow = 'none';
+                            const iconBox = item.querySelector('.submodule-icon-box');
+                            if (iconBox) {
+                                iconBox.style.color = '#00ff41';
+                                iconBox.style.background = 'rgba(0, 255, 65, 0.02)';
+                            }
+                        }
+                    }
+                });
+            } catch (e) {
+                console.error("Erro ao carregar progresso no modulo:", e);
+            }
+        });
+    </script>
 </body>
 </html>

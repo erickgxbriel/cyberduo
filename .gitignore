@@ -5,6 +5,7 @@ content/
 extracted/
 scripts/
 docs/
+scratch/
 
 # Ignorar arquivos temporários e do sistema
 .DS_Store

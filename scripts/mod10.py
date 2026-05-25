@@ -317,7 +317,7 @@ def main():
                     "type": "teach",
                     "icon": "fa-microscope",
                     "title": "Nunca Execute Exploit Sem Ler o Código (Cisco 10.2)",
-                    "content": "Exploit público pode conter comportamento inesperado, backdoor ou destruição não autorizada. Antes de executar, o pentester deve entender <b>CVE</b>, versões afetadas, vetor de ataque, impacto e trechos perigosos do script ou binário.",
+                    "content": "Exploit público pode conter comportamento inesperado, backdoor ou destruição não autorizada. Antes de executar scripts individuais ou disparar módulos no framework <b>Metasploit</b> (que organiza exploits e payloads de forma padronizada), o pentester deve entender a <b>CVE</b>, versões afetadas, vetor de ataque, impacto e trechos perigosos do script ou binário.",
                     "highlight": "Analisar primeiro evita comprometer o cliente e a própria credibilidade da equipe."
                 },
                 {

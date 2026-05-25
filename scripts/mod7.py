@@ -65,6 +65,20 @@ def normalize_module_7(lessons):
                 "(SCADA) e outros dispositivos IoT expostos na internet, "
                 "qual motor de busca especializado utilizaria?"
             )
+        elif step.get("title") == "Ameaças a Contêineres e Supply Chain":
+            step["content"] = (
+                "Ambientes Docker/Kubernetes sofrem com <b>Privileged Containers</b> (acesso root do host) e "
+                "exposição do <b>Docker Socket (/var/run/docker.sock)</b>, permitindo o <b>Container Breakout</b>. "
+                "Para proteger e auditar esses ambientes modernos, o analista usa o arsenal Cloud Native: o "
+                "<b>Grype</b> atua como scanner estático de vulnerabilidades em imagens Docker; o <b>Falco</b> "
+                "monitora e detecta anomalias e ameaças em runtime (tempo real); o <b>kube-bench</b> executa "
+                "auditorias de conformidade CIS para checar se o cluster Kubernetes está seguro; e o "
+                "<b>kube-hunter</b> faz varreduras ativas buscando caminhos de exploração no cluster."
+            )
+            step["highlight"] = (
+                "O uso de Grype, Falco, kube-bench e kube-hunter garante a visibilidade e proteção ponta a ponta "
+                "em infraestruturas Cloud Native."
+            )
 
     return normalized
 

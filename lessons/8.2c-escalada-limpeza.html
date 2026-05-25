@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <title>CyberDuo - Elevação de Acesso, Higienização e Evasão Esteganográfica</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap"></noscript>
     <style>
         :root {
             --cyber-blue: #ff003c;
@@ -25,14 +27,32 @@
         }
 
         html, body { height: 100%; height: 100dvh; margin: 0; padding: 0; overflow: hidden; }
-        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
+        body { background-color: var(--bg-dark); color: #e6edf3; font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; display: flex; flex-direction: column; touch-action: manipulation; }
 
         .game-header { flex-shrink: 0; padding: max(0.8rem, env(safe-area-inset-top)) 1rem 0.8rem; display: flex; align-items: center; gap: 0.8rem; background: #0d1117; border-bottom: 1px solid rgba(0, 255, 65, 0.2); z-index: 60; }
+        
+        .close-btn {
+            min-width: 48px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #8b949e;
+            transition: all 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+            margin-left: -10px;
+        }
+        .close-btn:active {
+            opacity: 0.6;
+            transform: scale(0.9);
+        }
+
         .progress-container { flex-grow: 1; height: 12px; background: #1f2937; border-radius: 10px; overflow: hidden; }
         .progress-fill { height: 100%; background: var(--cyber-blue); width: 0%; transition: width 0.4s ease; border-radius: 10px;}
         .hearts { display: flex; gap: 0.3rem; color: var(--cyber-red); min-width: 80px; justify-content: flex-end; font-size: 1.1rem; }
 
-        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.8rem; width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
+        .game-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(0.8rem, 3vw, 1.2rem); width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box; scrollbar-width: none; }
         .game-content::-webkit-scrollbar { display: none; }
 
         .game-card { width: 100%; animation: slideUp 0.3s ease-out; display: flex; flex-direction: column; gap: 0.8rem; }
@@ -44,7 +64,6 @@
         .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
         .text-body b { color: white; }
         
-        
         /* Utility Classes */
         .mr-1 { margin-right: 0.25rem; }
         .mr-2 { margin-right: 0.5rem; }
@@ -54,12 +73,12 @@
         .highlight-green { color: var(--cyber-green); font-weight: 700; }
 
         /* TYPE: TEACH */
-        .teach-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .teach-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: none; }
         .teach-icon { font-size: 2.5rem; color: var(--cyber-blue); margin-bottom: 1rem; }
         .teach-highlight { display: flex; align-items: center; gap: 0.6rem; background: rgba(0, 255, 65, 0.1); border-left: 3px solid var(--cyber-green); padding: 0.8rem; margin-top: 1rem; font-weight: 600; color: var(--cyber-green); border-radius: 0 0.5rem 0.5rem 0; }
 
         /* TYPE: EXAMPLE */
-        .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: none; }
         .example-scenario { background: #161b22; border: 1px solid #21262d; border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; }
         .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.9rem; color: #00ff41; border: 1px solid #30363d; }
         .example-takeaway { display: flex; gap: 0.8rem; align-items: flex-start; margin-top: 1rem; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
@@ -67,8 +86,9 @@
         /* TYPE: QUIZ */
         .quiz-title { font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 800; color: white; margin-bottom: 1.5rem; line-height: 1.3; }
         .options-grid { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
-        .option-card { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.8rem, 3vw, 1rem); border-radius: 1rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: clamp(0.95rem, 4vw, 1.05rem); -webkit-tap-highlight-color: transparent; }
-        .option-card:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .option-card { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.8rem, 3vw, 1rem); border-radius: 1rem; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: clamp(0.95rem, 4vw, 1.05rem); -webkit-tap-highlight-color: transparent; min-height: 48px; }
+        
+        .option-card:active { transform: scale(0.97); }
         .option-card.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.05); }
         .option-card.correct { border-color: var(--cyber-green) !important; background: rgba(0, 255, 65, 0.1) !important; color: var(--cyber-green); }
         .option-card.wrong { border-color: var(--cyber-red) !important; background: rgba(255, 0, 60, 0.1) !important; color: var(--cyber-red); }
@@ -83,9 +103,9 @@
 
         /* TYPE: MATCH */
         .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
-        /* .match-column removed */
         .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
-        .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
+        
+        .match-item:active { transform: scale(0.97); }
         .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
         .match-item.matched { border-color: var(--cyber-green); background: rgba(0, 255, 65, 0.05); color: var(--cyber-green); opacity: 0.5; pointer-events: none; }
         .match-item.error { border-color: var(--cyber-red); animation: shake 0.4s; }
@@ -94,9 +114,28 @@
         /* FOOTER & BUTTONS */
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
-        .check-btn:active { transform: scale(0.98); }
+        
+        .check-btn:active { transform: scale(0.97); }
         .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b3002a; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b3002a; }
+        .check-btn.active:active { transform: scale(0.97) translateY(2px); box-shadow: 0 2px 0 #b3002a; }
+
+        /* Isolated Hover Effects for fine pointer devices only */
+        @media (hover: hover) and (pointer: fine) {
+            .option-card:hover {
+                border-color: var(--cyber-blue);
+                background: rgba(0, 255, 65, 0.02);
+            }
+            .match-item:hover {
+                border-color: var(--cyber-blue);
+                background: rgba(0, 255, 65, 0.02);
+            }
+            .check-btn.active:hover {
+                filter: brightness(1.1);
+            }
+            .close-btn:hover {
+                color: #e6edf3;
+            }
+        }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +149,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-08.html'"><i class="fas fa-times"></i></div>
+        <div class="close-btn" onclick="window.location.href='../modules/modulo-08.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,65 +170,72 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-angles-up",
-                        "title": "Escalada de Privilégios (Cisco 8.2.5)",
-                        "content": "Ao obter o acesso inicial a uma máquina, o pentester geralmente ganha uma conta comum de baixas permissões. A <b>Escalada de Privilégios</b> é o abuso de falhas para acessar recursos restritos.<br><br>↕️ <b>Escalada Vertical</b>: Ocorre quando um usuário comum obtém privilégios de alto nível hierárquico (ex: o usuário `derek` vira `root` ou `SYSTEM`).<br><br>↔️ <b>Escalada Horizontal</b>: Acessar dados de contas de mesmo nível de privilégio (ex: mudar IDs de faturas ou ler posts privados de terceiros em fóruns).",
-                        "highlight": "A escalada de privilégios demonstra as falhas internas de autorização e controle de acessos da máquina."
+                        "icon": "fa-sitemap",
+                        "title": "Mapeando o Domínio: PowerSploit, Empire e BloodHound (Cisco 8.2.3)",
+                        "content": "A pós-exploração em redes corporativas com Active Directory (AD) utiliza ferramentas sofisticadas de automação:<br><br>• <b>`BloodHound`</b>: É uma aplicação web de página única (Javascript) que utiliza <b>Teoria dos Grafos</b> para mapear visualmente todas as relações complexas no Active Directory (usuários, grupos, computadores, permissões). Ele revela caminhos ocultos de ataque, mostrando exatamente qual sequência de computadores e contas um invasor deve comprometer para se tornar Administrador de Domínio.<br>• <b>`Empire`</b>: Um framework de comando e controle (C2) open source extremamente modular que permite gerenciar agentes PowerShell e Python. Ele executa payloads pós-exploração diretamente na memória RAM, sem a necessidade de chamar o binário `powershell.exe`, o que burla muitos mechanisms de monitoramento.<br>• <b>`PowerSploit`</b>: Uma coleção clássica de scripts ofensivos que facilitam tarefas como carregar o Mimikatz diretamente na memória RAM (`Invoke-Mimikatz`) para despejar senhas salvas, ou ler arquivos brutos particionados em NTFS (`Invoke-NinjaCopy`).",
+                        "highlight": "Essas ferramentas mapeiam e automatizam a exploração de domínios corporativos inteiros de forma extremamente avançada."
             },
             {
                         "type": "quiz",
-                        "task": "Você acessa a sua conta de usuário no Pixel Paradise e percebe que as faturas são acessadas por um ID numérico na URL: 'raccount?id=1050'. Ao alterar manualmente para '1051', você tem acesso completo à fatura privada de outro usuário comum. Que tipo de falha pedagógica isso representa?",
+                        "task": "Qual é a principal inovação metodológica trazida pelo utilitário BloodHound para o mapeamento e a exploração de redes baseadas em Microsoft Active Directory?",
                         "options": [
-                                    "Escalada de privilégios horizontal (abuso de autorização lateral).",
-                                    "Escalada de privilégios vertical (escalada direta para root).",
-                                    "Ataque cinético industrial SCADA/Modbus."
+                                    "O uso da Teoria dos Grafos para revelar caminhos ocultos de ataque a partir de relações de permissão entre usuários, grupos e computadores.",
+                                    "A criação de firewalls virtuais de microsegmentação automatizados na infraestrutura do cliente.",
+                                    "A quebra por força bruta ultrarrápida de hashes NTLMv2 capturados no tráfego SMB."
                         ],
-                        "correctText": "Escalada de privilégios horizontal (abuso de autorização lateral).",
-                        "explanation": "Você não virou administrador geral, mas acessou dados sensíveis de outro usuário com o mesmo nível de privilégios (Broken Object Level Authorization - BOLA / IDOR)."
+                        "correctText": "O uso da Teoria dos Grafos para revelar caminhos ocultos de ataque a partir de relações de permissão entre usuários, grupos e computadores.",
+                        "explanation": "Ao mapear permissões como nós e arestas de um grafo, o BloodHound expõe graficamente caminhos de escalada complexos de 'Usuário Comum' até 'Domain Admin'."
             },
             {
                         "type": "teach",
-                        "icon": "fa-broom",
-                        "title": "Como Cobrir Rastros e Limpar Sistemas (Cisco 8.2.7)",
-                        "content": "Ao término do pentest, é vital limpar o ambiente para retornar todos os sistemas do cliente ao estado original de integridade:<br><br>🧼 <b>Processo de Limpeza</b>:<br>• Excluir todas as contas de usuário criadas para o teste.<br>• Excluir todos os scripts, backdoors, daemons, binários e arquivos temporários.<br>• Restaurar cabeçalhos, logs de auditoria e configurações originais.<br>• Seguir as diretrizes da publicação do <b>NIST SP 800-88 Rev 1 (Media Sanitization)</b> para higienizar mídias com segurança.",
-                        "highlight": "Todo processo e limite de limpeza deve ser detalhado previamente no documento de Regras de Engajamento (ROE)."
+                        "icon": "fa-angles-up",
+                        "title": "Escalada de Privilégios (Cisco 8.2.5)",
+                        "content": "A escalada de privilégios consiste em explorar brechas em serviços locais, kernel ou configurações incorretas para obter mais permissões do que a conta inicial possuía. Ela é dividida em dois eixos:<br><br>↕️ <b>Escalada Vertical</b>: Ocorre quando um usuário de baixo nível obtém acesso a uma conta com poderes administrativos superiores (ex: o usuário comum vira `root` no Linux ou `SYSTEM`/`Administrator` no Windows).<br><br>↔️ <b>Escalada Horizontal</b>: Ocorre quando um usuário acessa recursos ou executa funções pertencentes a outros usuários que possuem o <b>mesmo nível de privilégio</b> hierárquico (ex: acessar a fatura privada de outro cliente ou ler mensagens pessoais de outra conta comum).",
+                        "highlight": "A escalada demonstra se um atacante pode tomar controle integral do sistema operacional ou violar a privacidade dos usuários."
             },
             {
                         "type": "quiz",
-                        "task": "Em qual etapa do engajamento de teste de penetração o auditor deve discutir e documentar junto ao cliente os processos de limpeza e remoção de dados das máquinas de ataque?",
+                        "task": "Durante um teste web em um e-commerce, você percebe que ao visualizar o seu perfil de usuário comum, a URL exibe 'perfil?usuario_id=9870'. Se você alterar o ID manualmente para '9871' e conseguir visualizar e editar todas as informações privadas e endereços de outro cliente comum, que tipo de escalada de privilégios ocorreu?",
                         "options": [
-                                    "Na fase de pré-engajamento, documentando tudo no documento de Regras de Engajamento (Rules of Engagement - ROE).",
-                                    "Apenas no último dia dos testes, decidindo os métodos por conta própria.",
-                                    "O pentester não deve realizar a limpeza das ferramentas, deixando isso a cargo do time de TI do cliente."
+                                    "Escalada de privilégios horizontal (abuso de autorização lateral entre mesmos níveis de privilégio).",
+                                    "Escalada de privilégios vertical (obtenção direta de acesso administrative SYSTEM).",
+                                    "Ataque de negação de serviço distribuído (DDoS) para derrubar o servidor."
                         ],
-                        "correctText": "Na fase de pré-engajamento, documentando tudo no documento de Regras de Engajamento (Rules of Engagement - ROE).",
-                        "explanation": "Para evitar a perda não intencional de dados produtivos do cliente e garantir transparência legal, os limites e autorizações de limpeza devem constar nas regras de engajamento (ROE)."
+                        "correctText": "Escalada de privilégios horizontal (abuso de autorização lateral entre mesmos níveis de privilégio).",
+                        "explanation": "Você não virou administrador geral do sistema, mas conseguiu invadir e modificar o espaço de dados de outro usuário com o mesmo nível de permissão (falha conhecida como IDOR/BOLA)."
             },
             {
                         "type": "teach",
                         "icon": "fa-file-image",
                         "title": "Esteganografia com a ferramenta Steghide (Cisco 8.2.7)",
-                        "content": "Os atacantes (e pentesters para demonstrar a exfiltração silenciosa) utilizam <b>Esteganografia</b> para ocultar dados secretos dentro de mídias inocentes (como arquivos JPG, BMP ou WAV). Isso evita que os sensores corporativos de DLP (Data Loss Prevention) detectem o vazamento.<br><br>A ferramenta clássica para isso no Kali Linux é o <b>steghide</b>, que permite embutir e extrair payloads criptografando a carga com uma frase secreta.",
+                        "content": "A <b>Esteganografia</b> é a arte e ciência de ocultar a própria existência de uma mensagem secreta dentro de outra mídia inocente, como arquivos de imagem (`.jpg`, `.bmp`) ou áudio (`.wav`).<br><br>🔒 <b>Uso Prático</b>: Em testes de segurança, é empregada para demonstrar como invasores podem realizar a <b>Exfiltração de Dados</b> confidenciais de forma silenciosa, burlando detectores automáticos de DLP (Data Loss Prevention) instalados na rede do cliente.<br><br>No Kali Linux, a ferramenta clássica para embutir e extrair payloads de forma simples e criptografada é o <b>`steghide`</b>.",
                         "highlight": "Esteganografia esconde a própria existência da informação secreta dentro de outra mídia."
             },
             {
                         "type": "example",
                         "icon": "fa-terminal",
                         "title": "Prática - Ocultando e Extraindo com Steghide (Cisco 8.2.8)",
-                        "scenario": "Para demonstrar a exfiltração de um documento secreto ('segredo.txt') oculto dentro de uma foto inocente ('foto.jpg') e extraí-lo do outro lado, o pentester roda os seguintes comandos no terminal:",
-                        "code": "# 1. Embutindo o arquivo secreto na foto de cobertura:\n$ steghide embed -cf foto.jpg -ef segredo.txt -p 'cyberduo123'\n\n# 2. Extraindo o arquivo secreto da foto contaminada:\n$ steghide extract -sf foto.jpg -p 'cyberduo123'",
-                        "takeaway": "-cf define o arquivo de cobertura (cover), -ef define o arquivo embutido e -sf define o stego-file."
+                        "scenario": "Para ocultar um arquivo confidencial contendo senhas vazadas ('segredo.txt') dentro de uma imagem de cobertura de férias ('foto.jpg'), e depois recuperá-lo no host do atacante, executa-se:",
+                        "code": "# 1. Embutindo o arquivo secreto na foto de cobertura (-cf = cover file, -ef = embed file):\n$ steghide embed -cf foto.jpg -ef segredo.txt -p 'cyberduo123'\n\n# 2. Extraindo o arquivo secreto da imagem contaminada (-sf = stego file):\n$ steghide extract -sf foto.jpg -p 'cyberduo123'",
+                        "takeaway": "O resultado do comando embed gera um arquivo idêntico visualmente à foto original, mas com os dados ocultos."
             },
             {
                         "type": "fill",
-                        "sentence": "No steghide, para embutir dados, o parâmetro que aponta para o arquivo que carrega a mensagem oculta (ex: segredo.txt) é o -ef, e o parâmetro que aponta para a imagem ou vídeo original de cobertura é o ___.",
+                        "sentence": "No utilitário steghide, o parâmetro que especifica o arquivo de cobertura ou disfarce original (como foto.jpg) é o ___, enquanto o parâmetro para extrair os dados do arquivo esteganográfico é o -sf.",
                         "options": [
                                     "-cf",
-                                    "-sf",
+                                    "-ef",
                                     "-p"
                         ],
                         "correctText": "-cf",
-                        "explanation": "-cf representa o 'cover file' (a mídia legítima de disfarce) e -ef representa o 'embed file' (a carga de dados confidenciais)."
+                        "explanation": "O parâmetro -cf define o 'cover file' (a mídia inocente que servirá de disfarce) e -ef aponta para o 'embedded file' (o payload secreto)."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-broom",
+                        "title": "Como Cobrir Rastros e Limpar Sistemas (Cisco 8.2.7)",
+                        "content": "Após concluir com sucesso os testes de penetração, o pentester deve <b>limpar e higienizar todos os sistemas afetados</b> para devolvê-los exatamente ao estado de integridade e disponibilidade em que os encontrou:<br><br>🧼 <b>Etapas de Limpeza Críticas</b>:<br>• Excluir todas as contas locais e de domínio criadas para o teste.<br>• Remover todas as ferramentas, scripts, daemons e arquivos de backdoor instalados nos discos.<br>• Restaurar configurações de rede, portas de firewall e logs originais.<br>• Seguir as diretrizes internacionais da publicação <b>NIST SP 800-88 Rev 1 (Guidelines for Media Sanitization)</b> para destruir dados de testes em mídias de armazenamento com segurança total, impedindo a recuperação de informações confidenciais do cliente.",
+                        "highlight": "A limpeza é uma obrigação ética e profissional. Deixar ferramentas instaladas no cliente é um risco severo de brecha de segurança real!"
             },
             {
                         "type": "match",
@@ -212,12 +258,23 @@
                                                 "definition": "Garantir que nenhum serviço ou porta dos fundos continue ativa"
                                     }
                         ]
+            },
+            {
+                        "type": "quiz",
+                        "task": "Em qual etapa do planejamento do teste de penetração o auditor deve discutir, alinhar e documentar junto ao cliente os critérios exatos e autorizações para limpeza de sistemas e remoção de dados pós-teste?",
+                        "options": [
+                                    "Na fase de pré-engajamento, formalizando tudo nas Regras de Engajamento (Rules of Engagement - ROE).",
+                                    "Durante a execução da pós-exploração, decidindo na hora conforme julgar conveniente.",
+                                    "Essa atividade não deve ser discutida com o cliente, ficando a cargo exclusivo da equipe de TI dele."
+                        ],
+                        "correctText": "Na fase de pré-engajamento, formalizando tudo nas Regras de Engajamento (Rules of Engagement - ROE).",
+                        "explanation": "Para proteger a responsabilidade jurídica e garantir que sistemas de produção não sejam danificados durante a limpeza, todas as diretrizes e limites devem constar no ROE."
             }
 ];
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
-        let hearts = 5;
+        let hearts = 3;
         let shuffledOptions = [];
         
         // Match state
@@ -242,7 +299,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(3).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {
@@ -493,7 +550,30 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/9.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            // Salvar progresso no localStorage
+            try {
+                const filename = window.location.pathname.split('/').pop();
+                if (filename && filename !== '0.0-boas-vindas.html') { // Ignorar o boilerplate genérico se carregado diretamente fora das lições
+                    let progress = JSON.parse(localStorage.getItem('cyberduo_progress') || '{"completed_lessons":[]}');
+                    if (!progress.completed_lessons) progress.completed_lessons = [];
+                    if (!progress.completed_lessons.includes(filename)) {
+                        progress.completed_lessons.push(filename);
+                        localStorage.setItem('cyberduo_progress', JSON.stringify(progress));
+                    }
+                } else if (filename === '0.0-boas-vindas.html') {
+                    // Forçar salvamento para a lição de boas-vindas
+                    let progress = JSON.parse(localStorage.getItem('cyberduo_progress') || '{"completed_lessons":[]}');
+                    if (!progress.completed_lessons) progress.completed_lessons = [];
+                    if (!progress.completed_lessons.includes('0.0-boas-vindas.html')) {
+                        progress.completed_lessons.push('0.0-boas-vindas.html');
+                        localStorage.setItem('cyberduo_progress', JSON.stringify(progress));
+                    }
+                }
+            } catch (e) {
+                console.error("Erro ao salvar progresso no localStorage:", e);
+            }
+            
+            let nextBtnHtml = ``;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
                 nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b3002a; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }

