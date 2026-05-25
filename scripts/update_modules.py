@@ -19,7 +19,8 @@ CUSTOM_DESCRIPTIONS = {
     "2.3-mentalidade-etica.html": "Desenvolvimento da postura profissional e ética durante o engajamento.",
     # Módulo 3
     "3.0-introducao.html": "Conceitos básicos de coleta de informações e inteligência de ameaças.",
-    "3.1-osint.html": "Técnicas e ferramentas para automação de coleta de dados públicos expostos.",
+    "3.1a-osint-dns.html": "Google Dorking, WHOIS, DNSRecon e enumeração passiva inicial de domínios e subdomínios.",
+    "3.1b-recon-ng-shodan.html": "Recon-ng, theHarvester, Certificate Transparency e busca de ativos expostos com Shodan/Censys.",
     "3.2-reconhecimento.html": "Varredura ativa, enumeração de serviços, portas e descoberta de hosts na rede.",
     "3.3-varredura-vulnerabilidade.html": "Uso de ferramentas automatizadas para mapeamento de falhas de segurança.",
     "3.4-analise-resultados.html": "Triagem de falso-positivos e classificação de riscos encontrados.",
@@ -32,11 +33,14 @@ CUSTOM_DESCRIPTIONS = {
     "4.5-metodos-influencia.html": "Gatilhos mentais, autoridade, escassez e psicologia de influência.",
     # Módulo 5
     "5.0-introducao.html": "Visão geral de ataques a redes internas, servidores e links wireless.",
-    "5.1-vulnerabilidades-rede.html": "Ataques MITM, ARP Spoofing, LLMNR Poisoning e exploração de Kerberos.",
+    "5.1a-fundamentos-mitm.html": "Protocolos de rede, ARP Spoofing e posicionamento do atacante em Man-in-the-Middle.",
+    "5.1b-resolucao-smb.html": "LLMNR/NBT-NS poisoning, captura de hashes com Responder e enumeração/exploração SMB.",
+    "5.1c-credenciais-controles.html": "Pass-the-Hash, Kerberoasting, AS-REP Roasting, NAC e segmentação por VLAN.",
     "5.2-wireless.html": "Quebra de redes sem fio WPA/WPA2, ataques a WPS e criação de Rogue APs.",
     # Módulo 6
     "6.0-introducao.html": "Fundamentos do protocolo HTTP, arquitetura web e a superfície de ataque.",
-    "6.1-owasp-top10.html": "Estudo detalhado das falhas críticas listadas no OWASP Top 10.",
+    "6.1a-owasp-fundamentos.html": "Fundamentos do OWASP Top 10 e falhas de Broken Access Control.",
+    "6.1b-owasp-riscos-modernos.html": "Design inseguro, configuração incorreta, componentes vulneráveis e autenticação quebrada.",
     "6.2-lab-setup.html": "Configuração do proxy Burp Suite e ambiente de testes para aplicações web.",
     "6.3-logica-negocio.html": "Identificação de falhas de lógica, manipulação de fluxos e parâmetros.",
     "6.4-injecao-web.html": "Vetores de injeção como SQL Injection (SQLi) e Command Injection.",
@@ -47,25 +51,32 @@ CUSTOM_DESCRIPTIONS = {
     "6.9-clickjacking.html": "Manipulação de iframes, sobreposição visual e desativação de proteções.",
     "6.10-configuracao.html": "Diretórios expostos, cabeçalhos inseguros e configurações padrão de fábrica.",
     "6.11-file-inclusion.html": "Local (LFI) e Remote (RFI) File Inclusion e Path Traversal.",
-    "6.12-codigo-inseguro.html": "Buffer overflows em C/C++, desserialização e lógica insegura web.",
+    "6.12a-memoria-concorrencia.html": "Buffer overflow, use-after-free e race conditions em aplicações inseguras.",
+    "6.12b-desserializacao-reversa.html": "Desserialização insegura e análise de comportamento perigoso em código.",
     # Módulo 7
-    "7.0-introducao.html": "Fundamentos da arquitetura cloud, IoT e sistemas industriais.",
-    "7.1-cloud.html": "Enumeração, falhas de IAM, buckets vazados e exploração de metadados em nuvem.",
-    "7.2-sistemas-especiais.html": "Análise mobile (MobSF/Frida), falhas em IoT e redes SCADA/embarcados.",
+    "7.0-introducao.html": "Visão geral do Módulo 7, motivação profissional da Cisco e o que você dominará nesta jornada.",
+    "7.1a-cloud.html": "Tipos de serviços em nuvem, colheita de credenciais com o SET (Kali), escalada de privilégios e aquisição de contas.",
+    "7.1b-configuracoes-nuvem.html": "Ataques IMDSv1/v2 por SSRF, buckets mal configurados, DoS na nuvem, injeção de malware e CPU Side-Channels.",
+    "7.2a-mobile.html": "Engenharia reversa, análise local SQLite/Keychain, bypass biométrico e Certificate Pinning com Frida e Objection.",
+    "7.2b-iot-virtualizacao.html": "Protocolos IoT, Shodan, BLE MITM, BMC/IPMI, VM Escape e auditorias cloud-native (kube-hunter, Grype, Falco).",
     # Módulo 8
-    "8.0-introducao.html": "Conceitos de escalação de privilégios locais e técnicas pós-comprometimento.",
-    "8.1-persistencia.html": "Instalação de web shells, backdoors persistentes e modificação de serviços.",
-    "8.2-lateral-exfiltracao.html": "Técnicas de movimentação lateral, pivoting de rede e exfiltração segura.",
+    "8.0-introducao.html": "Visão geral do Módulo 8, avaliação de risco cibernético real e tempo de detecção do SOC.",
+    "8.1a-shells-c2.html": "Diferenças entre Shell Reverso e Bind, e uso avançado de utilitários C2 e Netcat.",
+    "8.1b-persistencia-avancada.html": "Persistência em Windows e Linux via tarefas agendadas, cron jobs e novos usuários.",
+    "8.2a-movimento-lateral.html": "Técnicas de pivotagem, exfiltração, utilitários Sysinternals (PsExec), PowerShell e BloodHound.",
+    "8.2b-escalada-limpeza.html": "Escalação vertical/horizontal, sanitização NIST 800-88, limpeza de logs e esteganografia (steghide).",
     # Módulo 9
     "9.0-introducao.html": "A importância da documentação e da tradução técnica para executivos.",
-    "9.1-componentes-relatorio.html": "Sumário executivo, descrição técnica e classificação CVSS/critério.",
-    "9.2-analise-recomendacoes.html": "Elaboração de planos de mitigação e contramedidas recomendadas.",
-    "9.3-comunicacao-escalonamento.html": "Apresentação de resultados, diplomacia e reporte de falhas críticas.",
-    "9.4-atividades-pos-entrega.html": "Testes de revalidação (re-testing), retenção de dados e encerramento.",
+    "9.1a-componentes-distribuicao.html": "Público executivo e técnico, estrutura do relatório, CVE/CVSS e distribuição segura.",
+    "9.1b-notas-causa-raiz.html": "Gestão de notas, Dradis, validação manual e análise de causa raiz.",
+    "9.2a-controles-remediacao.html": "Recomendações práticas, controles de segurança e remediação orientada ao risco.",
+    "9.2b-comunicacao-pos-entrega.html": "Comunicação durante o teste, debriefing, limpeza e encerramento seguro.",
     # Módulo 10
     "10.0-introducao.html": "Fundamentos de automação de testes e customização de ferramentas.",
-    "10.1-scripts.html": "Lógica de programação com Bash e Python para automação de tarefas em pentest.",
-    "10.2-ferramentas.html": "Exploração aprofundada de ferramentas de Recon, Quebra de Hashes, C2 e Forense."
+    "10.1a-logica-estruturas.html": "Construções lógicas, JSON, listas, dicionários e bases de automação para pentest.",
+    "10.1b-scripts-bibliotecas.html": "Bibliotecas, funções, classes e o uso de Bash, Python e PowerShell no arsenal ofensivo.",
+    "10.2a-ferramentas-caso-uso.html": "Classificação de ferramentas por caso de uso: rede, credenciais, exploração e C2.",
+    "10.2b-analise-codigo-reversa.html": "Leitura de exploits, Ghidra, engenharia reversa e análise segura de código ofensivo."
 }
 
 # Group lessons by module

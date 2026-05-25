@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Suporte e Reteste Pós-Entrega</title>
+    <title>CyberDuo - Bibliotecas, Funções e Linguagens do Arsenal</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #00ffa3;
+            --cyber-blue: #8a2be2;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00b372; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #00b372; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #5e1d80; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #5e1d80; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-09.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-10.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,46 +131,69 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-handshake-angle",
-                        "title": "Atividades Pós-Entrega e Entregáveis",
-                        "content": "As <b>atividades pós-entrega</b> incluem o fechamento seguro do pentest. Os principais <b>entregáveis</b> são o relatório técnico/executivo, a lista de evidências de exploração e os scripts usados.",
-                        "highlight": "Pós-entrega garante a transição segura para a correção de falhas."
+                        "icon": "fa-book",
+                        "title": "Bibliotecas, Procedimentos, Funções e Classes (Cisco 10.1.6-10.1.9)",
+                        "content": "Bibliotecas reúnem código reutilizável. Procedimentos e funções encapsulam tarefas repetidas. Classes organizam objetos e comportamento. Esses conceitos ajudam o pentester a ler código de terceiros, adaptar automações internas e evitar scripts monolíticos difíceis de manter.",
+                        "highlight": "Código modular é mais seguro de entender e mais fácil de auditar."
             },
             {
                         "type": "teach",
-                        "icon": "fa-folder-open",
-                        "title": "Documentação e Evidências",
-                        "content": "Toda a <b>documentação</b> do pentest (incluindo logs de ferramentas, prints de telas e caminhos de acesso) deve ser guardada de forma segura pelo período contratado para auditorias posteriores.",
-                        "highlight": "Documentar com rigor protege o pentester e ajuda na auditoria."
+                        "icon": "fa-terminal",
+                        "title": "Bash, Python e PowerShell (Cisco 10.1.1 e 10.1.12)",
+                        "content": "<b>Bash</b> domina a automação nativa em Linux. <b>Python</b> é a linguagem mais versátil para integrar rede, web e parsing. <b>PowerShell</b> é essencial em ambientes Windows e Active Directory. O profissional também encontra Ruby, Perl e JavaScript em tooling ofensivo e em exploits públicos.",
+                        "highlight": "Python, Bash e PowerShell cobrem a maior parte da automação prática do pentest."
             },
             {
-                        "type": "teach",
-                        "icon": "fa-screwdriver-wrench",
-                        "title": "Remediação e Re-teste",
-                        "content": "A <b>remediação</b> é a correção das falhas pelo time de defesa da empresa. Após as correções, o pentester conduz o <b>re-teste</b> (validação de remediação) para verificar se as falhas foram realmente sanadas.",
-                        "highlight": "Remediação efetiva é o verdadeiro objetivo de um teste ético."
+                        "type": "example",
+                        "icon": "fa-sitemap",
+                        "title": "Exemplo - Função Reutilizável em Python",
+                        "scenario": "Em vez de repetir o mesmo código de requisição em vários pontos, o analista encapsula a tarefa em uma função para reaproveitar e testar melhor:",
+                        "code": "import requests\n\ndef consulta(host):\n    return requests.get(f'http://{host}/health', timeout=2).status_code\n\nprint(consulta('10.10.20.15'))",
+                        "takeaway": "Funções reduzem duplicação e deixam o script mais previsível para manutenção."
+            },
+            {
+                        "type": "match",
+                        "title": "Associe a Linguagem ao Cenário",
+                        "pairs": [
+                                    {
+                                                "term": "Bash",
+                                                "definition": "Automação rápida e nativa em Linux e Kali"
+                                    },
+                                    {
+                                                "term": "Python",
+                                                "definition": "Integração ampla com bibliotecas e criação de ferramentas customizadas"
+                                    },
+                                    {
+                                                "term": "PowerShell",
+                                                "definition": "Administração e automação em Windows e Active Directory"
+                                    },
+                                    {
+                                                "term": "Biblioteca",
+                                                "definition": "Conjunto reutilizável de recursos e rotinas de código"
+                                    }
+                        ]
             },
             {
                         "type": "quiz",
-                        "task": "O que constitui a etapa de remediação de um pentest?",
+                        "task": "Qual linguagem tende a ser mais importante quando o pentester precisa automatizar tarefas em um domínio Windows com Active Directory?",
                         "options": [
-                                    "A correção das vulnerabilidades encontradas pelo time de TI",
-                                    "A invasão de novos servidores sem avisar o cliente",
-                                    "O apagamento de todos os backups do cliente"
+                                    "PowerShell",
+                                    "CSS",
+                                    "Lua"
                         ],
-                        "correctText": "A correção das vulnerabilidades encontradas pelo time de TI",
-                        "explanation": "Remediação consiste em aplicar patches, atualizar softwares e mudar configurações para sanar os problemas relatados."
+                        "correctText": "PowerShell",
+                        "explanation": "PowerShell foi desenhado para administração e automação profunda em ambientes Microsoft."
             },
             {
                         "type": "fill",
-                        "sentence": "Para comprovar que o cliente corrigiu os problemas listados no relatório, o pentester realiza o ___-___.",
+                        "sentence": "No Linux, a linguagem de script mais imediata para orquestrar comandos do sistema e pipelines é o ___.",
                         "options": [
-                                    "re-teste",
-                                    "scan completo",
-                                    "relatório final"
+                                    "Bash",
+                                    "Photoshop",
+                                    "COBOL"
                         ],
-                        "correctText": "re-teste",
-                        "explanation": "O re-teste valida se as correções (remediação) foram aplicadas corretamente e se a falha deixou de existir."
+                        "correctText": "Bash",
+                        "explanation": "Bash é o shell mais familiar em distribuições Linux usadas em segurança ofensiva."
             }
 ];
 
@@ -452,15 +475,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/10.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/10.2a-ferramentas-caso-uso.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00b372; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #5e1d80; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">PÓS-ENTREGA CONCLUÍDA!</h2>
+                    <h2 class="title-main mb-2">SCRIPTING ORGANIZADO!</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -469,7 +492,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-09.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-10.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

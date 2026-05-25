@@ -1,37 +1,82 @@
 import json
-with open('/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json','r') as f: lessons=json.load(f)
-lessons.extend([
-{"filename":"7.0-introducao.html","module":"7","title":"Cloud e IoT 7.0","victory_msg":"CLOUD/IOT INICIADO!","steps":[
-{"type":"teach","icon":"fa-cloud","title":"Ataques em Cloud e IoT","content":"Este módulo cobre ataques a <b>ambientes cloud</b> (AWS, Azure, GCP), <b>dispositivos IoT</b>, <b>sistemas de armazenamento</b>, <b>VMs</b> e <b>containers</b>.","highlight":"Cloud e IoT são a nova superfície de ataque"},
-{"type":"teach","icon":"fa-server","title":"Responsabilidade Compartilhada","content":"Na cloud, a segurança é <b>compartilhada</b>: o provedor protege a infraestrutura, o cliente protege os dados e configurações. Misconfiguration é o risco nº1.","highlight":"Cloud segura exige configuração correta do cliente"},
-{"type":"quiz","task":"Qual é o risco nº1 em ambientes cloud?","options":["Misconfiguration (configuração incorreta)","Hardware defeituoso","Falta de internet"],"correctText":"Misconfiguration (configuração incorreta)","explanation":"A maioria dos incidentes em cloud são causados por configurações incorretas do cliente."},
-{"type":"fill","sentence":"No modelo de ___, o provedor cloud e o cliente dividem responsabilidades de segurança.","options":["responsabilidade compartilhada","licença aberta","código aberto"],"correctText":"responsabilidade compartilhada","explanation":"Shared Responsibility Model define quem protege o quê na cloud."}
-]},
-{"filename":"7.1-vetores-nuvem.html","module":"7","title":"Vetores de Ataque Cloud 7.1","victory_msg":"CLOUD ATTACKS DOMINADO!","steps":[
-{"type":"teach","icon":"fa-bucket","title":"S3 Buckets Expostos","content":"<b>S3 Buckets</b> mal configurados são um dos vetores mais comuns. Buckets públicos expõem dados sensíveis (backups, logs, dados de clientes) para qualquer pessoa.","highlight":"S3 público = dados expostos ao mundo"},
-{"type":"example","icon":"fa-terminal","title":"Enumeração de Buckets","scenario":"Usando ferramentas como <b>aws cli</b> ou <b>S3Scanner</b>, o pentester descobre buckets públicos com backups de banco de dados contendo milhões de registros.","code":"aws s3 ls s3://empresa-backup --no-sign-request","takeaway":"Buckets S3 sem autenticação podem ser listados por qualquer pessoa."},
-{"type":"teach","icon":"fa-key","title":"Credenciais Vazadas","content":"Chaves de API (<b>AWS Access Keys</b>) frequentemente vazam em repositórios Git públicos. Ferramentas como <b>truffleHog</b> e <b>git-secrets</b> detectam credenciais em commits.","highlight":"Nunca commite credenciais no Git"},
-{"type":"teach","icon":"fa-users-gear","title":"IAM Misconfiguration","content":"Políticas <b>IAM</b> excessivamente permissivas (ex: <b>Action: '*', Resource: '*'</b>) dão acesso total. O princípio de <b>Least Privilege</b> deve ser aplicado rigorosamente.","highlight":"IAM permissivo = acesso total ao atacante"},
-{"type":"quiz","task":"Qual ferramenta detecta credenciais vazadas em repositórios Git?","options":["truffleHog","Nmap","Burp Suite"],"correctText":"truffleHog","explanation":"truffleHog escaneia histórico de commits Git em busca de secrets e credenciais."},
-{"type":"match","title":"Vetor Cloud → Risco","pairs":[{"term":"S3 Bucket público","definition":"Exposição de dados sensíveis"},{"term":"IAM permissivo","definition":"Acesso total não autorizado"},{"term":"Credencial no Git","definition":"Comprometimento da conta cloud"}]},
-{"type":"fill","sentence":"Para evitar vazamento de chaves de API em repositórios, use ferramentas como ___.","options":["truffleHog","Wireshark","Metasploit"],"correctText":"truffleHog","explanation":"truffleHog e git-secrets escaneiam commits em busca de credenciais hardcoded."}
-]},
-{"filename":"7.2-sistemas-especializados.html","module":"7","title":"Sistemas Especializados 7.2","victory_msg":"SISTEMAS ESPECIALIZADOS DOMINADOS!","steps":[
-{"type":"teach","icon":"fa-mobile-screen","title":"Atacando Dispositivos Móveis","content":"Dispositivos móveis são alvos via <b>apps maliciosos</b>, <b>MDM bypass</b>, <b>jailbreak/root</b> e <b>interceptação de tráfego</b>. Ferramentas: <b>Frida</b>, <b>Objection</b>, <b>MobSF</b>.","highlight":"Celulares são computadores vulneráveis no bolso"},
-{"type":"teach","icon":"fa-mobile-retro","title":"Vulnerabilidades Móveis","content":"Principais riscos: <b>armazenamento inseguro</b> de dados no dispositivo, <b>comunicação sem TLS</b>, <b>autenticação fraca</b>, <b>binary protections</b> ausentes e <b>side-loading</b> de APKs.","highlight":"OWASP Mobile Top 10 lista os riscos"},
-{"type":"quiz","task":"Qual ferramenta é usada para análise dinâmica de apps móveis via hooking?","options":["Frida","Nmap","Aircrack-ng"],"correctText":"Frida","explanation":"Frida injeta scripts em apps mobile em tempo real para análise dinâmica."},
-{"type":"teach","icon":"fa-microchip","title":"Atacando IoT","content":"Dispositivos IoT têm superfície de ataque ampla: <b>firmware inseguro</b>, <b>credenciais default</b>, <b>protocolos sem criptografia</b> (MQTT, CoAP), <b>interfaces de debug</b> expostas (UART, JTAG).","highlight":"IoT = muitos dispositivos, pouca segurança"},
-{"type":"teach","icon":"fa-tower-broadcast","title":"Protocolos IoT","content":"<b>MQTT</b>: protocolo pub/sub leve, frequentemente sem autenticação. <b>CoAP</b>: versão IoT do HTTP. <b>Zigbee</b>: rede mesh de curto alcance. <b>BLE</b>: Bluetooth Low Energy.","highlight":"Protocolos IoT priorizam eficiência sobre segurança"},
-{"type":"match","title":"Protocolo IoT → Descrição","pairs":[{"term":"MQTT","definition":"Pub/sub leve (sem auth comum)"},{"term":"CoAP","definition":"HTTP para IoT (UDP)"},{"term":"Zigbee","definition":"Mesh de curto alcance"},{"term":"BLE","definition":"Bluetooth Low Energy"}]},
-{"type":"teach","icon":"fa-shield-halved","title":"Segurança IoT","content":"Considerações especiais: <b>atualização de firmware</b> difícil, <b>recursos limitados</b> (sem TLS pesado), <b>ciclo de vida longo</b> (dispositivos abandonados pelo fabricante), <b>rede flat</b> sem segmentação.","highlight":"IoT abandonado = vulnerabilidade permanente"},
-{"type":"quiz","task":"Qual é um problema comum de segurança em dispositivos IoT?","options":["Credenciais default que nunca são alteradas","Excesso de criptografia que torna o dispositivo lento","Atualizações automáticas muito frequentes"],"correctText":"Credenciais default que nunca são alteradas","explanation":"A maioria dos dispositivos IoT vem com admin/admin e os usuários nunca alteram."},
-{"type":"teach","icon":"fa-hard-drive","title":"Armazenamento de Dados","content":"Sistemas de armazenamento (NAS, SAN) frequentemente expõem <b>shares SMB/NFS</b> sem autenticação, <b>backups sem criptografia</b> e <b>interfaces web</b> com credenciais default.","highlight":"Armazenamento exposto = dados vazados"},
-{"type":"teach","icon":"fa-display","title":"Interfaces de Gerenciamento","content":"Painéis web de gerenciamento (iLO, iDRAC, IPMI) frequentemente têm <b>credenciais default</b>, <b>firmware desatualizado</b> e estão expostos na rede sem segmentação.","highlight":"Interface de gerenciamento = backdoor esquecida"},
-{"type":"teach","icon":"fa-desktop","title":"Explorando VMs","content":"VMs podem ser atacadas via <b>VM escape</b> (sair da VM para o host), <b>snapshot theft</b> (roubo de snapshots), e <b>side-channel attacks</b> em hipervisores compartilhados.","highlight":"VM escape = comprometer o hipervisor inteiro"},
-{"type":"teach","icon":"fa-cube","title":"Containers e Docker","content":"Vulnerabilidades em containers: <b>imagens com malware</b>, <b>container escape</b>, <b>Docker socket exposto</b>, <b>secrets em variáveis de ambiente</b>, <b>privileged mode</b> habilitado.","highlight":"Container privilegiado = acesso root ao host"},
-{"type":"quiz","task":"Qual ataque permite que código malicioso escape de um container e acesse o host?","options":["Container escape","SQL Injection","Phishing"],"correctText":"Container escape","explanation":"Container escape explora falhas no runtime para acessar o sistema host."},
-{"type":"fill","sentence":"Containers rodando em modo ___ têm acesso total ao kernel do host, tornando escape trivial.","options":["privileged","detached","readonly"],"correctText":"privileged","explanation":"Docker --privileged dá ao container capacidades equivalentes ao root do host."}
-]}
-])
-with open('/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json','w') as f: json.dump(lessons,f,ensure_ascii=False,indent=2)
-print(f"✅ {len(lessons)} lessons (added Module 7)")
+import os
+
+JSON_PATH = "/home/gabriel/Documentos/dev/cyberduo/scripts/lesson_definitions.json"
+MODULE = "7"
+EXPECTED_FILES = [
+    "7.0-introducao.html",
+    "7.1a-cloud.html",
+    "7.1b-configuracoes-nuvem.html",
+    "7.2a-mobile.html",
+    "7.2b-iot-virtualizacao.html",
+]
+
+
+def load_json(path):
+    if not os.path.exists(path):
+        return []
+    with open(path, "r", encoding="utf-8") as file:
+        return json.load(file)
+
+
+def save_json(path, data):
+    with open(path, "w", encoding="utf-8") as file:
+        json.dump(data, file, ensure_ascii=False, indent=2)
+
+
+def normalize_module_7(lessons):
+    module_7 = [lesson for lesson in lessons if lesson.get("module") == MODULE]
+    by_filename = {lesson["filename"]: lesson for lesson in module_7}
+
+    missing = [filename for filename in EXPECTED_FILES if filename not in by_filename]
+    if missing:
+        raise ValueError(
+            "As lições atuais do módulo 7 não estão completas no JSON. "
+            f"Arquivos ausentes: {', '.join(missing)}"
+        )
+
+    normalized = [by_filename[filename] for filename in EXPECTED_FILES]
+
+    for lesson in normalized:
+        lesson["module"] = MODULE
+
+    # A auditoria lê apenas title/content/scenario/task. O termo SCADA estava
+    # somente em highlight, então reforçamos o conceito em campos auditáveis.
+    iot_lesson = by_filename["7.2b-iot-virtualizacao.html"]
+    for step in iot_lesson.get("steps", []):
+        if step.get("title") == "Ameaças IoT & Shodan":
+            step["content"] = (
+                "Sistemas de Internet das Coisas (IoT) possuem arquitetura "
+                "extremamente heterogênea e recursos limitados, impedindo "
+                "criptografias pesadas. Comandos sem sanitização causam DoS "
+                "em <b>ICS e controladores industriais SCADA</b>, e erros "
+                "revelam dados internos. Pior: muitos vêm com <b>senhas padrão "
+                "de fábrica</b> expostas na internet, passivamente indexadas "
+                "pelo buscador <b>Shodan.io</b>, que coleta os banners e portas "
+                "expostas (Telnet, SSH)."
+            )
+            step["highlight"] = (
+                "Câmeras IP, PLCs e painéis SCADA expostos viram alvos fáceis "
+                "para invasores e auditorias."
+            )
+        elif step.get("type") == "quiz" and "mapear portas expostas" in step.get("task", ""):
+            step["task"] = (
+                "Se você precisa encontrar painéis de controle industrial "
+                "(SCADA) e outros dispositivos IoT expostos na internet, "
+                "qual motor de busca especializado utilizaria?"
+            )
+
+    return normalized
+
+
+def main():
+    lessons = load_json(JSON_PATH)
+    module_7_lessons = normalize_module_7(lessons)
+    lessons = [lesson for lesson in lessons if lesson.get("module") != MODULE]
+    lessons.extend(module_7_lessons)
+    save_json(JSON_PATH, lessons)
+    print(f"Modulo 7 normalizado com {len(module_7_lessons)} licoes.")
+
+
+if __name__ == "__main__":
+    main()

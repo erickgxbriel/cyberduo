@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Falhas de Memória, Lógica e Deserialização</title>
+    <title>CyberDuo - Notas de Campo, Dradis e Causa Raiz</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #00f2ff;
+            --cyber-blue: #00ffa3;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -95,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00a8b3; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #00a8b3; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #00b372; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #00b372; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -110,7 +110,7 @@
 <body>
 
     <div class="game-header">
-        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-06.html'"><i class="fas fa-times"></i></div>
+        <div class="flex items-center justify-center cursor-pointer text-gray-500" style="min-width: 44px; min-height: 44px; margin-left: -10px;" onclick="window.location.href='../modules/modulo-09.html'"><i class="fas fa-times"></i></div>
         <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
         <div class="hearts" id="heartsContainer"></div>
     </div>
@@ -131,129 +131,71 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-memory",
-                        "title": "Buffer Overflow",
-                        "content": "<b>Buffer Overflow</b> ocorre quando o programa escreve mais dados num bloco de memória do que ele suporta, transbordando e sobrescrevendo áreas vizinhas na RAM. Falhas de memória são comuns nas linguagens C/C++."
+                        "icon": "fa-book-open",
+                        "title": "Gerenciar Notas Também Faz Parte do Pentest (Cisco 9.1.4)",
+                        "content": "Um engajamento gera muitas evidências: saídas de scanners, comandos, screenshots, credenciais temporárias, hashes, requests, respostas e observações contextuais. Sem organização, a qualidade do relatório cai e o trabalho em equipe fica frágil.",
+                        "highlight": "Notas desorganizadas geram relatórios incompletos."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-diagram-project",
+                        "title": "Dradis e Espaço Colaborativo (Cisco 9.1.6)",
+                        "content": "O <b>Dradis Framework</b> foi criado para centralizar notas, importar resultados de ferramentas e facilitar colaboração. A <b>Community Edition</b> é aberta e extensível; a <b>Professional Edition</b> adiciona recursos mais fortes de projeto e geração de relatórios.",
+                        "highlight": "Ferramenta de notas boa reduz retrabalho e melhora consistência."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-magnifying-glass-chart",
+                        "title": "Analisar Causa Raiz Vai Além do Scanner (Cisco 9.1.7)",
+                        "content": "Um scanner pode mostrar uma porta 21 aberta, mas isso não explica o risco real. A <b>causa raiz</b> aparece quando o pentester correlaciona descoberta técnica, contexto operacional e entrevistas com o dono do ativo. É isso que transforma sintoma em correção útil.",
+                        "highlight": "Relatório forte explica por que o problema existe, não apenas onde ele aparece."
             },
             {
                         "type": "example",
-                        "icon": "fa-water",
-                        "title": "O Copo Cheio",
-                        "scenario": "Imagine um copo de 100ml. O hacker despeja 500ml de água ('A's). A água transborda para o circuito elétrico (ponteiro de retorno) e muda o funcionamento da máquina.",
-                        "takeaway": "Linguagens como C/C++ são vulneráveis porque não checam limites de memória."
+                        "icon": "fa-folder-tree",
+                        "title": "Exemplo - FTP Legado e Exposição Indevida",
+                        "scenario": "Durante o teste, o scanner não marcou criticidade alta no FTP, mas a investigação manual mostrou um problema maior:",
+                        "code": "[i] Nessus: porta 21 aberta sem CVE crítico associado\n[i] Entrevista com o responsável: serviço deveria ter sido desativado há anos\n[+] Evidência adicional: servidor exposto à internet\n[+] Logs indicam uso contínuo para transferir dados sensíveis",
+                        "takeaway": "A causa raiz não era apenas o FTP ativo, mas falha de governança, descomissionamento e uso inseguro do serviço."
             },
             {
                         "type": "quiz",
-                        "task": "O que um atacante busca atingir sobrescrevendo o ponteiro de retorno (Return Pointer) num Buffer Overflow?",
+                        "task": "Qual ação ajuda mais a determinar a causa raiz de um servidor não documentado exposto à internet?",
                         "options": [
-                                    "Mudar o fluxo do programa para executar um Shellcode malicioso.",
-                                    "Apagar logs de rede.",
-                                    "Ler o código fonte do site HTML."
+                                    "Entrevistar os responsáveis pelo ativo e correlacionar o uso real com as evidências técnicas",
+                                    "Confiar apenas na severidade automática do scanner de vulnerabilidade",
+                                    "Ignorar o contexto operacional para evitar aumentar o escopo"
                         ],
-                        "correctText": "Mudar o fluxo do programa para executar um Shellcode malicioso.",
-                        "explanation": "Redirecionando o ponteiro, o atacante dita a próxima instrução do processador."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-bug",
-                        "title": "Dangling Pointers (UAF)",
-                        "content": "<b>Use-After-Free (UAF)</b>: O programa libera um bloco de memória, mas 'esquece' de limpar o ponteiro que aponta para lá. O hacker aloca dados novos naquele mesmo lugar, e o programa usa achando que era o antigo."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-ghost",
-                        "title": "O Quarto de Hotel",
-                        "scenario": "O cliente devolve a chave do quarto (Free). O hotel dá o quarto pro Hacker. Mas o hotel deixou uma cópia da chave com o primeiro cliente (Dangling Pointer), que ainda acha que o quarto é dele.",
-                        "takeaway": "Ponteiros inválidos corrompem a execução segura."
-            },
-            {
-                        "type": "fill",
-                        "sentence": "Ataques que miram o controle e alocação de dados diretamente na memória RAM são mais comuns em sistemas construídos com a linguagem ___.",
-                        "options": [
-                                    "C/C++",
-                                    "JavaScript",
-                                    "Python"
-                        ],
-                        "correctText": "C/C++",
-                        "explanation": "Linguagens de baixo nível dão controle total (e risco total) de memória ao programador."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-stopwatch",
-                        "title": "Race Conditions",
-                        "content": "<b>Race Condition (Condição de Corrida)</b> ocorre quando a aplicação realiza ações simultâneas sem sincronização adequada. Ex: sacar dinheiro da conta duas vezes no exato mesmo milissegundo.",
-                        "highlight": "Falha de concorrência em sistemas multithread."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-running",
-                        "title": "Transferência Concorrente",
-                        "scenario": "Uma API de banco checa se saldo >= valor, e depois deduz o valor. O hacker envia 100 requisições de saque concorrentes em milissegundos. A API executa a verificação para todas antes de deduzir o saldo do primeiro saque, sacando 100x mais do que tinha.",
-                        "takeaway": "Use mecanismos de bloqueio de transação (locks) ou filas para serializar operações sensíveis."
-            },
-            {
-                        "type": "fill",
-                        "sentence": "Sacar R$ 100 de uma conta que só tem R$ 100 disparando 50 requisições simultâneas para ganhar R$ 5000 é um exemplo clássico de ___.",
-                        "options": [
-                                    "Race Condition",
-                                    "SQL Injection",
-                                    "IDOR"
-                        ],
-                        "correctText": "Race Condition",
-                        "explanation": "A verificação de saldo e a dedução ocorrem de forma assíncrona, falhando na proteção."
-            },
-            {
-                        "type": "teach",
-                        "icon": "fa-boxes-packing",
-                        "title": "Insecure Deserialization",
-                        "content": "<b>Desserialização Insegura</b> é transformar dados de fora (JSON, XML, Objetos Java/Python em disco) de volta em objetos na memória da aplicação. Se o aplicativo aceitar dados manipulados sem verificar, o hacker pode injetar classes perigosas.",
-                        "highlight": "Gera Execução Remota de Código (RCE) imediata."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-bug",
-                        "title": "O Ataque Mágico",
-                        "scenario": "O Java recebe um objeto serializado do usuário contendo o estado da sessão. O hacker envia um objeto malicioso que, ao ser 'desempacotado' (desserializado) pelo Java, dispara a abertura do terminal bash.",
-                        "takeaway": "Nunca deserialize dados provindos do usuário sem assinaturas criptográficas ou use JSON puro."
+                        "correctText": "Entrevistar os responsáveis pelo ativo e correlacionar o uso real com as evidências técnicas",
+                        "explanation": "Causa raiz exige contexto de negócio e operação, não só telemetria técnica."
             },
             {
                         "type": "quiz",
-                        "task": "Qual é o principal perigo de aceitar e desserializar objetos fornecidos diretamente por usuários não confiáveis?",
+                        "task": "Por que a validação manual das saídas de ferramentas é obrigatória antes de publicar achados?",
                         "options": [
-                                    "Execução Remota de Código (RCE) através da reconstrução de objetos maliciosos.",
-                                    "Aumento insignificante no consumo de banda de rede.",
-                                    "Exposição do banco de dados a ataques de injeção de SQL."
+                                    "Porque falsos positivos custam tempo, dinheiro e credibilidade",
+                                    "Porque scanners nunca encontram nenhuma vulnerabilidade útil",
+                                    "Porque relatórios só podem conter evidências coletadas manualmente"
                         ],
-                        "correctText": "Execução Remota de Código (RCE) através da reconstrução de objetos maliciosos.",
-                        "explanation": "O processo de desserialização pode instanciar e invocar métodos de classes arbitrárias pré-existentes na aplicação."
+                        "correctText": "Porque falsos positivos custam tempo, dinheiro e credibilidade",
+                        "explanation": "Achados não validados podem induzir o cliente a corrigir um problema inexistente."
             },
             {
-                        "type": "match",
-                        "title": "Associe as Falhas e Características",
-                        "pairs": [
-                                    {
-                                                "term": "Buffer Overflow",
-                                                "definition": "Escrita fora dos limites de memória em C/C++"
-                                    },
-                                    {
-                                                "term": "Use-After-Free",
-                                                "definition": "Acesso a ponteiro que aponta para memória liberada"
-                                    },
-                                    {
-                                                "term": "Race Condition",
-                                                "definition": "Falha de concorrência por falta de sincronização"
-                                    },
-                                    {
-                                                "term": "Insecure Deserialization",
-                                                "definition": "RCE ao instanciar objetos maliciosos do usuário"
-                                    }
-                        ]
+                        "type": "fill",
+                        "sentence": "Quando o pentester investiga o motivo estrutural de uma falha, ele está realizando uma análise de ___.",
+                        "options": [
+                                    "causa raiz",
+                                    "superfície externa",
+                                    "porta padrão"
+                        ],
+                        "correctText": "causa raiz",
+                        "explanation": "A análise de causa raiz conecta vulnerabilidade, processo e contexto operacional."
             }
 ];
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
-        let hearts = 7;
+        let hearts = 5;
         let shuffledOptions = [];
         
         // Match state
@@ -278,7 +220,7 @@
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('heartsContainer');
-            container.innerHTML = Array(7).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
+            container.innerHTML = Array(5).fill(0).map((_, i) => `<i class="${i < hearts ? 'fas' : 'far'} fa-heart"></i>`).join('');
         }
 
         function render() {
@@ -529,15 +471,15 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/6.2-lab-setup.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/9.2a-controles-remediacao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
-                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00a8b3; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #00b372; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
+                    <h2 class="title-main mb-2">CAUSA RAIZ IDENTIFICADA!</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
@@ -546,7 +488,7 @@
                                 <i class="fas fa-rotate-right mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">REINICIAR</span>
                             </button>
-                            <button class="check-btn" onclick="window.location.href='../modules/modulo-06.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
+                            <button class="check-btn" onclick="window.location.href='../modules/modulo-09.html'" style="flex: 1; background: #161b22; border: 2px solid var(--cyber-blue); color: var(--cyber-blue); box-shadow: 0 4px 0 rgba(0,255,255,0.2); padding: 0.8rem 0.5rem;">
                                 <i class="fas fa-layer-group mb-1 block text-lg"></i>
                                 <span style="font-size: 0.75rem; display: block; margin-top: 4px;">MÓDULOS</span>
                             </button>

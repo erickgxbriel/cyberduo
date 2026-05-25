@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - IoT, Virtualização e Containers</title>
+    <title>CyberDuo - IoT, Virtualização e Cargas em Containers</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #00a8ff;
+            --cyber-blue: #e6edf3;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -44,6 +44,7 @@
         .text-body { font-size: clamp(1rem, 4vw, 1.1rem); color: #b1bac4; line-height: 1.5; }
         .text-body b { color: white; }
         
+        
         /* Utility Classes */
         .mr-1 { margin-right: 0.25rem; }
         .mr-2 { margin-right: 0.5rem; }
@@ -60,7 +61,7 @@
         /* TYPE: EXAMPLE */
         .example-card { background: #0d1117; border: 1px solid #30363d; border-radius: 1.2rem; padding: clamp(1rem, 4vw, 1.5rem); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .example-scenario { background: #161b22; border: 1px solid #21262d; border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; }
-        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.85rem; color: #00ff41; border: 1px solid #30363d; overflow-x: auto; white-space: pre; }
+        .example-code { background: #010409; font-family: 'Fira Code', monospace; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.9rem; color: #00ff41; border: 1px solid #30363d; }
         .example-takeaway { display: flex; gap: 0.8rem; align-items: flex-start; margin-top: 1rem; color: #8b949e; font-size: 0.9rem; font-weight: 600; }
 
         /* TYPE: QUIZ */
@@ -82,6 +83,7 @@
 
         /* TYPE: MATCH */
         .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
+        /* .match-column removed */
         .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
         .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
         .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
@@ -93,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #007bb5; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #007bb5; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #a0a8b0; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #a0a8b0; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -128,99 +130,100 @@
     <script>
         const steps = [
             {
-                "type": "teach",
-                "icon": "fa-microchip",
-                "title": "Ameaças IoT & Shodan",
-                "content": "Sistemas de Internet das Coisas (IoT) possuem arquitetura extremamente heterogênea e recursos limitados, impedindo criptografias pesadas. Comandos sem sanitização causam DoS em ICS, e erros revelam dados internos. Pior: muitos vêm com <b>senhas padrão de fábrica</b> expostas na internet, passivamente indexadas pelo buscador <b>Shodan.io</b>, que coleta os banners e portas expostas (Telnet, SSH).",
-                "highlight": "Câmeras IP e controladores industriais SCADA estão frequentemente vulneráveis por padrão."
+                        "type": "teach",
+                        "icon": "fa-microchip",
+                        "title": "Ameaças IoT & Shodan",
+                        "content": "Sistemas de Internet das Coisas (IoT) possuem arquitetura extremamente heterogênea e recursos limitados, impedindo criptografias pesadas. Comandos sem sanitização causam DoS em <b>ICS e controladores industriais SCADA</b>, e erros revelam dados internos. Pior: muitos vêm com <b>senhas padrão de fábrica</b> expostas na internet, passivamente indexadas pelo buscador <b>Shodan.io</b>, que coleta os banners e portas expostas (Telnet, SSH).",
+                        "highlight": "Câmeras IP, PLCs e painéis SCADA expostos viram alvos fáceis para invasores e auditorias."
             },
             {
-                "type": "quiz",
-                "task": "Qual motor de busca é especializado em mapear portas expostas e catalogar dispositivos IoT, servidores e webcams globalmente?",
-                "options": [
-                    "Shodan",
-                    "Censys",
-                    "Google Dorking"
-                ],
-                "correctText": "Shodan",
-                "explanation": "Conhecido como 'o mecanismo de busca para a Internet das Coisas', o Shodan rastreia banners e IPs que respondem a protocolos industriais e web."
+                        "type": "quiz",
+                        "task": "Se você precisa encontrar painéis de controle industrial (SCADA) e outros dispositivos IoT expostos na internet, qual motor de busca especializado utilizaria?",
+                        "options": [
+                                    "Shodan",
+                                    "Censys",
+                                    "Google Dorking"
+                        ],
+                        "correctText": "Shodan",
+                        "explanation": "Conhecido como 'o mecanismo de busca para a Internet das Coisas', o Shodan rastreia banners e IPs que respondem a protocolos industriais e web."
             },
             {
-                "type": "teach",
-                "icon": "fa-bluetooth",
-                "title": "Interceptação de Rádio (BLE)",
-                "content": "O <b>Bluetooth Low Energy (BLE)</b> é a base de fechaduras smart e wearables. Como muitos desenvolvedores não ativam a criptografia nativa no payload, os dados trafegam em texto puro. Usando antenas como <b>Ubertooth One</b>, atacantes farejam os dados. Com ferramentas como <b>GATTacker</b> ou <b>BtleJuice</b>, criam clones que atuam como Man-in-the-Middle, lendo chaves de emparelhamento do ar.",
-                "highlight": "Ferramentas cloram o serviço GATT do BLE para interceptar o tráfego e reenviá-lo à vítima."
+                        "type": "teach",
+                        "icon": "fa-bluetooth",
+                        "title": "Interceptação de Rádio (BLE)",
+                        "content": "O <b>Bluetooth Low Energy (BLE)</b> é a base de fechaduras smart e wearables. Como muitos desenvolvedores não ativam a criptografia nativa no payload, os dados trafegam em texto puro. Usando antenas como <b>Ubertooth One</b>, atacantes farejam os dados. Com ferramentas como <b>GATTacker</b> ou <b>BtleJuice</b>, criam clones que atuam como Man-in-the-Middle, lendo chaves de emparelhamento do ar.",
+                        "highlight": "Ferramentas cloram o serviço GATT do BLE para interceptar o tráfego e reenviá-lo à vítima."
             },
             {
-                "type": "example",
-                "icon": "fa-walkie-talkie",
-                "title": "MITM com BtleJuice",
-                "scenario": "Com dois adaptadores Bluetooth, o atacante roda o BtleJuice para clonar uma fechadura inteligente. O celular da vítima se conecta ao PC do atacante em vez da fechadura original.",
-                "code": "$ btlejuice-proxy\n[+] Proxy started!\n[+] Target BLE Device found: SMART_LOCK_88\n\n// Payload secreto lido em hexadecimal no painel:\n[BLE RX] 0x4f 0x50 0x45 0x4e (OPEN)",
-                "takeaway": "O atacante agora possui a sequência binária que abre a porta."
+                        "type": "example",
+                        "icon": "fa-walkie-talkie",
+                        "title": "MITM com BtleJuice",
+                        "scenario": "Com dois adaptadores Bluetooth, o atacante roda o BtleJuice para clonar uma fechadura inteligente. O celular da vítima se conecta ao PC do atacante em vez da fechadura original.",
+                        "code": "$ btlejuice-proxy\n[+] Proxy started!\n[+] Target BLE Device found: SMART_LOCK_88\n\n// Payload secreto lido em hexadecimal no painel:\n[BLE RX] 0x4f 0x50 0x45 0x4e (OPEN)",
+                        "takeaway": "O atacante agora possui a sequência binária que abre a porta."
             },
             {
-                "type": "teach",
-                "icon": "fa-server",
-                "title": "Gestão Out-of-Band (IPMI & BMC)",
-                "content": "Servidores bare-metal modernos contam com um <b>BMC (Baseboard Management Controller)</b>, acessado via <b>IPMI</b>. Trata-se de um 'mini-computador' na placa-mãe. Se o atacante assumir o controle do BMC (via senhas padrão ou falhas de rede), ele obtém poder absoluto: pode desligar a máquina, alterar boot e formatar o disco, pois está operando fora do sistema operacional hospedeiro.",
-                "highlight": "Comprometer o BMC é o equivalente cibernético de estar com acesso físico ao servidor."
+                        "type": "teach",
+                        "icon": "fa-server",
+                        "title": "Gestão Out-of-Band (IPMI & BMC)",
+                        "content": "Servidores bare-metal modernos contam com um <b>BMC (Baseboard Management Controller)</b>, acessado via <b>IPMI</b>. Trata-se de um 'mini-computador' na placa-mãe. Se o atacante assumir o controle do BMC (via senhas padrão ou falhas de rede), ele obtém poder absoluto: pode desligar a máquina, alterar boot e formatar o disco, pois está operando fora do sistema operacional hospedeiro.",
+                        "highlight": "Comprometer o BMC é o equivalente cibernético de estar com acesso físico ao servidor."
             },
             {
-                "type": "teach",
-                "icon": "fa-window-restore",
-                "title": "Virtualização: Escapes e Hipervisores",
-                "content": "Ameaças ao isolamento de VMs (VMware, Hyper-V) são fatais. A <b>Fuga de VM (VM Escape)</b> explora o hipervisor para sair da máquina virtual convidada e rodar código direto no sistema físico (host). Já o <b>Hyperjacking</b> envolve a instalação invisível de um hipervisor malicioso por baixo do sistema hospedeiro. E imagens pre-empacotadas podem conter <b>Backdoors no Repositório de VM</b>.",
-                "highlight": "O VM Escape destrói a fronteira lógica entre máquinas que habitam o mesmo hardware."
+                        "type": "teach",
+                        "icon": "fa-window-restore",
+                        "title": "Virtualização: Escapes e Hipervisores",
+                        "content": "Ameaças ao isolamento de VMs (VMware, Hyper-V) são fatais. A <b>Fuga de VM (VM Escape)</b> explora o hipervisor para sair da máquina virtual convidada e rodar código direto no sistema físico (host). Já o <b>Hyperjacking</b> envolve a instalação invisível de um hipervisor malicioso por baixo do sistema hospedeiro. E imagens pre-empacotadas podem conter <b>Backdoors no Repositório de VM</b>.",
+                        "highlight": "O VM Escape destrói a fronteira lógica entre máquinas que habitam o mesmo hardware."
             },
             {
-                "type": "teach",
-                "icon": "fa-cubes",
-                "title": "Ameaças a Contêineres e Supply Chain",
-                "content": "Ambientes Docker/Kubernetes sofrem com <b>Privileged Containers</b> (rodar app web com acesso root do host) e exposição do <b>Docker Socket (/var/run/docker.sock)</b>, permitindo o <b>Container Breakout</b>. Atacantes também abusam da Cadeia de Suprimentos (Supply Chain), subindo contêineres falsificados ('Typosquatting') em repositórios públicos com cryptominers integrados na imagem base.",
-                "highlight": "Ataques de Supply Chain infectam sistemas na raiz, antes mesmo do desenvolvedor escrever código."
+                        "type": "teach",
+                        "icon": "fa-cubes",
+                        "title": "Ameaças a Contêineres e Supply Chain",
+                        "content": "Ambientes Docker/Kubernetes sofrem com <b>Privileged Containers</b> (rodar app web com acesso root do host) e exposição do <b>Docker Socket (/var/run/docker.sock)</b>, permitindo o <b>Container Breakout</b>. Atacantes também abusam da Cadeia de Suprimentos (Supply Chain), subindo contêineres falsificados ('Typosquatting') em repositórios públicos com cryptominers integrados na imagem base.",
+                        "highlight": "Ataques de Supply Chain infectam sistemas na raiz, antes mesmo do desenvolvedor escrever código."
             },
             {
-                "type": "quiz",
-                "task": "No ecosistema de contêineres, por que a técnica de Typosquatting em registros como o Docker Hub é considerada um ataque de Supply Chain (Cadeia de Suprimentos)?",
-                "options": [
-                    "Porque o atacante publica imagens de base maliciosas com nomes muito similares a imagens oficiais, visando que desenvolvedores as importem acidentalmente em seus builds.",
-                    "Porque a imagem de contêiner é preenchida com um grande volume de dados lixo, gerando custo adicional.",
-                    "Porque burla o isolamento do namespace do kernel Linux via chamadas de sistema falsas."
-                ],
-                "correctText": "Porque o atacante publica imagens de base maliciosas com nomes muito similares a imagens oficiais, visando que desenvolvedores as importem acidentalmente em seus builds.",
-                "explanation": "A imagem corrompida passa a fazer parte das fundações de um projeto corporativo, executando backdoors assim que for levantada."
+                        "type": "quiz",
+                        "task": "No ecosistema de contêineres, por que a técnica de Typosquatting em registros como o Docker Hub é considerada um ataque de Supply Chain (Cadeia de Suprimentos)?",
+                        "options": [
+                                    "Porque o atacante publica imagens de base maliciosas com nomes muito similares a imagens oficiais, visando que desenvolvedores as importem acidentalmente em seus builds.",
+                                    "Porque a imagem de contêiner é preenchida com um grande volume de dados lixo, gerando custo adicional.",
+                                    "Porque burla o isolamento do namespace do kernel Linux via chamadas de sistema falsas."
+                        ],
+                        "correctText": "Porque o atacante publica imagens de base maliciosas com nomes muito similares a imagens oficiais, visando que desenvolvedores as importem acidentalmente em seus builds.",
+                        "explanation": "A imagem corrompida passa a fazer parte das fundações de um projeto corporativo, executando backdoors assim que for levantada."
             },
             {
-                "type": "match",
-                "title": "Associe o Arsenal Cloud Native",
-                "pairs": [
-                    {
-                        "term": "Grype",
-                        "definition": "Scanner estático para vulnerabilidades em imagens Docker"
-                    },
-                    {
-                        "term": "Falco",
-                        "definition": "Monitoramento e detecção de anomalias em runtime (tempo real)"
-                    },
-                    {
-                        "term": "kube-bench",
-                        "definition": "Auditoria de conformidade CIS para a segurança do cluster"
-                    },
-                    {
-                        "term": "kube-hunter",
-                        "definition": "Scanner ativo de penetração em arquiteturas Kubernetes"
-                    }
-                ]
+                        "type": "match",
+                        "title": "Associe o Arsenal Cloud Native",
+                        "pairs": [
+                                    {
+                                                "term": "Grype",
+                                                "definition": "Scanner estático para vulnerabilidades em imagens Docker"
+                                    },
+                                    {
+                                                "term": "Falco",
+                                                "definition": "Monitoramento e detecção de anomalias em runtime (tempo real)"
+                                    },
+                                    {
+                                                "term": "kube-bench",
+                                                "definition": "Auditoria de conformidade CIS para a segurança do cluster"
+                                    },
+                                    {
+                                                "term": "kube-hunter",
+                                                "definition": "Scanner ativo de penetração em arquiteturas Kubernetes"
+                                    }
+                        ]
             }
-        ];
+];
 
         let currentStep = 0;
-        let selectedIdx = null;
+        let selectedIdx = null; // For quiz and fill
         let hearts = 5;
         let shuffledOptions = [];
         
+        // Match state
         let matchLeft = [];
         let matchRight = [];
         let selectedLeft = null;
@@ -253,6 +256,7 @@
             
             updateProgress();
             
+            // Reset states
             selectedIdx = null;
             checkBtn.disabled = true;
             checkBtn.classList.remove('active');
@@ -359,6 +363,7 @@
             area.scrollTop = 0;
         }
 
+        // Interactivity Handlers
         function selectQuiz(idx) {
             selectedIdx = idx;
             document.querySelectorAll('.option-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
@@ -380,6 +385,7 @@
             const item = document.getElementById(`${side}-${idx}`);
             if (item.classList.contains('matched')) return;
 
+            // Clear previous selection on same side
             document.querySelectorAll(`.match-item[id^='${side}-']`).forEach(el => {
                 if(!el.classList.contains('matched')) el.classList.remove('selected');
             });
@@ -390,6 +396,7 @@
             else selectedRight = {el: item, id: pairId};
 
             if (selectedLeft && selectedRight) {
+                // Check match
                 if (selectedLeft.id === selectedRight.id) {
                     selectedLeft.el.classList.remove('selected');
                     selectedLeft.el.classList.add('matched');
@@ -412,6 +419,7 @@
                     errRight.el.classList.remove('selected');
                     errRight.el.classList.add('error');
                     
+                    // Lose heart for wrong match
                     hearts--;
                     updateProgress();
                     if(hearts <= 0) triggerGameOver();
@@ -427,11 +435,13 @@
             }
         }
 
+        // Logic Check
         function checkResponse() {
             const step = steps[currentStep];
             const checkBtn = document.getElementById('checkBtn');
             const popup = document.getElementById('feedbackPopup');
             
+            // Non-interactive steps just advance
             if (step.type === 'teach' || step.type === 'example') {
                 currentStep++;
                 render();
@@ -449,7 +459,7 @@
                     c.classList.add('disabled');
                 });
             } else if (step.type === 'match') {
-                isCorrect = true;
+                isCorrect = true; // Button only enables when all matches found
             }
 
             if (isCorrect) {
@@ -486,13 +496,16 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/8.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/10.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #a0a8b0; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
-                    <i class="fas fa-trophy text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">MÓDULO 7 COMPLETO!</h2>
-                    <p class="text-body mb-6">Parabéns! Você concluiu com sucesso todo o treinamento avançado sobre Segurança e Exploração em Nuvem, Mobile, IoT e Cargas de Trabalho de Virtualização/Containers!</p>
+                    <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
+                    <h2 class="title-main mb-2">LIÇÃO COMPLETA!</h2>
+                    <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
                         <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">

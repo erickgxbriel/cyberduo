@@ -9,14 +9,14 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Superfícies de Ataque Expandidas</title>
+    <title>CyberDuo - Introdução e Objetivos de Aprendizado</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cyber-blue: #00a8ff;
+            --cyber-blue: #e6edf3;
             --cyber-green: #00ff41;
             --cyber-red: #ff003c;
             --cyber-yellow: #ffb800;
@@ -83,6 +83,7 @@
 
         /* TYPE: MATCH */
         .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem clamp(0.5rem, 3vw, 1rem); width: 100%; margin-top: 1rem; }
+        /* .match-column removed */
         .match-item { background: #161b22; border: 2px solid #30363d; border-bottom-width: 4px; padding: clamp(0.5rem, 2.5vw, 0.8rem); border-radius: 0.8rem; cursor: pointer; text-align: center; font-weight: 600; font-size: clamp(0.85rem, 3.5vw, 0.95rem); transition: all 0.1s; user-select: none; display: flex; align-items: center; justify-content: center; min-height: 60px; height: 100%; -webkit-tap-highlight-color: transparent; }
         .match-item:active { transform: translateY(2px); border-bottom-width: 2px; }
         .match-item.selected { border-color: var(--cyber-blue); background: rgba(0, 255, 65, 0.1); color: white; }
@@ -94,8 +95,8 @@
         .game-footer { flex-shrink: 0; padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)); background: #0d1117; border-top: 1px solid #1f2937; width: 100%; display: flex; justify-content: center; box-sizing: border-box; z-index: 50; }
         .check-btn { width: 100%; max-width: 400px; padding: 1rem; border-radius: 1rem; font-weight: 800; text-transform: uppercase; cursor: pointer; background: #1f2937; color: #4b5563; border: none; font-size: 1rem; letter-spacing: 1px; transition: all 0.1s; -webkit-tap-highlight-color: transparent; }
         .check-btn:active { transform: scale(0.98); }
-        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #007bb5; }
-        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #007bb5; }
+        .check-btn.active { background: var(--cyber-blue); color: black; box-shadow: 0 4px 0 #a0a8b0; }
+        .check-btn.active:active { transform: translateY(4px); box-shadow: 0 0px 0 #a0a8b0; }
 
         /* FEEDBACK OVERLAY */
         .feedback-overlay { position: fixed; bottom: -100%; left: 0; right: 0; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); transition: bottom 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 100; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: left; }
@@ -126,112 +127,45 @@
         <button class="check-btn" id="checkBtn" disabled onclick="checkResponse()">Verificar</button>
     </footer>
 
-    <script>        const steps = [
+    <script>
+        const steps = [
             {
-                "type": "teach",
-                "icon": "fa-user-graduate",
-                "title": "Por que devo fazer este módulo? (Cisco 7.0.1)",
-                "content": "Mais de <b>90% das empresas modernas</b> utilizam infraestruturas baseadas em nuvem, e praticamente 100% dos colaboradores operam com dispositivos móveis diariamente. Dominar a segurança de <b>Cloud, Mobile e IoT</b> é essencial: são hoje as superfícies de ataque mais ativas e críticas do mercado. Sem esse conhecimento, um Hacker Ético é incapaz de avaliar as redes corporativas descentralizadas atuais.",
-                "highlight": "Nuvem, Mobile e IoT representam a linha de frente do Pentest corporativo moderno."
+                        "type": "teach",
+                        "icon": "fa-cloud",
+                        "title": "Ataques em Cloud e IoT",
+                        "content": "Este módulo cobre ataques a <b>ambientes cloud</b> (AWS, Azure, GCP), <b>dispositivos IoT</b>, <b>sistemas de armazenamento</b>, <b>VMs</b> e <b>containers</b>.",
+                        "highlight": "Cloud e IoT são a nova superfície de ataque"
             },
             {
-                "type": "teach",
-                "icon": "fa-map",
-                "title": "O que aprenderei neste módulo? (Cisco 7.0.2)",
-                "content": "Nesta jornada alinhada ao currículo oficial de Hacking Ético da Cisco, você aprenderá:<br><br>1. ☁️ <b>Segurança em Nuvem</b>: Modelos de serviço, phishing com o SET, IMDSv1/v2, CPU Side-Channels e auditorias SDK.<br>2. 📱 <b>Ataques Mobile</b>: Engenharia reversa, análise SQLite/Keychain e quebra de SSL Pinning com Frida.<br>3. 🔌 <b>IoT e Embarcados</b>: BLE MITM, vulnerabilidades de BMC/IPMI e varreduras com Shodan.<br>4. 🐳 <b>Virtualização e Containers</b>: VM Escape do hipervisor e auditorias cloud-native em Docker/Kubernetes.",
-                "highlight": "Você dominará as metodologias reais usadas para auditar ativos físicos, virtuais e distribuídos."
+                        "type": "teach",
+                        "icon": "fa-server",
+                        "title": "Responsabilidade Compartilhada",
+                        "content": "Na cloud, a segurança é <b>compartilhada</b>: o provedor protege a infraestrutura, o cliente protege os dados e configurações. Misconfiguration é o risco nº1.",
+                        "highlight": "Cloud segura exige configuração correta do cliente"
             },
             {
-                "type": "teach",
-                "icon": "fa-shield-halved",
-                "title": "A Queda da Muralha",
-                "content": "No passado, a segurança corporativa baseava-se no modelo de <b>perímetro tradicional</b> (castelo e fosso). Bastava proteger a rede física interna com firewalls e proxies robustos. Mas essa era <b>acabou</b>. A adoção massiva de nuvem, dispositivos móveis e trabalho remoto dissolveu completamente esse limite físico.",
-                "highlight": "Não existe mais uma rede interna intrinsecamente confiável."
+                        "type": "quiz",
+                        "task": "Qual é o risco nº1 em ambientes cloud?",
+                        "options": [
+                                    "Misconfiguration (configuração incorreta)",
+                                    "Hardware defeituoso",
+                                    "Falta de internet"
+                        ],
+                        "correctText": "Misconfiguration (configuração incorreta)",
+                        "explanation": "A maioria dos incidentes em cloud são causados por configurações incorretas do cliente."
             },
             {
-                "type": "example",
-                "icon": "fa-house-laptop",
-                "title": "O Perímetro Invisível",
-                "scenario": "Um funcionário de RH acessa o banco de talentos (hospedado na AWS) usando o celular corporativo em um café público, enquanto um analista de marketing configura um servidor temporário na Azure com senha fraca.",
-                "takeaway": "Qualquer local é agora a rede corporativa, e qualquer brecha pode ser fatal."
-            },
-            {
-                "type": "quiz",
-                "task": "O que causou o desaparecimento do perímetro de rede tradicional nas empresas?",
-                "options": [
-                    "A adoção em larga escala de serviços em nuvem, trabalho móvel e dispositivos inteligentes (IoT).",
-                    "A substituição de cabos de rede de cobre por fibras ópticas nas redes locais.",
-                    "O surgimento de novos protocolos como o IPv6 e o DNSSEC."
-                ],
-                "correctText": "A adoção em larga escala de serviços em nuvem, trabalho móvel e dispositivos inteligentes (IoT).",
-                "explanation": "Essas tecnologias distribuíram os ativos e usuários por toda a internet, eliminando a dependência de um limite de rede físico único."
-            },
-            {
-                "type": "teach",
-                "icon": "fa-network-wired",
-                "title": "Vetores de Entrada Multiformes",
-                "content": "Como o perímetro sumiu, <b>qualquer dispositivo conectado à internet</b> passa a ser um vetor em potencial para invadir o coração de uma corporação. Isso inclui desde uma instância EC2 mal configurada na AWS até um termostato ou câmera de segurança IP instalada no escritório físico.",
-                "highlight": "Todo ponto de conexão ativo na internet é uma porta de entrada."
-            },
-            {
-                "type": "example",
-                "icon": "fa-server",
-                "title": "Invasão via Copa",
-                "scenario": "Um grupo hacker descobre uma câmera de segurança de baixo custo exposta na internet de uma subsidiária. Eles comprometem o sistema operacional da câmera e a utilizam como pivô para escanear e invadir a rede corporativa.",
-                "takeaway": "Dispositivos aparentemente inofensivos podem comprometer infraestruturas críticas."
-            },
-            {
-                "type": "fill",
-                "sentence": "Qualquer dispositivo conectado à internet (de uma instância AWS a uma câmera inteligente) que pode ser explorado por um atacante para obter acesso inicial à rede é chamado de ___.",
-                "options": [
-                    "vetor de entrada",
-                    "firewall periférico",
-                    "gateway redundante"
-                ],
-                "correctText": "vetor de entrada",
-                "explanation": "Os vetores de entrada representam as brechas por onde os atacantes conseguem seu primeiro acesso no ambiente alvo."
-            },
-            {
-                "type": "teach",
-                "icon": "fa-lock",
-                "title": "A Filosofia Zero Trust",
-                "content": "Para combater o fim do perímetro, a cibersegurança moderna adota o paradigma <b>Zero Trust (Confiança Zero)</b>. O princípio fundamental é simples: <b>'Nunca Confie, Sempre Verifique'</b>. Nenhum usuário ou dispositivo deve receber confiança implícita apenas por estar conectado a uma determinada rede.",
-                "highlight": "Zero Trust exige autenticação contínua para cada requisição de acesso."
-            },
-            {
-                "type": "quiz",
-                "task": "Qual é o princípio fundamental que norteia a arquitetura moderna Zero Trust?",
-                "options": [
-                    "Nunca confie, sempre verifique.",
-                    "Confie apenas nos usuários locais e verifique os remotos.",
-                    "Bloqueie qualquer tráfego que venha de fora do país."
-                ],
-                "correctText": "Nunca confie, sempre verifique.",
-                "explanation": "Zero Trust assume que ameaças podem vir de qualquer lugar (interno ou externo) e exige verificação rígida para cada solicitação."
-            },
-            {
-                "type": "match",
-                "title": "Associe os Novos Vetores",
-                "pairs": [
-                    {
-                        "term": "Nuvem (Cloud)",
-                        "definition": "Servidores AWS, buckets S3, IAM, Federação de tokens"
-                    },
-                    {
-                        "term": "Mobile",
-                        "definition": "Aplicativos de usuários descompilados, bypass biométrico, Frida"
-                    },
-                    {
-                        "term": "IoT / Embarcados",
-                        "definition": "Câmeras IP expostas, portas UART/JTAG, BLE sem criptografia"
-                    },
-                    {
-                        "term": "Virtualização",
-                        "definition": "Máquinas virtuais compartilhadas, containers Docker e Kubernetes"
-                    }
-                ]
+                        "type": "fill",
+                        "sentence": "No modelo de ___, o provedor cloud e o cliente dividem responsabilidades de segurança.",
+                        "options": [
+                                    "responsabilidade compartilhada",
+                                    "licença aberta",
+                                    "código aberto"
+                        ],
+                        "correctText": "responsabilidade compartilhada",
+                        "explanation": "Shared Responsibility Model define quem protege o quê na cloud."
             }
-        ];
+];
 
         let currentStep = 0;
         let selectedIdx = null; // For quiz and fill
@@ -512,12 +446,15 @@
             document.getElementById('footerArea').classList.add('hidden');
             
             let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/7.1a-cloud.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
+                nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #a0a8b0; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            }
 
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">JORNADA INICIADA!</h2>
-                    <p class="text-body mb-6">Você compreendeu os novos desafios de segurança física e virtual com a queda do perímetro corporativo.</p>
+                    <h2 class="title-main mb-2">LIÇÃO COMPLETA!</h2>
+                    <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}
                         <div style="display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-top: 0.5rem;">

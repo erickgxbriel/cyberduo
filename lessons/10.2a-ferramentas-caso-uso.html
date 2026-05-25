@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <title>CyberDuo - Linguagens de Script para Pentest (Bash, Python, etc)</title>
+    <title>CyberDuo - Ferramentas por Caso de Uso: Ofensiva, Rede e Credenciais</title>
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -131,51 +131,76 @@
         const steps = [
             {
                         "type": "teach",
-                        "icon": "fa-terminal",
-                        "title": "Bash Scripting",
-                        "content": "No Linux, o <b>Bash</b> é a linguagem do terminal. Escrever scripts em Bash permite automatizar comandos do sistema operacional, como varrer redes ou filtrar logs nativamente sem instalar nada."
-            },
-            {
-                        "type": "example",
-                        "icon": "fa-network-wired",
-                        "title": "Ping Sweep em Bash",
-                        "scenario": "Comando: `for ip in {1..254}; do ping -c 1 192.168.1.$ip; done`. Isso pinga todos os 254 computadores da rede em uma única linha de código.",
-                        "takeaway": "Bash interage diretamente com o ambiente do SO."
-            },
-            {
-                        "type": "quiz",
-                        "task": "Por que o Bash Scripting é essencial para um Pentester em ambientes Linux?",
-                        "options": [
-                                    "Porque ele é nativo da maioria das distribuições Linux e permite colar comandos de terminal de forma automatizada.",
-                                    "Porque ele é a linguagem mais rápida para quebrar senhas complexas.",
-                                    "Porque ele tem uma interface gráfica superior ao Windows."
-                        ],
-                        "correctText": "Porque ele é nativo da maioria das distribuições Linux e permite colar comandos de terminal de forma automatizada.",
-                        "explanation": "Não requer instalação de linguagens externas como Python ou Ruby."
+                        "icon": "fa-layer-group",
+                        "title": "Classificar Ferramentas Evita Uso Aleatório (Cisco 10.2)",
+                        "content": "Uma boa prática é agrupar ferramentas por objetivo: <b>captura e análise de rede</b>, <b>quebra de credenciais</b>, <b>enumeração</b>, <b>exploração</b>, <b>forense</b> e <b>engenharia reversa</b>. Isso reduz improviso e melhora a escolha técnica em cada fase do engajamento.",
+                        "highlight": "Ferramenta certa depende do objetivo, do contexto e do limite do escopo."
             },
             {
                         "type": "teach",
-                        "icon": "fa-python",
-                        "title": "Python para Hackers",
-                        "content": "O <b>Python</b> é a linguagem universal da segurança da informação. Bibliotecas como `requests` (para ataques web) e `socket` (para conexões de rede diretas) tornam a criação de exploits rápida e legível."
+                        "icon": "fa-network-wired",
+                        "title": "Wireshark, Hydra, John the Ripper e Hashcat",
+                        "content": "<b>Wireshark</b> ajuda a inspecionar tráfego e protocolos. <b>Hydra</b> automatiza tentativas online de credenciais. <b>John the Ripper</b> e <b>Hashcat</b> quebram hashes offline com foco em velocidade e wordlists. Cada uma atua em uma camada diferente do problema.",
+                        "highlight": "Online guessing e offline cracking são coisas diferentes e têm riscos diferentes."
             },
             {
                         "type": "example",
-                        "icon": "fa-spider",
-                        "title": "Criando um Brute-Forcer",
-                        "scenario": "Com 10 linhas de código usando `requests.post()`, o atacante cria seu próprio script Python que testa 1000 senhas por minuto contra a página de login de um site.",
-                        "takeaway": "Linguagens de script preenchem o espaço vazio onde não existem ferramentas prontas."
+                        "icon": "fa-terminal",
+                        "title": "Exemplo - Credenciais Online vs Offline",
+                        "scenario": "Em um portal SSH, o analista usa Hydra para testar logins online. Já após obter um dump de hashes NTLM, migra para Hashcat no host de ataque para quebrar as senhas sem interagir mais com o alvo.",
+                        "code": "$ hydra -l admin -P rockyou.txt ssh://10.10.30.9\n$ hashcat -m 1000 hashes.txt rockyou.txt",
+                        "takeaway": "Hydra depende da rede e pode gerar alertas; Hashcat e John the Ripper operam offline contra hashes roubados."
+            },
+            {
+                        "type": "teach",
+                        "icon": "fa-bug",
+                        "title": "Sqlmap, Metasploit e Frameworks C2",
+                        "content": "<b>Sqlmap</b> automatiza exploração de SQL Injection. <b>Metasploit</b> organiza exploits, payloads e módulos auxiliares. Frameworks de <b>C2</b> como Empire ou Cobalt Strike focam persistência, beacons e pós-exploração de longo prazo.",
+                        "highlight": "Metasploit tende a ganhar acesso inicial; C2 tende a sustentar operação pós-comprometimento."
+            },
+            {
+                        "type": "match",
+                        "title": "Associe a Ferramenta ao Caso de Uso",
+                        "pairs": [
+                                    {
+                                                "term": "Wireshark",
+                                                "definition": "Analisar pacotes, sessões e protocolos de rede"
+                                    },
+                                    {
+                                                "term": "Hydra",
+                                                "definition": "Força bruta online contra serviços como SSH ou HTTP"
+                                    },
+                                    {
+                                                "term": "Hashcat / John the Ripper",
+                                                "definition": "Quebrar hashes offline com wordlists e regras"
+                                    },
+                                    {
+                                                "term": "Sqlmap",
+                                                "definition": "Automatizar exploração de SQL Injection"
+                                    }
+                        ]
+            },
+            {
+                        "type": "quiz",
+                        "task": "Qual ferramenta é mais adequada para inspecionar tráfego capturado de rede e entender o comportamento de protocolos no detalhe?",
+                        "options": [
+                                    "Wireshark",
+                                    "Hydra",
+                                    "Hashcat"
+                        ],
+                        "correctText": "Wireshark",
+                        "explanation": "Wireshark é a referência para análise detalhada de pacotes e sessões de rede."
             },
             {
                         "type": "fill",
-                        "sentence": "A biblioteca padrão do Python chamada ___ é amplamente usada por auditores para criar, enviar e manipular pacotes HTTP customizados.",
+                        "sentence": "Quando o objetivo é quebrar senhas a partir de hashes roubados sem falar com o alvo, a abordagem correta é cracking ___ com ferramentas como Hashcat ou John the Ripper.",
                         "options": [
-                                    "requests",
-                                    "os",
-                                    "socket"
+                                    "offline",
+                                    "visual",
+                                    "manual"
                         ],
-                        "correctText": "requests",
-                        "explanation": "Ela simplifica imensamente o envio de GETs e POSTs."
+                        "correctText": "offline",
+                        "explanation": "Cracking offline remove latência e bloqueios do serviço alvo e depende da potência do host atacante."
             }
 ];
 
@@ -457,7 +482,7 @@
             document.getElementById('progressFill').style.width = `100%`;
             document.getElementById('footerArea').classList.add('hidden');
             
-            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/10.2-ferramentas.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
+            let nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/10.2b-analise-codigo-reversa.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #008f20; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             if (nextBtnHtml.includes("##NEXT_LESSON_BTN" + "##")) {
                 nextBtnHtml = `<button class="check-btn active w-full" onclick="window.location.href='../lessons/1.0-introducao.html'" style="background: var(--cyber-green); color: black; border-color: var(--cyber-green); box-shadow: 0 4px 0 #5e1d80; font-size: 1.1rem; padding: 1.2rem; letter-spacing: 2px;">PRÓXIMA LIÇÃO <i class="fas fa-arrow-right ml-2"></i></button>`;
             }
@@ -465,7 +490,7 @@
             document.getElementById('gameArea').innerHTML = `
                 <div class="game-card teach-card" style="align-items: center; text-align: center; border-color: var(--cyber-blue)">
                     <i class="fas fa-medal text-6xl text-yellow-400 mb-4 mt-4"></i>
-                    <h2 class="title-main mb-2">Você concluiu esta lição e dominou os conceitos apresentados.</h2>
+                    <h2 class="title-main mb-2">FERRAMENTAS CLASSIFICADAS!</h2>
                     <p class="text-body mb-6">Você completou esta lição com sucesso!</p>
                     <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; align-items: center; margin-top: 1rem;">
                         ${nextBtnHtml}

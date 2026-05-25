@@ -78,7 +78,7 @@ def main():
             lesson['filename'],
             lesson['module'],
             lesson['title'],
-            lesson['victory_msg'],
+            lesson.get('victory_msg', 'LIÇÃO COMPLETA!'),
             json.dumps(lesson['steps'], ensure_ascii=False, indent=12),
             next_filename
         )
