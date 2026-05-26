@@ -144,6 +144,96 @@
         .feedback-overlay.wrong { background: #1a0d0d; border-top: 4px solid var(--cyber-red); }
         .feedback-title { font-size: clamp(1.2rem, 5vw, 1.4rem); font-weight: 800; margin-bottom: 0.5rem; width: 100%; max-width: 400px; display: flex; align-items: center; gap: 0.5rem; }
         .feedback-msg { font-size: clamp(0.95rem, 4vw, 1.05rem); color: #8b949e; line-height: 1.5; width: 100%; max-width: 400px; margin-bottom: 1.5rem; }
+
+        /* GAME OVER MODAL STYLES */
+        .gameover-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 7, 10, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 200;
+            padding: 1.5rem;
+        }
+        .gameover-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .gameover-card {
+            background: #0d1117;
+            border: 2px solid var(--cyber-red);
+            box-shadow: 0 0 30px rgba(255, 0, 60, 0.25);
+            border-radius: 1.5rem;
+            padding: 2.5rem 2rem;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            animation: gameoverScale 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+        @keyframes gameoverScale {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .gameover-icon {
+            font-size: 4.5rem;
+            color: var(--cyber-red);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
+            animation: redPulse 2s infinite ease-in-out;
+        }
+        @keyframes redPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        .gameover-title {
+            font-size: clamp(1.6rem, 6vw, 2rem);
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .gameover-desc {
+            font-size: clamp(0.95rem, 4vw, 1.05rem);
+            color: #8b949e;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .gameover-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+        .gameover-btn-restart {
+            background: var(--cyber-red);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 0 #990024;
+        }
+        .gameover-btn-restart:active {
+            transform: scale(0.97) translateY(2px);
+            box-shadow: 0 2px 0 #990024;
+        }
+        .gameover-btn-menu {
+            background: #161b22;
+            border: 2px solid #30363d;
+            color: #c9d1d9;
+            box-shadow: 0 4px 0 #0d1117;
+        }
+        .gameover-btn-menu:active {
+            transform: scale(0.97) translateY(2px);
+            box-shadow: 0 2px 0 #0d1117;
+        }
     </style>
 </head>
 <body>
@@ -510,8 +600,25 @@
         }
 
         function triggerGameOver() {
-            alert("VOCÊ FICOU SEM VIDAS. O treinamento será reiniciado."); 
-            location.reload();
+            const modal = document.getElementById("gameoverModal");
+            if (modal) {
+                modal.classList.add("show");
+            } else {
+                alert("VOCÊ FICOU SEM VIDAS. O treinamento será reiniciado.");
+                location.reload();
+            }
+        }
+
+        function goToModules() {
+            const closeBtn = document.querySelector(".close-btn");
+            if (closeBtn) {
+                const match = closeBtn.getAttribute("onclick").match(/href='([^']+)'/);
+                if (match && match[1]) {
+                    window.location.href = match[1];
+                    return;
+                }
+            }
+            window.location.href = "../index.html";
         }
 
         function handleContinue() {
@@ -576,5 +683,22 @@
 
         render();
     </script>
+
+    <!-- Modal Game Over / Conexão Interrompida -->
+    <div id="gameoverModal" class="gameover-overlay">
+        <div class="gameover-card">
+            <i class="fas fa-triangle-exclamation gameover-icon"></i>
+            <h2 class="gameover-title">Conexão Interrompida</h2>
+            <p class="gameover-desc">Você esgotou todas as suas tentativas. O sistema de segurança do cliente detectou a atividade e bloqueou o seu acesso.</p>
+            <div class="gameover-buttons">
+                <button class="check-btn gameover-btn-restart" onclick="location.reload()">
+                    <i class="fas fa-rotate-right mr-2"></i> TENTAR NOVAMENTE
+                </button>
+                <button class="check-btn gameover-btn-menu" onclick="goToModules()">
+                    <i class="fas fa-layer-group mr-2"></i> MÓDULOS
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
